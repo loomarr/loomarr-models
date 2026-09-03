@@ -15,7 +15,8 @@ from loomarr_models.experiment import PreflightError
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-adapter-eval-v1.json"
+CONFIG = ROOT / "runs/planner-adapter-eval-v1/source-experiment.json"
+CURRENT_CONFIG = ROOT / "experiments/planner-adapter-eval-v1.json"
 ADAPTER_HASHES = json.loads(
     (ROOT / "runs/planner-qwen38-smoke-v1/run-manifest.json").read_text(encoding="utf-8")
 )["adapterFiles"]
@@ -48,6 +49,15 @@ class EvalExperimentTests(unittest.TestCase):
         self.assertEqual(report.caseCount, 50)
         self.assertEqual(report.projectedSpendUsd, "21.4977636149929768")
         self.assertEqual(report.authorizationUsd, "40.00")
+
+    def test_current_repository_config_refuses_completed_experiment(self):
+        with self.assertRaisesRegex(PreflightError, "not ready-for-development-eval"):
+            preflight_eval(
+                ROOT,
+                CURRENT_CONFIG,
+                git_probe=self._clean_git,
+                adapter_probe=self._approved_adapter,
+            )
 
     def test_refuses_bound_digest_drift(self):
         config = self._config()
@@ -152,6 +162,12 @@ class EvalExperimentTests(unittest.TestCase):
             destination = self.root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / relative, destination)
+        budget_path = self.root / config["bindings"]["budget"]["path"]
+        budget = json.loads(budget_path.read_text(encoding="utf-8"))
+        budget["postedSpendUsd"] = "18.3977636149929768"
+        budget["outstandingReservationsUsd"] = "0.10"
+        budget["committedSpendUsd"] = "18.4977636149929768"
+        budget_path.write_text(json.dumps(budget, indent=2) + "\n", encoding="utf-8")
         adapter = self.root / config["execution"]["adapterPath"]
         adapter.parent.mkdir(parents=True, exist_ok=True)
         for relative in ADAPTER_HASHES:

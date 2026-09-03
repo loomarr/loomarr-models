@@ -5,7 +5,7 @@
   "currency": "USD",
   "authorizationUsd": "40.00",
   "postedSpendUsd": "18.3977636149929768",
-  "outstandingReservationsUsd": "0.10",
-  "committedSpendUsd": "18.4977636149929768",
+  "outstandingReservationsUsd": "3.10",
+  "committedSpendUsd": "21.4977636149929768",
   "authorizedBy": "loomarr-maintainer"
 }

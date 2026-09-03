@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "experimentId": "planner-adapter-eval-v1",
   "issue": "https://github.com/loomarr/loomarr-models/issues/5",
-  "status": "ready-for-development-eval",
+  "status": "completed-pending-cost-settlement",
   "bindings": {
     "cases": {
       "path": "evaluation/planner-development-v1/cases.jsonl",

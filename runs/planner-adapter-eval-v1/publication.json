@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "runId": "planner-adapter-eval-a40-v1-parser-replay-v1",
+  "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/5",
+  "status": "rejected-pending-cost-settlement",
+  "runManifestPath": "runs/planner-adapter-eval-v1/run-manifest.json",
+  "runManifestSha256": "ce8dc06386a91df87f53f647c56c9c4da186ec20401298270f6b8ed65f8c285e",
+  "provider": "runpod",
+  "hardware": {
+    "cloud": "SECURE",
+    "dataCenterId": "CA-MTL-1",
+    "gpu": "NVIDIA A40",
+    "gpuHourlyUsd": "0.44",
+    "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851"
+  },
+  "providerCostUsd": null,
+  "reservationUsd": "3.00",
+  "rawArtifacts": {
+    "retention": "local-gitignored",
+    "path": ".artifacts/runpod-planner-adapter-eval-v1",
+    "sourceRunManifestSha256": "5e2ef670aabf7cd7cc6238c0a5ff1caff7d1b2c6766f594a3d2e6470ffdeb584",
+    "runLogSha256": "bb7a30af7097128bfa8a22f9716c89c5b90a4ed14d9e79f10acbec17553c799c",
+    "sourceRunSha256": {
+      "adapter": "ba57c5a3eefd538e3f04d693538b2d3a1dfc627601e4cefd0265c9e7fcab5e85",
+      "adapterGenerations": "d138a2cd3080f07d9de070f590e71a7e887edcae3e96eff3562d6917d826f79e",
+      "stock": "e22b4aa88750cf0b9e2b650c08eceed52e561c31c498328acafeb0f74983d4a1",
+      "stockGenerations": "7e4d2e867ea258173f86c25505052ce53140d4e9dee27a6fb04019668a9386bb"
+    },
+    "correctedResultSha256": {
+      "adapter": "147e10e9c6abe9e6d801d8da636ec0e48e6ac317a9ddf498f7b84d9bdeb1fadc",
+      "stock": "2918e821739daf13efd6601c9f8794c672e0030359d04cd859b0e0f8aa287309"
+    }
+  },
+  "decision": "adapter-rejected-no-release"
+}

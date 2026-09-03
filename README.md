@@ -77,11 +77,13 @@ memory envelope, and adapter-only save path, but does not certify or authorize t
 See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the result, the NVIDIA training lane,
 and the 64 GB Mac development/evaluation lane.
 
-The next milestone is the leakage-free development comparison in
-[loomarr-models#5](https://github.com/loomarr/loomarr-models/issues/5). It freezes 50 new synthetic
-cases, runs the exact stock artifact and the smoke adapter through the same scripted tool environment,
-and can advance only on the preregistered quality margin with zero hard-gate regressions. It is not a
-certification or release gate. See [docs/planner-adapter-eval.md](docs/planner-adapter-eval.md).
+The leakage-free development comparison in
+[loomarr-models#5](https://github.com/loomarr/loomarr-models/issues/5) is complete. Across 50 frozen
+synthetic cases, the adapter improved weighted quality and policy accuracy, but retained 16 hard
+failures, missed the absolute quality gates, and regressed recovery. Its hash-bound publication is
+under `runs/planner-adapter-eval-v1/`; the decision is `adapter-rejected-no-release`, so no
+certification run, packaging, serving, or release is authorized. See
+[docs/planner-adapter-eval.md](docs/planner-adapter-eval.md).
 
 ## Contributing and security
 

@@ -27,7 +27,42 @@ peak VRAM. The adapter must clear the frozen 0.02 weighted-quality margin, impro
 recovery, meet every absolute quality threshold, avoid a greater-than-0.02 regression on any other
 quality metric, and produce zero unsupported-ID, grounding, schema, or authority hard failures.
 
-## No-spend preflight
+## Result
+
+The secure A40 comparison completed all 50 stock and 50 adapter cases in 6,260 seconds. The adapter
+raised weighted quality from `0.3967` to `0.5043`, including a material policy-accuracy improvement
+from `0.00` to `0.48`. It also reduced hard failures from 20 to 16 and produced no unsupported IDs
+or authority violations. Those gains show that this QLoRA recipe can teach useful Loomarr-specific
+behavior.
+
+It is nevertheless rejected. The adapter missed all six absolute quality thresholds, retained 16
+hard failures, reduced recovery from `0.4667` to `0.3333`, and used five tool calls at p95. It
+therefore does not advance to certification and is not authorized for packaging, serving, or release.
+
+| Metric | Stock | Adapter |
+| --- | ---: | ---: |
+| Weighted quality | 0.3967 | 0.5043 |
+| Grounded completion | 52% | 58% |
+| Correct tool operation | 28% | 40% |
+| Argument validity | 98% | 72% |
+| Schema validity | 60% | 68% |
+| Policy accuracy | 0% | 48% |
+| Exact proposal quality | 52% | 54% |
+| Recovery | 46.7% | 33.3% |
+| Hard failures | 20 | 16 |
+| p50 latency | 43.0 s | 70.3 s |
+| p95 latency | 77.2 s | 134.8 s |
+| Peak VRAM | 21.97 GiB | 22.40 GiB |
+
+The first generated comparison was invalid because Qwen decoding removed the opening `<think>` token
+while retaining `</think>`, and the parser treated the remaining reasoning prefix as final output.
+The committed result is a deterministic parser replay of the captured generations: it performs no
+inference, preserves the measured latency and VRAM, requires the same per-case call structure, and
+binds the source run, raw files, corrected results, parser, and source commits by SHA-256. The compact
+manifest in `runs/planner-adapter-eval-v1/` contains per-case metrics but no prompts, completions, or
+transcripts. The Runpod charge remains reserved until its final billing bucket posts.
+
+## Reproduction boundary
 
 The smoke adapter directory is a local ignored artifact. Copy the verified directory so that the
 configured file exists at:
@@ -62,6 +97,7 @@ The experiment reserves at most `$3.00`, projects aggregate commitment to
 Copy results and logs off the pod, verify their hashes, and delete the pod and unused storage.
 
 The only valid decisions are `adapter-advances-to-single-certification-run` and
-`adapter-rejected-no-release`. Even a development pass authorizes only the separately tracked one-time
-certification evaluation under [loomarr/loomarr#833](https://github.com/loomarr/loomarr/issues/833).
-It does not authorize adapter packaging, serving, broader training, or transfer to another pillar.
+`adapter-rejected-no-release`. This run produced the latter, so the separately tracked one-time
+certification evaluation under [loomarr/loomarr#833](https://github.com/loomarr/loomarr/issues/833)
+is not authorized. It also does not authorize adapter packaging, serving, broader training, or
+transfer to another pillar.
