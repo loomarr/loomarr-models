@@ -34,9 +34,9 @@ class CorrectedBehaviorReviewTests(unittest.TestCase):
         self.assertEqual(report["inferenceCalls"], 0)
         self.assertEqual(report["externalCostUsd"], "0")
         self.assertTrue(report["paidReviewAuthorized"])
-        self.assertEqual(index["status"], "ready-for-review")
+        self.assertEqual(index["status"], "complete-approved")
         self.assertFalse(index["trainingAuthorized"])
-        self.assertIn("execute", index["nextGate"])
+        self.assertIn("decide whether QLoRA v2 is justified", index["nextGate"])
 
         prior = config["bindings"]["priorPublication"]
         prior_publication = json.loads((ROOT / prior["path"]).read_text(encoding="utf-8"))

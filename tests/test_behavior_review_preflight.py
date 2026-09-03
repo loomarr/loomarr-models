@@ -22,7 +22,7 @@ from loomarr_models.validator import load_contract, load_jsonl
 ROOT = Path(__file__).resolve().parents[1]
 TRACES_PATH = ROOT / "corpus/planner-behavior-v2/drafts.jsonl"
 SNAPSHOT_PATH = ROOT / "reviews/planner-behavior-v2/route-snapshot.json"
-BUDGET_PATH = ROOT / "budgets/external-spend-v1.json"
+BUDGET_PATH = ROOT / "tests/fixtures/external-spend-before-planner-behavior-v3.json"
 REQUEST_PLAN_PATH = ROOT / "reviews/planner-behavior-v2/request-plan.jsonl"
 REPORT_PATH = ROOT / "reviews/planner-behavior-v2/preflight-report.json"
 CONTRACT_PATH = ROOT / "contracts/planner-contract-v3.json"

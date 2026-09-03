@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import loomarr_models.behavior_review as review_contract
 import loomarr_models.behavior_model_review as review_preflight_contract
 import loomarr_models.targeted as targeted_contract
-from loomarr_models.behavior_review import empty_decision, load_review_decisions, trace_review
+from loomarr_models.behavior_review import derive_review, empty_decision, load_review_decisions, trace_review
 from loomarr_models.behavior_model_review import preflight as preflight_review
 from loomarr_models.behavior_model_review import request_plan_bytes
 from loomarr_models.evaluation import load_cases
@@ -60,6 +60,9 @@ REVIEW_PUBLISHER_PATH = ROOT / "scripts/publish_planner_behavior_review.py"
 CORPUS_FINALIZER_PATH = ROOT / "scripts/finalize_planner_behavior_corpus.py"
 REVIEW_PUBLICATION_PATH = (
     ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json"
+)
+CORRECTED_REVIEW_PUBLICATION_PATH = (
+    ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/publication.json"
 )
 
 TRAINING_BASE_ID = 920000
@@ -367,9 +370,13 @@ def build_outputs() -> dict[Path, bytes]:
     contract = load_contract(CONTRACT_PATH)
     denylisted_identities, denylisted_sha256 = load_denylist(DENYLIST_PATH)
     decisions = load_review_decisions(REVIEW_DECISIONS_PATH, trace_ids())
+    draft_decisions = {trace_id: empty_decision(trace_id) for trace_id in trace_ids()}
     prior_training = load_jsonl(PRIOR_TRAINING_PATH)
     prior_development = load_cases(PRIOR_DEVELOPMENT_PATH)
-    training = build_training(contract, decisions)
+    # Keep the corpus that was independently reviewed immutable. Promotion updates
+    # the canonical decision ledger; the finalizer combines those decisions with
+    # these drafts to create the frozen training corpus.
+    training = build_training(contract, draft_decisions)
     development = build_development(contract)
     training_bytes = b"".join(canonical(trace) + b"\n" for trace in training)
     development_bytes = b"".join(canonical(case) + b"\n" for case in development)
@@ -484,6 +491,81 @@ def build_outputs() -> dict[Path, bytes]:
             or publication.get("approved", 0) + publication.get("escalations", 0) != 120
         ):
             raise ValueError("behavior review publication is not an exact terminal result")
+    if publication is not None:
+        promoted = all(
+            derive_review(decision, require_complete=True).status == "approved"
+            for decision in decisions.values()
+        )
+        selected_publication_path = REVIEW_PUBLICATION_PATH
+        if promoted:
+            corrected = json.loads(CORRECTED_REVIEW_PUBLICATION_PATH.read_text(encoding="utf-8"))
+            decision_sha = hashlib.sha256(REVIEW_DECISIONS_PATH.read_bytes()).hexdigest()
+            if (
+                corrected.get("reviewId") != "planner-behavior-review-v3"
+                or corrected.get("status") != "complete-approved"
+                or (corrected.get("approved"), corrected.get("escalations")) != (120, 0)
+                or corrected.get("corpusSha256") != training_report.sha256
+                or corrected.get("decisionsSha256") != decision_sha
+                or Path(ROOT / corrected["decisionsPath"]).read_bytes()
+                != REVIEW_DECISIONS_PATH.read_bytes()
+            ):
+                raise ValueError("promoted decisions do not match the unanimous corrected review")
+            selected_publication_path = CORRECTED_REVIEW_PUBLICATION_PATH
+
+        # Review execution artifacts become immutable once their paid run is
+        # published. Later ledger entries and promoted decisions must not
+        # rewrite the historical request plan or make its old reservation look
+        # like a new outstanding commitment.
+        outputs = {
+            TRAINING_PATH: training_bytes,
+            TRAINING_MANIFEST_PATH: training_manifest_bytes,
+            DEVELOPMENT_PATH: development_bytes,
+            DEVELOPMENT_MANIFEST_PATH: development_manifest_bytes,
+            DISJOINTNESS_PATH: disjointness_bytes,
+            REVIEW_PLAN_PATH: REVIEW_PLAN_PATH.read_bytes(),
+            REQUEST_PLAN_PATH: REQUEST_PLAN_PATH.read_bytes(),
+            PREFLIGHT_REPORT_PATH: PREFLIGHT_REPORT_PATH.read_bytes(),
+        }
+        index_artifacts = {
+            **outputs,
+            ROUTE_SNAPSHOT_PATH: ROUTE_SNAPSHOT_PATH.read_bytes(),
+            REVIEW_PUBLICATION_PATH: REVIEW_PUBLICATION_PATH.read_bytes(),
+        }
+        if promoted:
+            index_artifacts[CORRECTED_REVIEW_PUBLICATION_PATH] = (
+                CORRECTED_REVIEW_PUBLICATION_PATH.read_bytes()
+            )
+        frozen = (ROOT / "corpus/planner-behavior-v2/manifest.json").exists()
+        index = {
+            "schemaVersion": 1,
+            "publicationId": "planner-behavior-corpus-v2",
+            "status": (
+                "reviewed-frozen-training-only"
+                if promoted and frozen
+                else "reviewed-decisions-promoted"
+                if promoted
+                else publication["status"]
+            ),
+            "artifacts": [
+                {"path": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(data).hexdigest()}
+                for path, data in sorted(index_artifacts.items(), key=lambda item: str(item[0]))
+            ],
+            "generator": {
+                "path": str(Path(__file__).relative_to(ROOT)),
+                "sha256": generator_sha,
+            },
+            "nextGate": (
+                "use the frozen corpus and untouched development gate to decide whether QLoRA v2 is justified"
+                if promoted and frozen
+                else "freeze the unanimously reviewed training corpus"
+                if promoted
+                else "correct the reviewer packet and publish a new independent review"
+            ),
+            "reviewPublication": binding(selected_publication_path),
+            "trainingAuthorized": False,
+        }
+        outputs[INDEX_PATH] = pretty(index)
+        return outputs
     review_preflight = preflight_review(
         training,
         route_snapshot=route_snapshot,

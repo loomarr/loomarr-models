@@ -1,7 +1,7 @@
 {
   "bindings": {
     "budget": {
-      "path": "budgets/external-spend-v1.json"
+      "path": "tests/fixtures/external-spend-before-planner-behavior-v3.json"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",

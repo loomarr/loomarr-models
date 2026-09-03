@@ -78,7 +78,9 @@ class ModelReviewPreflightTests(unittest.TestCase):
         self.assertEqual((self.plan.traceCount, self.plan.requestCount), (50, 100))
         self.assertEqual(self.plan.outputTokenUpperBound, 400000)
         self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("15.00"))
-        ledger = json.loads((ROOT / "budgets/external-spend-v1.json").read_text())
+        ledger = json.loads(
+            (ROOT / "tests/fixtures/external-spend-before-planner-behavior-v3.json").read_text()
+        )
         self.assertEqual(
             Decimal(self.plan.projectedSpendUsd),
             Decimal(ledger["committedSpendUsd"]) + Decimal(self.plan.reservationUsd),

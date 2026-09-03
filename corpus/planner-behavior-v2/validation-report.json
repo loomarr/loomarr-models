@@ -1,0 +1,27 @@
+{
+  "approved": 120,
+  "behaviorCounts": {
+    "ambiguous-intent-mapping": 20,
+    "canonical-argument-preservation": 20,
+    "complete-proposal-json": 20,
+    "one-tool-operation-per-turn": 20,
+    "structured-json-abstention": 20,
+    "synthetic-tool-error-recovery": 20
+  },
+  "checks": [
+    "targeted-behavior-contract",
+    "grounded-selected-identities",
+    "one-tool-operation-per-turn",
+    "complete-final-proposal-json",
+    "synthetic-only",
+    "holdout-denylist",
+    "dual-independent-review",
+    "published-decision-identity"
+  ],
+  "corpusId": "planner-behavior-v2",
+  "pending": 0,
+  "schemaVersion": 1,
+  "status": "passed",
+  "traceCount": 120,
+  "tracesSha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
+}

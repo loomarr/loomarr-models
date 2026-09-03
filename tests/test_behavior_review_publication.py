@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import sys
+import tempfile
 import unittest
 from decimal import Decimal
 from pathlib import Path
@@ -22,11 +23,28 @@ from loomarr_models.model_review import CRITERIA, ModelReviewError
 class BehaviorReviewPublicationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        _config, cls.plan, _snapshot = runner.build_plan(
-            runner.CONFIG_PATH,
-            require_authorized=False,
-            git_probe=lambda _root, _paths: "b" * 40,
+        config = json.loads(runner.CONFIG_PATH.read_text(encoding="utf-8"))
+        config["bindings"]["budget"]["path"] = (
+            "tests/fixtures/external-spend-before-planner-behavior-v3.json"
         )
+        for binding in config["bindings"].values():
+            if "sha256" in binding:
+                binding["sha256"] = hashlib.sha256(
+                    (ROOT / binding["path"]).read_bytes()
+                ).hexdigest()
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", dir=ROOT, delete=False, encoding="utf-8"
+        ) as handle:
+            json.dump(config, handle)
+            fixture_path = Path(handle.name)
+        try:
+            _config, cls.plan, _snapshot = runner.build_plan(
+                fixture_path,
+                require_authorized=False,
+                git_probe=lambda _root, _paths: "b" * 40,
+            )
+        finally:
+            fixture_path.unlink(missing_ok=True)
 
     def observations(self):
         attestations = []
@@ -87,9 +105,10 @@ class BehaviorReviewPublicationTests(unittest.TestCase):
         with self.assertRaisesRegex(ModelReviewError, "exceeds authorization"):
             publisher.settle_budget(budget, Decimal("16.00"), self.plan)
 
-    def test_freeze_refuses_pending_decisions_and_creates_no_partial_artifact(self):
-        for path in (finalizer.TRACES_PATH, finalizer.MANIFEST_PATH, finalizer.REPORT_PATH):
-            self.assertFalse(path.exists())
+    def test_freeze_uses_the_unanimous_v3_publication(self):
+        publication = json.loads(finalizer.PUBLICATION_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(publication["reviewId"], "planner-behavior-review-v3")
+        self.assertEqual((publication["approved"], publication["escalations"]), (120, 0))
 
     def test_published_disagreement_is_hash_bound_settled_and_terminal(self):
         public = ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v2"
@@ -111,12 +130,8 @@ class BehaviorReviewPublicationTests(unittest.TestCase):
         self.assertEqual(manifest["invalidReviewCount"], 0)
         self.assertEqual(manifest["actualCostUsd"], publication["actualCostUsd"])
         budget = json.loads((ROOT / "budgets/external-spend-v1.json").read_text(encoding="utf-8"))
-        self.assertEqual(budget["postedSpendUsd"], "23.2611685675672820")
-        self.assertEqual(budget["committedSpendUsd"], "23.3611685675672820")
-        with self.assertRaisesRegex(ValueError, "two approvals"):
-            finalizer.build_outputs()
-        for path in (finalizer.TRACES_PATH, finalizer.MANIFEST_PATH, finalizer.REPORT_PATH):
-            self.assertFalse(path.exists())
+        self.assertEqual(budget["postedSpendUsd"], "27.8826615675672820")
+        self.assertEqual(budget["committedSpendUsd"], "27.9826615675672820")
 
 
 if __name__ == "__main__":

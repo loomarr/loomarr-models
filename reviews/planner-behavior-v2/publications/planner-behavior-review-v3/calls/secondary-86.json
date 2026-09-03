@@ -1,0 +1,13 @@
+{
+  "batchIndex": 86,
+  "requestSha256": "c68c49bef55c2f81a5f13d759996c8e4d8e107854f9adca8df7638d1dc25b807",
+  "responseSha256": "0cb4e61e6105883322ebe34852990dae29c8d9a1b8fcddbf75be54a4ee1dd35c",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.02445",
+  "settlementSha256": "47b1e4df791af1bd2c99ae2211b16138b34575c3b95475c5a3b9d09be0152bbd",
+  "status": "valid",
+  "traceIds": [
+    "planner-behavior-v2-synthetic-tool-error-recovery-07"
+  ]
+}

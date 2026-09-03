@@ -109,6 +109,44 @@ def build_outputs() -> dict[Path, bytes]:
         else "planned-no-paid-calls-authorized"
     )
 
+    if publication is not None:
+        # The exact paid request plan is historical evidence after publication.
+        # Do not recompute it against a ledger that now includes its settled
+        # cost, or against later canonical-decision state.
+        outputs = {
+            REVIEW_PLAN_PATH: REVIEW_PLAN_PATH.read_bytes(),
+            REQUEST_PLAN_PATH: REQUEST_PLAN_PATH.read_bytes(),
+            PREFLIGHT_REPORT_PATH: PREFLIGHT_REPORT_PATH.read_bytes(),
+        }
+        index_inputs = {
+            **outputs,
+            ROUTE_SNAPSHOT_PATH: ROUTE_SNAPSHOT_PATH.read_bytes(),
+            PRIOR_PUBLICATION_PATH: PRIOR_PUBLICATION_PATH.read_bytes(),
+            PUBLICATION_PATH: PUBLICATION_PATH.read_bytes(),
+        }
+        frozen = (ROOT / "corpus/planner-behavior-v2/manifest.json").exists()
+        index = {
+            "schemaVersion": 1,
+            "publicationId": REVIEW_ID,
+            "status": status,
+            "artifacts": [
+                {
+                    "path": str(path.relative_to(ROOT)),
+                    "sha256": hashlib.sha256(data).hexdigest(),
+                }
+                for path, data in sorted(index_inputs.items(), key=lambda item: str(item[0]))
+            ],
+            "generator": binding(Path(__file__)),
+            "nextGate": (
+                "use the frozen corpus and untouched development gate to decide whether QLoRA v2 is justified"
+                if frozen
+                else "promote unanimous review decisions and freeze the training corpus"
+            ),
+            "trainingAuthorized": False,
+        }
+        outputs[INDEX_PATH] = pretty(index)
+        return outputs
+
     route_snapshot = json.loads(ROUTE_SNAPSHOT_PATH.read_text(encoding="utf-8"))
     budget = json.loads(corpus.BUDGET_PATH.read_text(encoding="utf-8"))
     checked = preflight(
