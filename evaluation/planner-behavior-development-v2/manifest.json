@@ -33,7 +33,7 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "fc792451e9b1cea839dbc32b986b24f4234fc39288ba18ec3252450d11c91905"
+      "sha256": "c7701311200710c2d0b7941094c5a0222693176c76da8d55f11ed77be6272399"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
@@ -51,10 +51,10 @@
   "contractSourceRevision": "d4718491584730a95fd3ad462074557a2e095564",
   "corpusId": "planner-behavior-development-v2",
   "disjointnessReportPath": "reports/planner-behavior-v2-disjointness.json",
-  "disjointnessReportSha256": "ba177576a92b5de4a8f917ff9285e5274c4ad081589c1d82558f08cf98774ddb",
+  "disjointnessReportSha256": "23c9734b3b2ebbfd6ed8b4195e87360d5673e4bdbbcb70803cf3ae433d312ebe",
   "fixtureId": "planner-behavior-development-catalog-v2",
   "generator": "planner-behavior-development-generator-v2",
-  "generatorSha256": "3cdcf40e951384d233b277e8ae0d0d97d36c5c7f47616a1df40a6151ee249a65",
+  "generatorSha256": "efa29e94084d93c5c19dab2e376b47465e1cc4ef80230f25f363f51284321afc",
   "schemaVersion": 1,
   "status": "frozen-development-only",
   "trainingDraftsPath": "corpus/planner-behavior-v2/drafts.jsonl",

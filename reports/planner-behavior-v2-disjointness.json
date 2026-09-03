@@ -25,7 +25,7 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "fc792451e9b1cea839dbc32b986b24f4234fc39288ba18ec3252450d11c91905"
+      "sha256": "c7701311200710c2d0b7941094c5a0222693176c76da8d55f11ed77be6272399"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",

@@ -98,7 +98,9 @@ training drafts and a separate 60-case development gate across the six observed 
 All four planner splits pass pairwise identity and normalized-content leakage checks. The review plan
 is hash-bound and its compact 240-call envelope passes a `$13.4835900` worst-case preflight, but paid
 calls remain disabled. The execution wrapper reconstructs every committed request and refuses to run
-before the authorization gate is changed in a reviewed commit. This does not authorize retraining. See
+before the authorization gate is changed in a reviewed commit. Publication, exact settlement,
+unanimous-only promotion, and corpus freezing are implemented and hash-bound before any paid call.
+This does not authorize retraining. See
 [docs/planner-behavior-corpus-v2.md](docs/planner-behavior-corpus-v2.md).
 
 ## Contributing and security
