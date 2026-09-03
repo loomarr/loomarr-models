@@ -78,7 +78,7 @@ class ModelReviewPreflightTests(unittest.TestCase):
         self.assertEqual((self.plan.traceCount, self.plan.requestCount), (50, 100))
         self.assertEqual(self.plan.outputTokenUpperBound, 400000)
         self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("15.00"))
-        self.assertEqual(self.plan.projectedSpendUsd, "25.529883391125471")
+        self.assertEqual(self.plan.projectedSpendUsd, "29.528923391125471")
         self.assertEqual(self.plan.authorizationUsd, "40")
         self.assertEqual(
             [(item.role, item.batchIndex, len(item.traceIds)) for item in self.plan.requests],

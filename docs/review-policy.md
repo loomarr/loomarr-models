@@ -123,6 +123,13 @@ pins GPT-5.4 to the single healthy `openai/fast` route. Its 100-call, 4,000-toke
 `$14.774516` worst case, a `$15` reservation, and a projected aggregate commitment of
 `$25.529883391125471 / $40`.
 
+Review v10 completed all 100 observations with no invalid responses for exactly `$3.999040`. Forty-six
+traces received two approvals. Four have a Gemini approval and GPT-5.4 rejection: keyword-discovery-02
+and ambiguous-intent-02 were rejected solely because the auditor treated deliberately synthetic fixture
+provenance as invented production content; tool-error-recovery-02 also reused a bare genre as a title
+query; and tool-error-recovery-05 omitted the requested Adventure genre from final policy. V10 remains
+partial evidence and does not mutate the canonical pending corpus.
+
 ## Disagreement and escalation
 
 Only two approvals with all twelve criterion decisions passing derive an approved trace. Two rejections

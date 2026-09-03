@@ -1,0 +1,13 @@
+{
+  "batchIndex": 8,
+  "requestSha256": "4422cef1365b918c324e95735e2e445d1947747ca01419b02f0485d82a6f474e",
+  "responseSha256": "0dafbea2c96017abf0e56a986b99bc33772aefb30f88d668121d66d75272fff4",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.023862",
+  "settlementSha256": "b5ef042299b281e6e55cba21d59142ae9b1853c6069cdfcb96dfb392fd9ca1ab",
+  "status": "valid",
+  "traceIds": [
+    "planner-smoke-genre-discovery-04"
+  ]
+}

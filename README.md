@@ -48,6 +48,12 @@ the single healthy `openai/flex` route. That route then rate-limited its first G
 Gemini reviews had settled, so the partial v9 run stopped and charged only the exact `$0.967292` Gemini
 cost. V10 uses the healthy `openai/fast` route and adds explicit provider-error-envelope validation.
 
+V10 completed 100/100 valid reviews for exactly `$3.999040`, independently approving 46 traces and
+leaving four disagreements. Two rejections misread the deliberately synthetic fixture provenance as
+assistant-invented content. Two recovery traces exposed real contract gaps: one reused a bare genre as
+a title query, and one omitted the requested genre from final policy. The canonical corpus remains
+pending while those reviewer and generator defects are corrected.
+
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
 container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend. Neither command
