@@ -152,6 +152,26 @@ Copper Meridian 12
         self.assertLess(positions["FastModel"], positions["torch"])
         self.assertLess(positions["FastModel"], positions["PeftModel"])
 
+    def test_model_load_keeps_embeddings_on_gpu_for_pinned_a40(self):
+        source = (ROOT / "src/loomarr_models/eval_runtime.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        function = next(
+            node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "run_evaluation"
+        )
+        call = next(
+            node
+            for node in ast.walk(function)
+            if isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and node.func.attr == "from_pretrained"
+        )
+        keywords = {keyword.arg: keyword.value for keyword in call.keywords}
+        self.assertIn("offload_embedding", keywords)
+        self.assertEqual(
+            ast.unparse(keywords["offload_embedding"]),
+            "comparison_config['offloadEmbedding']",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

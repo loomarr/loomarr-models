@@ -15,7 +15,9 @@ digest in the certification denylist. No household or certification payload is p
 
 Both candidates receive the same ordered cases, system prompt, tool schema, scripted tool results,
 greedy decoding, 4,096-token context, 768-token per-turn ceiling, seed, and single trial. Stock runs
-first and the adapter second on the same A40. Raw generations are captured before deterministic
+first and the adapter second on the same A40. The 2.37 GB untied embedding table remains on the GPU:
+the pinned 48 GB envelope has sufficient headroom, and Unsloth's automatic CPU offload made the
+first inference attempt transfer-bound. Raw generations are captured before deterministic
 scoring.
 
 The scorer reports grounded completion, correct tool operation, argument validity, schema validity,

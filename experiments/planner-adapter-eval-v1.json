@@ -68,6 +68,7 @@
     "maxSeqLength": 4096,
     "maxNewTokens": 768,
     "maxModelCallsPerCase": 5,
+    "offloadEmbedding": false,
     "reasoningEffort": "low",
     "doSample": false,
     "temperature": null,

@@ -63,6 +63,7 @@ def run_evaluation(
             max_seq_length=comparison_config["maxSeqLength"],
             load_in_4bit=True,
             full_finetuning=False,
+            offload_embedding=comparison_config["offloadEmbedding"],
         )
         loaded_revision = getattr(model.config, "_commit_hash", None)
         if loaded_revision and loaded_revision != artifact["revision"]:
@@ -73,16 +74,22 @@ def run_evaluation(
             model = PeftModel.from_pretrained(model, adapter_dir, is_trainable=False)
         FastModel.for_inference(model)
         generator = HuggingFaceTurnGenerator(model, tokenizer, comparison_config, torch)
-        results = [
-            evaluate_case(
-                case,
-                system_prompt=contract["systemPrompt"],
-                tools=contract["tools"],
-                generate=generator,
-                max_model_calls=comparison_config["maxModelCallsPerCase"],
+        results = []
+        for index, case in enumerate(cases, start=1):
+            results.append(
+                evaluate_case(
+                    case,
+                    system_prompt=contract["systemPrompt"],
+                    tools=contract["tools"],
+                    generate=generator,
+                    max_model_calls=comparison_config["maxModelCallsPerCase"],
+                )
             )
-            for case in cases
-        ]
+            print(
+                f"evaluation progress: candidate={candidate_id} case={index}/{len(cases)} "
+                f"caseId={case['caseId']}",
+                flush=True,
+            )
         raw_path = output / f"{candidate_id}-results.jsonl"
         raw_bytes = b"".join(
             json.dumps(result.as_dict(), sort_keys=True, separators=(",", ":")).encode()
