@@ -29,11 +29,7 @@ def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> d
     if not torch.cuda.is_available() or torch.cuda.device_count() < execution["gpuCount"]:
         raise PreflightError("required NVIDIA GPU is unavailable")
     props = torch.cuda.get_device_properties(0)
-    vram_gb = props.total_memory / 1024**3
-    if execution["gpuSku"] not in props.name or vram_gb < execution["minimumVramGb"] - 1:
-        raise PreflightError(
-            f"GPU identity {props.name!r} / {vram_gb:.1f} GiB is outside the experiment envelope"
-        )
+    _validate_gpu(props.name, props.total_memory, execution)
 
     output = root / execution["outputDir"]
     if output.exists():
@@ -151,6 +147,14 @@ def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> d
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     return manifest
+
+
+def _validate_gpu(name: str, total_memory_bytes: int, execution: dict[str, Any]) -> None:
+    vram_gb = total_memory_bytes / 1_000_000_000
+    if execution["gpuSku"] not in name or vram_gb < execution["minimumVramGb"] - 1:
+        raise PreflightError(
+            f"GPU identity {name!r} / {vram_gb:.1f} GB is outside the experiment envelope"
+        )
 
 
 def _json_values(values: dict[str, Any]) -> dict[str, Any]:
