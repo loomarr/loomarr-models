@@ -3,7 +3,7 @@
   "replayId": "planner-adapter-eval-parser-replay-v1",
   "issue": "https://github.com/loomarr/loomarr-models/issues/5",
   "sourceExperiment": {
-    "path": "experiments/planner-adapter-eval-v1.json",
+    "path": "runs/planner-adapter-eval-v1/source-experiment.json",
     "sha256": "98d8f4e3105a51efa0a0168012d694ef68043aebf4394deeba734270d446403c"
   },
   "sourceRun": {
