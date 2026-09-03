@@ -19,7 +19,7 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "8d88ee1a6a8f37d608ed30ee06ff73d2e49288c9b2ea5662af8a4a965c4fa8a1"
+      "sha256": "d08d74bf1a308b0cf4a6a5c514c771ed47c587ec8c14d114fa3f30cad7d0cf90"
     },
     "disjointnessReport": {
       "path": "reports/planner-behavior-v2-disjointness.json",
@@ -84,7 +84,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "36ed63dbf3e32fd1ca396f4cb2299e35437ea54fad306713a8e781532b31a6d5"
+      "sha256": "2be39e3ff00a9394ef9e823fe5c4c5c0b9c4fd338f9e042897066a6a223f375d"
     }
   },
   "budget": {
@@ -113,7 +113,7 @@
     "maxOutputTokensPerCall": 3000,
     "multiTraceBatchAuthorized": false,
     "outputDir": ".artifacts/planner-behavior-review-v2",
-    "paidReviewAuthorized": false,
+    "paidReviewAuthorized": true,
     "providerDataCollection": "deny",
     "providerFallback": false,
     "reasoningEffort": "medium",
@@ -153,5 +153,5 @@
     }
   ],
   "schemaVersion": 1,
-  "status": "planned-no-paid-calls-authorized"
+  "status": "ready-for-review"
 }

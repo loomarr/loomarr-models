@@ -492,7 +492,7 @@ def build_outputs() -> dict[Path, bytes]:
         "schemaVersion": 1,
         "reviewId": "planner-behavior-review-v2",
         "issue": "https://github.com/loomarr/loomarr-models/issues/9",
-        "status": "planned-no-paid-calls-authorized",
+        "status": "ready-for-review",
         "candidateFamily": "qwen",
         "criteria": ["intent", "tool_calls", "grounding", "recovery", "constraints", "final_proposal"],
         "reviewers": list(review_preflight_contract.REVIEWERS),
@@ -513,7 +513,7 @@ def build_outputs() -> dict[Path, bytes]:
             "providerFallback": False,
             "providerDataCollection": "deny",
             "automaticInferenceRetry": False,
-            "paidReviewAuthorized": False,
+            "paidReviewAuthorized": True,
         },
         "budget": {
             "aggregateAuthorizationUsd": review_preflight.authorizationUsd,
