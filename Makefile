@@ -1,10 +1,10 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38
+.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: compile test check-generated check-review check-finalized check-environment validate-drafts
+check: compile test check-generated check-development-eval check-review check-finalized check-environment validate-drafts
 
 compile:
 	$(PYTHON) -m compileall -q scripts src tests
@@ -20,6 +20,12 @@ generate-drafts:
 
 check-generated:
 	$(PYTHON) scripts/build_planner_smoke_drafts.py --check
+
+generate-development-eval:
+	$(PYTHON) scripts/build_planner_development_eval.py
+
+check-development-eval:
+	$(PYTHON) scripts/build_planner_development_eval.py --check
 
 generate-review:
 	$(PYTHON) scripts/render_review_packet.py
@@ -69,3 +75,12 @@ validate-corpus:
 
 preflight-qwen38:
 	PYTHONPATH=src $(PYTHON) scripts/train_planner_smoke.py --preflight-only
+
+preflight-planner-eval:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_adapter_eval.py --preflight-only
+
+run-planner-eval:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_adapter_eval.py
+
+replay-planner-eval:
+	PYTHONPATH=src $(PYTHON) scripts/replay_planner_adapter_eval.py

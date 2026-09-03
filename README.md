@@ -77,6 +77,15 @@ memory envelope, and adapter-only save path, but does not certify or authorize t
 See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the result, the NVIDIA training lane,
 and the 64 GB Mac development/evaluation lane.
 
+The leakage-free development comparison in
+[loomarr-models#5](https://github.com/loomarr/loomarr-models/issues/5) is complete. Across 50 frozen
+synthetic cases, the adapter improved weighted quality and policy accuracy, but retained 16 hard
+failures, missed the absolute quality gates, and regressed recovery. Its hash-bound publication is
+under `runs/planner-adapter-eval-v1/`; the decision is `adapter-rejected-no-release`, so no
+certification run, packaging, serving, or release is authorized. See
+[docs/planner-adapter-eval.md](docs/planner-adapter-eval.md). The exact Runpod charge was
+`$0.7827729525743052`.
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues privately as
