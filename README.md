@@ -19,7 +19,7 @@ make check
 `validate-corpus` accepts reviewed artifacts only. Draft validation is available explicitly for the
 independent-review workflow and never promotes a draft into training data.
 
-Every trace requires separate Claude Sonnet 5 and Gemini 3.1 Pro attestations through pinned OpenRouter
+Every corrected trace requires separate Gemini 3.1 Pro and GPT-5.4 attestations through pinned OpenRouter
 provider routes. The two model families remain blind to each other's output and outside the Qwen
 candidate family. Once both pass all six criteria for all 50 traces, `make finalize-corpus` creates the
 immutable artifact, manifest, and validation report. Any disagreement, rejection, invalid response,

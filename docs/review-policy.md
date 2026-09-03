@@ -20,9 +20,10 @@ trace-grounded evidence for each criterion. A trace-level approval is valid only
 
 ## Independent reviewers
 
-The primary reviewer is `anthropic/claude-sonnet-5` through the exact `anthropic` route. The secondary
-reviewer is `google/gemini-3.1-pro-preview` through the exact `google-ai-studio` route. They review all 50
-traces in separate calls without seeing each other's output. Neither belongs to the Qwen candidate family.
+The current primary reviewer is `google/gemini-3.1-pro-preview` through the exact `google-ai-studio`
+route. The secondary reviewer is `openai/gpt-5.4` through the exact `openai` route. They review all 50
+traces in separate calls without seeing each other's output. Neither belongs to the Qwen candidate family,
+and neither reuses the unreliable Anthropic route from v7.
 
 The route snapshot, exact prices, supported parameters, request hashes, response bytes, provider and model
 identity, finish reasons, native token counts, generation settlement, and costs are immutable evidence.
@@ -80,10 +81,17 @@ rejection. The 37 non-approved traces are staged for targeted paid escalation. P
 inside `reviews/planner-smoke-v1/planner-model-review-v7/` and do not mutate the canonical pending corpus
 until escalation is complete.
 
+Before spending on adjudication, the v7 rejection patterns were applied at the generator-family level.
+Twenty-five traces changed: genre and keyword discovery no longer invent a `media_type` restriction;
+keyword candidates contain explicit thematic evidence; must-include no longer promises unsupported
+variety; ambiguous moods map to grounded genre discovery; and error recovery switches to the required
+alternate search mode. Review v8 therefore re-reviews the complete corrected corpus with Gemini and the
+new OpenAI family rather than asking a third model to vote over known defects.
+
 The run is limited to one hundred one-trace calls with no automatic inference retry, at most 2,000 output
-tokens per call, and a conservative `$6.00` reservation. Its byte-count token upper bound prices the exact
-v7 request bodies at no more than `$5.845096`, projecting aggregate commitments to
-`$10.851869891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
+tokens per call, and a conservative `$7.50` reservation. Its byte-count token upper bound prices the exact
+v8 request bodies at no more than `$6.7973455`, projecting aggregate commitments to
+`$14.564613891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
 to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exact ledger value.
 
 ## Disagreement and escalation

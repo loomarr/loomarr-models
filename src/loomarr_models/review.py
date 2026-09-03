@@ -14,6 +14,7 @@ GITHUB_REVIEWER_ID = re.compile(r"^github:[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-
 MODEL_REVIEWER_IDS = {
     "openrouter:anthropic/claude-sonnet-5",
     "openrouter:google/gemini-3.1-pro-preview",
+    "openrouter:openai/gpt-5.4",
 }
 RFC3339_UTC = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$")
 PERSON_KEYS = {"verdict", "reviewer", "reviewedAt", "notes"}

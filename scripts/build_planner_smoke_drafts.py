@@ -116,21 +116,29 @@ def family_messages(family: str, variant: int, item_number: int) -> tuple[str, l
         item = candidate(item_number, media_type=item["mediaType"], genre=genre)
         item["year"] = int(era[:4]) + variant
         intent = f"Build {article} {genre.lower()} channel from the synthetic {era} catalog."
-        messages = [tool_call(call_1, {"genres": [genre], "era": era, "media_type": item["mediaType"]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} {genre}", [item], {"genres": {"include": [genre]}, "era": {"from": int(era[:4]), "to": int(era[:4]) + 9}})]
+        messages = [tool_call(call_1, {"genres": [genre], "era": era}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} {genre}", [item], {"genres": {"include": [genre]}, "era": {"from": int(era[:4]), "to": int(era[:4]) + 9}})]
     elif family == "keyword-discovery":
         keyword = ("clockwork", "paper moons", "hidden gardens", "midnight trains", "glass oceans")[variant]
         intent = f"Build a synthetic channel about {keyword}."
-        messages = [tool_call(call_1, {"keywords": [keyword], "media_type": item["mediaType"]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Motifs", [item])]
+        item["overview"] = f"A wholly synthetic {item['genres'][0].lower()} story about {keyword}."
+        messages = [tool_call(call_1, {"keywords": [keyword]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Motifs", [item])]
     elif family == "must-include":
-        intent = f"Build a varied channel that must include the synthetic title {item['name']}."
+        intent = f"Build a channel that must include the synthetic title {item['name']}."
         messages = [tool_call(call_1, {"query": item["name"]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Essentials", [item])]
     elif family == "must-exclude":
         intent = f"Build synthetic adventure programming but exclude horror and {excluded['name']}."
         messages = [tool_call(call_1, {"genres": ["Adventure"]}), tool_result(call_1, candidates=[allowed, excluded]), final_message(f"{ADJECTIVES[variant]} Adventures", [allowed], {"genres": {"include": ["Adventure"], "exclude": ["Horror"]}})]
     elif family == "ambiguous-intent":
-        mood = ("quiet", "bright", "restless", "curious", "windswept")[variant]
+        mood, genre = (
+            ("quiet and dramatic", "Drama"),
+            ("bright and comedic", "Comedy"),
+            ("restless and thrilling", "Thriller"),
+            ("curious and documentary-like", "Documentary"),
+            ("windswept and adventurous", "Adventure"),
+        )[variant]
+        item = candidate(item_number, media_type=item["mediaType"], genre=genre)
         intent = f"Build something synthetic that feels {mood}, without inventing titles."
-        messages = [tool_call(call_1, {"keywords": [mood]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Moods", [item])]
+        messages = [tool_call(call_1, {"genres": [genre]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Moods", [item])]
     elif family == "conflicting-intent":
         intent = f"Build an all-horror synthetic channel that excludes every horror title in fixture group {variant}."
         messages = [tool_call(call_1, {"genres": ["Horror"]}), tool_result(call_1, candidates=[]), tool_call(call_2, {"query": f"synthetic horror group {variant}"}), tool_result(call_2, candidates=[]), final_message(f"{ADJECTIVES[variant]} Abstains", [])]
@@ -140,7 +148,7 @@ def family_messages(family: str, variant: int, item_number: int) -> tuple[str, l
         messages = [tool_call(call_1, {"keywords": [token]}), tool_result(call_1, candidates=[]), tool_call(call_2, {"query": token}), tool_result(call_2, candidates=[]), final_message(f"{ADJECTIVES[variant]} Empty", [])]
     elif family == "tool-error-recovery":
         intent = f"Build a synthetic {item['genres'][0].lower()} channel and recover from a fixture timeout {variant}."
-        messages = [tool_call(call_1, {"genres": item["genres"]}), tool_result(call_1, error="synthetic fixture timeout"), tool_call(call_2, {"genres": item["genres"]}), tool_result(call_2, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Recovery", [item])]
+        messages = [tool_call(call_1, {"genres": item["genres"]}), tool_result(call_1, error="synthetic fixture timeout"), tool_call(call_2, {"query": item["genres"][0]}), tool_result(call_2, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Recovery", [item])]
     elif family == "malformed-final-repair":
         intent = f"Build a channel around the synthetic title {item['name']} and repair malformed output."
         messages = [tool_call(call_1, {"query": item["name"]}), tool_result(call_1, candidates=[item]), {"role": "assistant", "content": "{not-json"}, {"role": "user", "content": "Return only valid proposal JSON using the already surfaced id."}, final_message(f"{ADJECTIVES[variant]} Repaired", [item])]

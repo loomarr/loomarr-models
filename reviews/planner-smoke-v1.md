@@ -59,7 +59,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `genre-discovery`
 - Intent: Build an adventure channel from the synthetic 1980s catalog.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"era": "1980s", "genres": ["Adventure"], "media_type": "movie"}` → result candidates: `Cobalt Harbor 06` → final picks: `Cobalt Harbor 06`
+- Flow: call `catalog_search` `{"era": "1980s", "genres": ["Adventure"]}` → result candidates: `Cobalt Harbor 06` → final picks: `Cobalt Harbor 06`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -69,7 +69,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `genre-discovery`
 - Intent: Build a comedy channel from the synthetic 1990s catalog.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"era": "1990s", "genres": ["Comedy"], "media_type": "series"}` → result candidates: `Juniper Harbor 07` → final picks: `Juniper Harbor 07`
+- Flow: call `catalog_search` `{"era": "1990s", "genres": ["Comedy"]}` → result candidates: `Juniper Harbor 07` → final picks: `Juniper Harbor 07`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -79,7 +79,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `genre-discovery`
 - Intent: Build a mystery channel from the synthetic 2000s catalog.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"era": "2000s", "genres": ["Mystery"], "media_type": "movie"}` → result candidates: `Lunar Harbor 08` → final picks: `Lunar Harbor 08`
+- Flow: call `catalog_search` `{"era": "2000s", "genres": ["Mystery"]}` → result candidates: `Lunar Harbor 08` → final picks: `Lunar Harbor 08`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -89,7 +89,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `genre-discovery`
 - Intent: Build an animation channel from the synthetic 2010s catalog.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"era": "2010s", "genres": ["Animation"], "media_type": "series"}` → result candidates: `Velvet Harbor 09` → final picks: `Velvet Harbor 09`
+- Flow: call `catalog_search` `{"era": "2010s", "genres": ["Animation"]}` → result candidates: `Velvet Harbor 09` → final picks: `Velvet Harbor 09`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -99,7 +99,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `genre-discovery`
 - Intent: Build a documentary channel from the synthetic 2020s catalog.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"era": "2020s", "genres": ["Documentary"], "media_type": "movie"}` → result candidates: `Amber Signal 10` → final picks: `Amber Signal 10`
+- Flow: call `catalog_search` `{"era": "2020s", "genres": ["Documentary"]}` → result candidates: `Amber Signal 10` → final picks: `Amber Signal 10`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -109,7 +109,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `keyword-discovery`
 - Intent: Build a synthetic channel about clockwork.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["clockwork"], "media_type": "movie"}` → result candidates: `Cobalt Signal 11` → final picks: `Cobalt Signal 11`
+- Flow: call `catalog_search` `{"keywords": ["clockwork"]}` → result candidates: `Cobalt Signal 11` → final picks: `Cobalt Signal 11`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -119,7 +119,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `keyword-discovery`
 - Intent: Build a synthetic channel about paper moons.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["paper moons"], "media_type": "series"}` → result candidates: `Juniper Signal 12` → final picks: `Juniper Signal 12`
+- Flow: call `catalog_search` `{"keywords": ["paper moons"]}` → result candidates: `Juniper Signal 12` → final picks: `Juniper Signal 12`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -129,7 +129,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `keyword-discovery`
 - Intent: Build a synthetic channel about hidden gardens.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["hidden gardens"], "media_type": "movie"}` → result candidates: `Lunar Signal 13` → final picks: `Lunar Signal 13`
+- Flow: call `catalog_search` `{"keywords": ["hidden gardens"]}` → result candidates: `Lunar Signal 13` → final picks: `Lunar Signal 13`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -139,7 +139,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `keyword-discovery`
 - Intent: Build a synthetic channel about midnight trains.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["midnight trains"], "media_type": "series"}` → result candidates: `Velvet Signal 14` → final picks: `Velvet Signal 14`
+- Flow: call `catalog_search` `{"keywords": ["midnight trains"]}` → result candidates: `Velvet Signal 14` → final picks: `Velvet Signal 14`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -149,7 +149,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `keyword-discovery`
 - Intent: Build a synthetic channel about glass oceans.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["glass oceans"], "media_type": "movie"}` → result candidates: `Amber Archive 15` → final picks: `Amber Archive 15`
+- Flow: call `catalog_search` `{"keywords": ["glass oceans"]}` → result candidates: `Amber Archive 15` → final picks: `Amber Archive 15`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -157,7 +157,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-must-include-01
 
 - Axis: `must-include`
-- Intent: Build a varied channel that must include the synthetic title Cobalt Archive 16.
+- Intent: Build a channel that must include the synthetic title Cobalt Archive 16.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Cobalt Archive 16"}` → result candidates: `Cobalt Archive 16` → final picks: `Cobalt Archive 16`
 - Primary review: **pending** by `—`; notes: —
@@ -167,7 +167,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-must-include-02
 
 - Axis: `must-include`
-- Intent: Build a varied channel that must include the synthetic title Juniper Archive 17.
+- Intent: Build a channel that must include the synthetic title Juniper Archive 17.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Juniper Archive 17"}` → result candidates: `Juniper Archive 17` → final picks: `Juniper Archive 17`
 - Primary review: **pending** by `—`; notes: —
@@ -177,7 +177,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-must-include-03
 
 - Axis: `must-include`
-- Intent: Build a varied channel that must include the synthetic title Lunar Archive 18.
+- Intent: Build a channel that must include the synthetic title Lunar Archive 18.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Lunar Archive 18"}` → result candidates: `Lunar Archive 18` → final picks: `Lunar Archive 18`
 - Primary review: **pending** by `—`; notes: —
@@ -187,7 +187,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-must-include-04
 
 - Axis: `must-include`
-- Intent: Build a varied channel that must include the synthetic title Velvet Archive 19.
+- Intent: Build a channel that must include the synthetic title Velvet Archive 19.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Velvet Archive 19"}` → result candidates: `Velvet Archive 19` → final picks: `Velvet Archive 19`
 - Primary review: **pending** by `—`; notes: —
@@ -197,7 +197,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-must-include-05
 
 - Axis: `must-include`
-- Intent: Build a varied channel that must include the synthetic title Amber Parade 20.
+- Intent: Build a channel that must include the synthetic title Amber Parade 20.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Amber Parade 20"}` → result candidates: `Amber Parade 20` → final picks: `Amber Parade 20`
 - Primary review: **pending** by `—`; notes: —
@@ -257,9 +257,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-ambiguous-intent-01
 
 - Axis: `ambiguous-intent`
-- Intent: Build something synthetic that feels quiet, without inventing titles.
+- Intent: Build something synthetic that feels quiet and dramatic, without inventing titles.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["quiet"]}` → result candidates: `Cobalt Voyage 26` → final picks: `Cobalt Voyage 26`
+- Flow: call `catalog_search` `{"genres": ["Drama"]}` → result candidates: `Cobalt Voyage 26` → final picks: `Cobalt Voyage 26`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -267,9 +267,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-ambiguous-intent-02
 
 - Axis: `ambiguous-intent`
-- Intent: Build something synthetic that feels bright, without inventing titles.
+- Intent: Build something synthetic that feels bright and comedic, without inventing titles.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["bright"]}` → result candidates: `Juniper Voyage 27` → final picks: `Juniper Voyage 27`
+- Flow: call `catalog_search` `{"genres": ["Comedy"]}` → result candidates: `Juniper Voyage 27` → final picks: `Juniper Voyage 27`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -277,9 +277,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-ambiguous-intent-03
 
 - Axis: `ambiguous-intent`
-- Intent: Build something synthetic that feels restless, without inventing titles.
+- Intent: Build something synthetic that feels restless and thrilling, without inventing titles.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["restless"]}` → result candidates: `Lunar Voyage 28` → final picks: `Lunar Voyage 28`
+- Flow: call `catalog_search` `{"genres": ["Thriller"]}` → result candidates: `Lunar Voyage 28` → final picks: `Lunar Voyage 28`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -287,9 +287,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-ambiguous-intent-04
 
 - Axis: `ambiguous-intent`
-- Intent: Build something synthetic that feels curious, without inventing titles.
+- Intent: Build something synthetic that feels curious and documentary-like, without inventing titles.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["curious"]}` → result candidates: `Velvet Voyage 29` → final picks: `Velvet Voyage 29`
+- Flow: call `catalog_search` `{"genres": ["Documentary"]}` → result candidates: `Velvet Voyage 29` → final picks: `Velvet Voyage 29`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -297,9 +297,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-ambiguous-intent-05
 
 - Axis: `ambiguous-intent`
-- Intent: Build something synthetic that feels windswept, without inventing titles.
+- Intent: Build something synthetic that feels windswept and adventurous, without inventing titles.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"keywords": ["windswept"]}` → result candidates: `Amber Harbor 30` → final picks: `Amber Harbor 30`
+- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Amber Harbor 30` → final picks: `Amber Harbor 30`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -409,7 +409,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `tool-error-recovery`
 - Intent: Build a synthetic adventure channel and recover from a fixture timeout 0.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Cobalt Archive 41` → final picks: `Cobalt Archive 41`
+- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Cobalt Archive 41` → final picks: `Cobalt Archive 41`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -419,7 +419,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `tool-error-recovery`
 - Intent: Build a synthetic adventure channel and recover from a fixture timeout 1.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Juniper Archive 42` → final picks: `Juniper Archive 42`
+- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Juniper Archive 42` → final picks: `Juniper Archive 42`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -429,7 +429,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `tool-error-recovery`
 - Intent: Build a synthetic adventure channel and recover from a fixture timeout 2.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Lunar Archive 43` → final picks: `Lunar Archive 43`
+- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Lunar Archive 43` → final picks: `Lunar Archive 43`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -439,7 +439,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `tool-error-recovery`
 - Intent: Build a synthetic adventure channel and recover from a fixture timeout 3.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Velvet Archive 44` → final picks: `Velvet Archive 44`
+- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Velvet Archive 44` → final picks: `Velvet Archive 44`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -449,7 +449,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Axis: `tool-error-recovery`
 - Intent: Build a synthetic adventure channel and recover from a fixture timeout 4.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Amber Parade 45` → final picks: `Amber Parade 45`
+- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Amber Parade 45` → final picks: `Amber Parade 45`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**

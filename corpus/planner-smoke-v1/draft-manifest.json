@@ -16,7 +16,7 @@
     "tool-error-recovery": 5
   },
   "generator": "planner-smoke-draft-generator-v1",
-  "generatorSha256": "46abe47012071574bc6141c14b047d5b9bff80d7f702d7329ec14879ce8ca139",
+  "generatorSha256": "d00832bfc381cf44a45def157036adf9ed7dbf26fd895df590850ab670e4c99c",
   "review": {
     "approved": 0,
     "pending": 50,
@@ -26,12 +26,12 @@
   "reviewDecisionsPath": "reviews/planner-smoke-v1.jsonl",
   "reviewDecisionsSha256": "8e3827fae52691a2d63cd81426e3f46a9eac750c91a39c797772f58b4b4e0e20",
   "reviewValidatorPath": "src/loomarr_models/review.py",
-  "reviewValidatorSha256": "03bd30ceaba776cc99fde2e2787c09c55397f9cbf751dc1cda8008654e3cc3e3",
+  "reviewValidatorSha256": "8daef0b0e80ebe9a09a955ac28e8e74581d0d247355c58abb8b50fad4bc902cd",
   "schemaVersion": 1,
   "status": "draft-pending-independent-review",
   "systemPromptSha256": "c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61",
   "toolSchemaSha256": "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853",
   "traceCount": 50,
   "tracesPath": "corpus/planner-smoke-v1/drafts.jsonl",
-  "tracesSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92"
+  "tracesSha256": "d9deeb9d48bb639ffe586ea5e66802cf645fc7b676f1c97cc854cbf1aa4c2557"
 }

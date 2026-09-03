@@ -26,12 +26,12 @@ def clean_git(_root: Path, _paths: object) -> str:
 class ModelReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config = load_config(ROOT / "experiments/planner-model-review-v7.json")
+        cls.config = load_config(ROOT / "experiments/planner-model-review-v8.json")
         cls.snapshot = json.loads(
-            (ROOT / "reviews/planner-smoke-v1/model-review-v1-route-snapshot.json").read_text()
+            (ROOT / "reviews/planner-smoke-v1/model-review-v8-route-snapshot.json").read_text()
         )
         cls.plan = preflight(
-            ROOT, ROOT / "experiments/planner-model-review-v7.json", git_probe=clean_git
+            ROOT, ROOT / "experiments/planner-model-review-v8.json", git_probe=clean_git
         )
 
     def test_live_route_check_accepts_exact_snapshot_and_rejects_drift(self):

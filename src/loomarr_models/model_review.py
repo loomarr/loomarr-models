@@ -57,9 +57,9 @@ EXECUTION = {
     "batchSize": 1,
     "maxCalls": 100,
     "maxOutputTokensPerCall": 2000,
-    "maxReservationUsd": "6.00",
+    "maxReservationUsd": "7.50",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v7",
+    "outputDir": ".artifacts/planner-model-review-v8",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 60,
@@ -68,15 +68,15 @@ EXECUTION = {
 REVIEWERS = (
     {
         "role": "primary",
-        "family": "anthropic",
-        "model": "anthropic/claude-sonnet-5",
-        "providerTag": "anthropic",
-    },
-    {
-        "role": "secondary",
         "family": "google-gemini",
         "model": "google/gemini-3.1-pro-preview",
         "providerTag": "google-ai-studio",
+    },
+    {
+        "role": "secondary",
+        "family": "openai",
+        "model": "openai/gpt-5.4",
+        "providerTag": "openai",
     },
 )
 
@@ -536,11 +536,11 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v7"
+        config["reviewId"] != "planner-model-review-v8"
         or config["promptVersion"] != "planner-model-review-v4"
     ):
         raise ModelReviewError("unexpected model-review identity")
-    if config["issue"] != "https://github.com/loomarr/loomarr-models/issues/2":
+    if config["issue"] != "https://github.com/loomarr/loomarr-models/issues/4":
         raise ModelReviewError("unexpected model-review tracking issue")
     if config["status"] != "ready-for-review" or config["candidateFamily"] != "qwen":
         raise ModelReviewError("model-review status or candidate family drifted")
@@ -616,7 +616,7 @@ def _validate_budget(
         raise ModelReviewError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise ModelReviewError("spend ledger does not reconcile")
-    if authorization != Decimal("40.00") or reservation != Decimal("6.00"):
+    if authorization != Decimal("40.00") or reservation != Decimal("7.50"):
         raise ModelReviewError("review authorization or reservation drifted")
     projected = committed + reservation
     if projected > authorization:
