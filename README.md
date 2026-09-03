@@ -86,6 +86,12 @@ certification run, packaging, serving, or release is authorized. See
 [docs/planner-adapter-eval.md](docs/planner-adapter-eval.md). The exact Runpod charge was
 `$0.7827729525743052`.
 
+The exhaustive no-spend follow-up in
+[loomarr-models#7](https://github.com/loomarr/loomarr-models/issues/7) classifies all 16 hard failures
+by first divergence. The current 50-trace corpus does not authorize another QLoRA configuration;
+targeted reviewed traces and a newly frozen disjoint development set must exist first. See
+[docs/planner-adapter-failure-analysis.md](docs/planner-adapter-failure-analysis.md).
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues privately as
