@@ -54,6 +54,7 @@ DEVELOPMENT_MANIFEST_PATH = ROOT / "evaluation/planner-behavior-development-v2/m
 DISJOINTNESS_PATH = ROOT / "reports/planner-behavior-v2-disjointness.json"
 REVIEW_PLAN_PATH = ROOT / "experiments/planner-behavior-review-v2.json"
 INDEX_PATH = ROOT / "runs/planner-behavior-corpus-v2/index.json"
+REVIEW_RUNNER_PATH = ROOT / "scripts/run_planner_behavior_review.py"
 
 TRAINING_BASE_ID = 920000
 DEVELOPMENT_BASE_ID = 930000
@@ -480,6 +481,7 @@ def build_outputs() -> dict[Path, bytes]:
         "budget": binding(BUDGET_PATH),
         "routeSnapshot": binding(ROUTE_SNAPSHOT_PATH),
         "reviewPreflightValidator": binding(Path(review_preflight_contract.__file__)),
+        "reviewRunner": binding(REVIEW_RUNNER_PATH),
     }
     review_plan = {
         "schemaVersion": 1,
@@ -497,6 +499,11 @@ def build_outputs() -> dict[Path, bytes]:
             "reasoningEffort": "medium",
             "compactTracePacket": True,
             "multiTraceBatchAuthorized": False,
+            "outputDir": ".artifacts/planner-behavior-review-v2",
+            "requestTimeoutSeconds": 180,
+            "settlementAttempts": 60,
+            "settlementDelaySeconds": 1,
+            "requireCleanGit": True,
             "strictStructuredOutput": True,
             "providerFallback": False,
             "providerDataCollection": "deny",

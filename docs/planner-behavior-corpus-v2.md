@@ -61,6 +61,19 @@ collection are denied, inference retries are disabled, and every completed gener
 an exact cost before its output can count. Any rejection, disagreement, invalid completion, route
 drift, or unsettled charge leaves the affected trace pending.
 
+The execution wrapper reconstructs all 240 request bodies from committed sources and refuses any
+request-hash, corpus, route, price, budget, runner, or execution-envelope drift. It reads the existing
+`OPENROUTER_API_KEY` from the process environment or the ignored repository `.env` without printing it.
+Its read-only preflight is:
+
+```bash
+make preflight-targeted-review
+```
+
+`make run-targeted-review` currently fails before credential or network access because the checked-in
+plan is not authorized for paid calls. Enabling it requires a separate reviewed commit that changes
+both the plan status and `paidReviewAuthorized` gate, followed by a fresh live route comparison.
+
 The review reservation ceiling is `$15.00`. Aggregate external commitment is currently
 `$19.2805365675672820 / $40.00`, so the planned maximum would be
 `$34.2805365675672820 / $40.00`. Route availability and worst-case pricing must be refreshed

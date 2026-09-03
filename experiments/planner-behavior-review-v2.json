@@ -15,11 +15,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "2a6286480160a892df4ef7488cb319186bd24f6569972e06c0799e4656042762"
+      "sha256": "a202db0c8069668f8a0b3f8f7d9da6a98bf235273c800980bf8e9a24eea299cd"
     },
     "disjointnessReport": {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "851046b8fdac5305cbcb757894e2ece4f971643408451f0fc3274a3f7eadeecb"
+      "sha256": "ba177576a92b5de4a8f917ff9285e5274c4ad081589c1d82558f08cf98774ddb"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -47,11 +47,15 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "f496ce6206c1f1f875f367896d877b01779a814c4ac781d741f04405cee41cae"
+      "sha256": "fc792451e9b1cea839dbc32b986b24f4234fc39288ba18ec3252450d11c91905"
     },
     "reviewPreflightValidator": {
       "path": "src/loomarr_models/behavior_model_review.py",
       "sha256": "07150e1eaa1e98c48437e119248a3535b28d8c1ff1224e4ecbb4b8923ac42c8d"
+    },
+    "reviewRunner": {
+      "path": "scripts/run_planner_behavior_review.py",
+      "sha256": "e3f511146525a918f1f8607b3f0bf6320bae17747d6e142f64b0bc7616bc75c8"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
@@ -72,7 +76,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "514d155e244b0d123f09fbed02c6b35e5bd55de0ac63a41c7e45f7bf8a82df2c"
+      "sha256": "76e16c3239d3d6fe12ad721ddcb90cd1b97c650871a3e24a837278cb93b96888"
     }
   },
   "budget": {
@@ -100,10 +104,15 @@
     "maxCalls": 240,
     "maxOutputTokensPerCall": 3000,
     "multiTraceBatchAuthorized": false,
+    "outputDir": ".artifacts/planner-behavior-review-v2",
     "paidReviewAuthorized": false,
     "providerDataCollection": "deny",
     "providerFallback": false,
     "reasoningEffort": "medium",
+    "requestTimeoutSeconds": 180,
+    "requireCleanGit": true,
+    "settlementAttempts": 60,
+    "settlementDelaySeconds": 1,
     "strictStructuredOutput": true
   },
   "issue": "https://github.com/loomarr/loomarr-models/issues/9",
