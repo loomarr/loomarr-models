@@ -28,7 +28,8 @@ class BehaviorReviewRunnerTests(unittest.TestCase):
 
     def test_reconstructs_the_exact_committed_runtime_requests(self):
         config, plan, snapshot = self.build()
-        self.assertTrue(plan.paidReviewAuthorized)
+        self.assertFalse(plan.paidReviewAuthorized)
+        self.assertEqual(config["status"], "complete-with-escalations")
         self.assertEqual(plan.requestCount, 240)
         self.assertEqual(len(plan.requests), 240)
         self.assertEqual(plan.sourceCommit, "a" * 40)
@@ -44,24 +45,9 @@ class BehaviorReviewRunnerTests(unittest.TestCase):
         self.assertEqual(snapshot["reviewers"][1]["providerTag"], "anthropic")
         self.assertEqual(config["execution"]["maxCalls"], len(plan.requests))
 
-    def test_execution_refuses_before_key_or_network_while_plan_is_disabled(self):
-        config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-        config["status"] = "planned-no-paid-calls-authorized"
-        config["execution"]["paidReviewAuthorized"] = False
-        with tempfile.NamedTemporaryFile(
-            mode="w",
-            suffix=".json",
-            dir=ROOT,
-            delete=False,
-            encoding="utf-8",
-        ) as handle:
-            json.dump(config, handle)
-            disabled_path = Path(handle.name)
-        try:
-            with self.assertRaisesRegex(BehaviorReviewPreflightError, "not authorized"):
-                self.build(disabled_path, authorized=True)
-        finally:
-            disabled_path.unlink(missing_ok=True)
+    def test_terminal_execution_refuses_before_key_or_network(self):
+        with self.assertRaisesRegex(BehaviorReviewPreflightError, "not authorized"):
+            self.build(authorized=True)
 
     def test_execution_and_binding_drift_fail_closed(self):
         config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))

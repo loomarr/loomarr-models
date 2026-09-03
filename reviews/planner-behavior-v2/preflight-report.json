@@ -2,7 +2,7 @@
   "bindings": {
     "budget": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "d29552f85e01314dea850125568656c747c04dc95b46859f6ddef7c871fcdc86"
+      "sha256": "917b12295be48c40ffa8eb7b7474ce489557256d8221a71c76c1defbd24f60b2"
     },
     "requestPlan": {
       "path": "reviews/planner-behavior-v2/request-plan.jsonl",
@@ -10,7 +10,7 @@
     },
     "reviewPlan": {
       "path": "experiments/planner-behavior-review-v2.json",
-      "sha256": "3e67b39860ef67b04ceeeec3dc2b3930b694f442543a635bfbb0000c0b6e4826"
+      "sha256": "456ed1c322a054a1e5810d4af59e8732d4e333d612b1f6cf3e66a443d6cda613"
     },
     "routeSnapshot": {
       "path": "reviews/planner-behavior-v2/route-snapshot.json",
@@ -28,10 +28,10 @@
   "preflight": {
     "authorizationUsd": "40.00",
     "batchSize": 1,
-    "committedSpendUsd": "19.2805365675672820",
+    "committedSpendUsd": "23.3611685675672820",
     "inputByteUpperBound": 1675120,
     "outputTokenUpperBound": 720000,
-    "projectedSpendUsd": "34.2805365675672820",
+    "projectedSpendUsd": "38.3611685675672820",
     "requestCount": 240,
     "requestPlanSha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062",
     "reservationUsd": "15.00",

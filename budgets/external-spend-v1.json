@@ -1,11 +1,11 @@
 {
-  "schemaVersion": 1,
-  "ledgerId": "loomarr-ai-external-spend-v1",
   "asOf": "2026-09-03",
-  "currency": "USD",
   "authorizationUsd": "40.00",
-  "postedSpendUsd": "19.1805365675672820",
+  "authorizedBy": "loomarr-maintainer",
+  "committedSpendUsd": "23.3611685675672820",
+  "currency": "USD",
+  "ledgerId": "loomarr-ai-external-spend-v1",
   "outstandingReservationsUsd": "0.10",
-  "committedSpendUsd": "19.2805365675672820",
-  "authorizedBy": "loomarr-maintainer"
+  "postedSpendUsd": "23.2611685675672820",
+  "schemaVersion": 1
 }

@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443571-uTKvWWE9OCWBSrvMbhLv","object":"chat.completion","created":1788443571,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-07\":{\"criteria\":{\"constraints\":{\"evidence\":\"The Comedy genre constraint is preserved throughout: the recovery search uses genres:[\\\"Comedy\\\"], the policy block in the final proposal specifies genres.include:[\\\"Comedy\\\"], and the picked item has genres:[\\\"Comedy\\\"] per the tool result.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal is a valid JSON object with channelName 'Beryl Recovery', a rationale, a picks array containing tmdbId 920087 with mediaType 'movie', name matching the catalog result, and confidence 0.91. All fields are grounded in the tool result from behavior-87-2.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId 920087, name 'Beryl Junction Fixture 087', mediaType 'movie' all match exactly the candidate returned by catalog_search tool call behavior-87-2. No fabricated IDs or titles appear outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent is to build a comedy channel around 'Beryl Junction Fixture 087' and recover from a fixture timeout. Both elements are present: the initial search times out with 'synthetic fixture timeout' error, and recovery produces a valid comedy channel proposal featuring the target fixture.\",\"passed\":true},\"recovery\":{\"evidence\":\"After the first tool call behavior-87-1 returned an error 'synthetic fixture timeout' with empty candidates, the assistant correctly issued a fallback catalog_search (behavior-87-2) using genres:[\\\"Comedy\\\"] which successfully retrieved the target fixture, demonstrating proper error recovery behavior.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two catalog_search calls are made: behavior-87-1 with query 'Beryl Junction Fixture 087' (direct lookup), and behavior-87-2 with genres:[\\\"Comedy\\\"] (recovery fallback). Both are necessary given the timeout, and arguments conform to the catalog-search-v3 schema.\",\"passed\":true}},\"summary\":\"The trace correctly represents the synthetic-tool-error-recovery behavior: the initial search for 'Beryl Junction Fixture 087' times out, the assistant recovers with a genre-based fallback search, retrieves the grounded fixture (tmdbId 920087), and produces a valid final proposal with honest confidence (0.91) grounded exclusively in tool results. All six criteria pass.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2220,"completion_tokens":572,"total_tokens":2792,"cost":0.01524,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01524,"upstream_inference_prompt_cost":0.00666,"upstream_inference_completions_cost":0.00858},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

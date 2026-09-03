@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788440194-4Ouv5Ofxx4fSiD4dMlBq","object":"chat.completion","created":1788440194,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-canonical-argument-preservation-18\":{\"criteria\":{\"constraints\":{\"evidence\":\"All must-include constraints are faithfully preserved: genres=[Documentary], era=1990s, media_type=series, original_language=ja, origin_country=JP, runtime_min=30, runtime_max=60, vote_average_min=6.5, vote_count_min=525. No extra qualifiers were added beyond what the intent specified.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal names channel 'Cinder Exact Mix', picks tmdbId=920018 ('Cinder Gallery Fixture 018') with mediaType=series, confidence=0.91, policy includes genres.include=[Documentary] and era from=1990 to=1999. All fields are grounded in the tool result and values are honest.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId=920018 ('Cinder Gallery Fixture 018') is directly returned by catalog_search result for toolCallId=behavior-18-1. voteAverage=7.0 (≥6.5), voteCount=575 (≥525), runtime=40 (30-60), year=1997 (1990s), originCountry=JP, originalLanguage=ja. No ungrounded claims present.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent requests a Documentary channel with era=1990s, media_type=series, original_language=ja, origin_country=JP, runtime 30-60 min, vote_average_min=6.5, vote_count_min=525. All these constraints are represented in the tool call and final proposal without omission or alteration.\",\"passed\":true},\"recovery\":{\"evidence\":\"The tool returned exactly one valid candidate. The assistant correctly used it without fabricating additional results or abstaining unnecessarily. No empty-result or error condition occurred, and the assistant's behavior is appropriate for a single-result trace.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Single tool call 'catalog_search' with id=behavior-18-1 uses exactly the required arguments: era='1990s', genres=['Documentary'], media_type='series', origin_country='JP', original_language='ja', runtime_max=60, runtime_min=30, vote_average_min=6.5, vote_count_min=525. No extraneous or missing arguments.\",\"passed\":true}},\"summary\":\"All six criteria pass. The intent is fully and accurately represented. The single catalog_search tool call uses exactly the correct arguments matching the production contract with no extras. The pick tmdbId=920018 is fully grounded in the tool result with all qualifying attributes verified. Recovery behavior is appropriate for a single valid result. All constraints (era, genre, language, country, runtime, rating, votes) are preserved and no extra qualifiers added. The final proposal is schema-valid, grounded, and uses a plausible confidence value of 0.91.\",\"verdict\":\"approved\"}}, \"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2269,"completion_tokens":705,"total_tokens":2974,"cost":0.017382,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.017382,"upstream_inference_prompt_cost":0.006807,"upstream_inference_completions_cost":0.010575},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

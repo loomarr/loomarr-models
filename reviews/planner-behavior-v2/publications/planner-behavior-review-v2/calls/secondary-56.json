@@ -1,0 +1,13 @@
+{
+  "batchIndex": 56,
+  "requestSha256": "b31751f1537a15709c6a0f89432b02d0151775bda6c1035a8c224170cc59fc91",
+  "responseSha256": "7db0b3988f3ba27fc392b28b817edacd924fa2a5ac9898d00a10593c4527197e",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.018921",
+  "settlementSha256": "a4bdd3a4293f7d0ad64c0bb41fdf8a8f8162e80f7022ef2cf0d4c8a0d35fe469",
+  "status": "valid",
+  "traceIds": [
+    "planner-behavior-v2-complete-proposal-json-17"
+  ]
+}

@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788444770-CFACRIieorRTOwGfZKtm","object":"chat.completion","created":1788444770,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-ambiguous-intent-mapping-12\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent specifies a patient and observant mood to be mapped to a genre without asking a question. The assistant selected Documentary genre, which aligns with patient/observant tones. The policy block in the final proposal confirms genre include constraint: {\\\"genres\\\":{\\\"include\\\":[\\\"Documentary\\\"]}}. No must-exclude or audience/era constraints were specified, and none were violated.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal is a valid JSON object containing channelName 'Beryl Mood', rationale, picks array with tmdbId 920112, mediaType 'series', name 'Beryl Horizon Fixture 112', confidence 0.91, and a policy block. The tmdbId and name match the tool result. Confidence 0.91 is a reasonable, honest value for a single-result match. Schema fields appear complete and grounded.\",\"passed\":true},\"grounding\":{\"evidence\":\"The assistant selected tmdbId 920112, name 'Beryl Horizon Fixture 112', mediaType 'series' — all fields directly match the catalog_search tool result returned under toolCallId 'behavior-112-1'. No facts or IDs were invented outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent requests building something 'patient and observant' and mapping the mood to the best catalog genre without asking a question. The assistant mapped this mood to Documentary genre and proceeded directly to search and proposal without posing any clarifying questions, fully representing the ambiguous-intent-mapping behavior.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned exactly one candidate. The assistant did not error or abstain; it correctly used the single available result to form a proposal. No empty-result or error recovery scenario was triggered. The behavior is appropriate for a single-result non-empty response.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call was made: catalog_search with arguments {\\\"genres\\\":[\\\"Documentary\\\"]}, id 'behavior-112-1'. This is the minimum necessary call to satisfy the genre-mapping intent. The argument structure matches the catalog-search-v3 schema (genres as an array). No extraneous or redundant tool calls were made.\",\"passed\":true}},\"summary\":\"All six criteria pass. The assistant correctly mapped the ambiguous patient/observant mood to the Documentary genre without asking clarifying questions, made a single necessary and schema-compliant tool call, grounded the final proposal entirely in the tool result (tmdbId 920112, Beryl Horizon Fixture 112), and produced a valid schema output with honest confidence 0.91. Constraints were respected and no recovery issues arose.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2145,"completion_tokens":644,"total_tokens":2789,"cost":0.016095,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.016095,"upstream_inference_prompt_cost":0.006435,"upstream_inference_completions_cost":0.00966},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

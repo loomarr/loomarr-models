@@ -211,8 +211,8 @@ class TargetedCorpusTests(unittest.TestCase):
         self.assertEqual(development_manifest["status"], "frozen-development-only")
 
         plan = json.loads(PLAN_PATH.read_text(encoding="utf-8"))
-        self.assertEqual(plan["status"], "ready-for-review")
-        self.assertTrue(plan["execution"]["paidReviewAuthorized"])
+        self.assertEqual(plan["status"], "complete-with-escalations")
+        self.assertFalse(plan["execution"]["paidReviewAuthorized"])
         self.assertEqual(plan["budget"]["aggregateAuthorizationUsd"], "40.00")
         for value in plan["bindings"].values():
             path = ROOT / value["path"]

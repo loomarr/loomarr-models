@@ -42,7 +42,7 @@ class BehaviorReviewPreflightTests(unittest.TestCase):
         self.assertEqual(plan.outputTokenUpperBound, 720000)
         self.assertEqual(plan.worstCaseCostUsd, "13.906540")
         self.assertEqual(plan.reservationUsd, "15.00")
-        self.assertEqual(plan.projectedSpendUsd, "34.2805365675672820")
+        self.assertEqual(plan.projectedSpendUsd, "38.3611685675672820")
         payload = request_plan_bytes(plan)
         self.assertEqual(hashlib.sha256(payload).hexdigest(), plan.requestPlanSha256)
         self.assertEqual(payload, REQUEST_PLAN_PATH.read_bytes())

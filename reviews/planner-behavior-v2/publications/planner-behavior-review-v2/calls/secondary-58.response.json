@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788442159-geKbA56QMnvHcM8zWpRC","object":"chat.completion","created":1788442159,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-complete-proposal-json-19\":{\"criteria\":{\"constraints\":{\"evidence\":\"No must-include, must-exclude, audience, era, or format constraints were specified in the intent. The proposal correctly omits any policy field content (policy: {}) and the single pick matches the requested title exactly with no extraneous items.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final assistant turn is valid JSON with channelName ('Dune Complete'), rationale, picks array containing tmdbId 920059 / name 'Dune Junction Fixture 059' / mediaType 'movie', confidence 0.91 (honest, below 1.0), and an empty policy object. All fields are schema-consistent and grounded in the tool result.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId 920059 and name 'Dune Junction Fixture 059' are taken directly from the catalog_search result returned under toolCallId 'behavior-59-1'. No factual claims or IDs appear that are not supported by the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent requests building a synthetic channel around the exact catalog title 'Dune Junction Fixture 059' with no policy. The trace searches for that exact title, retrieves it, and proposes a channel anchored to it. The intent is fully and clearly represented.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned a non-empty result with exactly one candidate matching the query. No error or empty-result scenario occurred; the assistant correctly proceeded to produce a complete proposal without any unnecessary recovery behavior.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call 'catalog_search' with argument query='Dune Junction Fixture 059' is made (id: behavior-59-1). This is the necessary and sufficient call to locate the requested title. No redundant or missing calls; arguments conform to catalog-search-v3 schema.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace correctly identifies the intent (channel around Dune Junction Fixture 059), makes exactly one necessary catalog_search call with correct arguments, grounds the single pick on tmdbId 920059 returned by the tool, handles the non-empty result appropriately, respects the absence of any policy constraints, and delivers a schema-valid final proposal with honest confidence 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2127,"completion_tokens":562,"total_tokens":2689,"cost":0.014811,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.014811,"upstream_inference_prompt_cost":0.006381,"upstream_inference_completions_cost":0.00843},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

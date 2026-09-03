@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443900-xgOxUh5EhkmUeHzIZeI7","object":"chat.completion","created":1788443900,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-14\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent specifies a drama channel; the recovery search uses genres:[\\\"Drama\\\"], the final proposal's policy includes genres.include:[\\\"Drama\\\"], and the sole pick is a Drama series. All constraints are preserved end-to-end.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The assistant emits a valid JSON proposal: channelName \\\"Dune Recovery\\\", picks contains tmdbId 920094 / \\\"Dune Beacon Fixture 094\\\" returned by catalog_search behavior-94-2, confidence 0.91, policy genres include Drama. Schema fields are present and grounded.\",\"passed\":true},\"grounding\":{\"evidence\":\"The only pick (tmdbId 920094, name \\\"Dune Beacon Fixture 094\\\") exactly matches the candidate returned by catalog_search toolCallId behavior-94-2. No facts or IDs are introduced outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The trace intent is to build a drama channel around Dune Beacon Fixture 094 and recover from a fixture timeout. Both elements are clearly represented: the primary search targets that fixture, the timeout error occurs, recovery produces the fixture, and the final channel is built around it.\",\"passed\":true},\"recovery\":{\"evidence\":\"First call (behavior-94-1) returns error \\\"synthetic fixture timeout\\\" with empty candidates. The assistant correctly retries via a fallback genre search (behavior-94-2) which successfully returns Dune Beacon Fixture 094, demonstrating proper error recovery without hallucination or silent failure.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two catalog_search calls are made. Call behavior-94-1 uses query argument targeting the specific fixture (necessary first attempt). Call behavior-94-2 uses genres:[\\\"Drama\\\"] as a recovery fallback after the timeout. Both arguments conform to the catalog-search-v3 schema and both calls are necessary.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace correctly represents the drama-channel-around-Dune-Beacon-Fixture-094 intent, makes exactly two necessary catalog_search calls under the v3 schema, recovers properly from the synthetic fixture timeout by retrying with a genre filter, grounds every pick in the tool result from behavior-94-2, preserves the Drama genre constraint throughout, and delivers a schema-valid final proposal with honest confidence (0.91) tied to the grounded fixture.\",\"verdict\":\"approved\"}}, \"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2224,"completion_tokens":588,"total_tokens":2812,"cost":0.015492,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.015492,"upstream_inference_prompt_cost":0.006672,"upstream_inference_completions_cost":0.00882},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 import sys
 import unittest
 from decimal import Decimal
@@ -69,14 +71,14 @@ class BehaviorReviewPublicationTests(unittest.TestCase):
 
     def test_budget_settlement_is_exact_and_refuses_drift_or_overflow(self):
         budget = {
-            "postedSpendUsd": "19.1805365675672820",
+            "postedSpendUsd": "23.2611685675672820",
             "outstandingReservationsUsd": "0.10",
-            "committedSpendUsd": "19.2805365675672820",
+            "committedSpendUsd": "23.3611685675672820",
             "authorizationUsd": "40.00",
         }
         settled = publisher.settle_budget(budget, Decimal("2.50"), self.plan)
-        self.assertEqual(settled["postedSpendUsd"], "21.6805365675672820")
-        self.assertEqual(settled["committedSpendUsd"], "21.7805365675672820")
+        self.assertEqual(settled["postedSpendUsd"], "25.7611685675672820")
+        self.assertEqual(settled["committedSpendUsd"], "25.8611685675672820")
 
         drifted = copy.deepcopy(budget)
         drifted["committedSpendUsd"] = "19.29"
@@ -88,6 +90,29 @@ class BehaviorReviewPublicationTests(unittest.TestCase):
     def test_freeze_refuses_pending_decisions_and_creates_no_partial_artifact(self):
         for path in (finalizer.TRACES_PATH, finalizer.MANIFEST_PATH, finalizer.REPORT_PATH):
             self.assertFalse(path.exists())
+
+    def test_published_disagreement_is_hash_bound_settled_and_terminal(self):
+        public = ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v2"
+        publication = json.loads((public / "publication.json").read_text(encoding="utf-8"))
+        self.assertEqual(publication["status"], "complete-with-escalations")
+        self.assertEqual(publication["approved"], 118)
+        self.assertEqual(publication["escalations"], 2)
+        self.assertEqual(publication["actualCostUsd"], "4.080632")
+        for label in ("runManifest", "attestations", "invalidReviews", "decisions", "escalations"):
+            path = ROOT / publication[f"{label}Path"]
+            self.assertEqual(
+                publication[f"{label}Sha256"],
+                hashlib.sha256(path.read_bytes()).hexdigest(),
+            )
+        manifest = json.loads((ROOT / publication["runManifestPath"]).read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "complete")
+        self.assertEqual(manifest["requestCount"], 240)
+        self.assertEqual(manifest["attestationCount"], 240)
+        self.assertEqual(manifest["invalidReviewCount"], 0)
+        self.assertEqual(manifest["actualCostUsd"], publication["actualCostUsd"])
+        budget = json.loads((ROOT / "budgets/external-spend-v1.json").read_text(encoding="utf-8"))
+        self.assertEqual(budget["postedSpendUsd"], "23.2611685675672820")
+        self.assertEqual(budget["committedSpendUsd"], "23.3611685675672820")
         with self.assertRaisesRegex(ValueError, "two approvals"):
             finalizer.build_outputs()
         for path in (finalizer.TRACES_PATH, finalizer.MANIFEST_PATH, finalizer.REPORT_PATH):

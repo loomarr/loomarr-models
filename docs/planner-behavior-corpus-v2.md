@@ -73,6 +73,13 @@ make preflight-targeted-review
 `make run-targeted-review` is enabled by a separate reviewed authorization commit. It still refuses
 before inference if the live route, price, budget, committed source, or exact execution envelope differs.
 
+The completed review settled 240 valid observations for exactly `$4.080632`. It produced 118
+unanimous approvals and two disagreements. The first disagreement treated the contract's `query`
+title-search field as though a nonexistent `title` field were required; the second incorrectly required
+a per-pick confidence value when the abstention contained no picks. Both traces remain pending. The
+completed plan is now terminal and paid execution is disabled; a corrected full review packet must be
+published as a separate experiment.
+
 The complete evidence lifecycle is implemented before any paid call:
 
 1. `make run-targeted-review` preserves every raw response and exact generation settlement, quarantines

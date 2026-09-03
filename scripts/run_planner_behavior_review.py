@@ -66,6 +66,7 @@ EXPECTED_BINDINGS = {
     "disjointnessReport",
     "requestPlan",
 }
+TERMINAL_STATUSES = {"complete-approved", "complete-with-escalations"}
 EXPECTED_EXECUTION = {
     "apiBaseUrl": "https://openrouter.ai/api/v1",
     "batchSize": 1,
@@ -158,8 +159,12 @@ def build_plan(
     expected_execution = {**EXPECTED_EXECUTION, "paidReviewAuthorized": authorized}
     if execution != expected_execution:
         raise BehaviorReviewPreflightError("behavior review execution envelope drifted")
-    expected_status = "ready-for-review" if authorized else "planned-no-paid-calls-authorized"
-    if config.get("status") != expected_status:
+    status = config.get("status")
+    allowed_statuses = {"ready-for-review"} if authorized else {
+        "planned-no-paid-calls-authorized",
+        *TERMINAL_STATUSES,
+    }
+    if status not in allowed_statuses:
         raise BehaviorReviewPreflightError("behavior review status and authorization disagree")
     if (
         config.get("issue") != "https://github.com/loomarr/loomarr-models/issues/9"
@@ -170,7 +175,8 @@ def build_plan(
         raise BehaviorReviewPreflightError("behavior review authority or reviewer identity drifted")
 
     bindings = config["bindings"]
-    if set(bindings) != EXPECTED_BINDINGS:
+    expected_bindings = EXPECTED_BINDINGS | ({"publication"} if status in TERMINAL_STATUSES else set())
+    if set(bindings) != expected_bindings:
         raise BehaviorReviewPreflightError("behavior review bindings differ from the exact plan")
     bound: dict[str, Path] = {}
     for name, binding in bindings.items():
@@ -180,6 +186,11 @@ def build_plan(
         if sha256_file(path) != binding["sha256"]:
             raise BehaviorReviewPreflightError(f"{name} digest mismatch")
         bound[name] = path
+
+    if status in TERMINAL_STATUSES:
+        publication = _object(bound["publication"])
+        if publication.get("status") != status or publication.get("reviewId") != config["reviewId"]:
+            raise BehaviorReviewPreflightError("terminal review status differs from publication")
 
     contract = load_contract(bound["contract"])
     identities, digests = load_denylist(bound["holdoutDenylist"])

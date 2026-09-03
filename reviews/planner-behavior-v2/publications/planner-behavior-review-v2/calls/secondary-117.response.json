@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788445031-vforGTMP7zBSYDEPl4Xi","object":"chat.completion","created":1788445031,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-ambiguous-intent-mapping-18\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent specified a shadowy/investigative mood. The assistant mapped this to the Mystery genre and enforced it via policy.genres.include=[\\\"Mystery\\\"]. No must-exclude or audience/era constraints were present; the single must-include genre constraint is fully preserved in both the tool call arguments and the final policy object.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal JSON contains channelName, rationale, picks array with tmdbId 920118 (returned by catalog_search), mediaType 'series', name 'Cinder Junction Fixture 118', a rationale string, and confidence 0.91. All fields are schema-valid and grounded in the tool result. Confidence 0.91 is honest given one strong genre match.\",\"passed\":true},\"grounding\":{\"evidence\":\"The only pick is tmdbId 920118 / 'Cinder Junction Fixture 118', which appears directly in the catalog_search result with toolCallId behavior-118-1. No IDs or titles are introduced that are absent from the tool result; grounding is complete.\",\"passed\":true},\"intent\":{\"evidence\":\"Intent requests a 'shadowy and investigative' mood mapped to a catalog genre without asking a question. The assistant autonomously mapped the mood to Mystery, executed a catalog_search for ['Mystery'], and proposed a series with an 'shadowy and investigative tone' overview. The intent is fully and correctly represented.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned one candidate; no empty-result or error scenario arose. The assistant used the single returned candidate appropriately without fabricating alternatives, and no recovery path was needed. Behavior is correct for this trace family.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call: catalog_search with arguments {genres: ['Mystery']}, id 'behavior-118-1'. The call is necessary to resolve the ambiguous mood intent into a concrete catalog result. Arguments conform to catalog-search-v3 schema (genres array). No superfluous or missing tool calls observed.\",\"passed\":true}},\"summary\":\"All six criteria pass. The assistant correctly interpreted the ambiguous shadowy/investigative intent as Mystery genre without prompting the user, made a single appropriate catalog_search call, grounded the sole pick (tmdbId 920118) in the returned tool result, preserved genre constraints in the policy object, and produced a schema-valid final proposal with an honest confidence value of 0.91.\",\"verdict\":\"approved\"}}, \"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2145,"completion_tokens":594,"total_tokens":2739,"cost":0.015345,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.015345,"upstream_inference_prompt_cost":0.006435,"upstream_inference_completions_cost":0.00891},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}
