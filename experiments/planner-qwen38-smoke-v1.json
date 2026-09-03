@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "experimentId": "planner-qwen38-smoke-v1",
   "issue": "https://github.com/loomarr/loomarr/issues/938",
-  "status": "completed-pending-cost-settlement",
+  "status": "completed",
   "bindings": {
     "corpus": {
       "path": "corpus/planner-smoke-v1/traces.jsonl",

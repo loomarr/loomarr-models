@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "qwen38-qlora-a40-smoke-v1",
   "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/4",
-  "status": "passed-pending-cost-settlement",
+  "status": "passed-settled",
   "runManifestPath": "runs/planner-qwen38-smoke-v1/run-manifest.json",
   "runManifestSha256": "168b880e351b041e156bda45f961cd7651859e8576c78060554ffcb70616b5fa",
   "provider": "runpod",
@@ -13,7 +13,7 @@
     "gpuHourlyUsd": "0.44",
     "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851"
   },
-  "providerCostUsd": null,
+  "providerCostUsd": "0.1832042238675058",
   "reservationUsd": "1.50",
   "rawArtifacts": {
     "retention": "local-gitignored",

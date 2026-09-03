@@ -58,8 +58,8 @@ the adapter before considering packaging, serving, or a larger training run.
 
 The compact run manifest and publication record are committed under
 `runs/planner-qwen38-smoke-v1/`. Raw logs, checkpoints, caches, and adapter bytes remain under the
-gitignored `.artifacts/runpod-qwen38-qlora-smoke-v1/` directory. Runpod has not yet posted the exact
-pod charge, so the entire `$1.50` allowance remains reserved in the aggregate ledger until settlement.
+gitignored `.artifacts/runpod-qwen38-qlora-smoke-v1/` directory. Runpod settled the pod at exactly
+`$0.1832042238675058`: `$0.17811163142323494` for the GPU and `$0.005092592444270849` for disk.
 
 The run exposed and fixed four pre-step integration defects: the resolver checksum had targeted
 Apple silicon instead of Linux x86_64, Unsloth was imported after the training stack, the A40 guard

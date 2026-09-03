@@ -174,6 +174,7 @@ class ExperimentPreflightTests(unittest.TestCase):
             shutil.copy2(PROJECT_ROOT / relative, destination)
         budget_path = self.root / "budgets/external-spend-v1.json"
         budget = json.loads(budget_path.read_text(encoding="utf-8"))
+        budget["postedSpendUsd"] = "18.214559391125471"
         budget["outstandingReservationsUsd"] = "0.10"
         budget["committedSpendUsd"] = "18.314559391125471"
         budget_path.write_text(json.dumps(budget, indent=2) + "\n", encoding="utf-8")
