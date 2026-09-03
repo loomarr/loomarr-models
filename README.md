@@ -59,6 +59,10 @@ explicit. A tool-returned reserved-ID fixture stands in for real catalog content
 title. The complete corpus will be reviewed again through the same healthy Gemini and GPT-5.4 fast
 routes before any trace is promoted.
 
+V11 completed with 100 valid attestations, 50 unanimous approvals, zero escalations, and an exact
+`$3.785636` cost. Its replayable publication is the sole input to the fail-closed canonical promotion
+step; no earlier partial decisions are combined with it.
+
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
 container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend. Neither command

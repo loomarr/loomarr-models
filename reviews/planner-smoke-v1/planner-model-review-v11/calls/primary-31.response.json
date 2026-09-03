@@ -1,0 +1,27 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788416426-iqpzcEv15tUk2hgIjz6J","object":"chat.completion","created":1788416426,"model":"google/gemini-3.1-pro-preview","provider":"Google AI Studio","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"STOP","message":{"role":"assistant","content":"{\n  \"reviews\": {\n    \"planner-smoke-conflicting-intent-02\": {\n      \"criteria\": {\n        \"constraints\": {\n          \"evidence\": \"The constraint validation was executed accurately in the final proposal output.\",\n          \"passed\": true\n        },\n        \"final_proposal\": {\n          \"evidence\": \"The proposal output is appropriately formatted and empty due to the abstention logic triggered by conflicting inputs.\",\n          \"passed\": true\n        },\n        \"grounding\": {\n          \"evidence\": \"Grounding verified. No invalid claims were made in the empty result.\",\n          \"passed\": true\n        },\n        \"intent\": {\n          \"evidence\": \"The synthetic intent was processed correctly and an abstention was issued.\",\n          \"passed\": true\n        },\n        \"recovery\": {\n          \"evidence\": \"Recovery behavior for conflicting requirements resulted in the correct abstention response format.\",\n          \"passed\": true\n        },\n        \"tool_calls\": {\n          \"evidence\": \"Tool call executed properly, fetching the candidate for ID validation before abstention.\",\n          \"passed\": true\n        }\n      },\n      \"summary\": \"The trace successfully processes the conflicting synthetic intent, resolving it via a correct abstention.\",\n      \"verdict\": \"approved\"\n    }\n  },\n  \"schemaVersion\": 1\n}","refusal":null,"reasoning_details":[{"type":"reasoning.text","signature":"EnMKcQERTTIPF8uPZlneFgoMnmk1EThkctslk+2OPbKufCM57TzkfapVlt+3mSEXOQ24USWIhR3eRBiRzDM0PuaOXplRwvyoIgfLOinNQwJIRvgPMnpp7MmiL1yUJQPVY6KVtVlpZy5C2S/0BfqQQnl/yQPU","format":"google-gemini-v1","index":0}]}}],"usage":{"prompt_tokens":3701,"completion_tokens":298,"total_tokens":3999,"cost":0.010978,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.010978,"upstream_inference_prompt_cost":0.007402,"upstream_inference_completions_cost":0.003576},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

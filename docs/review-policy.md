@@ -138,6 +138,12 @@ V11 re-reviews the complete new corpus through the same healthy routes. Its exac
 is `$14.925863`, within a `$15` reservation and a projected aggregate commitment of
 `$29.528923391125471 / $40`.
 
+Review v11 completed all 100 observations with no invalid responses for exactly `$3.785636`. Both
+reviewers approved all 50 traces, leaving zero escalations. The publication keeps every request,
+response, settlement, attestation, and derived decision hash-bound to the final pending corpus. Canonical
+promotion accepts only this exact 50-approval, zero-escalation publication and refuses partial or
+digest-mismatched decisions before finalization.
+
 ## Disagreement and escalation
 
 Only two approvals with all twelve criterion decisions passing derive an approved trace. Two rejections

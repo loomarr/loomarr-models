@@ -1,0 +1,13 @@
+{
+  "batchIndex": 28,
+  "requestSha256": "8996ef6cf5f2d2b3eb1249c2ecaee1ed4d4daef5a9bb08645c7664d83d4fc211",
+  "responseSha256": "6a0da62588faea5505a1f6b5e85bf9669bfe9f09f68d5e93b2b495b943fbc9af",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.055725",
+  "settlementSha256": "48180b0f10cf5d74b3ab9d4800af43422d1f0a44dc27a7902b1b70070b510a20",
+  "status": "valid",
+  "traceIds": [
+    "planner-smoke-ambiguous-intent-04"
+  ]
+}

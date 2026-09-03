@@ -1,4 +1,4 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38
+.PHONY: check compile test init-review generate-drafts check-generated generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38
 
 PYTHON ?= python3
 UV ?= uv
@@ -41,6 +41,9 @@ run-model-review:
 
 publish-model-review:
 	PYTHONPATH=src $(PYTHON) scripts/publish_planner_model_review.py
+
+promote-model-review:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_model_review.py --promote-approved
 
 lock-qwen38-a40:
 	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }

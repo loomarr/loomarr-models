@@ -253,6 +253,28 @@ class ModelReviewWorkflowTests(unittest.TestCase):
         decisions, escalations = publisher._decisions(attestations, [], self.plan)
         self.assertEqual((len(decisions), len(escalations)), (50, 0))
 
+        with tempfile.TemporaryDirectory() as directory:
+            public = Path(directory)
+            decision_bytes = b"".join(
+                publisher.canonical(decision) + b"\n" for decision in decisions
+            )
+            (public / "decisions.jsonl").write_bytes(decision_bytes)
+            (public / "publication.json").write_text(
+                json.dumps(
+                    {
+                        "reviewId": self.plan.reviewId,
+                        "actualCostUsd": "1.00",
+                        "approved": 50,
+                        "escalations": 0,
+                        "decisionsSha256": hashlib.sha256(decision_bytes).hexdigest(),
+                    }
+                )
+            )
+            self.assertEqual(
+                publisher.validated_promotion_bytes(public, self.plan.reviewId),
+                decision_bytes,
+            )
+
         secondary = next(
             item
             for item in attestations

@@ -27,7 +27,7 @@ from loomarr_models.model_review import (
     validate_completion,
     validate_settlement,
 )
-from loomarr_models.review import derive_review, empty_decision
+from loomarr_models.review import derive_review, empty_decision, load_review_decisions
 
 
 CONFIG = ROOT / "experiments/planner-model-review-v11.json"
@@ -36,9 +36,14 @@ CONFIG = ROOT / "experiments/planner-model-review-v11.json"
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate and publish dual-model review evidence")
     parser.add_argument("--config", type=Path, default=CONFIG)
+    parser.add_argument("--promote-approved", action="store_true")
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
     try:
+        if args.promote_approved:
+            result = promote_approved(config_path)
+            print(json.dumps(result, sort_keys=True))
+            return
         repaired = _repair_partial_publication(config_path)
         if repaired is not None:
             print(json.dumps(repaired, sort_keys=True))
@@ -48,6 +53,42 @@ def main() -> None:
     except (OSError, ModelReviewError, json.JSONDecodeError, subprocess.CalledProcessError) as exc:
         parser.error(str(exc))
     print(json.dumps(result, sort_keys=True))
+
+
+def promote_approved(config_path: Path) -> dict[str, Any]:
+    config = load_config(config_path)
+    public = ROOT / "reviews/planner-smoke-v1" / config["reviewId"]
+    decision_bytes = validated_promotion_bytes(public, config["reviewId"])
+    current = drafts.load_reviews()
+    pristine = [empty_decision(trace_id) for trace_id in drafts.expected_trace_ids()]
+    if list(current.values()) != pristine:
+        raise ModelReviewError("canonical review decisions are not pristine")
+    drafts.REVIEW_PATH.write_bytes(decision_bytes)
+    subprocess.run([sys.executable, "scripts/build_planner_smoke_drafts.py"], cwd=ROOT, check=True)
+    subprocess.run([sys.executable, "scripts/render_review_packet.py"], cwd=ROOT, check=True)
+    return {
+        "reviewId": config["reviewId"],
+        "status": "canonical-decisions-promoted",
+        "decisionsSha256": hashlib.sha256(decision_bytes).hexdigest(),
+    }
+
+
+def validated_promotion_bytes(public: Path, review_id: str) -> bytes:
+    publication = _object(public / "publication.json")
+    if (
+        publication.get("reviewId") != review_id
+        or publication.get("approved") != 50
+        or publication.get("escalations") != 0
+    ):
+        raise ModelReviewError("only a unanimous 50-trace publication may be promoted")
+    decision_path = public / "decisions.jsonl"
+    decision_bytes = decision_path.read_bytes()
+    if hashlib.sha256(decision_bytes).hexdigest() != publication.get("decisionsSha256"):
+        raise ModelReviewError("published decisions digest does not match publication")
+    decisions = load_review_decisions(decision_path, drafts.expected_trace_ids())
+    if any(derive_review(decision).status != "approved" for decision in decisions.values()):
+        raise ModelReviewError("published decisions are not unanimously approved")
+    return decision_bytes
 
 
 def publish(plan: Any) -> dict[str, Any]:
