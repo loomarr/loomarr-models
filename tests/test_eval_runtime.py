@@ -4,13 +4,83 @@ import ast
 import unittest
 from pathlib import Path
 
-from loomarr_models.eval_runtime import _to_huggingface_messages, parse_qwen_turn
+from loomarr_models.eval_runtime import (
+    HuggingFaceTurnGenerator,
+    _to_huggingface_messages,
+    parse_qwen_turn,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class EvalRuntimeTests(unittest.TestCase):
+    def test_multimodal_processor_receives_rendered_prompt_as_text_keyword(self):
+        class Tensor:
+            shape = (1, 3)
+
+        class Batch(dict):
+            def to(self, _device):
+                return self
+
+        class Generated:
+            shape = (2,)
+
+        class Output:
+            def __getitem__(self, key):
+                self.key = key
+                return Generated()
+
+        class Tokenizer:
+            eos_token_id = 1
+
+            def apply_chat_template(self, *_args, **_kwargs):
+                return "rendered prompt"
+
+            def __call__(self, *args, **kwargs):
+                if args or kwargs.get("text") != "rendered prompt":
+                    raise AssertionError("multimodal processor input was not passed as text=")
+                return Batch(input_ids=Tensor())
+
+            def decode(self, _tokens, **_kwargs):
+                return '{"channelName":"Test Signal","rationale":"Synthetic.","picks":[],"policy":{}}'
+
+        class Model:
+            device = "cuda:0"
+
+            def generate(self, **_kwargs):
+                return Output()
+
+        class InferenceMode:
+            def __enter__(self):
+                return None
+
+            def __exit__(self, *_args):
+                return False
+
+        class Torch:
+            @staticmethod
+            def inference_mode():
+                return InferenceMode()
+
+        generator = HuggingFaceTurnGenerator(
+            Model(),
+            Tokenizer(),
+            {
+                "reasoningEffort": "low",
+                "maxSeqLength": 4096,
+                "maxNewTokens": 768,
+                "doSample": False,
+            },
+            Torch(),
+        )
+        turn = generator(
+            [{"role": "system", "content": "system"}, {"role": "user", "content": "intent"}],
+            [],
+        )
+        self.assertEqual(turn["role"], "assistant")
+        self.assertIn("channelName", turn["content"])
+
     def test_parses_qwen_xml_tool_call_and_reasoning_prefix(self):
         raw = """<think>choose the title route</think>
 <tool_call>

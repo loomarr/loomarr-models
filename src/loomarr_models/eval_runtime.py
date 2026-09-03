@@ -154,7 +154,7 @@ class HuggingFaceTurnGenerator:
             add_generation_prompt=True,
             reasoning_effort=self.config["reasoningEffort"],
         )
-        inputs = self.tokenizer(rendered, return_tensors="pt").to(self.model.device)
+        inputs = self.tokenizer(text=rendered, return_tensors="pt").to(self.model.device)
         input_tokens = int(inputs["input_ids"].shape[-1])
         available = self.config["maxSeqLength"] - input_tokens
         if available < 32:
