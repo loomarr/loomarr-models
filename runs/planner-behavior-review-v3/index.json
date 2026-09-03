@@ -9,6 +9,10 @@
       "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
     },
     {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/publication.json",
+      "sha256": "5058ee98a159d33ec128c3f2880926e211cd88ec9b0a989492fc6480a82b9cae"
+    },
+    {
       "path": "reviews/planner-behavior-v3/preflight-report.json",
       "sha256": "40f6b6d12143f00f49e2efe451a37546c33e8f6c21a03cfd4946ad02bd24545f"
     },
@@ -23,11 +27,11 @@
   ],
   "generator": {
     "path": "scripts/build_planner_behavior_review_v3.py",
-    "sha256": "855121aaf71431966d5eddc7e22967fd9f90857758e1cdee8d50bbe94bbef307"
+    "sha256": "06c28c4fb1cb9c7914b7cfbbdd9e0cbeb2dae341ebc4925ddb1a89e8e1e94e25"
   },
-  "nextGate": "execute the exact 240-call full review and preserve every settlement",
+  "nextGate": "use the frozen corpus and untouched development gate to decide whether QLoRA v2 is justified",
   "publicationId": "planner-behavior-review-v3",
   "schemaVersion": 1,
-  "status": "ready-for-review",
+  "status": "complete-approved",
   "trainingAuthorized": false
 }

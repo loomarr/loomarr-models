@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import sys
 import tempfile
@@ -22,11 +23,28 @@ CORRECTED_CONFIG_PATH = ROOT / "experiments/planner-behavior-review-v3.json"
 
 class BehaviorReviewRunnerTests(unittest.TestCase):
     def build(self, path=CONFIG_PATH, *, authorized=False):
-        return runner.build_plan(
-            path,
-            require_authorized=authorized,
-            git_probe=lambda _root, _paths: "a" * 40,
+        config = json.loads(path.read_text(encoding="utf-8"))
+        config["bindings"]["budget"]["path"] = (
+            "tests/fixtures/external-spend-before-planner-behavior-v3.json"
         )
+        for binding in config["bindings"].values():
+            if "sha256" in binding:
+                binding["sha256"] = hashlib.sha256(
+                    (ROOT / binding["path"]).read_bytes()
+                ).hexdigest()
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", dir=ROOT, delete=False, encoding="utf-8"
+        ) as handle:
+            json.dump(config, handle)
+            fixture_path = Path(handle.name)
+        try:
+            return runner.build_plan(
+                fixture_path,
+                require_authorized=authorized,
+                git_probe=lambda _root, _paths: "a" * 40,
+            )
+        finally:
+            fixture_path.unlink(missing_ok=True)
 
     def test_reconstructs_the_exact_committed_runtime_requests(self):
         config, plan, snapshot = self.build()

@@ -116,12 +116,11 @@ argument; each assistant turn contains at most one tool operation; the final obj
 each existing pick rather than at the top level. Tests bind those statements to the production contract
 and corpus validators.
 
-The 240-call envelope retains the 3,000-token output ceiling and has a conservative `$15.617740`
-worst case inside a `$16.50` reservation. Starting from `$23.3611685675672820` committed, the maximum
-aggregate commitment is `$39.8611685675672820 / $40.00`. The exact routes and unchanged prices were
-refreshed at `2026-09-03T14:48:13.192940Z`. The separate authorization commit sets only this bound plan
-to `ready-for-review`; the runner still rechecks the live routes, prices, budget, clean source commit,
-and every request hash before its first inference.
+The 240-call envelope retained the 3,000-token output ceiling and had a conservative `$15.617740`
+worst case inside a `$16.50` reservation. Starting from `$23.3611685675672820` committed, its maximum
+aggregate commitment was `$39.8611685675672820 / $40.00`. The exact routes and unchanged prices were
+refreshed at `2026-09-03T14:48:13.192940Z`; the runner rechecked the live routes, prices, budget, clean
+source commit, and every request hash before its first inference.
 
 ```bash
 make check-live-corrected-targeted-review-routes # authenticated metadata GETs; no inference
@@ -130,12 +129,16 @@ make preflight-corrected-targeted-review
 make run-corrected-targeted-review # refuses while authorization is false
 ```
 
-The v2 evidence remains immutable. A future v3 publication must settle and bind all 240 new calls; only
-a unanimous 120/120 result may be promoted into the canonical training decisions.
+The full v3 run completed all 240 calls with 240 valid structured attestations. Both reviewers approved
+all 120 traces, leaving zero escalations. The exact settled cost was `$4.621493`, bringing committed
+external spend to `$27.9826615675672820 / $40.00`. The publication binds every raw response, settlement,
+attestation, paired decision, and the authorization source commit. Its unanimous decisions are promoted
+into the canonical decision ledger, and the resulting 120-trace training corpus is frozen separately
+from the immutable pending-review drafts. No inference was retried and the v2 evidence remains immutable.
 
 ## Stop point
 
-This milestone stops after all 120 traces are independently approved and frozen while the 60
-development cases remain untouched. It does not authorize GPU provisioning, model downloads,
-training, certification, packaging, serving, or release. A later tracked decision may authorize one
-new Unsloth QLoRA configuration if the reviewed corpus and remaining budget justify it.
+All 120 traces are independently approved and frozen while the 60 development cases remain untouched.
+This does not authorize GPU provisioning, model downloads, training, certification, packaging, serving,
+or release. The next decision is whether the reviewed corpus and remaining `$12.0173384324327180`
+authorization justify one new Unsloth QLoRA configuration.

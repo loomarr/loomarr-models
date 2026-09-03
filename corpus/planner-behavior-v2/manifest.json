@@ -1,0 +1,33 @@
+{
+  "behaviorCounts": {
+    "ambiguous-intent-mapping": 20,
+    "canonical-argument-preservation": 20,
+    "complete-proposal-json": 20,
+    "one-tool-operation-per-turn": 20,
+    "structured-json-abstention": 20,
+    "synthetic-tool-error-recovery": 20
+  },
+  "contractPath": "contracts/planner-contract-v3.json",
+  "contractSha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4",
+  "corpusId": "planner-behavior-v2",
+  "developmentCorpusPath": "evaluation/planner-behavior-development-v2/cases.jsonl",
+  "developmentCorpusSha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115",
+  "draftManifestPath": "corpus/planner-behavior-v2/draft-manifest.json",
+  "draftManifestSha256": "6a5924a4fa4325a68699fa410b7cb0f737ca63a473058a7b275c1891bca1ac99",
+  "finalizerPath": "scripts/finalize_planner_behavior_corpus.py",
+  "finalizerSha256": "1b14d2f75efbae9b9b34598ea8589d1d88994c2744c1e871e71df8ae2b7c9134",
+  "holdoutDenylistPath": "contracts/holdout-denylist-v1.json",
+  "holdoutDenylistSha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de",
+  "reviewDecisionsPath": "reviews/planner-behavior-v2.jsonl",
+  "reviewDecisionsSha256": "c9884d150ff304d5ee2cb8e1b8c29866fa9fd1b654d9c2a76a7686e73154e841",
+  "reviewPublicationPath": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/publication.json",
+  "reviewPublicationSha256": "5058ee98a159d33ec128c3f2880926e211cd88ec9b0a989492fc6480a82b9cae",
+  "schemaVersion": 1,
+  "status": "reviewed-frozen-training-only",
+  "traceCount": 120,
+  "tracesPath": "corpus/planner-behavior-v2/traces.jsonl",
+  "tracesSha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57",
+  "trainingAuthorized": false,
+  "validationReportPath": "corpus/planner-behavior-v2/validation-report.json",
+  "validationReportSha256": "6526f14861322e414cc824a9a9803ec031fadcdb26514c3bac6ea6ea07d67e26"
+}

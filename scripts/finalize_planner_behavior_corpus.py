@@ -16,14 +16,14 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import build_planner_behavior_corpus as corpus
 from loomarr_models.behavior_review import derive_review, load_review_decisions
 from loomarr_models.targeted import validate_targeted_training
-from loomarr_models.validator import load_contract, load_denylist, load_jsonl
+from loomarr_models.validator import load_contract, load_denylist
 
 
 TRACES_PATH = ROOT / "corpus/planner-behavior-v2/traces.jsonl"
 MANIFEST_PATH = ROOT / "corpus/planner-behavior-v2/manifest.json"
 REPORT_PATH = ROOT / "corpus/planner-behavior-v2/validation-report.json"
 PUBLICATION_PATH = (
-    ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json"
+    ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/publication.json"
 )
 PUBLISHED_DECISIONS_PATH = PUBLICATION_PATH.with_name("decisions.jsonl")
 
@@ -52,14 +52,14 @@ def main() -> None:
 def build_outputs() -> dict[Path, bytes]:
     contract = load_contract(corpus.CONTRACT_PATH)
     identities, digests = load_denylist(corpus.DENYLIST_PATH)
-    traces = load_jsonl(corpus.TRAINING_PATH)
+    decisions = load_review_decisions(corpus.REVIEW_DECISIONS_PATH, corpus.trace_ids())
+    traces = corpus.build_training(contract, decisions)
     report = validate_targeted_training(
         traces,
         contract=contract,
         denylisted_identities=identities,
         denylisted_sha256=digests,
     )
-    decisions = load_review_decisions(corpus.REVIEW_DECISIONS_PATH, corpus.trace_ids())
     if any(derive_review(decision, require_complete=True).status != "approved" for decision in decisions.values()):
         raise ValueError("all 120 behavior traces require two approvals before freeze")
     if any(trace["review"]["status"] != "approved" for trace in traces):
@@ -75,7 +75,7 @@ def build_outputs() -> dict[Path, bytes]:
     ):
         raise ValueError("canonical decisions differ from the published review evidence")
 
-    trace_bytes = corpus.TRAINING_PATH.read_bytes()
+    trace_bytes = b"".join(corpus.canonical(trace) + b"\n" for trace in traces)
     validation = {
         "schemaVersion": 1,
         "corpusId": "planner-behavior-v2",

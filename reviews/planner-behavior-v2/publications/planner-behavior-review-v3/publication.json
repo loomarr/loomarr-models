@@ -1,0 +1,21 @@
+{
+  "actualCostUsd": "4.621493",
+  "approved": 120,
+  "attestationsPath": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/attestations.jsonl",
+  "attestationsSha256": "93ec99208eac734230c1d19279d615df31ed3344ca8315684110e7020c1f58fe",
+  "configSha256": "ffa571775222ea87bdf90a01ee8229d14f337f7f4945705359dfaaabfc5ceb77",
+  "corpusSha256": "60b10f12d98c65a146ed0966917a8e3ab34045805968dd126e9f3ad86b6c6002",
+  "decisionsPath": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/decisions.jsonl",
+  "decisionsSha256": "c9884d150ff304d5ee2cb8e1b8c29866fa9fd1b654d9c2a76a7686e73154e841",
+  "escalations": 0,
+  "escalationsPath": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/escalations.json",
+  "escalationsSha256": "3b414e6fca556fe781621616e271407d95d62118ff7726c80d9acb4be92fc0bf",
+  "invalidReviewsPath": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/invalid-reviews.jsonl",
+  "invalidReviewsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "reviewId": "planner-behavior-review-v3",
+  "runManifestPath": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/run-manifest.json",
+  "runManifestSha256": "57b42fc079d8622039c4aef3e1b01f2befbaff2f25c4fa3611cdb522df7d8840",
+  "schemaVersion": 1,
+  "sourceCommit": "edb4237d4cd41ae0fcd42ab1d5b7357a883bd569",
+  "status": "complete-approved"
+}

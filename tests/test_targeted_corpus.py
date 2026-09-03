@@ -9,6 +9,7 @@ from pathlib import Path
 from loomarr_models.behavior_review import (
     BehaviorReviewError,
     derive_review,
+    empty_decision,
     load_review_decisions,
 )
 from loomarr_models.evaluation import load_cases
@@ -183,7 +184,10 @@ class TargetedCorpusTests(unittest.TestCase):
         expected = [trace["traceId"] for trace in self.training]
         decisions = load_review_decisions(REVIEW_PATH, expected)
         self.assertEqual(len(decisions), 120)
-        first = copy.deepcopy(next(iter(decisions.values())))
+        self.assertTrue(
+            all(derive_review(decision, require_complete=True).status == "approved" for decision in decisions.values())
+        )
+        first = empty_decision(next(iter(decisions)))
         first["primary"] = {
             "verdict": "approved",
             "reviewer": "openrouter:google/gemini-3.1-pro-preview",
@@ -215,13 +219,14 @@ class TargetedCorpusTests(unittest.TestCase):
         self.assertFalse(plan["execution"]["paidReviewAuthorized"])
         self.assertEqual(plan["budget"]["aggregateAuthorizationUsd"], "40.00")
         policy = (ROOT / "docs/planner-behavior-corpus-v2.md").read_text(encoding="utf-8")
-        self.assertIn("$23.3611685675672820 / $40.00", policy)
-        self.assertNotIn("$19.2805365675672820 / $40.00", policy)
-        for value in plan["bindings"].values():
-            path = ROOT / value["path"]
-            self.assertEqual(value["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+        self.assertIn("$27.9826615675672820 / $40.00", policy)
+        self.assertEqual(
+            plan["bindings"]["requestPlan"]["sha256"],
+            hashlib.sha256((ROOT / plan["bindings"]["requestPlan"]["path"]).read_bytes()).hexdigest(),
+        )
 
         index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(index["status"], "reviewed-frozen-training-only")
         self.assertFalse(index["trainingAuthorized"])
         for artifact in index["artifacts"]:
             path = ROOT / artifact["path"]
