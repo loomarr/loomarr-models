@@ -7,6 +7,7 @@ import json
 import os
 import sys
 from dataclasses import asdict, dataclass
+from decimal import Decimal
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
@@ -56,6 +57,8 @@ EXPECTED_BINDINGS = {
     "routeSnapshot",
     "reviewPreflightValidator",
     "reviewRunner",
+    "reviewPublisher",
+    "corpusFinalizer",
     "trainingDrafts",
     "trainingManifest",
     "developmentCases",
@@ -204,7 +207,9 @@ def build_plan(
         "currentCommittedUsd": checked.committedSpendUsd,
         "reviewReservationUsd": checked.reservationUsd,
         "projectedMaximumUsd": checked.projectedSpendUsd,
-        "remainingAfterMaximumUsd": "5.7194634324327180",
+        "remainingAfterMaximumUsd": str(
+            Decimal(checked.authorizationUsd) - Decimal(checked.projectedSpendUsd)
+        ),
         "worstCaseReviewUsd": checked.worstCaseCostUsd,
     }
     if config["budget"] != expected_budget:

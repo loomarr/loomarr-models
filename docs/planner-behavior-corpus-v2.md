@@ -74,6 +74,22 @@ make preflight-targeted-review
 plan is not authorized for paid calls. Enabling it requires a separate reviewed commit that changes
 both the plan status and `paidReviewAuthorized` gate, followed by a fresh live route comparison.
 
+The complete evidence lifecycle is implemented before any paid call:
+
+1. `make run-targeted-review` preserves every raw response and exact generation settlement, quarantines
+   settled model-authored invalid output, and never retries inference.
+2. `make publish-targeted-review` replays all 240 observations from raw evidence, verifies their hashes
+   and settled costs, derives 120 two-review decisions, copies the immutable evidence publication, and
+   reconciles the aggregate budget ledger.
+3. `make promote-targeted-review` changes the canonical decision file only if all 120 traces have two
+   valid approvals and zero escalations.
+4. `make finalize-targeted-corpus` creates the frozen training artifact only from that unanimous
+   publication. It keeps `trainingAuthorized: false`; freezing data is not permission to train.
+
+The runnable plan binds the runner, publisher, and finalizer by SHA-256. A route failure, malformed
+response, missing observation, invalid settlement, disagreement, budget change, or artifact drift
+stops promotion or leaves the affected trace pending.
+
 The review reservation ceiling is `$15.00`. Aggregate external commitment is currently
 `$19.2805365675672820 / $40.00`, so the planned maximum would be
 `$34.2805365675672820 / $40.00`. Route availability and worst-case pricing must be refreshed

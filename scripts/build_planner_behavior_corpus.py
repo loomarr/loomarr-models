@@ -7,6 +7,7 @@ import hashlib
 import json
 import sys
 from dataclasses import dataclass
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
@@ -55,6 +56,8 @@ DISJOINTNESS_PATH = ROOT / "reports/planner-behavior-v2-disjointness.json"
 REVIEW_PLAN_PATH = ROOT / "experiments/planner-behavior-review-v2.json"
 INDEX_PATH = ROOT / "runs/planner-behavior-corpus-v2/index.json"
 REVIEW_RUNNER_PATH = ROOT / "scripts/run_planner_behavior_review.py"
+REVIEW_PUBLISHER_PATH = ROOT / "scripts/publish_planner_behavior_review.py"
+CORPUS_FINALIZER_PATH = ROOT / "scripts/finalize_planner_behavior_corpus.py"
 
 TRAINING_BASE_ID = 920000
 DEVELOPMENT_BASE_ID = 930000
@@ -482,6 +485,8 @@ def build_outputs() -> dict[Path, bytes]:
         "routeSnapshot": binding(ROUTE_SNAPSHOT_PATH),
         "reviewPreflightValidator": binding(Path(review_preflight_contract.__file__)),
         "reviewRunner": binding(REVIEW_RUNNER_PATH),
+        "reviewPublisher": binding(REVIEW_PUBLISHER_PATH),
+        "corpusFinalizer": binding(CORPUS_FINALIZER_PATH),
     }
     review_plan = {
         "schemaVersion": 1,
@@ -515,7 +520,10 @@ def build_outputs() -> dict[Path, bytes]:
             "currentCommittedUsd": review_preflight.committedSpendUsd,
             "reviewReservationUsd": review_preflight.reservationUsd,
             "projectedMaximumUsd": review_preflight.projectedSpendUsd,
-            "remainingAfterMaximumUsd": "5.7194634324327180",
+            "remainingAfterMaximumUsd": str(
+                Decimal(review_preflight.authorizationUsd)
+                - Decimal(review_preflight.projectedSpendUsd)
+            ),
             "worstCaseReviewUsd": review_preflight.worstCaseCostUsd,
         },
         "preflight": review_preflight.summary(),

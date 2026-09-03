@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "76e16c3239d3d6fe12ad721ddcb90cd1b97c650871a3e24a837278cb93b96888"
+      "sha256": "36ed63dbf3e32fd1ca396f4cb2299e35437ea54fad306713a8e781532b31a6d5"
     },
     {
       "path": "corpus/planner-behavior-v2/drafts.jsonl",
@@ -14,19 +14,19 @@
     },
     {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "a202db0c8069668f8a0b3f8f7d9da6a98bf235273c800980bf8e9a24eea299cd"
+      "sha256": "8d88ee1a6a8f37d608ed30ee06ff73d2e49288c9b2ea5662af8a4a965c4fa8a1"
     },
     {
       "path": "experiments/planner-behavior-review-v2.json",
-      "sha256": "ea35a9ce8e0135966a7785f9b815066ee390c7e5926170c4b2fa6135fc084078"
+      "sha256": "9d1d70d40524c367bbb7ba17973925f17f48a3eff960dea205b1f3afe5a752d1"
     },
     {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "ba177576a92b5de4a8f917ff9285e5274c4ad081589c1d82558f08cf98774ddb"
+      "sha256": "23c9734b3b2ebbfd6ed8b4195e87360d5673e4bdbbcb70803cf3ae433d312ebe"
     },
     {
       "path": "reviews/planner-behavior-v2/preflight-report.json",
-      "sha256": "9118cb419297390131ee1cffb07cf5b5073b724ccaa90e9a1146882a37c8cbc7"
+      "sha256": "aa54f421117d52d11ce4ed42e24a867cf518d2155e6baca3c1b1dcd59bf6b12e"
     },
     {
       "path": "reviews/planner-behavior-v2/request-plan.jsonl",
@@ -39,7 +39,7 @@
   ],
   "generator": {
     "path": "scripts/build_planner_behavior_corpus.py",
-    "sha256": "3cdcf40e951384d233b277e8ae0d0d97d36c5c7f47616a1df40a6151ee249a65"
+    "sha256": "efa29e94084d93c5c19dab2e376b47465e1cc4ef80230f25f363f51284321afc"
   },
   "nextGate": "maintainer authorization to enable the paid review runner",
   "publicationId": "planner-behavior-corpus-v2",
