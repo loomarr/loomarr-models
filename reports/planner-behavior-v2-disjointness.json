@@ -25,11 +25,11 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "c7701311200710c2d0b7941094c5a0222693176c76da8d55f11ed77be6272399"
+      "sha256": "730cd6ef67b614d9400bce19c0a80bb1c185d94f3088d1a6acc89eb33c8625f9"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
-      "sha256": "a8c86e171433445b176c3f5395bfccbafb805508b799a69fd7073d5bcc639dcc"
+      "sha256": "a3bcffcbb5a0e1655ec527e4fda50733b3c98b4341e0fea99f88ca1f0d3f3293"
     },
     "targetedDevelopment": {
       "count": 60,

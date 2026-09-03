@@ -38,9 +38,9 @@ class BehaviorReviewPreflightTests(unittest.TestCase):
         self.assertEqual(plan.traceCount, 120)
         self.assertEqual(plan.requestCount, 240)
         self.assertEqual(plan.batchSize, 1)
-        self.assertEqual(plan.inputByteUpperBound, 1673200)
+        self.assertEqual(plan.inputByteUpperBound, 1675120)
         self.assertEqual(plan.outputTokenUpperBound, 720000)
-        self.assertEqual(plan.worstCaseCostUsd, "13.4835900")
+        self.assertEqual(plan.worstCaseCostUsd, "13.906540")
         self.assertEqual(plan.reservationUsd, "15.00")
         self.assertEqual(plan.projectedSpendUsd, "34.2805365675672820")
         payload = request_plan_bytes(plan)
@@ -78,7 +78,7 @@ class BehaviorReviewPreflightTests(unittest.TestCase):
 
     def test_route_price_and_budget_drift_fail_closed(self):
         route = copy.deepcopy(self.snapshot)
-        route["reviewers"][1]["providerTag"] = "openai/fast"
+        route["reviewers"][1]["providerTag"] = "claude-on-aws"
         with self.assertRaisesRegex(BehaviorReviewPreflightError, "route identity drifted"):
             preflight(self.traces, route_snapshot=route, budget=self.budget)
 

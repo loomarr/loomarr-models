@@ -19,11 +19,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "d08d74bf1a308b0cf4a6a5c514c771ed47c587ec8c14d114fa3f30cad7d0cf90"
+      "sha256": "608423f0a20aa37ee7c5d5000a54814200eb3e2419e60f23fde40d5d9236f500"
     },
     "disjointnessReport": {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "23c9734b3b2ebbfd6ed8b4195e87360d5673e4bdbbcb70803cf3ae433d312ebe"
+      "sha256": "85b3467a373cd1b9e9cfd69128126f825c9a8570a1aa85f4eeee909f1e0eea3a"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -42,7 +42,7 @@
     "requestPlan": {
       "count": 240,
       "path": "reviews/planner-behavior-v2/request-plan.jsonl",
-      "sha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12"
+      "sha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062"
     },
     "reviewDecisions": {
       "count": 120,
@@ -51,11 +51,11 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "c7701311200710c2d0b7941094c5a0222693176c76da8d55f11ed77be6272399"
+      "sha256": "730cd6ef67b614d9400bce19c0a80bb1c185d94f3088d1a6acc89eb33c8625f9"
     },
     "reviewPreflightValidator": {
       "path": "src/loomarr_models/behavior_model_review.py",
-      "sha256": "07150e1eaa1e98c48437e119248a3535b28d8c1ff1224e4ecbb4b8923ac42c8d"
+      "sha256": "d03f2c5ba7c9925f818d13a843be5afbbc2d644394bede7d45ac52aa367d5e86"
     },
     "reviewPublisher": {
       "path": "scripts/publish_planner_behavior_review.py",
@@ -67,11 +67,11 @@
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
-      "sha256": "a8c86e171433445b176c3f5395bfccbafb805508b799a69fd7073d5bcc639dcc"
+      "sha256": "a3bcffcbb5a0e1655ec527e4fda50733b3c98b4341e0fea99f88ca1f0d3f3293"
     },
     "routeSnapshot": {
       "path": "reviews/planner-behavior-v2/route-snapshot.json",
-      "sha256": "1c7947924c1088ab02310dab1ba278e393ed89813ba6f3beb6665b8554231f38"
+      "sha256": "9d872066442fee414695e189929d28c52cc0368df11a0f4f113c4d595dd1e837"
     },
     "targetedValidator": {
       "path": "src/loomarr_models/targeted.py",
@@ -84,7 +84,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "2be39e3ff00a9394ef9e823fe5c4c5c0b9c4fd338f9e042897066a6a223f375d"
+      "sha256": "9bf78b20f3c1504dc586b0b063390e554e8cd7f0dba569c818c497d1019fc348"
     }
   },
   "budget": {
@@ -93,7 +93,7 @@
     "projectedMaximumUsd": "34.2805365675672820",
     "remainingAfterMaximumUsd": "5.7194634324327180",
     "reviewReservationUsd": "15.00",
-    "worstCaseReviewUsd": "13.4835900"
+    "worstCaseReviewUsd": "13.906540"
   },
   "candidateFamily": "qwen",
   "criteria": [
@@ -128,14 +128,14 @@
     "authorizationUsd": "40.00",
     "batchSize": 1,
     "committedSpendUsd": "19.2805365675672820",
-    "inputByteUpperBound": 1673200,
+    "inputByteUpperBound": 1675120,
     "outputTokenUpperBound": 720000,
     "projectedSpendUsd": "34.2805365675672820",
     "requestCount": 240,
-    "requestPlanSha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12",
+    "requestPlanSha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062",
     "reservationUsd": "15.00",
     "traceCount": 120,
-    "worstCaseCostUsd": "13.4835900"
+    "worstCaseCostUsd": "13.906540"
   },
   "reviewId": "planner-behavior-review-v2",
   "reviewers": [
@@ -146,9 +146,9 @@
       "role": "primary"
     },
     {
-      "family": "openai",
-      "model": "openai/gpt-5.4",
-      "providerTag": "openai",
+      "family": "anthropic-claude",
+      "model": "anthropic/claude-sonnet-4.6",
+      "providerTag": "anthropic",
       "role": "secondary"
     }
   ],

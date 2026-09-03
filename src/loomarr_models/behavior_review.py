@@ -12,7 +12,7 @@ TRACE_ID = re.compile(r"^planner-behavior-v2-[a-z0-9-]+-\d{2}$")
 RFC3339_UTC = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$")
 REVIEWERS = {
     "openrouter:google/gemini-3.1-pro-preview",
-    "openrouter:openai/gpt-5.4",
+    "openrouter:anthropic/claude-sonnet-4.6",
 }
 PERSON_KEYS = {"verdict", "reviewer", "reviewedAt", "notes"}
 DECISION_KEYS = {"schemaVersion", "traceId", "primary", "secondary"}

@@ -16,9 +16,9 @@ REVIEWERS = (
     },
     {
         "role": "secondary",
-        "family": "openai",
-        "model": "openai/gpt-5.4",
-        "providerTag": "openai",
+        "family": "anthropic-claude",
+        "model": "anthropic/claude-sonnet-4.6",
+        "providerTag": "anthropic",
     },
 )
 REQUIRED_PARAMETERS = {"max_tokens", "reasoning", "response_format", "structured_outputs"}
