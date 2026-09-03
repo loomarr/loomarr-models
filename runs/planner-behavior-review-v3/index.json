@@ -1,0 +1,33 @@
+{
+  "artifacts": [
+    {
+      "path": "experiments/planner-behavior-review-v3.json",
+      "sha256": "b00472eace5279464c857a6e680c170ec2097a36701d0333ff19737100cee4a6"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
+      "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
+    },
+    {
+      "path": "reviews/planner-behavior-v3/preflight-report.json",
+      "sha256": "51f025e9d773113d6f86e9b0f8108c3296168e7a57f974cb8e7c7e4b3c0ef11c"
+    },
+    {
+      "path": "reviews/planner-behavior-v3/request-plan.jsonl",
+      "sha256": "5759c2b0a9a4dca4a0439ae70ba91512fcabb7e084e492251c6a426f12e35045"
+    },
+    {
+      "path": "reviews/planner-behavior-v3/route-snapshot.json",
+      "sha256": "9d872066442fee414695e189929d28c52cc0368df11a0f4f113c4d595dd1e837"
+    }
+  ],
+  "generator": {
+    "path": "scripts/build_planner_behavior_review_v3.py",
+    "sha256": "b2717af863ec178fd5c86e1985723c1e4c4795b418a54d749b8b81328b7e3144"
+  },
+  "nextGate": "refresh exact routes and pricing, then authorize the paid full review separately",
+  "publicationId": "planner-behavior-review-v3",
+  "schemaVersion": 1,
+  "status": "planned-no-paid-calls-authorized",
+  "trainingAuthorized": false
+}

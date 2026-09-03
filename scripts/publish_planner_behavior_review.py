@@ -203,7 +203,7 @@ def publish(plan: Any) -> dict[str, Any]:
 def promote_approved(config_path: Path) -> dict[str, Any]:
     config = _object(config_path)
     review_id = config.get("reviewId")
-    if review_id != "planner-behavior-review-v2":
+    if review_id not in {"planner-behavior-review-v2", "planner-behavior-review-v3"}:
         raise ModelReviewError("unexpected behavior-review publication identity")
     public = PUBLIC_ROOT / review_id
     publication = _object(public / "publication.json")

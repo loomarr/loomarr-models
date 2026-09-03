@@ -102,6 +102,34 @@ must use a separate experiment, refresh route availability and worst-case pricin
 remaining authorization before a reviewed authorization commit may enable it. The completed plan has
 `paidReviewAuthorized: false`; it cannot be used as permission to call OpenRouter.
 
+## Corrected full review plan
+
+`planner-behavior-review-v3` is a separate, no-spend experiment over the same immutable corpus. It
+reviews all 120 traces with both independent reviewers again—240 new calls if later authorized—not
+only the two disputed cases. This prevents selective retry or approval shopping.
+
+The corrected packet still contains one trace per call, but it now embeds the exact production tool
+declaration and a deterministic targeted-audit projection. That projection makes the formerly implicit
+semantics executable and reviewable: known-title search uses `query` and has no separate `title`
+argument; each assistant turn contains at most one tool operation; the final object has exactly
+`channelName`, `rationale`, `picks`, and `policy`; `picks` may be empty; and `confidence` is required on
+each existing pick rather than at the top level. Tests bind those statements to the production contract
+and corpus validators.
+
+The 240-call envelope retains the 3,000-token output ceiling and has a conservative `$15.617740`
+worst case inside a `$16.50` reservation. Starting from `$23.3611685675672820` committed, the maximum
+aggregate commitment is `$39.8611685675672820 / $40.00`. The plan is intentionally
+`planned-no-paid-calls-authorized`; route health and pricing must be refreshed immediately before a
+separate reviewed authorization commit.
+
+```bash
+make preflight-corrected-targeted-review
+make run-corrected-targeted-review # refuses while authorization is false
+```
+
+The v2 evidence remains immutable. A future v3 publication must settle and bind all 240 new calls; only
+a unanimous 120/120 result may be promoted into the canonical training decisions.
+
 ## Stop point
 
 This milestone stops after all 120 traces are independently approved and frozen while the 60

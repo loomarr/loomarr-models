@@ -1,10 +1,10 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review finalize-targeted-corpus check-targeted-finalized generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus generate-corrected-targeted-review check-corrected-targeted-review preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: compile test check-generated check-development-eval check-targeted-corpus check-targeted-finalized check-review check-finalized check-environment validate-drafts
+check: compile test check-generated check-development-eval check-targeted-corpus check-corrected-targeted-review check-targeted-finalized check-review check-finalized check-environment validate-drafts
 
 compile:
 	$(PYTHON) -m compileall -q scripts src tests
@@ -36,6 +36,12 @@ generate-targeted-corpus:
 check-targeted-corpus:
 	$(PYTHON) scripts/build_planner_behavior_corpus.py --check
 
+generate-corrected-targeted-review:
+	$(PYTHON) scripts/build_planner_behavior_review_v3.py
+
+check-corrected-targeted-review:
+	$(PYTHON) scripts/build_planner_behavior_review_v3.py --check
+
 preflight-targeted-review:
 	PYTHONPATH=src $(PYTHON) scripts/run_planner_behavior_review.py --preflight-only
 
@@ -47,6 +53,18 @@ publish-targeted-review:
 
 promote-targeted-review:
 	PYTHONPATH=src $(PYTHON) scripts/publish_planner_behavior_review.py --promote-approved
+
+preflight-corrected-targeted-review:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_behavior_review.py --config experiments/planner-behavior-review-v3.json --preflight-only
+
+run-corrected-targeted-review:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_behavior_review.py --config experiments/planner-behavior-review-v3.json
+
+publish-corrected-targeted-review:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_behavior_review.py --config experiments/planner-behavior-review-v3.json
+
+promote-corrected-targeted-review:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_behavior_review.py --config experiments/planner-behavior-review-v3.json --promote-approved
 
 finalize-targeted-corpus:
 	PYTHONPATH=src $(PYTHON) scripts/finalize_planner_behavior_corpus.py

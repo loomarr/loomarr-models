@@ -7,14 +7,16 @@ import unittest
 from pathlib import Path
 
 from loomarr_models.behavior_model_review import (
+    CORRECTED_PACKET_VERSION,
     REVIEWERS,
     BehaviorReviewPreflightError,
     canonical,
     preflight,
     request_payload,
     request_plan_bytes,
+    targeted_audit_contract,
 )
-from loomarr_models.validator import load_jsonl
+from loomarr_models.validator import load_contract, load_jsonl
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +26,8 @@ BUDGET_PATH = ROOT / "budgets/external-spend-v1.json"
 REQUEST_PLAN_PATH = ROOT / "reviews/planner-behavior-v2/request-plan.jsonl"
 REPORT_PATH = ROOT / "reviews/planner-behavior-v2/preflight-report.json"
 CONTRACT_PATH = ROOT / "contracts/planner-contract-v3.json"
+CORRECTED_REQUEST_PLAN_PATH = ROOT / "reviews/planner-behavior-v3/request-plan.jsonl"
+CORRECTED_REPORT_PATH = ROOT / "reviews/planner-behavior-v3/preflight-report.json"
 
 
 class BehaviorReviewPreflightTests(unittest.TestCase):
@@ -66,6 +70,56 @@ class BehaviorReviewPreflightTests(unittest.TestCase):
         self.assertEqual(payload["provider"]["only"], ["google-ai-studio"])
         self.assertFalse(payload["provider"]["allow_fallbacks"])
         self.assertEqual(payload["provider"]["data_collection"], "deny")
+
+    def test_corrected_packet_supplies_the_missing_authoritative_semantics(self):
+        contract = load_contract(CONTRACT_PATH)
+        with self.assertRaisesRegex(BehaviorReviewPreflightError, "requires the contract bundle"):
+            request_payload(
+                REVIEWERS[0],
+                [self.traces[0]],
+                max_output_tokens=3000,
+                packet_version=CORRECTED_PACKET_VERSION,
+            )
+        payload = request_payload(
+            REVIEWERS[0],
+            [self.traces[0]],
+            max_output_tokens=3000,
+            packet_version=CORRECTED_PACKET_VERSION,
+            contract_bundle=contract,
+        )
+        packet = json.loads(payload["messages"][1]["content"])
+        self.assertNotIn("contractBinding", packet)
+        audit = packet["auditContract"]
+        self.assertEqual(audit, targeted_audit_contract(contract))
+        self.assertEqual(audit["toolDeclaration"], contract["tools"][0])
+        properties = audit["toolDeclaration"]["Parameters"]["properties"]
+        self.assertIn("query", properties)
+        self.assertNotIn("title", properties)
+        search = audit["auditSemantics"]["search"]
+        self.assertEqual(search["knownTitleArgument"], "query")
+        self.assertTrue(search["knownTitleHasNoSeparateTitleArgument"])
+        final = audit["auditSemantics"]["finalProposal"]
+        self.assertTrue(final["picksMayBeEmpty"])
+        self.assertIn("confidence", final["requiredFieldsForEachExistingPick"])
+        self.assertTrue(final["emptyPicksThereforeRequireNoConfidenceField"])
+
+        plan = preflight(
+            self.traces,
+            route_snapshot=self.snapshot,
+            budget=self.budget,
+            reservation_usd="16.50",
+            packet_version=CORRECTED_PACKET_VERSION,
+            contract_bundle=contract,
+        )
+        self.assertEqual(plan.traceCount, 120)
+        self.assertEqual(plan.requestCount, 240)
+        self.assertEqual(plan.inputByteUpperBound, 2359600)
+        self.assertEqual(plan.worstCaseCostUsd, "15.617740")
+        self.assertEqual(plan.projectedSpendUsd, "39.8611685675672820")
+        self.assertEqual(request_plan_bytes(plan), CORRECTED_REQUEST_PLAN_PATH.read_bytes())
+        report = json.loads(CORRECTED_REPORT_PATH.read_text(encoding="utf-8"))
+        self.assertFalse(report["paidReviewAuthorized"])
+        self.assertEqual(report["inferenceCalls"], 0)
 
     def test_multi_trace_batch_stays_disabled_without_exact_compile_proof(self):
         with self.assertRaisesRegex(BehaviorReviewPreflightError, "batch size|multi-trace"):

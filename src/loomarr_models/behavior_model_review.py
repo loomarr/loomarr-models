@@ -22,6 +22,8 @@ REVIEWERS = (
     },
 )
 REQUIRED_PARAMETERS = {"max_tokens", "reasoning", "response_format", "structured_outputs"}
+LEGACY_PACKET_VERSION = "compact-contract-binding-v1"
+CORRECTED_PACKET_VERSION = "targeted-audit-contract-v1"
 
 
 class BehaviorReviewPreflightError(ValueError):
@@ -77,28 +79,103 @@ def compact_trace(trace: dict[str, Any]) -> dict[str, Any]:
         raise BehaviorReviewPreflightError("cannot compact malformed behavior trace") from exc
 
 
+def targeted_audit_contract(contract: dict[str, Any]) -> dict[str, Any]:
+    """Return the contract evidence needed to audit every targeted behavior.
+
+    The production bundle remains authoritative. This projection carries its exact tool declaration
+    plus explicit dataset-validation semantics that were implicit in the first review packet.
+    """
+    try:
+        tool = contract["tools"][0]
+        properties = tool["Parameters"]["properties"]
+        prompt = contract["systemPrompt"]
+    except (KeyError, IndexError, TypeError) as exc:
+        raise BehaviorReviewPreflightError("cannot project malformed planner contract") from exc
+    required_prompt_evidence = (
+        'KNOWN TITLE → "query" with the title.',
+        "If a call returns no candidates, TRY THE OTHER MODE before giving up",
+        "A non-empty result ends retrieval.",
+        "Select ONLY from ids the tool returns.",
+        'SET "confidence" ON EVERY PICK',
+        "When finished, reply with ONLY this JSON",
+    )
+    if any(evidence not in prompt for evidence in required_prompt_evidence):
+        raise BehaviorReviewPreflightError("planner contract lacks targeted audit evidence")
+    if "query" not in properties or "title" in properties:
+        raise BehaviorReviewPreflightError("planner title-search schema differs from audit semantics")
+    return {
+        "identity": {
+            "contractId": contract["contractId"],
+            "promptVersion": contract["promptVersion"],
+            "systemPromptSha256": contract["systemPromptSha256"],
+            "toolSchemaVersion": contract["toolSchemaVersion"],
+            "toolSchemaSha256": contract["toolSchemaSha256"],
+            "messageTemplateVersion": contract["messageTemplateVersion"],
+        },
+        "toolDeclaration": tool,
+        "auditSemantics": {
+            "search": {
+                "knownTitleArgument": "query",
+                "knownTitleHasNoSeparateTitleArgument": True,
+                "discoveryArguments": ["genres", "keywords"],
+                "queryCannotMixWithDiscoveryQualifiers": True,
+                "emptyOrErroredFirstResultRequiresAlternateModeBeforeAbstention": True,
+                "nonEmptyResultEndsRetrieval": True,
+            },
+            "conversation": {
+                "maximumToolOperationsPerAssistantTurn": 1,
+                "toolCallAndResultMustAlternate": True,
+            },
+            "finalProposal": {
+                "jsonOnly": True,
+                "requiredTopLevelFields": ["channelName", "rationale", "picks", "policy"],
+                "picksMayBeEmpty": True,
+                "maximumPicks": 8,
+                "requiredFieldsForEachExistingPick": [
+                    "mediaType",
+                    "tmdbId",
+                    "name",
+                    "rationale",
+                    "confidence",
+                ],
+                "confidenceIsPerPickNotTopLevel": True,
+                "emptyPicksThereforeRequireNoConfidenceField": True,
+                "selectedIdsMustAppearInToolResults": True,
+            },
+        },
+    }
+
+
 def request_payload(
     reviewer: dict[str, str],
     traces: list[dict[str, Any]],
     *,
     max_output_tokens: int,
+    packet_version: str = LEGACY_PACKET_VERSION,
+    contract_bundle: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     trace_ids = tuple(trace["traceId"] for trace in traces)
     criteria = [
         {"criterion": criterion, "requirement": CRITERION_DESCRIPTIONS[criterion]}
         for criterion in CRITERIA
     ]
-    user = canonical(
-        {
-            "criteria": criteria,
-            "contractBinding": {
-                "contractId": "loomarr-planner-contract-v3",
-                "fullContractIsHashBoundAndDeterministicallyValidated": True,
-            },
-            "requiredTraceIds": list(trace_ids),
-            "traces": [compact_trace(trace) for trace in traces],
+    packet = {
+        "criteria": criteria,
+        "requiredTraceIds": list(trace_ids),
+        "traces": [compact_trace(trace) for trace in traces],
+    }
+    if packet_version == LEGACY_PACKET_VERSION:
+        packet["contractBinding"] = {
+            "contractId": "loomarr-planner-contract-v3",
+            "fullContractIsHashBoundAndDeterministicallyValidated": True,
         }
-    ).decode()
+    elif packet_version == CORRECTED_PACKET_VERSION:
+        if contract_bundle is None:
+            raise BehaviorReviewPreflightError("corrected review packet requires the contract bundle")
+        packet["auditContract"] = targeted_audit_contract(contract_bundle)
+    else:
+        raise BehaviorReviewPreflightError("unsupported behavior review packet version")
+    user = canonical(packet).decode()
     payload: dict[str, Any] = {
         "model": reviewer["model"],
         "messages": [
@@ -135,6 +212,8 @@ def preflight(
     batch_size: int = 1,
     max_output_tokens: int = 3000,
     reservation_usd: str = "15.00",
+    packet_version: str = LEGACY_PACKET_VERSION,
+    contract_bundle: dict[str, Any] | None = None,
 ) -> BehaviorReviewPreflight:
     trace_list = list(traces)
     if len(trace_list) != 120:
@@ -155,7 +234,13 @@ def preflight(
         completion_price = Decimal(route["completionPriceUsdPerToken"])
         for batch_index in range(0, len(trace_list), batch_size):
             batch = trace_list[batch_index : batch_index + batch_size]
-            payload = request_payload(reviewer, batch, max_output_tokens=max_output_tokens)
+            payload = request_payload(
+                reviewer,
+                batch,
+                max_output_tokens=max_output_tokens,
+                packet_version=packet_version,
+                contract_bundle=contract_bundle,
+            )
             request_bytes = canonical(payload)
             worst = Decimal(len(request_bytes)) * prompt_price + Decimal(max_output_tokens) * completion_price
             request = ReviewRequest(
@@ -236,7 +321,7 @@ def _validate_budget(budget: Any, reservation: Decimal) -> tuple[Decimal, Decima
     if posted + outstanding != committed:
         raise BehaviorReviewPreflightError("budget ledger does not reconcile")
     projected = committed + reservation
-    if reservation != Decimal("15.00") or authorization != Decimal("40.00") or projected > authorization:
+    if reservation <= 0 or authorization != Decimal("40.00") or projected > authorization:
         raise BehaviorReviewPreflightError("review reservation exceeds its authorization envelope")
     return committed, projected, authorization
 
