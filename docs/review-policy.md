@@ -51,10 +51,16 @@ GET-only settlement poll, binds the provider-native finish reason between respon
 each criteria array with six required named properties plus explicit substantive-evidence instructions.
 The v3 evidence is `reviews/planner-smoke-v1/model-review-v3-settlement-failure.json`.
 
-The run is limited to twenty five-trace calls with no automatic inference retry, at most 6,000 output
-tokens per call, and a conservative `$5.00` reservation. Its byte-count token upper bound prices the exact
-v4 request bodies at no more than `$4.580936`, projecting aggregate commitments to
-`$9.587107891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
+Review v4 stopped before inference when Anthropic rejected the five-trace strict schema as too large to
+compile; current-key usage did not change. Review v5 therefore reviews one trace per request. This keeps
+the same two independent decisions for every trace while reducing each provider grammar to one exact
+trace key and six exact criterion keys. The zero-cost v4 evidence is
+`reviews/planner-smoke-v1/model-review-v4-grammar-failure.json`.
+
+The run is limited to one hundred one-trace calls with no automatic inference retry, at most 2,000 output
+tokens per call, and a conservative `$6.00` reservation. Its byte-count token upper bound prices the exact
+v5 request bodies at no more than `$5.850296`, projecting aggregate commitments to
+`$10.587107891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
 to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exact ledger value.
 
 ## Disagreement and escalation

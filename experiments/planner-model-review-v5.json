@@ -36,12 +36,12 @@
   ],
   "execution": {
     "apiBaseUrl": "https://openrouter.ai/api/v1",
-    "batchSize": 5,
-    "maxCalls": 20,
-    "maxOutputTokensPerCall": 6000,
-    "maxReservationUsd": "5.00",
+    "batchSize": 1,
+    "maxCalls": 100,
+    "maxOutputTokensPerCall": 2000,
+    "maxReservationUsd": "6.00",
     "noAutomaticRetry": true,
-    "outputDir": ".artifacts/planner-model-review-v4",
+    "outputDir": ".artifacts/planner-model-review-v5",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": true,
     "settlementAttempts": 60,
@@ -49,7 +49,7 @@
   },
   "issue": "https://github.com/loomarr/loomarr-models/issues/2",
   "promptVersion": "planner-model-review-v3",
-  "reviewId": "planner-model-review-v4",
+  "reviewId": "planner-model-review-v5",
   "reviewers": [
     {
       "family": "anthropic",

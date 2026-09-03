@@ -28,9 +28,9 @@ from loomarr_models.model_review import (
 from loomarr_models.review import derive_review, empty_decision
 
 
-CONFIG = ROOT / "experiments/planner-model-review-v4.json"
-ARTIFACTS = ROOT / ".artifacts/planner-model-review-v4"
-PUBLIC = ROOT / "reviews/planner-smoke-v1/model-review-v4"
+CONFIG = ROOT / "experiments/planner-model-review-v5.json"
+ARTIFACTS = ROOT / ".artifacts/planner-model-review-v5"
+PUBLIC = ROOT / "reviews/planner-smoke-v1/model-review-v5"
 
 
 def main() -> None:
@@ -185,7 +185,14 @@ def _decisions(
     attestations: list[dict[str, Any]], plan: Any
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     by_key = {(item["role"], item["traceId"]): item for item in attestations}
-    trace_ids = [trace_id for request in plan.requests[:10] for trace_id in request.traceIds]
+    trace_ids = [
+        trace_id
+        for request in plan.requests
+        if request.role == "primary"
+        for trace_id in request.traceIds
+    ]
+    if len(trace_ids) != 50:
+        raise ModelReviewError("primary review plan does not cover exactly 50 traces")
     decisions: list[dict[str, Any]] = []
     escalations: list[dict[str, Any]] = []
     for trace_id in trace_ids:

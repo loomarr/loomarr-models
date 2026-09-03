@@ -54,12 +54,12 @@ CONFIG_KEYS = {
 BINDING_KEYS = {"corpus", "corpusManifest", "contract", "denylist", "routeSnapshot", "budget"}
 EXECUTION = {
     "apiBaseUrl": "https://openrouter.ai/api/v1",
-    "batchSize": 5,
-    "maxCalls": 20,
-    "maxOutputTokensPerCall": 6000,
-    "maxReservationUsd": "5.00",
+    "batchSize": 1,
+    "maxCalls": 100,
+    "maxOutputTokensPerCall": 2000,
+    "maxReservationUsd": "6.00",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v4",
+    "outputDir": ".artifacts/planner-model-review-v5",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 60,
@@ -406,7 +406,10 @@ def _build_requests(
     config: dict[str, Any], traces: list[dict[str, Any]], snapshot: list[dict[str, Any]]
 ) -> list[RequestPlan]:
     execution = config["execution"]
-    batches = [traces[index : index + execution["batchSize"]] for index in range(0, len(traces), 5)]
+    batch_size = execution["batchSize"]
+    batches = [
+        traces[index : index + batch_size] for index in range(0, len(traces), batch_size)
+    ]
     result: list[RequestPlan] = []
     for reviewer, route in zip(config["reviewers"], snapshot, strict=True):
         prompt_price = Decimal(route["promptPriceUsdPerToken"])
@@ -519,7 +522,7 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v4"
+        config["reviewId"] != "planner-model-review-v5"
         or config["promptVersion"] != "planner-model-review-v3"
     ):
         raise ModelReviewError("unexpected model-review identity")
@@ -599,7 +602,7 @@ def _validate_budget(
         raise ModelReviewError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise ModelReviewError("spend ledger does not reconcile")
-    if authorization != Decimal("40.00") or reservation != Decimal("5.00"):
+    if authorization != Decimal("40.00") or reservation != Decimal("6.00"):
         raise ModelReviewError("review authorization or reservation drifted")
     projected = committed + reservation
     if projected > authorization:
