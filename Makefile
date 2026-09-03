@@ -1,4 +1,4 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval
+.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
@@ -81,3 +81,6 @@ preflight-planner-eval:
 
 run-planner-eval:
 	PYTHONPATH=src $(PYTHON) scripts/run_planner_adapter_eval.py
+
+replay-planner-eval:
+	PYTHONPATH=src $(PYTHON) scripts/replay_planner_adapter_eval.py

@@ -110,6 +110,19 @@ Copper Meridian 12
             },
         )
 
+    def test_strips_reasoning_when_decoding_removed_the_opening_marker(self):
+        raw = """choose the grounded result
+</think>
+
+{"channelName":"Test Signal","rationale":"Synthetic.","picks":[],"policy":{}}"""
+        self.assertEqual(
+            parse_qwen_turn(raw, 1),
+            {
+                "role": "assistant",
+                "content": '{"channelName":"Test Signal","rationale":"Synthetic.","picks":[],"policy":{}}',
+            },
+        )
+
     def test_malformed_tool_markup_remains_content_and_fails_later_schema_checks(self):
         raw = "<tool_call><function=catalog_search>junk</function></tool_call>"
         self.assertEqual(parse_qwen_turn(raw, 1), {"role": "assistant", "content": raw})

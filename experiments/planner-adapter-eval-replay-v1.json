@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "replayId": "planner-adapter-eval-parser-replay-v1",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/5",
+  "sourceExperiment": {
+    "path": "experiments/planner-adapter-eval-v1.json",
+    "sha256": "98d8f4e3105a51efa0a0168012d694ef68043aebf4394deeba734270d446403c"
+  },
+  "sourceRun": {
+    "directory": ".artifacts/runpod-planner-adapter-eval-v1",
+    "runManifest": {
+      "path": "run-manifest.json",
+      "sha256": "5e2ef670aabf7cd7cc6238c0a5ff1caff7d1b2c6766f594a3d2e6470ffdeb584"
+    },
+    "artifacts": {
+      "stockResults": {
+        "path": "stock-results.jsonl",
+        "sha256": "e22b4aa88750cf0b9e2b650c08eceed52e561c31c498328acafeb0f74983d4a1"
+      },
+      "stockGenerations": {
+        "path": "stock-generations.jsonl",
+        "sha256": "7e4d2e867ea258173f86c25505052ce53140d4e9dee27a6fb04019668a9386bb"
+      },
+      "adapterResults": {
+        "path": "adapter-results.jsonl",
+        "sha256": "ba57c5a3eefd538e3f04d693538b2d3a1dfc627601e4cefd0265c9e7fcab5e85"
+      },
+      "adapterGenerations": {
+        "path": "adapter-generations.jsonl",
+        "sha256": "d138a2cd3080f07d9de070f590e71a7e887edcae3e96eff3562d6917d826f79e"
+      },
+      "runLog": {
+        "path": "loomarr-planner-adapter-eval-v4.log",
+        "sha256": "bb7a30af7097128bfa8a22f9716c89c5b90a4ed14d9e79f10acbec17553c799c"
+      }
+    }
+  },
+  "outputDir": ".artifacts/planner-adapter-eval-replay-v1"
+}

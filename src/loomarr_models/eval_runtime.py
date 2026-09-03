@@ -202,7 +202,7 @@ class HuggingFaceTurnGenerator:
 
 def parse_qwen_turn(raw: str, call_number: int) -> dict[str, Any]:
     text = raw.replace("<|im_end|>", "").strip()
-    text = re.sub(r"\A<think>.*?</think>\s*", "", text, flags=re.DOTALL)
+    text = re.sub(r"\A(?:<think>)?.*?</think>\s*", "", text, count=1, flags=re.DOTALL)
     match = re.fullmatch(
         r".*?<tool_call>\s*<function=([^>\n]+)>\s*(.*?)</function>\s*</tool_call>\s*",
         text,
