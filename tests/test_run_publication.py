@@ -53,7 +53,11 @@ class RunPublicationTests(unittest.TestCase):
             self.assertGreaterEqual(outstanding, Decimal(publication["reservationUsd"]))
         else:
             self.assertEqual(publication["status"], "passed-settled")
-            self.assertGreaterEqual(Decimal(publication["providerCostUsd"]), Decimal("0"))
+            self.assertEqual(
+                Decimal(publication["providerCostUsd"]),
+                Decimal("0.1832042238675058"),
+            )
+            self.assertEqual(outstanding, Decimal("0.10"))
 
 
 if __name__ == "__main__":
