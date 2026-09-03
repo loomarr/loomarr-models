@@ -224,7 +224,7 @@ def _validate_shape(config: dict[str, Any]) -> None:
     required_run = {
         "runId": "qwen38-qlora-a40-smoke-v1",
         "seed": 3407,
-        "maxSeqLength": 1024,
+        "maxSeqLength": 4096,
         "maxSteps": 20,
         "perDeviceTrainBatchSize": 1,
         "gradientAccumulationSteps": 4,

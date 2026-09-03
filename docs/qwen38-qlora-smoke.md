@@ -39,6 +39,10 @@ The experiment has a `$1.50` reservation ceiling and a 9,000-second process alar
 LoRA adapter, tokenizer metadata, trainer checkpoints, and a hash-bound run manifest. Merging,
 quantizing, packaging, certification, or deployment belongs to later tracked work.
 
+The pinned tokenizer renders the certified traces at 3,179–3,287 tokens, with the final assistant
+response beginning as late as token 3,204. The smoke therefore uses a 4,096-token ceiling; 1,024
+truncated the response marker and was rejected before the first training step.
+
 ## Recipe provenance
 
 The code follows Unsloth's official Qwen3.8-27B conversational recipe at repository revision
