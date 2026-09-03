@@ -30,7 +30,7 @@ from loomarr_models.model_review import (
 from loomarr_models.review import derive_review, empty_decision
 
 
-CONFIG = ROOT / "experiments/planner-model-review-v9.json"
+CONFIG = ROOT / "experiments/planner-model-review-v10.json"
 
 
 def main() -> None:

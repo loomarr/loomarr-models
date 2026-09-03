@@ -26,12 +26,12 @@ def clean_git(_root: Path, _paths: object) -> str:
 class ModelReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config = load_config(ROOT / "experiments/planner-model-review-v9.json")
+        cls.config = load_config(ROOT / "experiments/planner-model-review-v10.json")
         cls.snapshot = json.loads(
-            (ROOT / "reviews/planner-smoke-v1/model-review-v9-route-snapshot.json").read_text()
+            (ROOT / "reviews/planner-smoke-v1/model-review-v10-route-snapshot.json").read_text()
         )
         cls.plan = preflight(
-            ROOT, ROOT / "experiments/planner-model-review-v9.json", git_probe=clean_git
+            ROOT, ROOT / "experiments/planner-model-review-v10.json", git_probe=clean_git
         )
 
     def test_live_route_check_accepts_exact_snapshot_and_rejects_drift(self):
@@ -97,6 +97,43 @@ class ModelReviewWorkflowTests(unittest.TestCase):
         ):
             with self.assertRaisesRegex(runner.OpenRouterHTTPError, "HTTP 500"):
                 runner._settle(config, "secret", "gen-1")
+
+    def test_provider_error_envelope_stops_before_settlement(self):
+        request = self.plan.requests[0]
+        one_call_plan = replace(
+            self.plan,
+            requestCount=1,
+            requests=(request,),
+            outputDir=".artifacts/provider-error-test",
+        )
+        response = {
+            "id": "gen-rate-limited",
+            "error": {"code": 429, "message": "temporarily rate-limited upstream"},
+        }
+        response_bytes = json.dumps(response).encode()
+        with tempfile.TemporaryDirectory() as directory:
+            temp_root = Path(directory)
+            with (
+                mock.patch.object(runner, "ROOT", temp_root),
+                mock.patch.object(
+                    runner, "_request_json", return_value=(response_bytes, response)
+                ) as transport,
+                self.assertRaisesRegex(ModelReviewError, "provider error 429"),
+            ):
+                runner.run(self.config, one_call_plan, "secret")
+            output = temp_root / one_call_plan.outputDir
+            self.assertEqual(transport.call_count, 1)
+            self.assertEqual(
+                (output / "calls/primary-00.response.json").read_bytes(), response_bytes
+            )
+            self.assertFalse((output / "calls/primary-00.settlement.json").exists())
+            state = json.loads((output / "run-state.json").read_text())
+            self.assertEqual((state["status"], state["completedCalls"]), ("failed", 0))
+            self.assertEqual(state["currentCall"]["responseId"], "gen-rate-limited")
+            self.assertEqual(
+                state["currentCall"]["responseSha256"],
+                hashlib.sha256(response_bytes).hexdigest(),
+            )
 
     def test_invalid_completion_is_persisted_settled_and_quarantined_without_retry(self):
         request = self.plan.requests[0]

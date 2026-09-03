@@ -44,7 +44,9 @@ title that the same request both requires and excludes, avoiding fixture-only se
 GPT-5.4 completion ceiling is raised to 4,000 tokens to reduce invalid reasoning-only completions while
 preserving one call per trace and no automatic inference retry. Its first launch stopped before inference
 when the pinned OpenAI route became unavailable; v9 now pins the same model and upstream revision through
-the single healthy `openai/flex` route.
+the single healthy `openai/flex` route. That route then rate-limited its first GPT call after all 50
+Gemini reviews had settled, so the partial v9 run stopped and charged only the exact `$0.967292` Gemini
+cost. V10 uses the healthy `openai/fast` route and adds explicit provider-error-envelope validation.
 
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned

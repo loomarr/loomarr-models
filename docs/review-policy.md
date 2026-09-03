@@ -21,7 +21,7 @@ trace-grounded evidence for each criterion. A trace-level approval is valid only
 ## Independent reviewers
 
 The current primary reviewer is `google/gemini-3.1-pro-preview` through the exact `google-ai-studio`
-route. The secondary reviewer is `openai/gpt-5.4` through the exact `openai/flex` route. They review all 50
+route. The secondary reviewer is `openai/gpt-5.4` through the exact `openai/fast` route. They review all 50
 traces in separate calls without seeing each other's output. Neither belongs to the Qwen candidate family,
 and neither reuses the unreliable Anthropic route from v7.
 
@@ -114,6 +114,14 @@ spent `$0` when the pinned `openai` route reported unavailable. V9 re-pins the s
 and upstream revision through the single healthy `openai/flex` route. Its exact byte-count upper bound is
 `$6.861311`, within a `$10` reservation and a projected aggregate commitment of
 `$19.562591391125471 / $40`.
+
+The flex attempt completed and settled all 50 Gemini reviews for `$0.967292`, then received a top-level
+upstream 429 envelope on its first GPT call. That envelope's generation lookup remained 404 not found,
+so the failed GPT call is accounted at `$0`; the exact Gemini cost is posted to the aggregate ledger.
+Review v10 rejects provider-error envelopes immediately instead of polling a nonexistent settlement and
+pins GPT-5.4 to the single healthy `openai/fast` route. Its 100-call, 4,000-token plan has an exact
+`$14.774516` worst case, a `$15` reservation, and a projected aggregate commitment of
+`$25.529883391125471 / $40`.
 
 ## Disagreement and escalation
 

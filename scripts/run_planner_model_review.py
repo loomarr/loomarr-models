@@ -33,7 +33,7 @@ from loomarr_models.model_review import (
 )
 
 
-DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v9.json"
+DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v10.json"
 
 
 class OpenRouterHTTPError(ModelReviewError):
@@ -109,22 +109,27 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
             response_sha = hashlib.sha256(response_bytes).hexdigest()
             _write_exclusive(response_path, response_bytes)
             response_id = response.get("id")
-            if not isinstance(response_id, str) or not response_id:
-                raise ModelReviewError("completion response has no generation id")
             response_usage = response.get("usage")
             reported_cost = (
                 response_usage.get("cost", "unknown")
                 if isinstance(response_usage, dict)
                 else "unknown"
             )
-            state["currentCall"].update(
-                {
-                    "responseId": response_id,
-                    "responseSha256": response_sha,
-                    "responseReportedCostUsd": str(reported_cost),
-                }
-            )
+            response_state = {
+                "responseSha256": response_sha,
+                "responseReportedCostUsd": str(reported_cost),
+            }
+            if isinstance(response_id, str) and response_id:
+                response_state["responseId"] = response_id
+            state["currentCall"].update(response_state)
             _write_atomic(output / "run-state.json", _pretty(state))
+            provider_error = response.get("error")
+            if isinstance(provider_error, dict):
+                code = provider_error.get("code", "unknown")
+                message = provider_error.get("message", "provider returned an error envelope")
+                raise ModelReviewError(f"completion provider error {code}: {message}")
+            if not isinstance(response_id, str) or not response_id:
+                raise ModelReviewError("completion response has no generation id")
             settlement_bytes, settlement = _settle(config, api_key, response_id)
             settlement_sha = hashlib.sha256(settlement_bytes).hexdigest()
             _write_exclusive(settlement_path, settlement_bytes)

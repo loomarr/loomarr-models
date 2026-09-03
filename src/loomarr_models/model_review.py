@@ -57,9 +57,9 @@ EXECUTION = {
     "batchSize": 1,
     "maxCalls": 100,
     "maxOutputTokensPerCall": 4000,
-    "maxReservationUsd": "10.00",
+    "maxReservationUsd": "15.00",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v9",
+    "outputDir": ".artifacts/planner-model-review-v10",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 60,
@@ -76,7 +76,7 @@ REVIEWERS = (
         "role": "secondary",
         "family": "openai",
         "model": "openai/gpt-5.4",
-        "providerTag": "openai/flex",
+        "providerTag": "openai/fast",
     },
 )
 
@@ -536,7 +536,7 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v9"
+        config["reviewId"] != "planner-model-review-v10"
         or config["promptVersion"] != "planner-model-review-v4"
     ):
         raise ModelReviewError("unexpected model-review identity")
@@ -616,7 +616,7 @@ def _validate_budget(
         raise ModelReviewError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise ModelReviewError("spend ledger does not reconcile")
-    if authorization != Decimal("40.00") or reservation != Decimal("10.00"):
+    if authorization != Decimal("40.00") or reservation != Decimal("15.00"):
         raise ModelReviewError("review authorization or reservation drifted")
     projected = committed + reservation
     if projected > authorization:

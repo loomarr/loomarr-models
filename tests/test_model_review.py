@@ -21,7 +21,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v9.json"
+CONFIG = ROOT / "experiments/planner-model-review-v10.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:
@@ -77,8 +77,8 @@ class ModelReviewPreflightTests(unittest.TestCase):
     def test_exact_hundred_call_plan_fits_reservation_and_aggregate_cap(self):
         self.assertEqual((self.plan.traceCount, self.plan.requestCount), (50, 100))
         self.assertEqual(self.plan.outputTokenUpperBound, 400000)
-        self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("10.00"))
-        self.assertEqual(self.plan.projectedSpendUsd, "19.562591391125471")
+        self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("15.00"))
+        self.assertEqual(self.plan.projectedSpendUsd, "25.529883391125471")
         self.assertEqual(self.plan.authorizationUsd, "40")
         self.assertEqual(
             [(item.role, item.batchIndex, len(item.traceIds)) for item in self.plan.requests],
@@ -127,11 +127,11 @@ class ModelReviewPreflightTests(unittest.TestCase):
         overflow["outstandingReservationsUsd"] = "0.00"
         overflow["committedSpendUsd"] = "35.00"
         with self.assertRaisesRegex(ModelReviewError, "exceed aggregate"):
-            _validate_budget(overflow, Decimal("10.00"))
+            _validate_budget(overflow, Decimal("15.00"))
         unreconciled = copy.deepcopy(ledger)
         unreconciled["committedSpendUsd"] = "5.00"
         with self.assertRaisesRegex(ModelReviewError, "does not reconcile"):
-            _validate_budget(unreconciled, Decimal("10.00"))
+            _validate_budget(unreconciled, Decimal("15.00"))
 
 
 class ModelReviewEvidenceTests(unittest.TestCase):
