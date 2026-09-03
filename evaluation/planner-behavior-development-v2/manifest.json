@@ -1,0 +1,62 @@
+{
+  "behaviorCounts": {
+    "ambiguous-intent-mapping": 10,
+    "canonical-argument-preservation": 10,
+    "complete-proposal-json": 10,
+    "one-tool-operation-per-turn": 10,
+    "structured-json-abstention": 10,
+    "synthetic-tool-error-recovery": 10
+  },
+  "bindings": {
+    "contract": {
+      "path": "contracts/planner-contract-v3.json",
+      "sha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "priorDevelopment": {
+      "count": 50,
+      "path": "evaluation/planner-development-v1/cases.jsonl",
+      "sha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209"
+    },
+    "priorTraining": {
+      "count": 50,
+      "path": "corpus/planner-smoke-v1/traces.jsonl",
+      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+    },
+    "reviewDecisions": {
+      "count": 120,
+      "path": "reviews/planner-behavior-v2.jsonl",
+      "sha256": "8972341262dae7485c0d376b71bb2d4f62f99b77d72444c8b98e4e201f20bc40"
+    },
+    "reviewPolicy": {
+      "path": "docs/planner-behavior-corpus-v2.md",
+      "sha256": "c953b2262d58c4c9955355d53072c04c28e8b8c3e29ca198967b7ef2bcc5cc4a"
+    },
+    "reviewValidator": {
+      "path": "src/loomarr_models/behavior_review.py",
+      "sha256": "a8c86e171433445b176c3f5395bfccbafb805508b799a69fd7073d5bcc639dcc"
+    },
+    "targetedValidator": {
+      "path": "src/loomarr_models/targeted.py",
+      "sha256": "41b0e7b353fe053e405a0215d76d6b3a563743a23020d2b85847f524c44da258"
+    }
+  },
+  "caseCount": 60,
+  "casesPath": "evaluation/planner-behavior-development-v2/cases.jsonl",
+  "casesSha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115",
+  "contractId": "loomarr-planner-contract-v3",
+  "contractSourceRevision": "d4718491584730a95fd3ad462074557a2e095564",
+  "corpusId": "planner-behavior-development-v2",
+  "disjointnessReportPath": "reports/planner-behavior-v2-disjointness.json",
+  "disjointnessReportSha256": "5414e3ffebf9262c0199633d272ad9f9e935c3457317978a59c27e11b9a05c21",
+  "fixtureId": "planner-behavior-development-catalog-v2",
+  "generator": "planner-behavior-development-generator-v2",
+  "generatorSha256": "1cd2884a600d78219bc83a954359e0310c135d2533079862ad3ffd6a5d19fc4f",
+  "schemaVersion": 1,
+  "status": "frozen-development-only",
+  "trainingDraftsPath": "corpus/planner-behavior-v2/drafts.jsonl",
+  "trainingDraftsSha256": "60b10f12d98c65a146ed0966917a8e3ab34045805968dd126e9f3ad86b6c6002"
+}

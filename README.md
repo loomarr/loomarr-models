@@ -92,6 +92,13 @@ by first divergence. The current 50-trace corpus does not authorize another QLoR
 targeted reviewed traces and a newly frozen disjoint development set must exist first. See
 [docs/planner-adapter-failure-analysis.md](docs/planner-adapter-failure-analysis.md).
 
+The no-spend first stage of
+[loomarr-models#9](https://github.com/loomarr/loomarr-models/issues/9) generates 120 targeted pending
+training drafts and a separate 60-case development gate across the six observed corrective behaviors.
+All four planner splits pass pairwise identity and normalized-content leakage checks. The review plan
+is hash-bound but keeps paid calls disabled; it does not authorize retraining. See
+[docs/planner-behavior-corpus-v2.md](docs/planner-behavior-corpus-v2.md).
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues privately as

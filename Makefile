@@ -1,10 +1,10 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: compile test check-generated check-development-eval check-review check-finalized check-environment validate-drafts
+check: compile test check-generated check-development-eval check-targeted-corpus check-review check-finalized check-environment validate-drafts
 
 compile:
 	$(PYTHON) -m compileall -q scripts src tests
@@ -26,6 +26,15 @@ generate-development-eval:
 
 check-development-eval:
 	$(PYTHON) scripts/build_planner_development_eval.py --check
+
+init-targeted-review:
+	$(PYTHON) scripts/build_planner_behavior_corpus.py --init-review
+
+generate-targeted-corpus:
+	$(PYTHON) scripts/build_planner_behavior_corpus.py
+
+check-targeted-corpus:
+	$(PYTHON) scripts/build_planner_behavior_corpus.py --check
 
 generate-review:
 	$(PYTHON) scripts/render_review_packet.py
