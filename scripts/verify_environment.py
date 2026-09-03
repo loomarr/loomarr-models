@@ -20,6 +20,7 @@ EXPECTED_PINS = {
     "unsloth": "2026.9.2",
     "unsloth-zoo": "2026.9.1",
 }
+EXPECTED_UV_X86_64_LINUX_SHA256 = "ec7a99cd05e0cd7f80243f135ce1361c76835cb0ee60055d14d20eba8eba1460"
 
 
 def digest(path: Path) -> str:
@@ -28,6 +29,20 @@ def digest(path: Path) -> str:
 
 def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    if manifest.get("platform") != {
+        "os": "linux",
+        "architecture": "amd64",
+        "gpuClass": "nvidia-48gb",
+        "validatedSku": "NVIDIA A40",
+    }:
+        raise SystemExit("environment platform differs from the pinned A40 lane")
+    resolver = manifest.get("resolver", {})
+    if (
+        resolver.get("name"),
+        resolver.get("version"),
+        resolver.get("releaseAssetSha256"),
+    ) != ("uv", "0.12.9", EXPECTED_UV_X86_64_LINUX_SHA256):
+        raise SystemExit("resolver identity or Linux x86_64 release hash drifted")
     requirements = manifest["requirements"]
     input_path = ROOT / requirements["inputPath"]
     overrides_path = ROOT / requirements["overridesPath"]

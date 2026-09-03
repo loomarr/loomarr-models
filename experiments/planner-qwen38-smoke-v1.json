@@ -12,7 +12,7 @@
     },
     "corpusManifest": {
       "path": "corpus/planner-smoke-v1/manifest.json",
-      "sha256": "33e58fe236bdced792d9fecfa1847237ccd8d26b631c9c4ea9c82075634c450a"
+      "sha256": "4f7bb7f4048eb33def2a2bf34ef74d02cc4444e7db9c16d3caeb6ebea18efac2"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",
@@ -24,7 +24,7 @@
     },
     "environment": {
       "path": "environments/qwen38-a40-v1.json",
-      "sha256": "7aead23bdac7f5a0140c5499c92e833224308f6bf523b75c556fbc81926aa41e"
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
     },
     "budget": {
       "path": "budgets/external-spend-v1.json"
