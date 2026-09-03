@@ -54,6 +54,11 @@ assistant-invented content. Two recovery traces exposed real contract gaps: one 
 a title query, and one omitted the requested genre from final policy. The canonical corpus remains
 pending while those reviewer and generator defects are corrected.
 
+V11 applies the recovery correction across all five variants and makes the auditor's fixture semantics
+explicit. A tool-returned reserved-ID fixture stands in for real catalog content and is not an invented
+title. The complete corpus will be reviewed again through the same healthy Gemini and GPT-5.4 fast
+routes before any trace is promoted.
+
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
 container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend. Neither command

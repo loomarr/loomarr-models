@@ -164,8 +164,18 @@ def family_messages(family: str, variant: int, item_number: int) -> tuple[str, l
         intent = f"Build a channel about the nonexistent synthetic motif {token}."
         messages = [tool_call(call_1, {"keywords": [token]}), tool_result(call_1, candidates=[]), tool_call(call_2, {"query": token}), tool_result(call_2, candidates=[]), final_message(f"{ADJECTIVES[variant]} Empty", [])]
     elif family == "tool-error-recovery":
-        intent = f"Build a synthetic {item['genres'][0].lower()} channel and recover from a fixture timeout {variant}."
-        messages = [tool_call(call_1, {"genres": item["genres"]}), tool_result(call_1, error="synthetic fixture timeout"), tool_call(call_2, {"query": item["genres"][0]}), tool_result(call_2, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Recovery", [item])]
+        intent = f"Build a synthetic adventure channel around {item['name']} and recover from a fixture timeout {variant}."
+        messages = [
+            tool_call(call_1, {"query": item["name"]}),
+            tool_result(call_1, error="synthetic fixture timeout"),
+            tool_call(call_2, {"genres": item["genres"]}),
+            tool_result(call_2, candidates=[item]),
+            final_message(
+                f"{ADJECTIVES[variant]} Recovery",
+                [item],
+                {"genres": {"include": item["genres"]}},
+            ),
+        ]
     elif family == "malformed-final-repair":
         intent = f"Build a channel around the synthetic title {item['name']} and repair malformed output."
         messages = [tool_call(call_1, {"query": item["name"]}), tool_result(call_1, candidates=[item]), {"role": "assistant", "content": "{not-json"}, {"role": "user", "content": "Return only valid proposal JSON using the already surfaced id."}, final_message(f"{ADJECTIVES[variant]} Repaired", [item])]

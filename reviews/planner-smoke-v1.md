@@ -407,9 +407,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-tool-error-recovery-01
 
 - Axis: `tool-error-recovery`
-- Intent: Build a synthetic adventure channel and recover from a fixture timeout 0.
+- Intent: Build a synthetic adventure channel around Cobalt Archive 41 and recover from a fixture timeout 0.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Cobalt Archive 41` → final picks: `Cobalt Archive 41`
+- Flow: call `catalog_search` `{"query": "Cobalt Archive 41"}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Cobalt Archive 41` → final picks: `Cobalt Archive 41`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -417,9 +417,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-tool-error-recovery-02
 
 - Axis: `tool-error-recovery`
-- Intent: Build a synthetic adventure channel and recover from a fixture timeout 1.
+- Intent: Build a synthetic adventure channel around Juniper Archive 42 and recover from a fixture timeout 1.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Juniper Archive 42` → final picks: `Juniper Archive 42`
+- Flow: call `catalog_search` `{"query": "Juniper Archive 42"}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Juniper Archive 42` → final picks: `Juniper Archive 42`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -427,9 +427,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-tool-error-recovery-03
 
 - Axis: `tool-error-recovery`
-- Intent: Build a synthetic adventure channel and recover from a fixture timeout 2.
+- Intent: Build a synthetic adventure channel around Lunar Archive 43 and recover from a fixture timeout 2.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Lunar Archive 43` → final picks: `Lunar Archive 43`
+- Flow: call `catalog_search` `{"query": "Lunar Archive 43"}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Lunar Archive 43` → final picks: `Lunar Archive 43`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -437,9 +437,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-tool-error-recovery-04
 
 - Axis: `tool-error-recovery`
-- Intent: Build a synthetic adventure channel and recover from a fixture timeout 3.
+- Intent: Build a synthetic adventure channel around Velvet Archive 44 and recover from a fixture timeout 3.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Velvet Archive 44` → final picks: `Velvet Archive 44`
+- Flow: call `catalog_search` `{"query": "Velvet Archive 44"}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Velvet Archive 44` → final picks: `Velvet Archive 44`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -447,9 +447,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-tool-error-recovery-05
 
 - Axis: `tool-error-recovery`
-- Intent: Build a synthetic adventure channel and recover from a fixture timeout 4.
+- Intent: Build a synthetic adventure channel around Amber Parade 45 and recover from a fixture timeout 4.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"query": "Adventure"}` → result candidates: `Amber Parade 45` → final picks: `Amber Parade 45`
+- Flow: call `catalog_search` `{"query": "Amber Parade 45"}` → result error: `synthetic fixture timeout` → call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Amber Parade 45` → final picks: `Amber Parade 45`
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**

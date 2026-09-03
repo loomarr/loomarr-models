@@ -91,8 +91,12 @@ class TrainingDataTests(unittest.TestCase):
         for trace in by_axis["tool-error-recovery"]:
             first = trace["messages"][2]["toolCalls"][0]["arguments"]
             second = trace["messages"][4]["toolCalls"][0]["arguments"]
-            self.assertEqual(set(first), {"genres"})
-            self.assertEqual(set(second), {"query"})
+            candidate = trace["messages"][5]["content"]["candidates"][0]
+            proposal = json.loads(trace["messages"][6]["content"])
+            self.assertEqual(first, {"query": candidate["name"]})
+            self.assertEqual(second, {"genres": ["Adventure"]})
+            self.assertIn(candidate["name"], trace["messages"][1]["content"])
+            self.assertEqual(proposal["policy"]["genres"]["include"], ["Adventure"])
 
 
 if __name__ == "__main__":

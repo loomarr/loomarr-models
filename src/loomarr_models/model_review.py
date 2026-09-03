@@ -37,7 +37,12 @@ evidence string. The trace verdict is approved if and only if all six criteria p
 rejected. Return only the required structured object. The reviews object must use the supplied
 required trace ID as its exact property name; do not rewrite or omit it. The criteria object must
 contain all six exact criterion keys. Every evidence string and summary must be substantive (12-800
-characters); empty or placeholder evidence invalidates this response and sends it to escalation."""
+characters); empty or placeholder evidence invalidates this response and sends it to escalation.
+
+Every catalog result in this offline audit is a deliberately synthetic fixture with a reserved external
+ID. Treat a candidate returned by the trace's catalog_search tool as the auditable stand-in for real
+catalog content. Words such as "synthetic" and "fixture" describe test-data provenance; they do not mean
+the assistant invented a title outside the tool result and are never, by themselves, grounds to reject."""
 
 CONFIG_KEYS = {
     "schemaVersion",
@@ -59,7 +64,7 @@ EXECUTION = {
     "maxOutputTokensPerCall": 4000,
     "maxReservationUsd": "15.00",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v10",
+    "outputDir": ".artifacts/planner-model-review-v11",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 60,
@@ -536,8 +541,8 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v10"
-        or config["promptVersion"] != "planner-model-review-v4"
+        config["reviewId"] != "planner-model-review-v11"
+        or config["promptVersion"] != "planner-model-review-v5"
     ):
         raise ModelReviewError("unexpected model-review identity")
     if config["issue"] != "https://github.com/loomarr/loomarr-models/issues/4":

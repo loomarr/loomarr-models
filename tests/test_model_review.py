@@ -21,7 +21,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v10.json"
+CONFIG = ROOT / "experiments/planner-model-review-v11.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:
@@ -119,6 +119,11 @@ class ModelReviewPreflightTests(unittest.TestCase):
                 self.assertEqual(criteria["required"], list(CRITERIA))
                 self.assertEqual(set(criteria["properties"]), set(CRITERIA))
             self.assertNotIn("reviewer output", request.payload["messages"][1]["content"].lower())
+            self.assertIn(
+                "deliberately synthetic fixture",
+                request.payload["messages"][0]["content"],
+            )
+            self.assertIn("reserved external", request.payload["messages"][0]["content"])
 
     def test_budget_refuses_overflow_or_unreconciled_ledger(self):
         ledger = json.loads((ROOT / "budgets/external-spend-v1.json").read_text())

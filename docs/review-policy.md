@@ -130,6 +130,14 @@ provenance as invented production content; tool-error-recovery-02 also reused a 
 query; and tool-error-recovery-05 omitted the requested Adventure genre from final policy. V10 remains
 partial evidence and does not mutate the canonical pending corpus.
 
+Review v11 changes all five recovery traces: the first call searches an explicitly named title, the
+simulated timeout recovers through alternate genre discovery, and the final policy preserves Adventure.
+Auditor prompt v5 also makes the frozen fixture contract explicit: a reserved-ID candidate returned by
+the synthetic catalog is the offline stand-in for real tool-returned content, not an assistant invention.
+V11 re-reviews the complete new corpus through the same healthy routes. Its exact byte-count worst case
+is `$14.925863`, within a `$15` reservation and a projected aggregate commitment of
+`$29.528923391125471 / $40`.
+
 ## Disagreement and escalation
 
 Only two approvals with all twelve criterion decisions passing derive an approved trace. Two rejections

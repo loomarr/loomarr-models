@@ -6,13 +6,13 @@
   "bindings": {
     "corpus": {
       "path": "corpus/planner-smoke-v1/drafts.jsonl",
-      "sha256": "54e3d370b7834bca63279d5b9bbc10fbba194432c10626004a8379e72a903968",
+      "sha256": "2ac2508c9cda5b70d77db8f72365c0192944a93b1bbd4071e00488b349d824ab",
       "traceCount": 50,
       "requireApproved": true
     },
     "corpusManifest": {
       "path": "corpus/planner-smoke-v1/draft-manifest.json",
-      "sha256": "d7d38486226e336bbb1573e76ca88d1b3fa1b15d5ec8148ffaf23ac6ba9e2919"
+      "sha256": "a63dffddf154075344342684d327081dbf1abcbb6bf882e6370b88dcf76c428e"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",
