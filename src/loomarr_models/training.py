@@ -14,11 +14,12 @@ from .validator import load_jsonl
 
 
 def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> dict[str, Any]:
+    from unsloth import FastModel
+    from unsloth.chat_templates import train_on_responses_only
+
     import torch
     from datasets import Dataset
     from trl import SFTConfig, SFTTrainer
-    from unsloth import FastModel
-    from unsloth.chat_templates import train_on_responses_only
 
     config = load_experiment(config_path)
     execution = config["execution"]
