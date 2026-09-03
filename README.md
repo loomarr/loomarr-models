@@ -42,7 +42,9 @@ Review v9 corrects the two remaining generator families and re-reviews the compl
 Ambiguous-mood candidates now contain explicit tone evidence; conflicting-intent traces use a named
 title that the same request both requires and excludes, avoiding fixture-only search language. The
 GPT-5.4 completion ceiling is raised to 4,000 tokens to reduce invalid reasoning-only completions while
-preserving one call per trace and no automatic inference retry.
+preserving one call per trace and no automatic inference retry. Its first launch stopped before inference
+when the pinned OpenAI route became unavailable; v9 now pins the same model and upstream revision through
+the single healthy `openai/flex` route.
 
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned

@@ -21,7 +21,7 @@ trace-grounded evidence for each criterion. A trace-level approval is valid only
 ## Independent reviewers
 
 The current primary reviewer is `google/gemini-3.1-pro-preview` through the exact `google-ai-studio`
-route. The secondary reviewer is `openai/gpt-5.4` through the exact `openai` route. They review all 50
+route. The secondary reviewer is `openai/gpt-5.4` through the exact `openai/flex` route. They review all 50
 traces in separate calls without seeing each other's output. Neither belongs to the Qwen candidate family,
 and neither reuses the unreliable Anthropic route from v7.
 
@@ -109,8 +109,11 @@ horror title while also excluding that same title; the planner performs one cont
 and returns an empty proposal that explains the contradiction. V9 re-reviews all 50 resulting traces so
 every attestation binds the corrected corpus. It retains one hundred one-trace calls and no inference
 retry, but raises the per-call output ceiling to 4,000 tokens because eight v8 GPT-5.4 calls spent their
-entire 2,000-token allowance on hidden reasoning. The exact byte-count upper bound is `$9.498421`, within
-a `$10` reservation and a projected aggregate commitment of `$19.562591391125471 / $40`.
+entire 2,000-token allowance on hidden reasoning. The first launch attempt stopped before inference and
+spent `$0` when the pinned `openai` route reported unavailable. V9 re-pins the same OpenAI model family
+and upstream revision through the single healthy `openai/flex` route. Its exact byte-count upper bound is
+`$6.861311`, within a `$10` reservation and a projected aggregate commitment of
+`$19.562591391125471 / $40`.
 
 ## Disagreement and escalation
 

@@ -76,7 +76,7 @@ REVIEWERS = (
         "role": "secondary",
         "family": "openai",
         "model": "openai/gpt-5.4",
-        "providerTag": "openai",
+        "providerTag": "openai/flex",
     },
 )
 

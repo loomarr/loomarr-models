@@ -21,8 +21,8 @@
       "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
     },
     "routeSnapshot": {
-      "path": "reviews/planner-smoke-v1/model-review-v8-route-snapshot.json",
-      "sha256": "b8a1df10f2709073885e912bcea98cb6a4002e784e83b4c9c5d1fc3846937f02"
+      "path": "reviews/planner-smoke-v1/model-review-v9-route-snapshot.json",
+      "sha256": "73d1dff4cffd4d006c8a50b6ef4a60cd374b9901eb98ead2ac3597b29c2ea45a"
     }
   },
   "candidateFamily": "qwen",
@@ -60,7 +60,7 @@
     {
       "family": "openai",
       "model": "openai/gpt-5.4",
-      "providerTag": "openai",
+      "providerTag": "openai/flex",
       "role": "secondary"
     }
   ],

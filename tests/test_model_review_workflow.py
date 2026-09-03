@@ -28,7 +28,7 @@ class ModelReviewWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.config = load_config(ROOT / "experiments/planner-model-review-v9.json")
         cls.snapshot = json.loads(
-            (ROOT / "reviews/planner-smoke-v1/model-review-v8-route-snapshot.json").read_text()
+            (ROOT / "reviews/planner-smoke-v1/model-review-v9-route-snapshot.json").read_text()
         )
         cls.plan = preflight(
             ROOT, ROOT / "experiments/planner-model-review-v9.json", git_probe=clean_git
