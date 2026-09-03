@@ -1,0 +1,37 @@
+{
+  "artifacts": [
+    {
+      "path": "corpus/planner-behavior-v2/draft-manifest.json",
+      "sha256": "ae941cf84983727f22e068c7a7af21b8507cbfd22fc837dab9dba6f2dcb67627"
+    },
+    {
+      "path": "corpus/planner-behavior-v2/drafts.jsonl",
+      "sha256": "60b10f12d98c65a146ed0966917a8e3ab34045805968dd126e9f3ad86b6c6002"
+    },
+    {
+      "path": "evaluation/planner-behavior-development-v2/cases.jsonl",
+      "sha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115"
+    },
+    {
+      "path": "evaluation/planner-behavior-development-v2/manifest.json",
+      "sha256": "77708686a20ba908287320c59552ca958721fdfef585f3a99a9613944c537eac"
+    },
+    {
+      "path": "experiments/planner-behavior-review-v2.json",
+      "sha256": "f085832bf2654d889aad6ea2d9115aed8101ffa0a4e2c973b452fc8842b28fb0"
+    },
+    {
+      "path": "reports/planner-behavior-v2-disjointness.json",
+      "sha256": "5414e3ffebf9262c0199633d272ad9f9e935c3457317978a59c27e11b9a05c21"
+    }
+  ],
+  "generator": {
+    "path": "scripts/build_planner_behavior_corpus.py",
+    "sha256": "1cd2884a600d78219bc83a954359e0310c135d2533079862ad3ffd6a5d19fc4f"
+  },
+  "nextGate": "live no-inference route/schema and pricing preflight before any paid review",
+  "publicationId": "planner-behavior-corpus-v2",
+  "schemaVersion": 1,
+  "status": "draft-no-spend",
+  "trainingAuthorized": false
+}
