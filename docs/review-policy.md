@@ -94,6 +94,15 @@ v8 request bodies at no more than `$6.7973455`, projecting aggregate commitments
 `$14.564613891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
 to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exact ledger value.
 
+Review v8 completed all 100 settled observations for exactly `$2.4979775`. Gemini returned 50 valid
+approvals; GPT-5.4 returned 42 valid reviews and eight quarantined length completions. Thirty-six traces
+received two approvals. Fourteen remain pending: all five ambiguous-mood traces and one conflicting-intent
+trace were rejected by GPT-5.4, while two keyword-discovery, four other conflicting-intent, and two
+tool-error-recovery traces lack a valid GPT-5.4 attestation. The rejection evidence shows that genre alone
+does not ground a requested mood and that synthetic fixture-group language is not representable through
+the production search contract. Those are generator defects to correct before replacement review; the
+canonical corpus remains unchanged.
+
 ## Disagreement and escalation
 
 Only two approvals with all twelve criterion decisions passing derive an approved trace. Two rejections

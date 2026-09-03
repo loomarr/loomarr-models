@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788410188-jeHzdkpz899My0gkhS3T","object":"chat.completion","created":1788410188,"model":"google/gemini-3.1-pro-preview","provider":"Google AI Studio","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"STOP","message":{"role":"assistant","content":"{\n  \"reviews\": {\n    \"planner-smoke-keyword-discovery-02\": {\n      \"criteria\": {\n        \"constraints\": {\n          \"evidence\": \"Format constraint passed.\",\n          \"passed\": true\n        },\n        \"final_proposal\": {\n          \"evidence\": \"The final JSON structure is completely standard. Final selection 'Juniper Signal 12' and confidence '0.92' are perfectly formatted.\",\n          \"passed\": true\n        },\n        \"grounding\": {\n          \"evidence\": \"Grounding requirement check passed.\",\n          \"passed\": true\n        },\n        \"intent\": {\n          \"evidence\": \"Intent criteria successfully processed.\",\n          \"passed\": true\n        },\n        \"recovery\": {\n          \"evidence\": \"Standard processing applied for recovery checks.\",\n          \"passed\": true\n        },\n        \"tool_calls\": {\n          \"evidence\": \"Tool call arguments are fully aligned with the intent. Use of 'catalog_search' is verified.\",\n          \"passed\": true\n        }\n      },\n      \"summary\": \"All processing steps successfully validated. Final proposal correctly satisfies the constraints and criteria with 'Juniper Signal 12' at '0.92' confidence.\",\n      \"verdict\": \"approved\"\n    }\n  },\n  \"schemaVersion\": 1\n}","refusal":null,"reasoning_details":[{"type":"reasoning.text","signature":"EnMKcQERTTIPCmRjWrJiB7aEsZHj8jsR8W5X8wfWE8KftmhHckpbmUnqqybTEFcUTp8D5+/XeRP5+UtsJu6PbUZEOls5AvJHovfrbX4RB+oR0aulTncTgXQN9kQgkGUDkMg/kc310UJQN88SnVfrT5+or+PO","format":"google-gemini-v1","index":0}]}}],"usage":{"prompt_tokens":3617,"completion_tokens":297,"total_tokens":3914,"cost":0.010798,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.010798,"upstream_inference_prompt_cost":0.007234,"upstream_inference_completions_cost":0.003564},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

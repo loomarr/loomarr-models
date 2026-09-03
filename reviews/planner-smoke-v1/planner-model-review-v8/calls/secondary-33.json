@@ -1,0 +1,14 @@
+{
+  "batchIndex": 33,
+  "contentError": "completion finish reason is 'length'",
+  "requestSha256": "d855d9c3231aaafa67a6a83fa293951ff807dda139d8b35175b40483bc78f280",
+  "responseSha256": "225aa550967ebb81508c1c7711c04b489546637c40dddd7300d0b7bc59cbdfb4",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.0395025",
+  "settlementSha256": "2f6b19ec101c5782886c811e0c610d52d6f80062e51e4b5c3aa2071ffaf3325a",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-conflicting-intent-04"
+  ]
+}

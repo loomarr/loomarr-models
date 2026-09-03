@@ -1,0 +1,14 @@
+{
+  "batchIndex": 42,
+  "contentError": "completion finish reason is 'length'",
+  "requestSha256": "a89c3334803bf5f9ddbdbd2486a91a317e7a4aaa4610886335144cdf90d02a1c",
+  "responseSha256": "d5fde3dd3dc4c050ec5448ff894bac5fc9643a23e3817ab27882f928eebe0ce9",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.0397175",
+  "settlementSha256": "75b9e8373bb9d6ddba393075deddbbfbd00db0537d468778bcb769c842c8c8b5",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-tool-error-recovery-03"
+  ]
+}

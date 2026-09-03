@@ -1,0 +1,267 @@
+{
+  "count": 14,
+  "reviewId": "planner-model-review-v8",
+  "schemaVersion": 1,
+  "traces": [
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "529da5c0e2f4be537fcedc7fcf935941dadbe9ac56b26d522665650221da2014",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "a8e40e321184226bc677ee44cfcb62716d11fd37b01a1c14e8e53fe961355c61",
+        "responseSha256": "4ae4f1454cbb7526fd386c1d4fceea6797a44797619a08f5c00ef30163c19e1e",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-keyword-discovery-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "9e0dd5f64c9c089cc71670cd28c79d8167a823523d433a7131ddab757e529141",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "87a3fea39243ae88d500353e26db678f235a1319d84e410eb7693478d17cfc1a",
+        "responseSha256": "debc0e3186c7174d759c1e507d5a3f4dc03d40cc238b3080b1c74a137d56eff9",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-keyword-discovery-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "b8adf7288a8064df2731349185b360958b8d3971e37697ac80be4f27dcb90955",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "4741c26f7f2d44dfe7af9515f988f17905d3c38a54e68267c4ac6bc4229a35de",
+        "failedCriteria": [
+          "intent",
+          "grounding",
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "3fc2c3e1d70eb996e5a08672514ebec9e8763aee52c8b573ebfc4bbbaa9549bb",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "38e059d990d439daab685185be13004188eeb1ab4b5a5405bc721eb9f15782d2",
+        "failedCriteria": [
+          "intent",
+          "grounding",
+          "recovery",
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "061e0113adeae482d9e6770e55333f54fd8786f709a526d0df597a68d256a5fe",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "0aafd7db4c7860ebce22326b2cbbda631a04ad97540ddb312ec8cf0e810b2e51",
+        "failedCriteria": [
+          "intent",
+          "grounding",
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "eb570b7c5e72dd47fd7872414ed02d68dbe2936ffe3dc56ff3a7f493cb38dcf5",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "df2300b3df430972438c168e2a821260af4cba7464ddbc9639112b3cc9dbf935",
+        "failedCriteria": [
+          "intent",
+          "grounding",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "2d28552fdc96cbdcea7aef63112a165f563a3ff974b1f9d213eac764d29643e4",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "94be139d04492ad9db890efe9ac0208d5adc962068569aa6f8070c8f93ccb4db",
+        "failedCriteria": [
+          "intent",
+          "grounding",
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "a8cecdadb6a9d68f591d98df8c265fc9e8cae2df88aa57ced963595a8cd14ec0",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "a318d3d190837f5536915be82dd31e6c3a6c121c1baf56e2d9ef95a9db21d05f",
+        "failedCriteria": [
+          "intent",
+          "tool_calls"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-conflicting-intent-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "c828c200f0f08762a986db88644e4e6a5919bad428351659068042b5de41f3a9",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "fd6be27de80801112120f3539a1c2d4391af5ed6c05a4eac52ed6a16fd7f56d6",
+        "responseSha256": "e69b6667add07a357a6ba3401f9a83df200a67332961badab549885277fa9499",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-conflicting-intent-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "e76ab245cb57fded5efc14c94c2653c49a20eb5a8d4fa5895345c167d513f0b8",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "b1dccee54c610c4d59da0ab5c5aff27f3915f08a2e11ec5c63a4b132c7a8d577",
+        "responseSha256": "0dd165ae7765772cd4b436004163c7a716e897beec079a33eddf64c0036f0837",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-conflicting-intent-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "6d4d2feafd9c67ce6cd6ecad1780c16c43a36e1f4a93b0b6d33a35b14d93561b",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "147bd7187651ad1878e59dd1f5519f5d0dcbb2cef3e896cb852923e7741e69be",
+        "responseSha256": "225aa550967ebb81508c1c7711c04b489546637c40dddd7300d0b7bc59cbdfb4",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-conflicting-intent-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "96ea9a350ade3a7674842b83f5bb4efaacf53c4982851b1a9dc8377fce4b41ad",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "127ea7b70a15980cb9108dbb9879e95257a155657eae31a9ff83c70d05416ddf",
+        "responseSha256": "5208cb0f907d978bd743af7ee50535a5d059f615d25957df450cf49ac4b81904",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-conflicting-intent-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "d011e9edd21f087577b71e3951b2178e8f5c11bcc4e335c1a503075f35c9037f",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "4f5236bb0e0938c4f709576f99c695e9124408d098a145b1b42014fa739272bb",
+        "responseSha256": "d5fde3dd3dc4c050ec5448ff894bac5fc9643a23e3817ab27882f928eebe0ce9",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "aa4ec6999812b66732ebd2a0519637281f352c108c37f220be6adca5f0862ea1",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "664d583c7b08fa2fa87e82078c923b90e3f9772853e2adb2e74b1bc41ed333f2",
+        "responseSha256": "cd96d6089d9fc989e6f3e6ef302ead8a1b6d69ebb797ad2ccf0e61b7d3cd8539",
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "invalid"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-04"
+    }
+  ]
+}
