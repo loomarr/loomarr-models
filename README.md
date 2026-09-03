@@ -17,12 +17,13 @@ make check
 ```
 
 `validate-corpus` accepts reviewed artifacts only. Draft validation is available explicitly for the
-human-review workflow and never promotes a draft into training data.
+independent-review workflow and never promotes a draft into training data.
 
-Review decisions have separate primary and secondary evidence. Exactly 22 traces require a second,
-distinct GitHub reviewer. Once all required decisions approve, `make finalize-corpus` creates the
-immutable 50-trace artifact, manifest, and validation report; it refuses pending, rejected, disputed,
-partial, or drifted inputs.
+Every trace requires separate Claude Sonnet 5 and Gemini 3.1 Pro attestations through pinned OpenRouter
+provider routes. The two model families remain blind to each other's output and outside the Qwen
+candidate family. Once both pass all six criteria for all 50 traces, `make finalize-corpus` creates the
+immutable artifact, manifest, and validation report. Any disagreement, rejection, invalid response,
+route drift, partial run, or unsettled charge remains non-approved and produces a targeted escalation.
 
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
@@ -31,7 +32,7 @@ downloads model weights or starts training.
 
 Issue [loomarr/loomarr#938](https://github.com/loomarr/loomarr/issues/938) adds the no-spend QLoRA
 smoke runner. Its checked-in experiment intentionally fails preflight while the 50 traces remain
-pending review. See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the NVIDIA training
+pending independent review. See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the NVIDIA training
 lane, the 64 GB Mac development/evaluation lane, and the paid-run stop point.
 
 ## Contributing and security

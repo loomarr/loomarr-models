@@ -13,4 +13,4 @@ Before opening a pull request:
 
 Never commit credentials, `.env` files, household data, certification holdouts, downloaded model
 weights or training checkpoints. Generated training artifacts require the documented independent
-human-review workflow and must pass the fail-closed finalizer.
+review workflow and must pass the fail-closed finalizer.

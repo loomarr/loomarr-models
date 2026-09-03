@@ -215,7 +215,7 @@ def build_outputs() -> tuple[bytes, bytes]:
     manifest = {
         "schemaVersion": 1,
         "corpusId": "planner-smoke-v1",
-        "status": "draft-pending-human-review",
+        "status": "draft-pending-independent-review",
         "traceCount": len(traces),
         "familyCounts": {family: 5 for family in FAMILIES},
         "tracesPath": str(OUT_PATH.relative_to(ROOT)),
@@ -256,11 +256,23 @@ def main() -> None:
         return
     if args.migrate_pending_review:
         legacy = [json.loads(line) for line in REVIEW_PATH.read_text(encoding="utf-8").splitlines() if line]
-        expected = [
+        flat_pending = [
             {"traceId": trace_id, "status": "pending", "reviewer": "", "reviewedAt": None, "notes": ""}
             for trace_id in expected_trace_ids()
         ]
-        if legacy != expected:
+        structured_pending = len(legacy) == len(expected_trace_ids()) and all(
+            isinstance(item, dict)
+            and item.get("traceId") == trace_id
+            and item.get("primary")
+            == {"verdict": "pending", "reviewer": "", "reviewedAt": None, "notes": ""}
+            and isinstance(item.get("secondary"), dict)
+            and item["secondary"].get("verdict") in {"pending", "not-required"}
+            and item["secondary"].get("reviewer") == ""
+            and item["secondary"].get("reviewedAt") is None
+            and item["secondary"].get("notes") == ""
+            for item, trace_id in zip(legacy, expected_trace_ids(), strict=True)
+        )
+        if legacy != flat_pending and not structured_pending:
             raise SystemExit("refusing migration: review file is not the exact unevidenced legacy pending set")
         REVIEW_PATH.write_bytes(default_review_bytes())
         return

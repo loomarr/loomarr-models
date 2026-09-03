@@ -66,7 +66,7 @@ class ExperimentPreflightTests(unittest.TestCase):
 
     def test_refuses_blocked_experiment_after_review(self):
         config = self._load_config()
-        config["status"] = "blocked-pending-human-review"
+        config["status"] = "blocked-pending-independent-review"
         self._write_config(config)
         with self.assertRaisesRegex(PreflightError, "not ready-for-smoke"):
             preflight(self.root, self.config_path, git_probe=self._clean_git)

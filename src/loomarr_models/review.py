@@ -9,13 +9,12 @@ from typing import Any, Iterable
 
 
 REVIEW_SCHEMA_VERSION = 1
-SECONDARY_ALL_FAMILIES = {
-    "empty-results",
-    "tool-error-recovery",
-    "malformed-final-repair",
-}
 TRACE_ID = re.compile(r"^planner-smoke-(?P<family>[a-z-]+)-(?P<variant>\d{2})$")
-REVIEWER_ID = re.compile(r"^github:[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$")
+GITHUB_REVIEWER_ID = re.compile(r"^github:[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$")
+MODEL_REVIEWER_IDS = {
+    "openrouter:anthropic/claude-sonnet-5",
+    "openrouter:google/gemini-3.1-pro-preview",
+}
 RFC3339_UTC = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$")
 PERSON_KEYS = {"verdict", "reviewer", "reviewedAt", "notes"}
 DECISION_KEYS = {"schemaVersion", "traceId", "primary", "secondary"}
@@ -35,10 +34,9 @@ class DerivedReview:
 
 
 def secondary_review_required(trace_id: str) -> bool:
-    match = TRACE_ID.fullmatch(trace_id)
-    if not match:
+    if not TRACE_ID.fullmatch(trace_id):
         raise ReviewError(f"invalid planner smoke trace id: {trace_id!r}")
-    return match.group("family") in SECONDARY_ALL_FAMILIES or match.group("variant") == "01"
+    return True
 
 
 def empty_decision(trace_id: str) -> dict[str, Any]:
@@ -99,8 +97,6 @@ def derive_review(decision: dict[str, Any], *, require_complete: bool = False) -
         (secondary["reviewer"], secondary["reviewedAt"], secondary["notes"])
     ):
         raise ReviewError(f"{trace_id}: non-required secondary review carries evidence")
-    if primary["verdict"] != "approved" and required and secondary["verdict"] != "pending":
-        raise ReviewError(f"{trace_id}: secondary decision cannot precede primary approval")
     if (
         required
         and secondary["verdict"] in {"approved", "rejected"}
@@ -113,16 +109,23 @@ def derive_review(decision: dict[str, Any], *, require_complete: bool = False) -
         if secondary_time <= primary_time:
             raise ReviewError(f"{trace_id}: secondary review must follow primary review")
 
-    if primary["verdict"] == "rejected":
+    if required and primary["verdict"] == secondary["verdict"] == "approved":
+        status = "approved"
+    elif required and primary["verdict"] == secondary["verdict"] == "rejected":
+        status = "rejected"
+    elif required:
+        status = "pending"
+    elif primary["verdict"] == "rejected":
         status = "rejected"
     elif primary["verdict"] == "pending":
-        status = "pending"
-    elif required and secondary["verdict"] != "approved":
         status = "pending"
     else:
         status = "approved"
     if require_complete and status != "approved":
-        detail = "review disagreement" if secondary["verdict"] == "rejected" else "review incomplete"
+        complete_verdicts = primary["verdict"] in {"approved", "rejected"} and secondary[
+            "verdict"
+        ] in {"approved", "rejected"}
+        detail = "review disagreement or rejection" if complete_verdicts else "review incomplete"
         raise ReviewError(f"{trace_id}: {detail}; frozen corpus requires approval")
 
     reviewed_at = (
@@ -174,8 +177,12 @@ def _validate_person(
         if reviewer != "" or reviewed_at is not None or notes != "":
             raise ReviewError(f"{trace_id}: {label} {verdict} review carries false evidence")
     else:
-        if not isinstance(reviewer, str) or not REVIEWER_ID.fullmatch(reviewer):
-            raise ReviewError(f"{trace_id}: {label} reviewer must be github:<login>")
+        if not isinstance(reviewer, str) or (
+            not GITHUB_REVIEWER_ID.fullmatch(reviewer) and reviewer not in MODEL_REVIEWER_IDS
+        ):
+            raise ReviewError(
+                f"{trace_id}: {label} reviewer must be github:<login> or a pinned model reviewer"
+            )
         _parse_timestamp(trace_id, label, reviewed_at)
         if not isinstance(notes, str) or not notes.strip():
             raise ReviewError(f"{trace_id}: {label} decision requires a note")

@@ -21,7 +21,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Juniper Voyage 02"}` → result candidates: `Juniper Voyage 02` → final picks: `Juniper Voyage 02`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-title-search-03
@@ -31,7 +31,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Lunar Voyage 03"}` → result candidates: `Lunar Voyage 03` → final picks: `Lunar Voyage 03`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-title-search-04
@@ -41,7 +41,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Velvet Voyage 04"}` → result candidates: `Velvet Voyage 04` → final picks: `Velvet Voyage 04`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-title-search-05
@@ -51,7 +51,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Amber Harbor 05"}` → result candidates: `Amber Harbor 05` → final picks: `Amber Harbor 05`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-genre-discovery-01
@@ -71,7 +71,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"era": "1990s", "genres": ["Comedy"], "media_type": "series"}` → result candidates: `Juniper Harbor 07` → final picks: `Juniper Harbor 07`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-genre-discovery-03
@@ -81,7 +81,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"era": "2000s", "genres": ["Mystery"], "media_type": "movie"}` → result candidates: `Lunar Harbor 08` → final picks: `Lunar Harbor 08`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-genre-discovery-04
@@ -91,7 +91,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"era": "2010s", "genres": ["Animation"], "media_type": "series"}` → result candidates: `Velvet Harbor 09` → final picks: `Velvet Harbor 09`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-genre-discovery-05
@@ -101,7 +101,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"era": "2020s", "genres": ["Documentary"], "media_type": "movie"}` → result candidates: `Amber Signal 10` → final picks: `Amber Signal 10`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-keyword-discovery-01
@@ -121,7 +121,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["paper moons"], "media_type": "series"}` → result candidates: `Juniper Signal 12` → final picks: `Juniper Signal 12`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-keyword-discovery-03
@@ -131,7 +131,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["hidden gardens"], "media_type": "movie"}` → result candidates: `Lunar Signal 13` → final picks: `Lunar Signal 13`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-keyword-discovery-04
@@ -141,7 +141,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["midnight trains"], "media_type": "series"}` → result candidates: `Velvet Signal 14` → final picks: `Velvet Signal 14`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-keyword-discovery-05
@@ -151,7 +151,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["glass oceans"], "media_type": "movie"}` → result candidates: `Amber Archive 15` → final picks: `Amber Archive 15`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-include-01
@@ -171,7 +171,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Juniper Archive 17"}` → result candidates: `Juniper Archive 17` → final picks: `Juniper Archive 17`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-include-03
@@ -181,7 +181,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Lunar Archive 18"}` → result candidates: `Lunar Archive 18` → final picks: `Lunar Archive 18`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-include-04
@@ -191,7 +191,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Velvet Archive 19"}` → result candidates: `Velvet Archive 19` → final picks: `Velvet Archive 19`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-include-05
@@ -201,7 +201,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"query": "Amber Parade 20"}` → result candidates: `Amber Parade 20` → final picks: `Amber Parade 20`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-exclude-01
@@ -221,7 +221,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Juniper Parade 22`, `Juniper Parade 522 After Dark` → final picks: `Juniper Parade 22`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-exclude-03
@@ -231,7 +231,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Lunar Parade 23`, `Lunar Parade 523 After Dark` → final picks: `Lunar Parade 23`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-exclude-04
@@ -241,7 +241,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Velvet Parade 24`, `Velvet Parade 524 After Dark` → final picks: `Velvet Parade 24`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-must-exclude-05
@@ -251,7 +251,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Adventure"]}` → result candidates: `Amber Voyage 25`, `Amber Voyage 525 After Dark` → final picks: `Amber Voyage 25`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-ambiguous-intent-01
@@ -271,7 +271,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["bright"]}` → result candidates: `Juniper Voyage 27` → final picks: `Juniper Voyage 27`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-ambiguous-intent-03
@@ -281,7 +281,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["restless"]}` → result candidates: `Lunar Voyage 28` → final picks: `Lunar Voyage 28`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-ambiguous-intent-04
@@ -291,7 +291,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["curious"]}` → result candidates: `Velvet Voyage 29` → final picks: `Velvet Voyage 29`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-ambiguous-intent-05
@@ -301,7 +301,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"keywords": ["windswept"]}` → result candidates: `Amber Harbor 30` → final picks: `Amber Harbor 30`
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-conflicting-intent-01
@@ -321,7 +321,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 1"}` → result candidates: none → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-conflicting-intent-03
@@ -331,7 +331,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 2"}` → result candidates: none → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-conflicting-intent-04
@@ -341,7 +341,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 3"}` → result candidates: none → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-conflicting-intent-05
@@ -351,7 +351,7 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
 - Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 4"}` → result candidates: none → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
-- Secondary review: not required; notes: —
+- Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
 
 ## planner-smoke-empty-results-01

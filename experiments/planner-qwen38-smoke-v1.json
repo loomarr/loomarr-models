@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "experimentId": "planner-qwen38-smoke-v1",
   "issue": "https://github.com/loomarr/loomarr/issues/938",
-  "status": "blocked-pending-human-review",
+  "status": "blocked-pending-independent-review",
   "bindings": {
     "corpus": {
       "path": "corpus/planner-smoke-v1/drafts.jsonl",
@@ -12,7 +12,7 @@
     },
     "corpusManifest": {
       "path": "corpus/planner-smoke-v1/draft-manifest.json",
-      "sha256": "d9ba65b112fb3d3b721ce3b064645ea3a851a32d64da20eaedc2c81f2e923bd7"
+      "sha256": "603b7601b1c7fea8474ecfd8ac98216707c0ebba5835f52d1ed05ceabf03b074"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",

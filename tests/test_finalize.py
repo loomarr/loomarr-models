@@ -59,7 +59,7 @@ class FinalizeTests(unittest.TestCase):
         report = json.loads(report_bytes)
         self.assertEqual(len(trace_bytes.splitlines()), 50)
         self.assertEqual(manifest["status"], "reviewed-frozen")
-        self.assertEqual(manifest["secondaryReviewCount"], 22)
+        self.assertEqual(manifest["secondaryReviewCount"], 50)
         self.assertEqual(report["result"], "pass")
         self.assertEqual((report["traces"], report["approved"], report["pending"]), (50, 50, 0))
         self.assertEqual(report["tracesSha256"], hashlib.sha256(trace_bytes).hexdigest())
