@@ -118,7 +118,7 @@ class BehaviorReviewPreflightTests(unittest.TestCase):
         self.assertEqual(plan.projectedSpendUsd, "39.8611685675672820")
         self.assertEqual(request_plan_bytes(plan), CORRECTED_REQUEST_PLAN_PATH.read_bytes())
         report = json.loads(CORRECTED_REPORT_PATH.read_text(encoding="utf-8"))
-        self.assertFalse(report["paidReviewAuthorized"])
+        self.assertTrue(report["paidReviewAuthorized"])
         self.assertEqual(report["inferenceCalls"], 0)
 
     def test_multi_trace_batch_stays_disabled_without_exact_compile_proof(self):

@@ -33,7 +33,7 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "7ebe01885231a854c9ae453d2d798f58293f3787f7f22c0ad37092a452cd120a"
+      "sha256": "f49ac15634ac528ca87b6592ab3425070591fbd2006959f7c9eee94bd5915568"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
@@ -51,7 +51,7 @@
   "contractSourceRevision": "d4718491584730a95fd3ad462074557a2e095564",
   "corpusId": "planner-behavior-development-v2",
   "disjointnessReportPath": "reports/planner-behavior-v2-disjointness.json",
-  "disjointnessReportSha256": "29296e2d539865b44ca5ff1ca23b3d55c3166af976fb9577674d936d83ab0835",
+  "disjointnessReportSha256": "dfefd71fe5c6eba3ab1771b52b1f56e4dc5c7be2569afa2b5e48d0627ea160ed",
   "fixtureId": "planner-behavior-development-catalog-v2",
   "generator": "planner-behavior-development-generator-v2",
   "generatorSha256": "d8976ce933d3e229a755808125d121dbde55026be9bf1452d1ccc3a6caf71838",

@@ -90,18 +90,23 @@ class CorrectedRouteRefreshTests(unittest.TestCase):
             refresh.fetch_snapshot(self.config, "secret", fetch=fetch_incomplete)
 
     def test_only_disabled_v3_config_can_refresh(self):
-        self.assertEqual(refresh.load_refresh_config(CONFIG_PATH), self.config)
-        enabled = copy.deepcopy(self.config)
-        enabled["status"] = "ready-for-review"
-        enabled["execution"]["paidReviewAuthorized"] = True
+        self.assertEqual(
+            refresh.load_refresh_config(CONFIG_PATH, require_disabled=False), self.config
+        )
+        with self.assertRaisesRegex(ValueError, "only the disabled corrected review"):
+            refresh.load_refresh_config(CONFIG_PATH, require_disabled=True)
+        disabled = copy.deepcopy(self.config)
+        disabled["status"] = "planned-no-paid-calls-authorized"
+        disabled["execution"]["paidReviewAuthorized"] = False
         with tempfile.NamedTemporaryFile(
             mode="w", suffix=".json", dir=ROOT, delete=False, encoding="utf-8"
         ) as handle:
-            json.dump(enabled, handle)
+            json.dump(disabled, handle)
             path = Path(handle.name)
         try:
-            with self.assertRaisesRegex(ValueError, "only the disabled corrected review"):
-                refresh.load_refresh_config(path)
+            self.assertEqual(
+                refresh.load_refresh_config(path, require_disabled=True), disabled
+            )
         finally:
             path.unlink(missing_ok=True)
 

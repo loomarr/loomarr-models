@@ -29,7 +29,7 @@ from loomarr_models.validator import load_contract, load_denylist, load_jsonl
 
 
 REVIEW_ID = "planner-behavior-review-v3"
-PAID_REVIEW_AUTHORIZED = False
+PAID_REVIEW_AUTHORIZED = True
 REVIEW_PLAN_PATH = ROOT / f"experiments/{REVIEW_ID}.json"
 REVIEW_ROOT = ROOT / "reviews/planner-behavior-v3"
 ROUTE_SNAPSHOT_PATH = REVIEW_ROOT / "route-snapshot.json"
@@ -199,7 +199,7 @@ def build_outputs() -> dict[Path, bytes]:
         "schemaVersion": 1,
         "reportId": f"{REVIEW_ID}-preflight",
         "status": "passed-no-inference",
-        "paidReviewAuthorized": False,
+        "paidReviewAuthorized": paid_authorized,
         "inferenceCalls": 0,
         "externalCostUsd": "0",
         "routeMetadataCapturedAt": route_snapshot["capturedAt"],
@@ -248,6 +248,8 @@ def build_outputs() -> dict[Path, bytes]:
             if publication is not None and publication["escalations"] == 0
             else "resolve independent-review escalations"
             if publication is not None
+            else "execute the exact 240-call full review and preserve every settlement"
+            if paid_authorized
             else "refresh exact routes and pricing, then authorize the paid full review separately"
         ),
         "trainingAuthorized": False,

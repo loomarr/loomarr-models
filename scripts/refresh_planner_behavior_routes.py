@@ -29,17 +29,24 @@ def timestamp() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def load_refresh_config(path: Path) -> dict[str, Any]:
+def load_refresh_config(path: Path, *, require_disabled: bool) -> dict[str, Any]:
     config = json.loads(path.read_text(encoding="utf-8"))
     if (
         not isinstance(config, dict)
         or config.get("reviewId") != "planner-behavior-review-v3"
-        or config.get("status") != "planned-no-paid-calls-authorized"
-        or config.get("execution", {}).get("paidReviewAuthorized") is not False
         or config.get("bindings", {}).get("routeSnapshot", {}).get("path")
         != str(ROUTE_PATH.relative_to(ROOT))
     ):
-        raise BehaviorReviewPreflightError("only the disabled corrected review may refresh routes")
+        raise BehaviorReviewPreflightError("route refresh config is not the corrected review")
+    status = config.get("status")
+    authorized = config.get("execution", {}).get("paidReviewAuthorized")
+    if (status, authorized) not in {
+        ("planned-no-paid-calls-authorized", False),
+        ("ready-for-review", True),
+    }:
+        raise BehaviorReviewPreflightError("corrected review status and authorization disagree")
+    if require_disabled and authorized:
+        raise BehaviorReviewPreflightError("only the disabled corrected review may update routes")
     return config
 
 
@@ -113,7 +120,7 @@ def main() -> None:
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
     try:
-        config = load_refresh_config(config_path)
+        config = load_refresh_config(config_path, require_disabled=args.write)
         live = fetch_snapshot(config, _api_key())
         if args.write:
             ROUTE_PATH.write_text(
