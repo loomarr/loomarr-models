@@ -19,11 +19,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "4bc4a3719b4732aa6f8c656784f47f2f2d3eb503ef305031dc739d0b133be7ee"
+      "sha256": "9336f32ebaff4592d0c87d6dfc5f9bdca22d638247c19bdf42edf69a5de25c36"
     },
     "disjointnessReport": {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "190813e93020ab1625b900f8bcef1b8a0178622e0ae5c887865de9582547b984"
+      "sha256": "29296e2d539865b44ca5ff1ca23b3d55c3166af976fb9577674d936d83ab0835"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -55,7 +55,7 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "2c1877c8e0f45f9be7688bd3ed8c9cdc4fec3126f656148e397b4905ece544c3"
+      "sha256": "7ebe01885231a854c9ae453d2d798f58293f3787f7f22c0ad37092a452cd120a"
     },
     "reviewPreflightValidator": {
       "path": "src/loomarr_models/behavior_model_review.py",
@@ -67,7 +67,7 @@
     },
     "reviewRunner": {
       "path": "scripts/run_planner_behavior_review.py",
-      "sha256": "0169c6fc70a617143ece2087c908fa9073ece4b9c56b6179b2f521b6359b96ab"
+      "sha256": "e4d82c7dfa2e90f44a0b52da756b14f2f0c821ba160951f54d02e9e5b8f5b02e"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
@@ -88,7 +88,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "2fb4d87a0ceba972792ec9a21ecf6343d5b4cd19e150103a830a0cbd5a8b2f5b"
+      "sha256": "849f270f0c8e033f14ee65b527cbdee3f98a406ab5f0c81965bf66d3e5b930a8"
     }
   },
   "budget": {

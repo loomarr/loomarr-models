@@ -42,6 +42,7 @@ PRIOR_PUBLICATION_PATH = (
 PUBLICATION_PATH = ROOT / f"reviews/planner-behavior-v2/publications/{REVIEW_ID}/publication.json"
 REVIEW_RUNNER_PATH = ROOT / "scripts/run_planner_behavior_review.py"
 REVIEW_PUBLISHER_PATH = ROOT / "scripts/publish_planner_behavior_review.py"
+ROUTE_REFRESHER_PATH = ROOT / "scripts/refresh_planner_behavior_routes.py"
 CORPUS_FINALIZER_PATH = ROOT / "scripts/finalize_planner_behavior_corpus.py"
 
 
@@ -136,6 +137,7 @@ def build_outputs() -> dict[Path, bytes]:
         "reviewPreflightValidator": binding(Path(review_preflight_contract.__file__)),
         "reviewRunner": binding(REVIEW_RUNNER_PATH),
         "reviewPublisher": binding(REVIEW_PUBLISHER_PATH),
+        "routeRefresher": binding(ROUTE_REFRESHER_PATH),
         "corpusFinalizer": binding(CORPUS_FINALIZER_PATH),
         "trainingDrafts": binding(corpus.TRAINING_PATH, count=training_report.records),
         "trainingManifest": binding(corpus.TRAINING_MANIFEST_PATH),

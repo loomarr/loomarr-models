@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "experiments/planner-behavior-review-v3.json",
-      "sha256": "b00472eace5279464c857a6e680c170ec2097a36701d0333ff19737100cee4a6"
+      "sha256": "8a1ac13cdf842e3727179a5bbd8102726366d53b1666f7a76f58acd975f6b741"
     },
     {
       "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
@@ -10,7 +10,7 @@
     },
     {
       "path": "reviews/planner-behavior-v3/preflight-report.json",
-      "sha256": "51f025e9d773113d6f86e9b0f8108c3296168e7a57f974cb8e7c7e4b3c0ef11c"
+      "sha256": "a4d1b5c454dbec9b173d6829a2cba84d843a8dc5621334e3ecd035a694efa82a"
     },
     {
       "path": "reviews/planner-behavior-v3/request-plan.jsonl",
@@ -23,7 +23,7 @@
   ],
   "generator": {
     "path": "scripts/build_planner_behavior_review_v3.py",
-    "sha256": "b2717af863ec178fd5c86e1985723c1e4c4795b418a54d749b8b81328b7e3144"
+    "sha256": "9e1e0df8ba20fb1eb159613e30c14aaec3be551947ef55f9b5d81170c87c3fbd"
   },
   "nextGate": "refresh exact routes and pricing, then authorize the paid full review separately",
   "publicationId": "planner-behavior-review-v3",
