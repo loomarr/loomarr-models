@@ -115,7 +115,23 @@ class RunPublicationTests(unittest.TestCase):
             self.assertGreaterEqual(outstanding, Decimal(publication["reservationUsd"]))
         else:
             self.assertEqual(publication["status"], "rejected-settled")
-            self.assertGreater(Decimal(publication["providerCostUsd"]), Decimal("0"))
+            self.assertEqual(
+                Decimal(publication["providerCostUsd"]),
+                Decimal("0.7827729525743052"),
+            )
+            breakdown = publication["providerCostBreakdownUsd"]
+            self.assertLessEqual(
+                abs(
+                    Decimal(breakdown["gpu"])
+                    + Decimal(breakdown["disk"])
+                    - Decimal(breakdown["total"])
+                ),
+                Decimal("0.0000000000000001"),
+            )
+            self.assertEqual(
+                Decimal(breakdown["total"]), Decimal(publication["providerCostUsd"])
+            )
+            self.assertEqual(posted, Decimal("19.1805365675672820"))
             self.assertEqual(outstanding, Decimal("0.10"))
 
 

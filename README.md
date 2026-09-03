@@ -83,7 +83,8 @@ synthetic cases, the adapter improved weighted quality and policy accuracy, but 
 failures, missed the absolute quality gates, and regressed recovery. Its hash-bound publication is
 under `runs/planner-adapter-eval-v1/`; the decision is `adapter-rejected-no-release`, so no
 certification run, packaging, serving, or release is authorized. See
-[docs/planner-adapter-eval.md](docs/planner-adapter-eval.md).
+[docs/planner-adapter-eval.md](docs/planner-adapter-eval.md). The exact Runpod charge was
+`$0.7827729525743052`.
 
 ## Contributing and security
 

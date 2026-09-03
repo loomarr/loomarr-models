@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "planner-adapter-eval-a40-v1-parser-replay-v1",
   "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/5",
-  "status": "rejected-pending-cost-settlement",
+  "status": "rejected-settled",
   "runManifestPath": "runs/planner-adapter-eval-v1/run-manifest.json",
   "runManifestSha256": "ce8dc06386a91df87f53f647c56c9c4da186ec20401298270f6b8ed65f8c285e",
   "provider": "runpod",
@@ -13,7 +13,12 @@
     "gpuHourlyUsd": "0.44",
     "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851"
   },
-  "providerCostUsd": null,
+  "providerCostUsd": "0.7827729525743052",
+  "providerCostBreakdownUsd": {
+    "gpu": "0.7560368422418833",
+    "disk": "0.02673611033242196",
+    "total": "0.7827729525743052"
+  },
   "reservationUsd": "3.00",
   "rawArtifacts": {
     "retention": "local-gitignored",

@@ -60,7 +60,9 @@ The committed result is a deterministic parser replay of the captured generation
 inference, preserves the measured latency and VRAM, requires the same per-case call structure, and
 binds the source run, raw files, corrected results, parser, and source commits by SHA-256. The compact
 manifest in `runs/planner-adapter-eval-v1/` contains per-case metrics but no prompts, completions, or
-transcripts. The Runpod charge remains reserved until its final billing bucket posts.
+transcripts. Runpod settled the exact charge at `$0.7827729525743052`: `$0.7560368422418833` for GPU
+and `$0.02673611033242196` for disk. The full program ledger is now
+`$19.2805365675672820 / $40.00`, including the standing `$0.10` reservation.
 
 ## Reproduction boundary
 
