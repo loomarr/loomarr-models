@@ -77,6 +77,12 @@ memory envelope, and adapter-only save path, but does not certify or authorize t
 See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the result, the NVIDIA training lane,
 and the 64 GB Mac development/evaluation lane.
 
+The next milestone is the leakage-free development comparison in
+[loomarr-models#5](https://github.com/loomarr/loomarr-models/issues/5). It freezes 50 new synthetic
+cases, runs the exact stock artifact and the smoke adapter through the same scripted tool environment,
+and can advance only on the preregistered quality margin with zero hard-gate regressions. It is not a
+certification or release gate. See [docs/planner-adapter-eval.md](docs/planner-adapter-eval.md).
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues privately as

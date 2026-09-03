@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "planner-adapter-eval-v1",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/5",
+  "status": "ready-for-development-eval",
+  "bindings": {
+    "cases": {
+      "path": "evaluation/planner-development-v1/cases.jsonl",
+      "sha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209",
+      "caseCount": 50
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-development-v1/manifest.json",
+      "sha256": "61cb395f11c38a0d2c7d5221b71465f8805ec52c3579b97c6c20aedbb15fb4af"
+    },
+    "trainingCorpus": {
+      "path": "corpus/planner-smoke-v1/traces.jsonl",
+      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v3.json",
+      "sha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4"
+    },
+    "denylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "adapterSourceManifest": {
+      "path": "runs/planner-qwen38-smoke-v1/run-manifest.json",
+      "sha256": "168b880e351b041e156bda45f961cd7651859e8576c78060554ffcb70616b5fa"
+    },
+    "budget": {
+      "path": "budgets/external-spend-v1.json"
+    }
+  },
+  "models": {
+    "upstream": {
+      "repository": "Qwen/Qwen3.8-27B",
+      "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0"
+    },
+    "inferenceArtifact": {
+      "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+      "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+    }
+  },
+  "execution": {
+    "platform": "linux-amd64",
+    "gpuSku": "NVIDIA A40",
+    "gpuCount": 1,
+    "minimumVramGb": 48,
+    "maxWallClockSeconds": 14400,
+    "maxReservationUsd": "3.00",
+    "outputDir": ".artifacts/planner-adapter-eval-v1",
+    "adapterPath": ".artifacts/runpod-qwen38-qlora-smoke-v1/planner-qwen38-smoke-v1/adapter/adapter_model.safetensors",
+    "adapterSha256": "08a166aa73ec1aaf965cf5a53af61a728d4542c841859b477af72305e5cb35f7",
+    "requireCleanGit": true
+  },
+  "comparison": {
+    "candidateOrder": [
+      "stock",
+      "adapter"
+    ],
+    "seed": 3407,
+    "maxSeqLength": 4096,
+    "maxNewTokens": 768,
+    "maxModelCallsPerCase": 5,
+    "reasoningEffort": "low",
+    "doSample": false,
+    "temperature": null,
+    "topP": null,
+    "trials": 1
+  }
+}
