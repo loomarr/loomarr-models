@@ -20,7 +20,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v3.json"
+CONFIG = ROOT / "experiments/planner-model-review-v4.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:
@@ -33,14 +33,13 @@ def valid_output(request) -> dict:
         "reviews": {
             trace_id: {
                 "verdict": "approved",
-                "criteria": [
-                    {
-                        "criterion": criterion,
+                "criteria": {
+                    criterion: {
                         "passed": True,
                         "evidence": f"Concrete evidence for {criterion} appears in this trace.",
                     }
                     for criterion in CRITERIA
-                ],
+                },
                 "summary": "All six criteria are supported by the complete synthetic trace.",
             }
             for trace_id in request.traceIds
@@ -77,8 +76,8 @@ class ModelReviewPreflightTests(unittest.TestCase):
     def test_exact_twenty_call_plan_fits_reservation_and_aggregate_cap(self):
         self.assertEqual((self.plan.traceCount, self.plan.requestCount), (50, 20))
         self.assertEqual(self.plan.outputTokenUpperBound, 120000)
-        self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("4.50"))
-        self.assertEqual(self.plan.projectedSpendUsd, "9.022723891125471")
+        self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("5.00"))
+        self.assertEqual(self.plan.projectedSpendUsd, "9.587107891125471")
         self.assertEqual(self.plan.authorizationUsd, "40")
         self.assertEqual(
             [(item.role, item.batchIndex, len(item.traceIds)) for item in self.plan.requests],
@@ -113,6 +112,11 @@ class ModelReviewPreflightTests(unittest.TestCase):
                     for definition in reviews["properties"].values()
                 )
             )
+            for definition in reviews["properties"].values():
+                criteria = definition["properties"]["criteria"]
+                self.assertFalse(criteria["additionalProperties"])
+                self.assertEqual(criteria["required"], list(CRITERIA))
+                self.assertEqual(set(criteria["properties"]), set(CRITERIA))
             self.assertNotIn("reviewer output", request.payload["messages"][1]["content"].lower())
 
     def test_budget_refuses_overflow_or_unreconciled_ledger(self):
@@ -122,11 +126,11 @@ class ModelReviewPreflightTests(unittest.TestCase):
         overflow["outstandingReservationsUsd"] = "0.00"
         overflow["committedSpendUsd"] = "36.00"
         with self.assertRaisesRegex(ModelReviewError, "exceed aggregate"):
-            _validate_budget(overflow, Decimal("4.50"))
+            _validate_budget(overflow, Decimal("5.00"))
         unreconciled = copy.deepcopy(ledger)
         unreconciled["committedSpendUsd"] = "5.00"
         with self.assertRaisesRegex(ModelReviewError, "does not reconcile"):
-            _validate_budget(unreconciled, Decimal("4.50"))
+            _validate_budget(unreconciled, Decimal("5.00"))
 
 
 class ModelReviewEvidenceTests(unittest.TestCase):
@@ -154,9 +158,10 @@ class ModelReviewEvidenceTests(unittest.TestCase):
                     first = self.request.traceIds[0]
                     output["reviews"]["planner-smoke-injected-99"] = output["reviews"].pop(first)
                 elif sabotage == "criterion":
-                    output["reviews"][self.request.traceIds[0]]["criteria"][0]["criterion"] = "grounding"
+                    criteria = output["reviews"][self.request.traceIds[0]]["criteria"]
+                    criteria["injected"] = criteria.pop("intent")
                 else:
-                    output["reviews"][self.request.traceIds[0]]["criteria"][0]["passed"] = False
+                    output["reviews"][self.request.traceIds[0]]["criteria"]["intent"]["passed"] = False
                 response["choices"][0]["message"]["content"] = json.dumps(output)
                 with self.assertRaisesRegex(ModelReviewError, message):
                     validate_completion(response, self.request, "b" * 64)
@@ -196,6 +201,18 @@ class ModelReviewEvidenceTests(unittest.TestCase):
         self.assertEqual(validate_settlement(settlement, self.request, response), Decimal("0.01"))
         settlement["data"]["provider_name"] = "Other"
         with self.assertRaisesRegex(ModelReviewError, "provider differs"):
+            validate_settlement(settlement, self.request, response)
+        settlement = {
+            "data": {
+                "id": "gen-test",
+                "provider_name": self.request.providerDisplayName,
+                "model": self.request.model,
+                "finish_reason": "stop",
+                "native_finish_reason": "end_turn",
+                "total_cost": 0.01,
+            }
+        }
+        with self.assertRaisesRegex(ModelReviewError, "native finish reason differs"):
             validate_settlement(settlement, self.request, response)
 
     def test_live_endpoint_projection_has_only_stable_pinned_fields(self):

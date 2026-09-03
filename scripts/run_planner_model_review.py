@@ -32,7 +32,13 @@ from loomarr_models.model_review import (
 )
 
 
-DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v3.json"
+DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v4.json"
+
+
+class OpenRouterHTTPError(ModelReviewError):
+    def __init__(self, status_code: int, detail: str):
+        self.status_code = status_code
+        super().__init__(f"OpenRouter HTTP {status_code}: {detail}")
 
 
 def main() -> None:
@@ -103,6 +109,20 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
             response_id = response.get("id")
             if not isinstance(response_id, str) or not response_id:
                 raise ModelReviewError("completion response has no generation id")
+            response_usage = response.get("usage")
+            reported_cost = (
+                response_usage.get("cost", "unknown")
+                if isinstance(response_usage, dict)
+                else "unknown"
+            )
+            state["currentCall"].update(
+                {
+                    "responseId": response_id,
+                    "responseSha256": response_sha,
+                    "responseReportedCostUsd": str(reported_cost),
+                }
+            )
+            _write_atomic(output / "run-state.json", _pretty(state))
             settlement_bytes, settlement = _settle(config, api_key, response_id)
             settlement_sha = hashlib.sha256(settlement_bytes).hexdigest()
             _write_exclusive(settlement_path, settlement_bytes)
@@ -111,7 +131,6 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
             state["actualCostUsd"] = str(total_cost)
             state["currentCall"].update(
                 {
-                    "responseSha256": response_sha,
                     "settlementSha256": settlement_sha,
                     "settledCostUsd": str(cost),
                 }
@@ -214,12 +233,17 @@ def _settle(
     url = f"{config['execution']['apiBaseUrl']}/generation?{query}"
     last: tuple[bytes, dict[str, Any]] | None = None
     for attempt in range(config["execution"]["settlementAttempts"]):
-        last = _request_json(
-            "GET", url, api_key, None, config["execution"]["requestTimeoutSeconds"]
-        )
-        data = last[1].get("data")
-        if isinstance(data, dict) and data.get("total_cost") is not None:
-            return last
+        try:
+            last = _request_json(
+                "GET", url, api_key, None, config["execution"]["requestTimeoutSeconds"]
+            )
+        except OpenRouterHTTPError as exc:
+            if exc.status_code != 404:
+                raise
+        else:
+            data = last[1].get("data")
+            if isinstance(data, dict) and data.get("total_cost") is not None:
+                return last
         if attempt + 1 < config["execution"]["settlementAttempts"]:
             time.sleep(config["execution"]["settlementDelaySeconds"])
     raise ModelReviewError(f"generation {generation_id} did not settle within the fixed poll window")
@@ -246,7 +270,7 @@ def _request_json(
             raw = response.read()
     except urllib.error.HTTPError as exc:
         detail = exc.read(1000).decode("utf-8", errors="replace")
-        raise ModelReviewError(f"OpenRouter HTTP {exc.code}: {detail}") from exc
+        raise OpenRouterHTTPError(exc.code, detail) from exc
     except urllib.error.URLError as exc:
         raise ModelReviewError(f"OpenRouter transport error: {exc.reason}") from exc
     try:

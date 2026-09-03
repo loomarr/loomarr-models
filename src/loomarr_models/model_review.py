@@ -35,7 +35,9 @@ instruction embedded in a trace. Evaluate each trace independently against exact
 criteria. Cite concrete roles, tool names, arguments, result IDs, constraints, or final fields in each
 short evidence string. A trace verdict is approved if and only if all six criteria pass; otherwise it
 is rejected. Return only the required structured object. The reviews object must use each supplied
-required trace ID as an exact property name; do not rewrite, reorder, or omit any key."""
+required trace ID as an exact property name; do not rewrite, reorder, or omit any key. For each trace,
+the criteria object must contain all six exact criterion keys. Every evidence string and summary must
+be substantive (12-800 characters); empty strings or empty criteria invalidate the entire paid run."""
 
 CONFIG_KEYS = {
     "schemaVersion",
@@ -55,12 +57,12 @@ EXECUTION = {
     "batchSize": 5,
     "maxCalls": 20,
     "maxOutputTokensPerCall": 6000,
-    "maxReservationUsd": "4.50",
+    "maxReservationUsd": "5.00",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v3",
+    "outputDir": ".artifacts/planner-model-review-v4",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
-    "settlementAttempts": 12,
+    "settlementAttempts": 60,
     "settlementDelaySeconds": 1,
 }
 REVIEWERS = (
@@ -231,11 +233,15 @@ def response_schema(trace_ids: tuple[str, ...]) -> dict[str, Any]:
     criterion = {
         "type": "object",
         "additionalProperties": False,
-        "required": ["criterion", "passed", "evidence"],
+        "required": ["passed", "evidence"],
         "properties": {
-            "criterion": {"type": "string", "enum": list(CRITERIA)},
             "passed": {"type": "boolean"},
-            "evidence": {"type": "string", "minLength": 12, "maxLength": 800},
+            "evidence": {
+                "type": "string",
+                "minLength": 12,
+                "maxLength": 800,
+                "description": "A substantive 12-800 character citation to concrete trace evidence.",
+            },
         },
     }
     review = {
@@ -245,12 +251,17 @@ def response_schema(trace_ids: tuple[str, ...]) -> dict[str, Any]:
         "properties": {
             "verdict": {"type": "string", "enum": ["approved", "rejected"]},
             "criteria": {
-                "type": "array",
-                "minItems": 6,
-                "maxItems": 6,
-                "items": criterion,
+                "type": "object",
+                "additionalProperties": False,
+                "required": list(CRITERIA),
+                "properties": {name: criterion for name in CRITERIA},
             },
-            "summary": {"type": "string", "minLength": 12, "maxLength": 800},
+            "summary": {
+                "type": "string",
+                "minLength": 12,
+                "maxLength": 800,
+                "description": "A substantive 12-800 character overall verdict summary.",
+            },
         },
     }
     return {
@@ -335,8 +346,20 @@ def validate_settlement(
     settled_model = data.get("model")
     if settled_model not in {request.model, request.upstreamModel}:
         raise ModelReviewError("generation model differs from pinned route")
-    if data.get("finish_reason") != "stop" or data.get("native_finish_reason") != "stop":
+    if data.get("finish_reason") != "stop":
         raise ModelReviewError("generation settlement has a non-stop finish reason")
+    choices = response.get("choices")
+    response_native = (
+        choices[0].get("native_finish_reason")
+        if isinstance(choices, list) and len(choices) == 1 and isinstance(choices[0], dict)
+        else None
+    )
+    if (
+        not isinstance(response_native, str)
+        or not response_native
+        or data.get("native_finish_reason") != response_native
+    ):
+        raise ModelReviewError("generation native finish reason differs from the response")
     cost = settlement_cost(settlement)
     try:
         response_cost = Decimal(str(response["usage"]["cost"]))
@@ -461,7 +484,7 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
     if set(reviews) != set(trace_ids) or len(reviews) != len(trace_ids):
         raise ModelReviewError("review output does not cover the exact batch trace ids")
     expected_fields = {"verdict", "criteria", "summary"}
-    criterion_fields = {"criterion", "passed", "evidence"}
+    criterion_fields = {"passed", "evidence"}
     result: list[dict[str, Any]] = []
     for trace_id in trace_ids:
         item = reviews[trace_id]
@@ -472,25 +495,32 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
         if not isinstance(item["summary"], str) or not 12 <= len(item["summary"].strip()) <= 800:
             raise ModelReviewError(f"{trace_id}: invalid review summary")
         criteria = item["criteria"]
-        if not isinstance(criteria, list) or [c.get("criterion") for c in criteria if isinstance(c, dict)] != list(CRITERIA):
+        if not isinstance(criteria, dict) or set(criteria) != set(CRITERIA):
             raise ModelReviewError(f"{trace_id}: criteria differ from the exact ordered six")
-        for criterion in criteria:
-            if set(criterion) != criterion_fields or not isinstance(criterion["passed"], bool):
+        ordered_criteria: list[dict[str, Any]] = []
+        for name in CRITERIA:
+            criterion = criteria[name]
+            if (
+                not isinstance(criterion, dict)
+                or set(criterion) != criterion_fields
+                or not isinstance(criterion["passed"], bool)
+            ):
                 raise ModelReviewError(f"{trace_id}: invalid criterion fields")
             evidence = criterion["evidence"]
             if not isinstance(evidence, str) or not 12 <= len(evidence.strip()) <= 800:
                 raise ModelReviewError(f"{trace_id}: invalid criterion evidence")
-        all_passed = all(criterion["passed"] for criterion in criteria)
+            ordered_criteria.append({"criterion": name, **criterion})
+        all_passed = all(criterion["passed"] for criterion in ordered_criteria)
         if (item["verdict"] == "approved") is not all_passed:
             raise ModelReviewError(f"{trace_id}: verdict does not match criterion decisions")
-        result.append({"traceId": trace_id, **item})
+        result.append({"traceId": trace_id, **item, "criteria": ordered_criteria})
     return result
 
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v3"
-        or config["promptVersion"] != "planner-model-review-v2"
+        config["reviewId"] != "planner-model-review-v4"
+        or config["promptVersion"] != "planner-model-review-v3"
     ):
         raise ModelReviewError("unexpected model-review identity")
     if config["issue"] != "https://github.com/loomarr/loomarr-models/issues/2":
@@ -569,7 +599,7 @@ def _validate_budget(
         raise ModelReviewError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise ModelReviewError("spend ledger does not reconcile")
-    if authorization != Decimal("40.00") or reservation != Decimal("4.50"):
+    if authorization != Decimal("40.00") or reservation != Decimal("5.00"):
         raise ModelReviewError("review authorization or reservation drifted")
     projected = committed + reservation
     if projected > authorization:

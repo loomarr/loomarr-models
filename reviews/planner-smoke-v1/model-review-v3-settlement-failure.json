@@ -1,0 +1,58 @@
+{
+  "accounting": {
+    "settledCostUsd": "0.064384",
+    "settledGeneration": {
+      "createdAt": "2026-09-03T03:15:36.255Z",
+      "finishReason": "stop",
+      "id": "gen-1788405336-QtjyAbaLPRyd2xpH3Uhs",
+      "model": "anthropic/claude-sonnet-5-20260630",
+      "nativeFinishReason": "end_turn",
+      "nativeTokensCompletion": 695,
+      "nativeTokensPrompt": 28717,
+      "providerName": "Anthropic"
+    },
+    "verifiedAt": "2026-09-03T03:16:52Z"
+  },
+  "completedCalls": 0,
+  "error": "The first bounded settlement lookup returned HTTP 404 before the generation record became visible.",
+  "failedAt": "2026-09-03T03:15:52.055259Z",
+  "inferenceResponsesReceived": 1,
+  "invalidOutput": {
+    "criteriaCountPerTrace": 0,
+    "exactTraceKeysPresent": true,
+    "reason": "All five required criteria collections and summaries were empty; local validation would reject the response.",
+    "summaryLengthPerTrace": 0
+  },
+  "preflight": {
+    "authorizationUsd": "40",
+    "committedSpendUsd": "4.522723891125471",
+    "configSha256": "4828104e223aec8454c67c82c8fff1105e409bdce5cc0f38b98ac9817e03eb06",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1472068,
+    "outputDir": ".artifacts/planner-model-review-v3",
+    "outputTokenUpperBound": 120000,
+    "projectedSpendUsd": "9.022723891125471",
+    "requestCount": 20,
+    "reservationUsd": "4.5",
+    "reviewId": "planner-model-review-v3",
+    "schemaVersion": 1,
+    "sourceCommit": "f374fd4857b0c3f6a50213347a9cbbc52aed5d3b",
+    "traceCount": 50,
+    "worstCaseCostUsd": "4.264136"
+  },
+  "reservationUsd": "4.5",
+  "response": {
+    "completionTokens": 695,
+    "costUsd": "0.064384",
+    "finishReason": "stop",
+    "generationId": "gen-1788405336-QtjyAbaLPRyd2xpH3Uhs",
+    "model": "anthropic/claude-sonnet-5",
+    "promptTokens": 28717,
+    "provider": "Anthropic",
+    "sha256": "48b79e4a1e509f857256a7ff8f6771107bbc073dd30b31f9264ea9b8ed1e3afb"
+  },
+  "reviewId": "planner-model-review-v3",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:15:36.204121Z",
+  "status": "failed-after-first-response"
+}

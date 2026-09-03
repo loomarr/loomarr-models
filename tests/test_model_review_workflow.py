@@ -25,12 +25,12 @@ def clean_git(_root: Path, _paths: object) -> str:
 class ModelReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config = load_config(ROOT / "experiments/planner-model-review-v3.json")
+        cls.config = load_config(ROOT / "experiments/planner-model-review-v4.json")
         cls.snapshot = json.loads(
             (ROOT / "reviews/planner-smoke-v1/model-review-v1-route-snapshot.json").read_text()
         )
         cls.plan = preflight(
-            ROOT, ROOT / "experiments/planner-model-review-v3.json", git_probe=clean_git
+            ROOT, ROOT / "experiments/planner-model-review-v4.json", git_probe=clean_git
         )
 
     def test_live_route_check_accepts_exact_snapshot_and_rejects_drift(self):
@@ -79,6 +79,23 @@ class ModelReviewWorkflowTests(unittest.TestCase):
             self.assertEqual(runner._settle(config, "secret", "gen-1"), settled)
         self.assertEqual(request.call_count, 2)
         self.assertTrue(all(call.args[0] == "GET" for call in request.call_args_list))
+
+    def test_settlement_poll_tolerates_only_transient_not_found(self):
+        missing = runner.OpenRouterHTTPError(404, "generation not found")
+        settled = (b"{}", {"data": {"total_cost": 0.01}})
+        config = copy.deepcopy(self.config)
+        config["execution"]["settlementAttempts"] = 2
+        with (
+            mock.patch.object(runner, "_request_json", side_effect=[missing, settled]) as request,
+            mock.patch.object(runner.time, "sleep"),
+        ):
+            self.assertEqual(runner._settle(config, "secret", "gen-1"), settled)
+        self.assertEqual(request.call_count, 2)
+        with mock.patch.object(
+            runner, "_request_json", side_effect=runner.OpenRouterHTTPError(500, "server error")
+        ):
+            with self.assertRaisesRegex(runner.OpenRouterHTTPError, "HTTP 500"):
+                runner._settle(config, "secret", "gen-1")
 
     def test_invalid_completion_is_persisted_and_settled_before_failure(self):
         request = self.plan.requests[0]
@@ -149,6 +166,8 @@ class ModelReviewWorkflowTests(unittest.TestCase):
             state = json.loads((output / "run-state.json").read_text())
             self.assertEqual((state["status"], state["completedCalls"]), ("failed", 0))
             self.assertEqual(state["actualCostUsd"], "0.01")
+            self.assertEqual(state["currentCall"]["responseId"], "gen-invalid")
+            self.assertEqual(state["currentCall"]["responseReportedCostUsd"], "0.01")
             self.assertEqual(
                 state["currentCall"]["responseSha256"], hashlib.sha256(response_bytes).hexdigest()
             )

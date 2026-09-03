@@ -43,10 +43,18 @@ records the failing call hashes in run state. Its structured-output schema also 
 trace IDs as exact object keys, rather than permitting arbitrary strings. The v2 evidence is
 `reviews/planner-smoke-v1/model-review-v2-coverage-failure.json`.
 
+Review v3 preserved one exact-key response, then stopped when OpenRouter's first settlement lookup
+temporarily returned 404. The generation became visible immediately afterward and settled at `$0.064384`.
+Its preserved output also exposed that the provider did not enforce nested `minItems` or `minLength`: all
+criteria collections and summaries were empty. Review v4 tolerates 404 only inside a bounded 60-attempt
+GET-only settlement poll, binds the provider-native finish reason between response and settlement, and replaces
+each criteria array with six required named properties plus explicit substantive-evidence instructions.
+The v3 evidence is `reviews/planner-smoke-v1/model-review-v3-settlement-failure.json`.
+
 The run is limited to twenty five-trace calls with no automatic inference retry, at most 6,000 output
-tokens per call, and a conservative `$4.50` reservation. Its byte-count token upper bound prices the exact
-v3 request bodies at no more than `$4.264136`, projecting aggregate commitments to
-`$9.022723891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
+tokens per call, and a conservative `$5.00` reservation. Its byte-count token upper bound prices the exact
+v4 request bodies at no more than `$4.580936`, projecting aggregate commitments to
+`$9.587107891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
 to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exact ledger value.
 
 ## Disagreement and escalation
