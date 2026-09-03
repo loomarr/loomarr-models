@@ -1,0 +1,61 @@
+{
+  "adapterFiles": {
+    "README.md": "b8cdbbd9f55fe36ac77a80b4c4ff086996653028476a51a37c1452816b85f2a8",
+    "adapter_config.json": "ecff688fa8632d5c89a3d9cf9ab6dab5d6392372c2cf664afeac1cb82e290d30",
+    "adapter_model.safetensors": "08a166aa73ec1aaf965cf5a53af61a728d4542c841859b477af72305e5cb35f7",
+    "chat_template.jinja": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+    "processor_config.json": "d89ef49ce9cd37fbf510158e13c1ef063d9286411c1ec9049932dbe0487143b1",
+    "tokenizer.json": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+    "tokenizer_config.json": "544513ce44826a6236bb2a95a073d19aa86df3ee1fbe54730adbcb8e90792ed8"
+  },
+  "elapsedSeconds": 850.2525635510683,
+  "metrics": {
+    "epoch": 1.56,
+    "total_flos": 3.999218351617987e+16,
+    "train_loss": 0.3834807015955448,
+    "train_runtime": 780.0915,
+    "train_samples_per_second": 0.103,
+    "train_steps_per_second": 0.026
+  },
+  "packages": {
+    "datasets": "4.3.0",
+    "peft": "0.18.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.1",
+    "trl": "0.22.2",
+    "unsloth": "2026.9.2",
+    "unsloth-zoo": "2026.9.1"
+  },
+  "preflight": {
+    "approvedCount": 50,
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "18.314559391125471",
+    "configSha256": "849efc393ee37e9ea526912a545a663e96479d4200f4f4b3f687102a49943f14",
+    "corpusSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b",
+    "environmentId": "qwen38-a40-v1",
+    "environmentSha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248",
+    "experimentId": "planner-qwen38-smoke-v1",
+    "outputDir": ".artifacts/planner-qwen38-smoke-v1",
+    "projectedSpendUsd": "19.814559391125471",
+    "reservationUsd": "1.50",
+    "schemaVersion": 1,
+    "sourceCommit": "d0e96f269f55f9d3fa7b7158b069974250bc2be3",
+    "traceCount": 50,
+    "trainingArtifactRevision": "8aa5f05d26b7205477066e1449e0af13f762a299",
+    "upstreamRevision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0"
+  },
+  "renderedTrainingSha256": "fac23e276f500a73bf8aa20221fd601b8ca40a7c59a5094e00be34ce1b6643cf",
+  "runId": "qwen38-qlora-a40-smoke-v1",
+  "runtime": {
+    "cuda": "12.8",
+    "gpu": [
+      {
+        "name": "NVIDIA A40",
+        "peakReservedBytes": 26742882304,
+        "totalMemoryBytes": 47708110848
+      }
+    ],
+    "python": "3.12.3"
+  },
+  "schemaVersion": 1
+}

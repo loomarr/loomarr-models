@@ -79,7 +79,13 @@ def tool_result(call_id: str, *, candidates: list[dict] | None = None, error: st
     }
 
 
-def final_message(title: str, picks: list[dict], policy: dict | None = None) -> dict:
+def final_message(
+    title: str,
+    picks: list[dict],
+    policy: dict | None = None,
+    *,
+    rationale: str = "A grounded proposal using only synthetic catalog evidence.",
+) -> dict:
     selected = [
         {
             "mediaType": item["mediaType"],
@@ -92,7 +98,7 @@ def final_message(title: str, picks: list[dict], policy: dict | None = None) -> 
     ]
     final = {
         "channelName": title,
-        "rationale": "A grounded proposal using only synthetic catalog evidence.",
+        "rationale": rationale,
         "picks": selected,
         "policy": policy or {},
     }
@@ -116,31 +122,60 @@ def family_messages(family: str, variant: int, item_number: int) -> tuple[str, l
         item = candidate(item_number, media_type=item["mediaType"], genre=genre)
         item["year"] = int(era[:4]) + variant
         intent = f"Build {article} {genre.lower()} channel from the synthetic {era} catalog."
-        messages = [tool_call(call_1, {"genres": [genre], "era": era, "media_type": item["mediaType"]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} {genre}", [item], {"genres": {"include": [genre]}, "era": {"from": int(era[:4]), "to": int(era[:4]) + 9}})]
+        messages = [tool_call(call_1, {"genres": [genre], "era": era}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} {genre}", [item], {"genres": {"include": [genre]}, "era": {"from": int(era[:4]), "to": int(era[:4]) + 9}})]
     elif family == "keyword-discovery":
         keyword = ("clockwork", "paper moons", "hidden gardens", "midnight trains", "glass oceans")[variant]
         intent = f"Build a synthetic channel about {keyword}."
-        messages = [tool_call(call_1, {"keywords": [keyword], "media_type": item["mediaType"]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Motifs", [item])]
+        item["overview"] = f"A wholly synthetic {item['genres'][0].lower()} story about {keyword}."
+        messages = [tool_call(call_1, {"keywords": [keyword]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Motifs", [item])]
     elif family == "must-include":
-        intent = f"Build a varied channel that must include the synthetic title {item['name']}."
+        intent = f"Build a channel that must include the synthetic title {item['name']}."
         messages = [tool_call(call_1, {"query": item["name"]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Essentials", [item])]
     elif family == "must-exclude":
         intent = f"Build synthetic adventure programming but exclude horror and {excluded['name']}."
         messages = [tool_call(call_1, {"genres": ["Adventure"]}), tool_result(call_1, candidates=[allowed, excluded]), final_message(f"{ADJECTIVES[variant]} Adventures", [allowed], {"genres": {"include": ["Adventure"], "exclude": ["Horror"]}})]
     elif family == "ambiguous-intent":
-        mood = ("quiet", "bright", "restless", "curious", "windswept")[variant]
+        mood, genre = (
+            ("quiet and dramatic", "Drama"),
+            ("bright and comedic", "Comedy"),
+            ("restless and thrilling", "Thriller"),
+            ("curious and documentary-like", "Documentary"),
+            ("windswept and adventurous", "Adventure"),
+        )[variant]
+        item = candidate(item_number, media_type=item["mediaType"], genre=genre)
+        item["overview"] = f"A wholly synthetic {genre.lower()} story with a {mood} tone."
         intent = f"Build something synthetic that feels {mood}, without inventing titles."
-        messages = [tool_call(call_1, {"keywords": [mood]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Moods", [item])]
+        messages = [tool_call(call_1, {"genres": [genre]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Moods", [item])]
     elif family == "conflicting-intent":
-        intent = f"Build an all-horror synthetic channel that excludes every horror title in fixture group {variant}."
-        messages = [tool_call(call_1, {"genres": ["Horror"]}), tool_result(call_1, candidates=[]), tool_call(call_2, {"query": f"synthetic horror group {variant}"}), tool_result(call_2, candidates=[]), final_message(f"{ADJECTIVES[variant]} Abstains", [])]
+        item = candidate(item_number, media_type=item["mediaType"], genre="Horror")
+        intent = f"Build a synthetic horror channel that must include {item['name']} but also excludes {item['name']}."
+        messages = [
+            tool_call(call_1, {"query": item["name"]}),
+            tool_result(call_1, candidates=[item]),
+            final_message(
+                f"{ADJECTIVES[variant]} Abstains",
+                [],
+                {"genres": {"include": ["Horror"]}},
+                rationale=f"No proposal can include {item['name']} because the same request excludes it.",
+            ),
+        ]
     elif family == "empty-results":
         token = f"absent-synthetic-motif-{variant}"
         intent = f"Build a channel about the nonexistent synthetic motif {token}."
         messages = [tool_call(call_1, {"keywords": [token]}), tool_result(call_1, candidates=[]), tool_call(call_2, {"query": token}), tool_result(call_2, candidates=[]), final_message(f"{ADJECTIVES[variant]} Empty", [])]
     elif family == "tool-error-recovery":
-        intent = f"Build a synthetic {item['genres'][0].lower()} channel and recover from a fixture timeout {variant}."
-        messages = [tool_call(call_1, {"genres": item["genres"]}), tool_result(call_1, error="synthetic fixture timeout"), tool_call(call_2, {"genres": item["genres"]}), tool_result(call_2, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Recovery", [item])]
+        intent = f"Build a synthetic adventure channel around {item['name']} and recover from a fixture timeout {variant}."
+        messages = [
+            tool_call(call_1, {"query": item["name"]}),
+            tool_result(call_1, error="synthetic fixture timeout"),
+            tool_call(call_2, {"genres": item["genres"]}),
+            tool_result(call_2, candidates=[item]),
+            final_message(
+                f"{ADJECTIVES[variant]} Recovery",
+                [item],
+                {"genres": {"include": item["genres"]}},
+            ),
+        ]
     elif family == "malformed-final-repair":
         intent = f"Build a channel around the synthetic title {item['name']} and repair malformed output."
         messages = [tool_call(call_1, {"query": item["name"]}), tool_result(call_1, candidates=[item]), {"role": "assistant", "content": "{not-json"}, {"role": "user", "content": "Return only valid proposal JSON using the already surfaced id."}, final_message(f"{ADJECTIVES[variant]} Repaired", [item])]
@@ -215,7 +250,7 @@ def build_outputs() -> tuple[bytes, bytes]:
     manifest = {
         "schemaVersion": 1,
         "corpusId": "planner-smoke-v1",
-        "status": "draft-pending-human-review",
+        "status": "draft-pending-independent-review",
         "traceCount": len(traces),
         "familyCounts": {family: 5 for family in FAMILIES},
         "tracesPath": str(OUT_PATH.relative_to(ROOT)),
@@ -256,11 +291,23 @@ def main() -> None:
         return
     if args.migrate_pending_review:
         legacy = [json.loads(line) for line in REVIEW_PATH.read_text(encoding="utf-8").splitlines() if line]
-        expected = [
+        flat_pending = [
             {"traceId": trace_id, "status": "pending", "reviewer": "", "reviewedAt": None, "notes": ""}
             for trace_id in expected_trace_ids()
         ]
-        if legacy != expected:
+        structured_pending = len(legacy) == len(expected_trace_ids()) and all(
+            isinstance(item, dict)
+            and item.get("traceId") == trace_id
+            and item.get("primary")
+            == {"verdict": "pending", "reviewer": "", "reviewedAt": None, "notes": ""}
+            and isinstance(item.get("secondary"), dict)
+            and item["secondary"].get("verdict") in {"pending", "not-required"}
+            and item["secondary"].get("reviewer") == ""
+            and item["secondary"].get("reviewedAt") is None
+            and item["secondary"].get("notes") == ""
+            for item, trace_id in zip(legacy, expected_trace_ids(), strict=True)
+        )
+        if legacy != flat_pending and not structured_pending:
             raise SystemExit("refusing migration: review file is not the exact unevidenced legacy pending set")
         REVIEW_PATH.write_bytes(default_review_bytes())
         return

@@ -16,22 +16,22 @@
     "tool-error-recovery": 5
   },
   "generator": "planner-smoke-draft-generator-v1",
-  "generatorSha256": "7a56f1a40e707413eadfdc2bf2fa146196c26d2fd47feaa134f41198241b73b9",
+  "generatorSha256": "fc89f8371801e91dd41643c76323eca4f57ca4ced0b442c1e1ccd98ffd794053",
   "review": {
-    "approved": 0,
-    "pending": 50,
+    "approved": 50,
+    "pending": 0,
     "rejected": 0
   },
   "reviewContract": "planner-smoke-review-decision-v1",
   "reviewDecisionsPath": "reviews/planner-smoke-v1.jsonl",
-  "reviewDecisionsSha256": "1763b614dd0f38c3fd26ac683c8bda00fedc772f0110a25d7858fae0fa367d5a",
+  "reviewDecisionsSha256": "b108c21dbfce22efee5fd906e8acf848375d1b25c97c8310352e1c8c4e7045d0",
   "reviewValidatorPath": "src/loomarr_models/review.py",
-  "reviewValidatorSha256": "79ab362b828ca140f97eefaf48df0d5229e94d1f278eef0f09730f22ed785b8e",
+  "reviewValidatorSha256": "8daef0b0e80ebe9a09a955ac28e8e74581d0d247355c58abb8b50fad4bc902cd",
   "schemaVersion": 1,
-  "status": "draft-pending-human-review",
+  "status": "draft-pending-independent-review",
   "systemPromptSha256": "c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61",
   "toolSchemaSha256": "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853",
   "traceCount": 50,
   "tracesPath": "corpus/planner-smoke-v1/drafts.jsonl",
-  "tracesSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92"
+  "tracesSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
 }

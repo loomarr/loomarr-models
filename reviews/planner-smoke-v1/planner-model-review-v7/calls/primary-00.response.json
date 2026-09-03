@@ -1,0 +1,21 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788407150-aHfxAVsKLo0Mv1uAFXMQ","object":"chat.completion","created":1788407150,"model":"anthropic/claude-sonnet-5","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\": {\"planner-smoke-title-search-01\": {\"criteria\": {\"constraints\": {\"evidence\": \"placeholder\", \"passed\": true}, \"final_proposal\": {\"evidence\": \"placeholder\", \"passed\": true}, \"grounding\": {\"evidence\": \"placeholder\", \"passed\": true}, \"intent\": {\"evidence\": \"placeholder\", \"passed\": true}, \"recovery\": {\"evidence\": \"placeholder\", \"passed\": true}, \"tool_calls\": {\"evidence\": \"placeholder\", \"passed\": true}}, \"summary\": \"placeholder\", \"verdict\": \"approved\"}}, \"schemaVersion\": 1}","refusal":null}}],"usage":{"prompt_tokens":7210,"completion_tokens":217,"total_tokens":7427,"cost":0.01659,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01659,"upstream_inference_prompt_cost":0.01442,"upstream_inference_completions_cost":0.00217},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

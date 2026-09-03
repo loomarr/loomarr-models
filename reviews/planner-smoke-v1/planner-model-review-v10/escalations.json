@@ -1,0 +1,85 @@
+{
+  "count": 4,
+  "reviewId": "planner-model-review-v10",
+  "schemaVersion": 1,
+  "traces": [
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "d880f587914dd4b4700cc6b8fd54dbb3255aa5cee1b34e5701589dcabb79a711",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "607dca58a6f2b04b19b00dfa33d62f6d8181852bb856648a20cfdda2b3ff8bad",
+        "failedCriteria": [
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-keyword-discovery-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "33e10f7f9b2bc539fe5fdf4cffd91308daba06e779ea72ca7b3120d003503c99",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "13e6f23fb0ea5784ad8303abf0a79ce8c5201a57fefea1cdf25448ec557c6ebb",
+        "failedCriteria": [
+          "intent",
+          "recovery",
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "40d3a68f55c94cd26d9f6f5daf595b04dc49c4a9765eb01b1d9ae409de4c086d",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "92c1ec1d35c5fd6246a35ffb131f72479e1bb8362f4a9c36bec87c65f02ad94e",
+        "failedCriteria": [
+          "tool_calls",
+          "constraints",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "73823a0b1161a464a35647bf941c3a805c61b91af94485d59d4a639b47ea0e15",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "c3f0de22b249d16f13cb82d9c375a45c7648ce6238a5853dd01e800346949ee1",
+        "failedCriteria": [
+          "constraints"
+        ],
+        "reviewer": "openrouter:openai/gpt-5.4",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-05"
+    }
+  ]
+}

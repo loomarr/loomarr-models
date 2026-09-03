@@ -1,0 +1,12 @@
+{
+  "approved": 50,
+  "corpusId": "planner-smoke-v1",
+  "manifestSha256": "4f7bb7f4048eb33def2a2bf34ef74d02cc4444e7db9c16d3caeb6ebea18efac2",
+  "pending": 0,
+  "result": "pass",
+  "schemaVersion": 1,
+  "traces": 50,
+  "tracesSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b",
+  "validatorPath": "src/loomarr_models/validator.py",
+  "validatorSha256": "208a1b3921619bf742eb316ab0b22784c91d26e5d88abaabdd74fea4ddf5d91b"
+}

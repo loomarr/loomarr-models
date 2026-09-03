@@ -224,7 +224,7 @@ def _validate_shape(config: dict[str, Any]) -> None:
     required_run = {
         "runId": "qwen38-qlora-a40-smoke-v1",
         "seed": 3407,
-        "maxSeqLength": 1024,
+        "maxSeqLength": 4096,
         "maxSteps": 20,
         "perDeviceTrainBatchSize": 1,
         "gradientAccumulationSteps": 4,
@@ -297,8 +297,8 @@ def _validate_budget(
         raise PreflightError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise PreflightError("spend ledger does not reconcile")
-    if authorization != Decimal("20.00"):
-        raise PreflightError("aggregate authorization differs from $20")
+    if authorization != Decimal("40.00"):
+        raise PreflightError("aggregate authorization differs from $40")
     if reservation > Decimal("1.50") or reservation <= 0:
         raise PreflightError("experiment reservation exceeds $1.50")
     projected = committed + reservation

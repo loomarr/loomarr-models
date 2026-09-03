@@ -1,0 +1,46 @@
+{
+  "actualCostUsd": "0",
+  "completedCalls": 0,
+  "error": {
+    "code": 404,
+    "failedRoutingStep": "Filter by Data Policy",
+    "message": "No endpoints found matching your data policy (Zero data retention).",
+    "routingFunnel": [
+      {
+        "endpointCount": 9,
+        "step": "Initial Endpoints"
+      },
+      {
+        "endpointCount": 6,
+        "step": "Filter by Regional Surcharge"
+      },
+      {
+        "endpointCount": 1,
+        "step": "Filter by Allowed Providers"
+      }
+    ]
+  },
+  "failedAt": "2026-09-03T03:01:39.256947Z",
+  "preflight": {
+    "authorizationUsd": "20",
+    "committedSpendUsd": "4.454895891125471",
+    "configSha256": "6f271db84fae8fd6b7e78c9ccbef8e1eea2c8d56132b56f3bbdd200ba7b478bd",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1411428,
+    "outputDir": ".artifacts/planner-model-review-v1",
+    "outputTokenUpperBound": 120000,
+    "projectedSpendUsd": "8.954895891125471",
+    "requestCount": 20,
+    "reservationUsd": "4.5",
+    "reviewId": "planner-model-review-v1",
+    "schemaVersion": 1,
+    "sourceCommit": "3cb4a49d2727209d27d3492b55523ac33f623523",
+    "traceCount": 50,
+    "worstCaseCostUsd": "4.142856"
+  },
+  "reservationUsd": "4.5",
+  "reviewId": "planner-model-review-v1",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:01:39.126725Z",
+  "status": "failed-before-inference"
+}

@@ -1,0 +1,15 @@
+{
+  "actualCostUsd": "0.967292",
+  "completedCalls": 50,
+  "evidence": "All 50 Gemini calls settled. The first openai/flex response was a top-level upstream 429 error envelope, its generation lookup remained 404 not found after the bounded settlement window, and current-key daily usage equaled the prior settled usage plus the 50 Gemini charges. The failed GPT call is therefore accounted at $0.",
+  "evidenceCheckedAt": "2026-09-03T05:32:44Z",
+  "evidenceEndpoint": "https://openrouter.ai/api/v1/generation?id=gen-1788413441-TgSEVz88IT8jegPJI57O",
+  "failure": "openai/gpt-5.4 was temporarily rate-limited upstream on the openai/flex route",
+  "generationId": "gen-1788413441-TgSEVz88IT8jegPJI57O",
+  "invalidReviewCount": 0,
+  "responseSha256": "fea5a35631ffa5fa376e766a23c413b957ffcf88754b185b299f7ba8e977c093",
+  "reviewId": "planner-model-review-v9",
+  "runStateSha256": "da4c8afbc5c8b0390a2791a51a3c05e386a1fd1f7963a6775e9ac3dea712614e",
+  "schemaVersion": 1,
+  "sourceCommit": "a35f61bf97e5e254b30411115c0e6d02b4e54a53"
+}

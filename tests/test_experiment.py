@@ -45,10 +45,10 @@ class ExperimentPreflightTests(unittest.TestCase):
         self.assertEqual(imported, set())
         self.assertEqual((report.traceCount, report.approvedCount), (50, 50))
         self.assertEqual(report.sourceCommit, "a" * 40)
-        self.assertEqual(report.projectedSpendUsd, "5.954895891125471")
+        self.assertEqual(report.projectedSpendUsd, "19.814559391125471")
 
-    def test_current_repository_config_refuses_pending_corpus(self):
-        with self.assertRaisesRegex(ValueError, "not approved"):
+    def test_current_repository_config_refuses_completed_experiment(self):
+        with self.assertRaisesRegex(PreflightError, "not ready-for-smoke"):
             preflight(PROJECT_ROOT, CONFIG_PATH, git_probe=self._clean_git)
 
     def test_refuses_pending_trace(self):
@@ -66,7 +66,7 @@ class ExperimentPreflightTests(unittest.TestCase):
 
     def test_refuses_blocked_experiment_after_review(self):
         config = self._load_config()
-        config["status"] = "blocked-pending-human-review"
+        config["status"] = "blocked-pending-independent-review"
         self._write_config(config)
         with self.assertRaisesRegex(PreflightError, "not ready-for-smoke"):
             preflight(self.root, self.config_path, git_probe=self._clean_git)
@@ -93,9 +93,9 @@ class ExperimentPreflightTests(unittest.TestCase):
     def test_refuses_aggregate_budget_overflow(self):
         budget_path = self.root / "budgets/external-spend-v1.json"
         budget = json.loads(budget_path.read_text(encoding="utf-8"))
-        budget["postedSpendUsd"] = "19.00"
+        budget["postedSpendUsd"] = "39.00"
         budget["outstandingReservationsUsd"] = "0.00"
-        budget["committedSpendUsd"] = "19.00"
+        budget["committedSpendUsd"] = "39.00"
         budget_path.write_text(json.dumps(budget), encoding="utf-8")
         with self.assertRaisesRegex(PreflightError, "exceed aggregate authorization"):
             preflight(self.root, self.config_path, git_probe=self._clean_git)
@@ -159,8 +159,8 @@ class ExperimentPreflightTests(unittest.TestCase):
         copy_paths = [
             "contracts/planner-contract-v3.json",
             "contracts/holdout-denylist-v1.json",
-            "corpus/planner-smoke-v1/drafts.jsonl",
-            "corpus/planner-smoke-v1/draft-manifest.json",
+            "corpus/planner-smoke-v1/traces.jsonl",
+            "corpus/planner-smoke-v1/manifest.json",
             "environments/qwen38-a40-v1.json",
             "environments/qwen38-a40-v1.requirements.in",
             "environments/qwen38-a40-v1.overrides.txt",
@@ -172,6 +172,12 @@ class ExperimentPreflightTests(unittest.TestCase):
             destination = self.root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(PROJECT_ROOT / relative, destination)
+        budget_path = self.root / "budgets/external-spend-v1.json"
+        budget = json.loads(budget_path.read_text(encoding="utf-8"))
+        budget["postedSpendUsd"] = "18.214559391125471"
+        budget["outstandingReservationsUsd"] = "0.10"
+        budget["committedSpendUsd"] = "18.314559391125471"
+        budget_path.write_text(json.dumps(budget, indent=2) + "\n", encoding="utf-8")
         traces = self._load_corpus()
         for trace in traces:
             trace["review"] = {
@@ -194,7 +200,8 @@ class ExperimentPreflightTests(unittest.TestCase):
         return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
     def _write_corpus(self, traces: list[dict]) -> None:
-        path = self.root / "corpus/planner-smoke-v1/drafts.jsonl"
+        config = self._load_config()
+        path = self.root / config["bindings"]["corpus"]["path"]
         path.write_text(
             "".join(
                 json.dumps(trace, sort_keys=True, separators=(",", ":"), ensure_ascii=False)

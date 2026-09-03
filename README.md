@@ -7,8 +7,10 @@ separate from the Go application: Loomarr consumes released model bytes through 
 boundary and never imports this toolchain.
 
 The first milestone is [loomarr/loomarr#937](https://github.com/loomarr/loomarr/issues/937): a
-validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract and
-the pinned Qwen 3.8 / Unsloth candidate environment. No GPU training or model download occurs here.
+validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract,
+the pinned Qwen 3.8 / Unsloth candidate environment, and the reproducible evidence from the first
+bounded GPU smoke. Model weights, adapters, caches, and raw logs remain local ignored artifacts;
+only compact hash-bound evidence is committed.
 
 ## Checks
 
@@ -17,22 +19,63 @@ make check
 ```
 
 `validate-corpus` accepts reviewed artifacts only. Draft validation is available explicitly for the
-human-review workflow and never promotes a draft into training data.
+independent-review workflow and never promotes a draft into training data.
 
-Review decisions have separate primary and secondary evidence. Exactly 22 traces require a second,
-distinct GitHub reviewer. Once all required decisions approve, `make finalize-corpus` creates the
-immutable 50-trace artifact, manifest, and validation report; it refuses pending, rejected, disputed,
-partial, or drifted inputs.
+Every corrected trace requires separate Gemini 3.1 Pro and GPT-5.4 attestations through pinned OpenRouter
+provider routes. The two model families remain blind to each other's output and outside the Qwen
+candidate family. Once both pass all six criteria for all 50 traces, `make finalize-corpus` creates the
+immutable artifact, manifest, and validation report. Any disagreement, rejection, invalid response,
+route drift, partial run, or unsettled charge remains non-approved and produces a targeted escalation.
+
+The completed v7 review established a 50/50 valid rate for Gemini and an 18/50 valid rate for Sonnet,
+with 13 unanimous approvals and 37 targeted escalations. Its exact `$2.212744` cost and all replayable
+evidence are staged under `reviews/planner-smoke-v1/planner-model-review-v7/`; partial results do not alter
+the canonical pending corpus.
+
+Review v8 re-ran the complete corrected corpus with Gemini 3.1 Pro and GPT-5.4. All 100 calls settled
+for exactly `$2.4979775`: Gemini produced 50 valid approvals, while GPT-5.4 produced 42 valid reviews
+and eight quarantined length completions. The paired evidence independently approves 36 traces and
+leaves 14 pending. Five ambiguous-mood traces and one conflicting-intent trace exposed two remaining
+generator defects; the other eight pending traces require replacement attestations for invalid GPT
+completions. Replayable evidence is staged under
+`reviews/planner-smoke-v1/planner-model-review-v8/`, and the canonical corpus remains unchanged.
+
+Review v9 corrects the two remaining generator families and re-reviews the complete hash-bound corpus.
+Ambiguous-mood candidates now contain explicit tone evidence; conflicting-intent traces use a named
+title that the same request both requires and excludes, avoiding fixture-only search language. The
+GPT-5.4 completion ceiling is raised to 4,000 tokens to reduce invalid reasoning-only completions while
+preserving one call per trace and no automatic inference retry. Its first launch stopped before inference
+when the pinned OpenAI route became unavailable; v9 now pins the same model and upstream revision through
+the single healthy `openai/flex` route. That route then rate-limited its first GPT call after all 50
+Gemini reviews had settled, so the partial v9 run stopped and charged only the exact `$0.967292` Gemini
+cost. V10 uses the healthy `openai/fast` route and adds explicit provider-error-envelope validation.
+
+V10 completed 100/100 valid reviews for exactly `$3.999040`, independently approving 46 traces and
+leaving four disagreements. Two rejections misread the deliberately synthetic fixture provenance as
+assistant-invented content. Two recovery traces exposed real contract gaps: one reused a bare genre as
+a title query, and one omitted the requested genre from final policy. The canonical corpus remains
+pending while those reviewer and generator defects are corrected.
+
+V11 applies the recovery correction across all five variants and makes the auditor's fixture semantics
+explicit. A tool-returned reserved-ID fixture stands in for real catalog content and is not an invented
+title. The complete corpus will be reviewed again through the same healthy Gemini and GPT-5.4 fast
+routes before any trace is promoted.
+
+V11 completed with 100 valid attestations, 50 unanimous approvals, zero escalations, and an exact
+`$3.785636` cost. Its replayable publication is the sole input to the fail-closed canonical promotion
+step; no earlier partial decisions are combined with it.
 
 The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
 container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend. Neither command
 downloads model weights or starts training.
 
-Issue [loomarr/loomarr#938](https://github.com/loomarr/loomarr/issues/938) adds the no-spend QLoRA
-smoke runner. Its checked-in experiment intentionally fails preflight while the 50 traces remain
-pending review. See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the NVIDIA training
-lane, the 64 GB Mac development/evaluation lane, and the paid-run stop point.
+Issue [loomarr/loomarr#938](https://github.com/loomarr/loomarr/issues/938) owns the bounded QLoRA smoke
+runner. The first pinned A40 run completed all 20 steps against the reviewed-frozen 50-trace corpus;
+its compact publication is under `runs/planner-qwen38-smoke-v1/`. The result proves the environment,
+memory envelope, and adapter-only save path, but does not certify or authorize the adapter for release.
+See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the result, the NVIDIA training lane,
+and the 64 GB Mac development/evaluation lane.
 
 ## Contributing and security
 

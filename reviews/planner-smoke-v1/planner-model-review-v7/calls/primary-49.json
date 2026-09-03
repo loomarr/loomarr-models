@@ -1,0 +1,14 @@
+{
+  "batchIndex": 49,
+  "contentError": "planner-smoke-malformed-final-repair-05: invalid review summary",
+  "requestSha256": "19b2341eb1827b819bb5a159a2f255cfd2fb078ca3f4c0cd4735f594aa59aeb0",
+  "responseSha256": "76cd302c644843b4b82db5077365789b293dce7b987ce0f024f0f8367c2c0573",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.01653",
+  "settlementSha256": "c815a6a20be3f6548ad316940e7558e4473270115f5e3015f97082671718061b",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-malformed-final-repair-05"
+  ]
+}
