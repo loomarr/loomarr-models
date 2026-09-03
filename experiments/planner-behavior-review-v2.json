@@ -1,5 +1,9 @@
 {
   "bindings": {
+    "budget": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "d29552f85e01314dea850125568656c747c04dc95b46859f6ddef7c871fcdc86"
+    },
     "contract": {
       "path": "contracts/planner-contract-v3.json",
       "sha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4"
@@ -11,11 +15,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "77708686a20ba908287320c59552ca958721fdfef585f3a99a9613944c537eac"
+      "sha256": "a202db0c8069668f8a0b3f8f7d9da6a98bf235273c800980bf8e9a24eea299cd"
     },
     "disjointnessReport": {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "5414e3ffebf9262c0199633d272ad9f9e935c3457317978a59c27e11b9a05c21"
+      "sha256": "ba177576a92b5de4a8f917ff9285e5274c4ad081589c1d82558f08cf98774ddb"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -31,6 +35,11 @@
       "path": "corpus/planner-smoke-v1/traces.jsonl",
       "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
     },
+    "requestPlan": {
+      "count": 240,
+      "path": "reviews/planner-behavior-v2/request-plan.jsonl",
+      "sha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12"
+    },
     "reviewDecisions": {
       "count": 120,
       "path": "reviews/planner-behavior-v2.jsonl",
@@ -38,11 +47,23 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "c953b2262d58c4c9955355d53072c04c28e8b8c3e29ca198967b7ef2bcc5cc4a"
+      "sha256": "fc792451e9b1cea839dbc32b986b24f4234fc39288ba18ec3252450d11c91905"
+    },
+    "reviewPreflightValidator": {
+      "path": "src/loomarr_models/behavior_model_review.py",
+      "sha256": "07150e1eaa1e98c48437e119248a3535b28d8c1ff1224e4ecbb4b8923ac42c8d"
+    },
+    "reviewRunner": {
+      "path": "scripts/run_planner_behavior_review.py",
+      "sha256": "e3f511146525a918f1f8607b3f0bf6320bae17747d6e142f64b0bc7616bc75c8"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
       "sha256": "a8c86e171433445b176c3f5395bfccbafb805508b799a69fd7073d5bcc639dcc"
+    },
+    "routeSnapshot": {
+      "path": "reviews/planner-behavior-v2/route-snapshot.json",
+      "sha256": "1c7947924c1088ab02310dab1ba278e393ed89813ba6f3beb6665b8554231f38"
     },
     "targetedValidator": {
       "path": "src/loomarr_models/targeted.py",
@@ -55,7 +76,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "ae941cf84983727f22e068c7a7af21b8507cbfd22fc837dab9dba6f2dcb67627"
+      "sha256": "76e16c3239d3d6fe12ad721ddcb90cd1b97c650871a3e24a837278cb93b96888"
     }
   },
   "budget": {
@@ -63,7 +84,8 @@
     "currentCommittedUsd": "19.2805365675672820",
     "projectedMaximumUsd": "34.2805365675672820",
     "remainingAfterMaximumUsd": "5.7194634324327180",
-    "reviewReservationUsd": "15.00"
+    "reviewReservationUsd": "15.00",
+    "worstCaseReviewUsd": "13.4835900"
   },
   "candidateFamily": "qwen",
   "criteria": [
@@ -75,16 +97,38 @@
     "final_proposal"
   ],
   "execution": {
+    "apiBaseUrl": "https://openrouter.ai/api/v1",
     "automaticInferenceRetry": false,
-    "batchThreeRequiresLiveNoInferenceSchemaProof": true,
-    "fallbackBatchSize": 1,
+    "batchSize": 1,
+    "compactTracePacket": true,
+    "maxCalls": 240,
+    "maxOutputTokensPerCall": 3000,
+    "multiTraceBatchAuthorized": false,
+    "outputDir": ".artifacts/planner-behavior-review-v2",
     "paidReviewAuthorized": false,
-    "preferredBatchSize": 3,
     "providerDataCollection": "deny",
     "providerFallback": false,
+    "reasoningEffort": "medium",
+    "requestTimeoutSeconds": 180,
+    "requireCleanGit": true,
+    "settlementAttempts": 60,
+    "settlementDelaySeconds": 1,
     "strictStructuredOutput": true
   },
   "issue": "https://github.com/loomarr/loomarr-models/issues/9",
+  "preflight": {
+    "authorizationUsd": "40.00",
+    "batchSize": 1,
+    "committedSpendUsd": "19.2805365675672820",
+    "inputByteUpperBound": 1673200,
+    "outputTokenUpperBound": 720000,
+    "projectedSpendUsd": "34.2805365675672820",
+    "requestCount": 240,
+    "requestPlanSha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12",
+    "reservationUsd": "15.00",
+    "traceCount": 120,
+    "worstCaseCostUsd": "13.4835900"
+  },
   "reviewId": "planner-behavior-review-v2",
   "reviewers": [
     {
@@ -96,7 +140,7 @@
     {
       "family": "openai",
       "model": "openai/gpt-5.4",
-      "providerTag": "openai/fast",
+      "providerTag": "openai",
       "role": "secondary"
     }
   ],

@@ -1,4 +1,4 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus preflight-targeted-review run-targeted-review generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
@@ -35,6 +35,12 @@ generate-targeted-corpus:
 
 check-targeted-corpus:
 	$(PYTHON) scripts/build_planner_behavior_corpus.py --check
+
+preflight-targeted-review:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_behavior_review.py --preflight-only
+
+run-targeted-review:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_behavior_review.py
 
 generate-review:
 	$(PYTHON) scripts/render_review_packet.py
