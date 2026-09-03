@@ -9,6 +9,7 @@ from pathlib import Path
 
 from loomarr_models.model_review import (
     CRITERIA,
+    ModelReviewContentError,
     ModelReviewError,
     _validate_budget,
     canonical,
@@ -20,7 +21,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v5.json"
+CONFIG = ROOT / "experiments/planner-model-review-v6.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:
@@ -77,7 +78,7 @@ class ModelReviewPreflightTests(unittest.TestCase):
         self.assertEqual((self.plan.traceCount, self.plan.requestCount), (50, 100))
         self.assertEqual(self.plan.outputTokenUpperBound, 200000)
         self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("6.00"))
-        self.assertEqual(self.plan.projectedSpendUsd, "10.587107891125471")
+        self.assertEqual(self.plan.projectedSpendUsd, "10.625559891125471")
         self.assertEqual(self.plan.authorizationUsd, "40")
         self.assertEqual(
             [(item.role, item.batchIndex, len(item.traceIds)) for item in self.plan.requests],
@@ -165,6 +166,17 @@ class ModelReviewEvidenceTests(unittest.TestCase):
                 response["choices"][0]["message"]["content"] = json.dumps(output)
                 with self.assertRaisesRegex(ModelReviewError, message):
                     validate_completion(response, self.request, "b" * 64)
+
+    def test_distinguishes_model_authored_content_failure_from_envelope_failure(self):
+        response = valid_response(self.request)
+        response["choices"][0]["message"]["content"] = "not-json"
+        with self.assertRaises(ModelReviewContentError):
+            validate_completion(response, self.request, "b" * 64)
+        response = valid_response(self.request)
+        response["provider"] = "Other"
+        with self.assertRaises(ModelReviewError) as raised:
+            validate_completion(response, self.request, "b" * 64)
+        self.assertNotIsInstance(raised.exception, ModelReviewContentError)
 
     def test_rejects_model_provider_finish_and_usage_drift(self):
         cases = (

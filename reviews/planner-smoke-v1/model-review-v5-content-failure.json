@@ -1,0 +1,62 @@
+{
+  "accounting": {
+    "settledCostUsd": "0.038452",
+    "settledGenerations": [
+      {
+        "costUsd": "0.02209",
+        "id": "gen-1788406055-ryOj3u4syzlg2akhpjEr",
+        "settlementSha256": "9401bb75b37bb63417b8035188ebdb0adf9a183f26e3ab23ca3d0277317522cd"
+      },
+      {
+        "costUsd": "0.016362",
+        "id": "gen-1788406074-AbY4oGN31WshB4uiSkuB",
+        "settlementSha256": "ba79196c4c4635fca8b17af320a85097bfc15dc2cf8109901556eb27ef143383"
+      }
+    ]
+  },
+  "completedCalls": 1,
+  "error": "planner-smoke-title-search-02: invalid review summary",
+  "failedAt": "2026-09-03T03:28:11.516027Z",
+  "inferenceResponsesReceived": 2,
+  "invalidOutput": {
+    "reason": "The second response used placeholder evidence shorter than 12 characters and approved the trace despite a failed constraint criterion.",
+    "responseSha256": "188f49c8f3dc8c58474b491f6680d6d16d0dedbad90bfe6749e91f362f61900d",
+    "traceId": "planner-smoke-title-search-02"
+  },
+  "preflight": {
+    "authorizationUsd": "40",
+    "committedSpendUsd": "4.587107891125471",
+    "configSha256": "23862a58181330f01b740616c41cbbce24278e6ea67ce28c29d9dfc8350cc338",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1825148,
+    "outputDir": ".artifacts/planner-model-review-v5",
+    "outputTokenUpperBound": 200000,
+    "projectedSpendUsd": "10.587107891125471",
+    "requestCount": 100,
+    "reservationUsd": "6",
+    "reviewId": "planner-model-review-v5",
+    "schemaVersion": 1,
+    "sourceCommit": "8b13642bbe5c6734825835397a087e4f7bd4bf8b",
+    "traceCount": 50,
+    "worstCaseCostUsd": "5.850296"
+  },
+  "reservationUsd": "6",
+  "responseEvidence": [
+    {
+      "costUsd": "0.02209",
+      "responseSha256": "edabf71e670a321c81761ad26f06c09ed95bdab279ef444099421a52f9987387",
+      "status": "valid",
+      "traceId": "planner-smoke-title-search-01"
+    },
+    {
+      "costUsd": "0.016362",
+      "responseSha256": "188f49c8f3dc8c58474b491f6680d6d16d0dedbad90bfe6749e91f362f61900d",
+      "status": "invalid",
+      "traceId": "planner-smoke-title-search-02"
+    }
+  ],
+  "reviewId": "planner-model-review-v5",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:27:35.047511Z",
+  "status": "failed-after-second-response"
+}

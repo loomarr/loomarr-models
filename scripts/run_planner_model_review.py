@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from loomarr_models.model_review import (
+    ModelReviewContentError,
     ModelReviewError,
     RequestPlan,
     canonical,
@@ -32,7 +33,7 @@ from loomarr_models.model_review import (
 )
 
 
-DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v5.json"
+DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v6.json"
 
 
 class OpenRouterHTTPError(ModelReviewError):
@@ -83,6 +84,7 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
     }
     _write_atomic(output / "run-state.json", _pretty(state))
     attestations: list[dict[str, Any]] = []
+    invalid_reviews: list[dict[str, Any]] = []
     call_artifacts: list[dict[str, Any]] = []
     total_cost = Decimal(0)
     try:
@@ -138,22 +140,50 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
             _write_atomic(output / "run-state.json", _pretty(state))
             if total_cost > Decimal(plan.reservationUsd):
                 raise ModelReviewError("settled review cost exceeded the hard reservation")
-            parsed = validate_completion(response, request, response_sha)
             if validate_settlement(settlement, request, response) != cost:
                 raise ModelReviewError("generation settlement cost changed during validation")
             reviewed_at = _timestamp()
-            for attestation in parsed:
-                attestation.update(
-                    {
-                        "reviewedAt": reviewed_at,
-                        "batchIndex": request.batchIndex,
-                        "settledCostUsd": str(cost),
-                        "settlementSha256": settlement_sha,
-                    }
-                )
-            attestations.extend(parsed)
+            try:
+                parsed = validate_completion(response, request, response_sha)
+            except ModelReviewContentError as exc:
+                parsed = []
+                content_error = str(exc)
+                for trace_id in request.traceIds:
+                    invalid_reviews.append(
+                        {
+                            "schemaVersion": 1,
+                            "traceId": trace_id,
+                            "role": request.role,
+                            "reviewer": f"openrouter:{request.model}",
+                            "reviewerFamily": request.family,
+                            "providerTag": request.providerTag,
+                            "requestSha256": request.requestSha256,
+                            "responseId": response_id,
+                            "responseSha256": response_sha,
+                            "reviewedAt": reviewed_at,
+                            "batchIndex": request.batchIndex,
+                            "settledCostUsd": str(cost),
+                            "settlementSha256": settlement_sha,
+                            "error": content_error,
+                        }
+                    )
+                call_status = "invalid"
+            else:
+                for attestation in parsed:
+                    attestation.update(
+                        {
+                            "reviewedAt": reviewed_at,
+                            "batchIndex": request.batchIndex,
+                            "settledCostUsd": str(cost),
+                            "settlementSha256": settlement_sha,
+                        }
+                    )
+                attestations.extend(parsed)
+                content_error = None
+                call_status = "valid"
             call = {
                 "schemaVersion": 1,
+                "status": call_status,
                 "role": request.role,
                 "batchIndex": request.batchIndex,
                 "traceIds": list(request.traceIds),
@@ -162,6 +192,8 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
                 "settlementSha256": settlement_sha,
                 "settledCostUsd": str(cost),
             }
+            if content_error is not None:
+                call["contentError"] = content_error
             summary_bytes = _pretty(call)
             _write_exclusive(summary_path, summary_bytes)
             call_artifacts.append(
@@ -173,12 +205,17 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
                 }
             )
             state["completedCalls"] += 1
+            state["invalidReviewCount"] = len(invalid_reviews)
             del state["currentCall"]
             _write_atomic(output / "run-state.json", _pretty(state))
 
-        _validate_attestation_coverage(attestations, plan)
+        _validate_observation_coverage(attestations, invalid_reviews, plan)
         attestation_bytes = b"".join(canonical(item) + b"\n" for item in attestations)
+        invalid_review_bytes = b"".join(
+            canonical(item) + b"\n" for item in invalid_reviews
+        )
         _write_exclusive(output / "attestations.jsonl", attestation_bytes)
+        _write_exclusive(output / "invalid-reviews.jsonl", invalid_review_bytes)
         completed_at = _timestamp()
         manifest = {
             "schemaVersion": 1,
@@ -192,6 +229,8 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
             "requestCount": plan.requestCount,
             "attestationCount": len(attestations),
             "attestationsSha256": hashlib.sha256(attestation_bytes).hexdigest(),
+            "invalidReviewCount": len(invalid_reviews),
+            "invalidReviewsSha256": hashlib.sha256(invalid_review_bytes).hexdigest(),
             "actualCostUsd": str(total_cost),
             "reservationUsd": plan.reservationUsd,
             "callArtifacts": call_artifacts,
@@ -282,15 +321,20 @@ def _request_json(
     return raw, value
 
 
-def _validate_attestation_coverage(attestations: list[dict[str, Any]], plan: Any) -> None:
+def _validate_observation_coverage(
+    attestations: list[dict[str, Any]], invalid_reviews: list[dict[str, Any]], plan: Any
+) -> None:
     expected = [
         (request.role, trace_id)
         for request in plan.requests
         for trace_id in request.traceIds
     ]
-    actual = [(item.get("role"), item.get("traceId")) for item in attestations]
-    if actual != expected or len(actual) != 100:
-        raise ModelReviewError("attestations do not cover the exact ordered dual-review set")
+    actual = [
+        (item.get("role"), item.get("traceId"))
+        for item in [*attestations, *invalid_reviews]
+    ]
+    if len(actual) != len(expected) or len(set(actual)) != len(actual) or set(actual) != set(expected):
+        raise ModelReviewError("review observations do not cover the exact dual-review set")
 
 
 def _timestamp() -> str:

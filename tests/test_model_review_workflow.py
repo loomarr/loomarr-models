@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 from unittest import mock
 
@@ -25,12 +26,12 @@ def clean_git(_root: Path, _paths: object) -> str:
 class ModelReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config = load_config(ROOT / "experiments/planner-model-review-v5.json")
+        cls.config = load_config(ROOT / "experiments/planner-model-review-v6.json")
         cls.snapshot = json.loads(
             (ROOT / "reviews/planner-smoke-v1/model-review-v1-route-snapshot.json").read_text()
         )
         cls.plan = preflight(
-            ROOT, ROOT / "experiments/planner-model-review-v5.json", git_probe=clean_git
+            ROOT, ROOT / "experiments/planner-model-review-v6.json", git_probe=clean_git
         )
 
     def test_live_route_check_accepts_exact_snapshot_and_rejects_drift(self):
@@ -97,8 +98,9 @@ class ModelReviewWorkflowTests(unittest.TestCase):
             with self.assertRaisesRegex(runner.OpenRouterHTTPError, "HTTP 500"):
                 runner._settle(config, "secret", "gen-1")
 
-    def test_invalid_completion_is_persisted_and_settled_before_failure(self):
+    def test_invalid_completion_is_persisted_settled_and_quarantined_without_retry(self):
         request = self.plan.requests[0]
+        one_call_plan = replace(self.plan, requestCount=1, requests=(request,))
         invalid_output = {
             "schemaVersion": 1,
             "reviews": {
@@ -123,6 +125,7 @@ class ModelReviewWorkflowTests(unittest.TestCase):
             "choices": [
                 {
                     "finish_reason": "stop",
+                    "native_finish_reason": "stop",
                     "message": {"content": json.dumps(invalid_output)},
                 }
             ],
@@ -155,22 +158,24 @@ class ModelReviewWorkflowTests(unittest.TestCase):
                     side_effect=[(response_bytes, response), (settlement_bytes, settlement)],
                 ) as transport,
             ):
-                with self.assertRaisesRegex(ModelReviewError, "exact batch trace ids"):
-                    runner.run(self.config, self.plan, "secret")
-            output = temp_root / self.plan.outputDir
+                result = runner.run(self.config, one_call_plan, "secret")
+            output = temp_root / one_call_plan.outputDir
             self.assertEqual(transport.call_count, 2)
             self.assertEqual((output / "calls/primary-00.response.json").read_bytes(), response_bytes)
             self.assertEqual(
                 (output / "calls/primary-00.settlement.json").read_bytes(), settlement_bytes
             )
             state = json.loads((output / "run-state.json").read_text())
-            self.assertEqual((state["status"], state["completedCalls"]), ("failed", 0))
+            self.assertEqual((state["status"], state["completedCalls"]), ("complete", 1))
             self.assertEqual(state["actualCostUsd"], "0.01")
-            self.assertEqual(state["currentCall"]["responseId"], "gen-invalid")
-            self.assertEqual(state["currentCall"]["responseReportedCostUsd"], "0.01")
-            self.assertEqual(
-                state["currentCall"]["responseSha256"], hashlib.sha256(response_bytes).hexdigest()
-            )
+            self.assertEqual(state["invalidReviewCount"], 1)
+            self.assertNotIn("currentCall", state)
+            invalid = json.loads((output / "invalid-reviews.jsonl").read_text())
+            self.assertEqual(invalid["responseId"], "gen-invalid")
+            self.assertEqual(invalid["responseSha256"], hashlib.sha256(response_bytes).hexdigest())
+            self.assertEqual(invalid["error"], "review output does not cover the exact batch trace ids")
+            self.assertEqual(result["attestationCount"], 0)
+            self.assertEqual(result["invalidReviewCount"], 1)
 
     def test_promotion_requires_two_passes_and_escalates_disagreement(self):
         attestations = []
@@ -208,7 +213,7 @@ class ModelReviewWorkflowTests(unittest.TestCase):
                         "settlementSha256": "b" * 64,
                     }
                 )
-        decisions, escalations = publisher._decisions(attestations, self.plan)
+        decisions, escalations = publisher._decisions(attestations, [], self.plan)
         self.assertEqual((len(decisions), len(escalations)), (50, 0))
 
         secondary = next(
@@ -218,9 +223,33 @@ class ModelReviewWorkflowTests(unittest.TestCase):
         )
         secondary["verdict"] = "rejected"
         secondary["criteria"][0]["passed"] = False
-        decisions, escalations = publisher._decisions(attestations, self.plan)
+        decisions, escalations = publisher._decisions(attestations, [], self.plan)
         self.assertEqual(len(escalations), 1)
         self.assertEqual(escalations[0]["derivedStatus"], "pending")
+
+        invalid = attestations.pop(0)
+        invalid_review = {
+            key: invalid[key]
+            for key in (
+                "schemaVersion",
+                "traceId",
+                "role",
+                "reviewer",
+                "reviewerFamily",
+                "providerTag",
+                "requestSha256",
+                "responseId",
+                "responseSha256",
+                "reviewedAt",
+                "batchIndex",
+                "settledCostUsd",
+                "settlementSha256",
+            )
+        }
+        invalid_review["error"] = "invalid review summary"
+        decisions, escalations = publisher._decisions(attestations, [invalid_review], self.plan)
+        self.assertEqual(escalations[0]["primary"]["verdict"], "invalid")
+        self.assertEqual(decisions[0]["primary"]["verdict"], "pending")
 
 
 if __name__ == "__main__":
