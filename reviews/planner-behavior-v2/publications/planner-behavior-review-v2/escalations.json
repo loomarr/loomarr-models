@@ -1,0 +1,44 @@
+{
+  "count": 2,
+  "reviewId": "planner-behavior-review-v2",
+  "schemaVersion": 1,
+  "traces": [
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "da1c36153cc07097ac461105fb8b3a79736b887149f58771a36f66423f392345",
+        "failedCriteria": [
+          "intent",
+          "tool_calls"
+        ],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "rejected"
+      },
+      "secondary": {
+        "attestationSha256": "4ea118eb251b125c30e034d7cd8e2039c643893d97e82e2caf4f4cb82bf0dd2b",
+        "failedCriteria": [],
+        "reviewer": "openrouter:anthropic/claude-sonnet-4.6",
+        "verdict": "approved"
+      },
+      "traceId": "planner-behavior-v2-one-tool-operation-per-turn-06"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "e28a039c97f5ec3b2f2b1afa526720105d8cb721f7ee8ee4e50cd7fc373bc646",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "secondary": {
+        "attestationSha256": "e50b2b1c735af181fed202c32615c5efd44eda6694d58e5bf1a9392a08c55bd9",
+        "failedCriteria": [
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:anthropic/claude-sonnet-4.6",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-behavior-v2-structured-json-abstention-19"
+    }
+  ]
+}

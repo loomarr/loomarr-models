@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788440053-qehS010bohsIBR5V2HFS","object":"chat.completion","created":1788440053,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-canonical-argument-preservation-15\":{\"criteria\":{\"constraints\":{\"evidence\":\"All constraints preserved: genres=[Mystery], era=2000s, media_type=movie, original_language=de, origin_country=DE, runtime_min=40, runtime_max=70, vote_average_min=7.0, vote_count_min=450. No extra qualifiers were added. Policy block confirms era 2000-2009 and genre Mystery. Must-exclude list is empty and no unsolicited qualifiers appear.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final JSON includes channelName 'Ember Exact Mix', picks array with tmdbId 920015 matching tool result, confidence 0.91 (honest, not inflated), rationale present. Policy block correctly encodes genre and era. Schema fields appear complete and grounded in tool result data.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId 920015 ('Ember Delta Fixture 015') is directly returned by catalog_search tool call behavior-15-1. voteAverage 7.5 >= 7.0, voteCount 500 >= 450, runtime 50 within 40-70, originCountry DE, originalLanguage de, year 2004 in 2000s, genre Mystery. All factual claims are supported by the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"Intent requests a Mystery channel, 2000s era, movie media type, original language de, origin country DE, runtime 40-70 min, min rating 7.0, min 450 votes, no other qualifiers. The assistant accurately captures all six explicit parameters and executes search accordingly.\",\"passed\":true},\"recovery\":{\"evidence\":\"The tool returned one valid candidate satisfying all constraints. No empty-result or error scenario was triggered. The assistant correctly consumed the single result without fabricating additional picks or flagging spurious errors, which is appropriate behavior for a non-empty result set.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Single tool call 'catalog_search' (id: behavior-15-1) with arguments: era=2000s, genres=[Mystery], media_type=movie, origin_country=DE, original_language=de, runtime_max=70, runtime_min=40, vote_average_min=7.0, vote_count_min=450. All arguments match the stated intent exactly with no extra or missing parameters. Schema version catalog-search-v3 compliance confirmed.\",\"passed\":true}},\"summary\":\"All six criteria pass. The intent is fully and correctly represented. The single catalog_search tool call uses exactly the required arguments with no extraneous qualifiers. The pick (tmdbId 920015, Ember Delta Fixture 015) is fully grounded in the tool result, with runtime 50, voteAverage 7.5, voteCount 500, year 2004, all satisfying the constraints. Recovery behavior is appropriate for a non-empty result. The final proposal is schema-valid with honest confidence 0.91 and a correct policy block.\",\"verdict\":\"approved\"}}, \"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2266,"completion_tokens":726,"total_tokens":2992,"cost":0.017688,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.017688,"upstream_inference_prompt_cost":0.006798,"upstream_inference_completions_cost":0.01089},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

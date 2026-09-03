@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443940-hmmDn8yYpxQUKFquBpgI","object":"chat.completion","created":1788443940,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-15\":{\"criteria\":{\"constraints\":{\"evidence\":\"The genre constraint 'Mystery' is preserved in both the recovery search arguments (genres:[\\\"Mystery\\\"]) and in the final proposal's policy field (genres.include:[\\\"Mystery\\\"]), fully honoring the must-include genre requirement throughout the trace.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final proposal is a valid JSON object with channelName 'Ember Recovery', a picks array containing tmdbId 920095 (Ember Beacon Fixture 095) with mediaType 'movie', a rationale string, and confidence 0.91 — all grounded in the tool result from behavior-95-2.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick (tmdbId 920095, 'Ember Beacon Fixture 095') is directly returned by the recovery catalog_search (toolCallId behavior-95-2). No IDs or titles are fabricated outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent is to build a mystery channel around 'Ember Beacon Fixture 095' and recover from a fixture timeout. The trace demonstrates the primary search failing with 'synthetic fixture timeout' and a successful recovery search, fully representing the stated intent.\",\"passed\":true},\"recovery\":{\"evidence\":\"After the first call (behavior-95-1) returned an empty candidates list with error 'synthetic fixture timeout', the assistant correctly issued a fallback search with genres:[\\\"Mystery\\\"] (behavior-95-2) which succeeded, demonstrating proper error recovery behavior rather than halting or hallucinating.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two catalog_search calls are made: the first targets 'Ember Beacon Fixture 095' by query (necessary primary attempt), the second uses genres:[\\\"Mystery\\\"] as a recovery fallback (necessary after timeout). Both argument sets conform to the catalog-search-v3 schema. No unnecessary calls are present.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace correctly represents a timeout-recovery scenario: the initial query-based search fails with a synthetic fixture timeout, the assistant recovers with a genre-based fallback search, retrieves the correct fixture (tmdbId 920095), and produces a grounded, schema-valid final proposal with honest confidence of 0.91 and preserved Mystery genre constraint.\",\"verdict\":\"approved\"}}, \"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2219,"completion_tokens":559,"total_tokens":2778,"cost":0.015042,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.015042,"upstream_inference_prompt_cost":0.006657,"upstream_inference_completions_cost":0.008385},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

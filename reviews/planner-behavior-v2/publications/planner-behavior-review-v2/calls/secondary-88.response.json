@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443653-QQCpFX6wSPjyQRGePDLw","object":"chat.completion","created":1788443653,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-09\":{\"criteria\":{\"constraints\":{\"evidence\":\"The genre constraint Drama is preserved in the catalog_search call (genres:[\\\"Drama\\\"]) and reflected in the policy field of the final proposal: policy.genres.include=[\\\"Drama\\\"]. No must-exclude or audience/era constraints were specified, and none were violated.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final proposal is a valid JSON object with channelName \\\"Dune Recovery\\\", rationale string, picks array containing tmdbId 920089 / name \\\"Dune Junction Fixture 089\\\" grounded in tool result behavior-89-2, and confidence 0.91 which is honest and reasonable. Policy captures the Drama genre constraint.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId 920089 / \\\"Dune Junction Fixture 089\\\" matches exactly the candidate returned by tool call behavior-89-2. No facts or IDs are asserted outside the tool results; the overview and year are not fabricated by the assistant.\",\"passed\":true},\"intent\":{\"evidence\":\"The stated intent is to build a drama channel around Dune Junction Fixture 089 and recover from a fixture timeout. The trace begins with a targeted search for that fixture, receives a timeout error, retries with a genre-based search, and ultimately builds the channel around the recovered fixture — fully representing the intent.\",\"passed\":true},\"recovery\":{\"evidence\":\"First call behavior-89-1 returned error 'synthetic fixture timeout' with empty candidates. The assistant correctly did not give up; it issued a fallback call behavior-89-2 using genre filter [\\\"Drama\\\"] which returned the target fixture. Recovery behavior is correct for the error-recovery trace family.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two catalog_search calls made: behavior-89-1 with query argument 'Dune Junction Fixture 089' (direct lookup, necessary), and behavior-89-2 with genres:[\\\"Drama\\\"] (recovery fallback after timeout error, necessary). Both calls use the catalog_search tool name and their arguments conform to the catalog-search-v3 schema. No extraneous calls were made.\",\"passed\":true}},\"summary\":\"All six criteria pass. The intent is clearly represented with targeted initial search followed by proper error recovery on timeout. Both tool calls are necessary and schema-conformant. Every fact and ID in the final proposal is grounded in tool result behavior-89-2. Recovery behavior is exemplary — abstaining from the errored result and retrying with a genre filter. The Drama genre constraint is consistently preserved. The final proposal is schema-valid, fully grounded, and uses a credible confidence of 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2220,"completion_tokens":634,"total_tokens":2854,"cost":0.01617,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01617,"upstream_inference_prompt_cost":0.00666,"upstream_inference_completions_cost":0.00951},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

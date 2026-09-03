@@ -73,6 +73,13 @@ make preflight-targeted-review
 `make run-targeted-review` is enabled by a separate reviewed authorization commit. It still refuses
 before inference if the live route, price, budget, committed source, or exact execution envelope differs.
 
+The completed review settled 240 valid observations for exactly `$4.080632`. It produced 118
+unanimous approvals and two disagreements. The first disagreement treated the contract's `query`
+title-search field as though a nonexistent `title` field were required; the second incorrectly required
+a per-pick confidence value when the abstention contained no picks. Both traces remain pending. The
+completed plan is now terminal and paid execution is disabled; a corrected full review packet must be
+published as a separate experiment.
+
 The complete evidence lifecycle is implemented before any paid call:
 
 1. `make run-targeted-review` preserves every raw response and exact generation settlement, quarantines
@@ -89,11 +96,11 @@ The runnable plan binds the runner, publisher, and finalizer by SHA-256. A route
 response, missing observation, invalid settlement, disagreement, budget change, or artifact drift
 stops promotion or leaves the affected trace pending.
 
-The review reservation ceiling is `$15.00`. Aggregate external commitment is currently
-`$19.2805365675672820 / $40.00`, so the planned maximum would be
-`$34.2805365675672820 / $40.00`. Route availability and worst-case pricing must be refreshed
-immediately before authorization. The route snapshot and no-inference preflight cost `$0`. The
-checked-in plan has `paidReviewAuthorized: false`; it cannot be used as permission to call OpenRouter.
+The completed review settled for `$4.080632`. Aggregate external commitment is now
+`$23.3611685675672820 / $40.00`, leaving `$16.6388314324327180` uncommitted. A future corrected review
+must use a separate experiment, refresh route availability and worst-case pricing, and fit within that
+remaining authorization before a reviewed authorization commit may enable it. The completed plan has
+`paidReviewAuthorized: false`; it cannot be used as permission to call OpenRouter.
 
 ## Stop point
 

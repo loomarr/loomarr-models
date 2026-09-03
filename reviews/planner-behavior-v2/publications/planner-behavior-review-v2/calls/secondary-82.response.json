@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443386-aqBNLDhYsJgaGmFhO0Q1","object":"chat.completion","created":1788443386,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-03\":{\"criteria\":{\"constraints\":{\"evidence\":\"The final proposal enforces genre include constraint [\\\"Documentary\\\"] matching the recovery search arguments and the fixture's genres field [\\\"Documentary\\\"]. No must-exclude or era constraints were specified; the single must-include (Cinder Horizon Fixture 083, tmdbId 920083) is present in picks.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final proposal is a valid JSON object with channelName 'Cinder Recovery', picks array containing tmdbId 920083, name 'Cinder Horizon Fixture 083', mediaType 'movie', confidence 0.91, a grounded rationale, and a policy block with genres include Documentary. All fields are schema-consistent and confidence is honest.\",\"passed\":true},\"grounding\":{\"evidence\":\"The pick tmdbId 920083 and name 'Cinder Horizon Fixture 083' are directly sourced from the catalog_search result for toolCallId behavior-83-2, which returned a single candidate with matching tmdbId, name, genres, and mediaType. No facts are asserted beyond what the tool returned.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent 'Build a synthetic documentary channel around Cinder Horizon Fixture 083 and recover from the fixture timeout' is fully represented: the trace attempts a direct search, encounters a timeout error, recovers via a genre-based search, and surfaces Cinder Horizon Fixture 083 in the final channel proposal named 'Cinder Recovery'.\",\"passed\":true},\"recovery\":{\"evidence\":\"First tool call behavior-83-1 returned error 'synthetic fixture timeout' with empty candidates. The assistant correctly retried with an alternate strategy (genre-based search, behavior-83-2) rather than giving up or hallucinating, and successfully recovered the fixture in the second result. This matches expected error-recovery behavior for the trace family.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two tool calls were made: (1) catalog_search with query 'Cinder Horizon Fixture 083' (id behavior-83-1) — direct lookup as required; (2) catalog_search with genres ['Documentary'] (id behavior-83-2) — fallback recovery search. Both calls use the catalog_search tool with arguments conforming to catalog-search-v3 schema. No superfluous calls were made.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace cleanly demonstrates intent-driven error recovery: a direct fixture lookup times out, a genre-based fallback succeeds, and the final proposal correctly grounds tmdbId 920083 from the recovered result with valid schema fields and an honest confidence of 0.91. Constraints, grounding, and tool-call hygiene are all satisfied.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2224,"completion_tokens":658,"total_tokens":2882,"cost":0.016542,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.016542,"upstream_inference_prompt_cost":0.006672,"upstream_inference_completions_cost":0.00987},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

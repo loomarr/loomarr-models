@@ -53,7 +53,9 @@ def publish(plan: Any) -> dict[str, Any]:
     public = PUBLIC_ROOT / plan.reviewId
     if public.exists():
         raise ModelReviewError("published behavior-review directory already exists")
-    manifest = _object(artifacts / "run-manifest.json")
+    manifest_path = artifacts / "run-manifest.json"
+    manifest_bytes = manifest_path.read_bytes()
+    manifest = json.loads(manifest_bytes)
     expected_manifest_fields = {
         "schemaVersion",
         "reviewId",
@@ -163,22 +165,35 @@ def publish(plan: Any) -> dict[str, Any]:
 
     shutil.copytree(artifacts, public)
     (public / "decisions.jsonl").write_bytes(decision_bytes)
-    (public / "escalations.json").write_bytes(
-        _pretty(
-            {
-                "schemaVersion": 1,
-                "reviewId": plan.reviewId,
-                "count": len(escalations),
-                "traces": escalations,
-            }
-        )
+    escalation_bytes = _pretty(
+        {
+            "schemaVersion": 1,
+            "reviewId": plan.reviewId,
+            "count": len(escalations),
+            "traces": escalations,
+        }
     )
+    (public / "escalations.json").write_bytes(escalation_bytes)
     result = {
+        "schemaVersion": 1,
         "reviewId": plan.reviewId,
+        "status": "complete-approved" if not escalations else "complete-with-escalations",
+        "sourceCommit": plan.sourceCommit,
+        "configSha256": plan.configSha256,
+        "corpusSha256": plan.corpusSha256,
         "actualCostUsd": str(actual_cost),
         "approved": 120 - len(escalations),
         "escalations": len(escalations),
+        "runManifestPath": str((public / "run-manifest.json").relative_to(ROOT)),
+        "runManifestSha256": hashlib.sha256(manifest_bytes).hexdigest(),
+        "attestationsPath": str((public / "attestations.jsonl").relative_to(ROOT)),
+        "attestationsSha256": manifest["attestationsSha256"],
+        "invalidReviewsPath": str((public / "invalid-reviews.jsonl").relative_to(ROOT)),
+        "invalidReviewsSha256": manifest["invalidReviewsSha256"],
+        "decisionsPath": str((public / "decisions.jsonl").relative_to(ROOT)),
         "decisionsSha256": hashlib.sha256(decision_bytes).hexdigest(),
+        "escalationsPath": str((public / "escalations.json").relative_to(ROOT)),
+        "escalationsSha256": hashlib.sha256(escalation_bytes).hexdigest(),
     }
     (public / "publication.json").write_bytes(_pretty(result))
     corpus.BUDGET_PATH.write_bytes(_pretty(settled_budget))

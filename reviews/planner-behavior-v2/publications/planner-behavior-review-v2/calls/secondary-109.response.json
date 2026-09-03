@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788444676-kUkFGZ6dgCCHH3r9E0AB","object":"chat.completion","created":1788444676,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-ambiguous-intent-mapping-10\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent specifies an intimate and reflective mood. The tool call includes genre 'Drama' as an include constraint, and the final proposal policy field confirms genres.include=[\\\"Drama\\\"]. No must-exclude or era constraints were specified, and none were violated. The audience and format are unconstrained and appropriately left open.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal is a JSON object with channelName 'Ember Mood', a rationale, picks array containing tmdbId 920110 ('Ember Gallery Fixture 110', mediaType 'series'), a rationale per pick, and confidence 0.91. All fields are present and schema-valid. The selected item is grounded in the tool result and confidence is plausible and honest.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId 920110 ('Ember Gallery Fixture 110') exactly matches the candidate returned by catalog_search tool call 'behavior-110-1'. No facts are asserted beyond what the tool result provides. The overview 'A wholly synthetic drama fixture with an intimate and reflective tone' supports the mood mapping.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent requests building something 'intimate and reflective' without asking a question. The assistant mapped this mood directly to the Drama genre via catalog_search and produced a proposal without any clarifying question, satisfying the ambiguous-intent-mapping behavior requirement fully.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned exactly one candidate. The assistant did not abstain or error; it proceeded with the single available result, which is appropriate behavior when at least one valid candidate is returned. No empty-result or error recovery scenario was triggered, and no incorrect fallback was applied.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call was made: catalog_search with id 'behavior-110-1' and arguments {genres: ['Drama']}. This matches the catalog-search-v3 schema. No redundant or missing tool calls are present. The genre argument is the correct mechanism for mood-to-genre mapping under the production contract.\",\"passed\":true}},\"summary\":\"All six criteria pass. The assistant correctly mapped an ambiguous intimate/reflective mood to the Drama genre without asking a clarifying question, made a single necessary and schema-conformant tool call, grounded its final pick exclusively in the returned fixture (tmdbId 920110), handled the single-result scenario appropriately, preserved all applicable constraints, and produced a schema-valid final proposal with an honest confidence value of 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2140,"completion_tokens":616,"total_tokens":2756,"cost":0.01566,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01566,"upstream_inference_prompt_cost":0.00642,"upstream_inference_completions_cost":0.00924},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

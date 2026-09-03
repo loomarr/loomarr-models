@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788444902-alrys4Ds43ewBQOle3m9","object":"chat.completion","created":1788444902,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-ambiguous-intent-mapping-15\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent specifies intimate and reflective mood; the policy in the final proposal enforces genres.include=[\\\"Drama\\\"], which maps to that mood. No must-exclude or audience/era constraints were stated, so there is nothing to violate. The genre constraint is preserved end-to-end.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final assistant turn is a valid JSON string with channelName, rationale, picks (mediaType, tmdbId, name, rationale, confidence=0.91), and policy. tmdbId 920115 matches the tool result. Confidence 0.91 is plausible and honest. Schema appears complete and grounded.\",\"passed\":true},\"grounding\":{\"evidence\":\"The pick tmdbId 920115 and name 'Ember Horizon Fixture 115' match the catalog_search result returned under toolCallId behavior-115-1. No facts are asserted beyond what the tool result provides. Grounding is fully supported.\",\"passed\":true},\"intent\":{\"evidence\":\"Intent is 'Build something synthetic that feels intimate and reflective; map the mood to the best catalog genre without asking a question.' The assistant maps the mood to Drama and searches without issuing a clarifying question, fully addressing the ambiguous-intent-mapping behavior requirement.\",\"passed\":true},\"recovery\":{\"evidence\":\"No errors or empty results occurred. The catalog_search returned one valid candidate and the assistant used it directly. No recovery scenario was triggered; the trace correctly proceeds without abstention or fallback, which is appropriate given a successful result.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call is made: catalog_search with arguments {\\\"genres\\\":[\\\"Drama\\\"]}, id behavior-115-1. This is necessary to resolve the ambiguous mood to a catalog genre. No extraneous tool calls are present. Arguments match the catalog-search-v3 schema (genres as an array of strings).\",\"passed\":true}},\"summary\":\"All six criteria pass. The assistant correctly infers Drama from the intimate/reflective mood without asking a clarifying question, issues a single appropriately-scoped catalog_search call, grounds the final proposal entirely on the returned fixture (tmdbId 920115), and produces a schema-valid proposal with honest confidence. No constraint violations or grounding errors are present.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2142,"completion_tokens":557,"total_tokens":2699,"cost":0.014781,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.014781,"upstream_inference_prompt_cost":0.006426,"upstream_inference_completions_cost":0.008355},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

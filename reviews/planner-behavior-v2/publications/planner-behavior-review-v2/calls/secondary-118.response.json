@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788445076-LdV0gArzKIGre6go3KBU","object":"chat.completion","created":1788445076,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-ambiguous-intent-mapping-19\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent specifies a sweeping/exploratory mood; the assistant mapped this to the Adventure genre without asking a question, consistent with the must-not-ask constraint. The policy block in the final proposal confirms genres.include=[\\\"Adventure\\\"], preserving the genre mapping throughout.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal is a valid JSON object with required fields: channelName, rationale, picks, and policy. The single pick references tmdbId 920119 with mediaType 'movie', name 'Dune Junction Fixture 119', a rationale string, and confidence 0.91 — all grounded in the tool result and within the [0,1] range.\",\"passed\":true},\"grounding\":{\"evidence\":\"The assistant selected tmdbId 920119 ('Dune Junction Fixture 119') in the final proposal, which exactly matches the single candidate returned by the catalog_search tool call behavior-119-1. No IDs or titles appear in the proposal that are not present in the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent requests something 'sweeping and exploratory' mapped to a catalog genre without asking a question. The assistant interpreted this as Adventure genre, issued a search, and returned a proposal — fully representing the ambiguous-intent-mapping behavior without clarifying questions.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned exactly one candidate. The assistant did not need to recover from an empty result; it correctly used the single available fixture without fabricating alternatives or abstaining unnecessarily, which is appropriate behavior for this trace family.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call was made: catalog_search with arguments {\\\"genres\\\":[\\\"Adventure\\\"]}, id 'behavior-119-1'. This is necessary and sufficient to satisfy the mood-to-genre mapping. The arguments conform to the catalog-search-v3 schema (genres array of strings). No extraneous or missing tool calls observed.\",\"passed\":true}},\"summary\":\"All six criteria pass. The assistant correctly mapped the ambiguous sweeping/exploratory mood to Adventure without asking clarifying questions, issued a single well-formed catalog_search call, grounded its final proposal entirely on the returned fixture (tmdbId 920119), and produced a schema-valid proposal with an honest confidence value of 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2145,"completion_tokens":567,"total_tokens":2712,"cost":0.01494,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01494,"upstream_inference_prompt_cost":0.006435,"upstream_inference_completions_cost":0.008505},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

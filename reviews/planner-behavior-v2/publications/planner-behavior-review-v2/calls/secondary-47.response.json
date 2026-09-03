@@ -1,0 +1,27 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788441667-o6oFTcOC5jT4UoBQlubx","object":"chat.completion","created":1788441667,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-complete-proposal-json-08\":{\"criteria\":{\"constraints\":{\"evidence\":\"No must-include, must-exclude, audience, era, or format constraints were stated in the intent. The final proposal reflects this correctly: policy field is an empty object `{}`, and the single pick is the exact title requested with no extraneous additions or omissions.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal JSON contains channelName 'Cinder Complete', a picks array with one entry: mediaType 'series', tmdbId 920048, name 'Cinder Gallery Fixture 048', confidence 0.91, and an empty policy object. All fields are schema-valid, grounded in the tool result, and confidence is a plausible non-inflated value.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick uses tmdbId 920048 and name 'Cinder Gallery Fixture 048', both taken directly from the catalog_search result returned under toolCallId 'behavior-48-1'. No facts or IDs appear that were not present in the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent explicitly requests building a channel around the exact catalog title 'Cinder Gallery Fixture 048' with no policy. The assistant searched for that precise title and constructed a proposal centered on it, fully representing the stated intent.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search call returned a single candidate successfully. No errors, empty results, or ambiguous states occurred. The assistant correctly proceeded to finalize a proposal without unnecessary retry or abstention behavior.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Exactly one tool call was made: catalog_search with arguments {\\\"query\\\":\\\"Cinder Gallery Fixture 048\\\"} under id 'behavior-48-1'. This is the minimally necessary call to locate the requested title, and the argument precisely matches the requested title string per the production contract schema.\",\"passed\":true}},\"summary\":\"All six criteria pass. The intent to build a channel around 'Cinder Gallery Fixture 048' is clearly represented. The single catalog_search call is necessary and correctly argued. The pick (tmdbId 920048) is fully grounded in the tool result. No recovery issues arose. No constraints were specified and none were incorrectly imposed. The final proposal is schema-valid, grounded, and uses a reasonable confidence value of 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null,"reasoning_details":[{"type":"reasoning.text","text":"Let me analyze this trace against the six criteria.\n\n1. **Intent**: Build a synthetic channel around \"Cinder Gallery Fixture 048\"; no policy requested.\n2. **Tool calls**: One catalog_search with query \"Cinder Gallery Fixture 048\" - necessary and appropriate.\n3. **Grounding**: The pick uses tmdbId 920048, name \"Cinder Gallery Fixture 048\" - matches the tool result.\n4. **Recovery**: No errors occurred; single result returned and used correctly.\n5. **Constraints**: No constraints specified, and the empty policy object is correct.\n6. **Final proposal**: Schema is valid, confidence of 0.91 is reasonable and grounded in the tool results.\n\nAll criteria pass.\n\n","format":"anthropic-claude-v1","index":0,"signature":"EssHCrIBCBEYAipATFtg0fQiSY70CijhZ9BlysGfNLrMsA21nXngEpTrhMEIMY1zNlgDPRJZD+9g4vR6IA2WQZrSizU65QlF8Gm9qjIRY2xhdWRlLXNvbm5ldC00LTY4AEIIdGhpbmtpbmdaJDBkOTgzZjNmLTQ5ZmEtNGE0Ni04MjU0LWIxYmIyNDkxYTJhOXoedXByb2ZfMDExQ2VTVGJDekhpYkdMVFhTbjFVR2NOqAHf6OXUBhIM2I//fV9jmu6jSDHRGgx4VOFrzcjeatf37jYiMPZgtIaFQ57ZjyPCJDHdLmH/K7byg65uiMGeBZy3tmDTy1ZFshxgmUvbmhbhZKOFkirFBfOU51VytGFI7rTo5glS/CPSpdzwZzW4EiZRtN2Y6GYfAxwBa1APNz1kkj21ysZuWwN55kZ+bujL1pXZIqKHZaHhNvrTQEVhFLBPaoGh11DT7apKl6I18jPBbLtvYs9TMTXu0dj84+J8tzrbANB7Ht5Sx00kMsS6ZzkaVTmSBuNS+KdCIWmCZLr1IbhZF0bUv7XzUFVE7UgT/HI5bDMsvWhK7zWt6Q5jTtze6tjdWP6gEXj9qiizkrYCuYv8Ww44WsfFod0j+8O9v/W7xHvKkyjuxs8Dp93V/9x4NUnQpxZoc71BYixqOaalGUFWivi9LrhhLbxp+La1PY6orlYK+OPuuM+Mn28kopHamUBN5niIMutopzNu2kp74GDOgWqpbuiDjPUQXTZdXXV293mMifg/K18Uh/K4WvoIxD2GIcU3IejzvbKJwtJiP8SZiDew6QMjLo6q0Try4XgtLY4OI4K6tVmkOREq75DmljrBBw515TdnRPk23YBjdOIP1yGjaiW4pOBr/GUikMStceYWQfvk2JBI8sUdZ/hRg6WRIY55wW3cr4gm4dJkPeEABHb+GI6sP+Q5Ktv1kDrAQg6G/3rW1a6qi7/oFIhDp0Yqa7zZCspAgcfWNZKYffw7SbmCUYnFio+yNZtvjsVSJdJoY6ZkX0VJo2Q1k0zX0QmFAvdIqD/gDMgB+kLLYBMCHj1nUxG2ytO55AaItQfLy0Jki0oC+A6wq7gBHKXo1etuWMSREKAm1jwUDq4sXi79oJWmqR3GhLCCQSQQWMUNI2CuBfbrJDlV7QbxZIMxmy3JWKNWRq1nPiiawB4BLmVges4UJSM0e1ti8/IQDsi2bMoXAoJTRFBuiWqDxLSWquE35Rio2W2MxEua/C0LWCbR8UdS2T0abl+iEB2cbeU3jRA0E6mf6KWQnArGfZ5pi89VAC/SK9KEKTwYAQ=="}]}}],"usage":{"prompt_tokens":2127,"completion_tokens":762,"total_tokens":2889,"cost":0.017811,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.017811,"upstream_inference_prompt_cost":0.006381,"upstream_inference_completions_cost":0.01143},"completion_tokens_details":{"reasoning_tokens":190,"image_tokens":0,"audio_tokens":0}}}

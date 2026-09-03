@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "9bf78b20f3c1504dc586b0b063390e554e8cd7f0dba569c818c497d1019fc348"
+      "sha256": "92814712777cb665759db005208a852bad46a875d86f7b1b8aba6e50212d910d"
     },
     {
       "path": "corpus/planner-behavior-v2/drafts.jsonl",
@@ -14,19 +14,23 @@
     },
     {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "608423f0a20aa37ee7c5d5000a54814200eb3e2419e60f23fde40d5d9236f500"
+      "sha256": "3a8227d4e117d3f73f4bece43521a04d606487dc53059f46ae9870fef5b46267"
     },
     {
       "path": "experiments/planner-behavior-review-v2.json",
-      "sha256": "3e67b39860ef67b04ceeeec3dc2b3930b694f442543a635bfbb0000c0b6e4826"
+      "sha256": "5d7fd3fbbf542e873d132b203bbfb70522b621d2a95d72538ce1af5deb47ba34"
     },
     {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "85b3467a373cd1b9e9cfd69128126f825c9a8570a1aa85f4eeee909f1e0eea3a"
+      "sha256": "12341246ae673f64db1ea500c9ce6141f434286731175a4301d592919788fc12"
     },
     {
       "path": "reviews/planner-behavior-v2/preflight-report.json",
-      "sha256": "c154d307c8159f7b5d48d10b83d8ba03f247678cf523ecfa90422ff4acfe7889"
+      "sha256": "eddfa3e8d459d6f1a5e3ded76f5eadd9619b13bd90e5d7143759c6a1c9da01f9"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
+      "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
     },
     {
       "path": "reviews/planner-behavior-v2/request-plan.jsonl",
@@ -39,11 +43,11 @@
   ],
   "generator": {
     "path": "scripts/build_planner_behavior_corpus.py",
-    "sha256": "838c3a7a1d275bb8c79768bacda9a934c5afe2cca91e726e42d7ee3b2d44864f"
+    "sha256": "d8976ce933d3e229a755808125d121dbde55026be9bf1452d1ccc3a6caf71838"
   },
-  "nextGate": "maintainer authorization to enable the paid review runner",
+  "nextGate": "correct the reviewer packet and publish a new independent review",
   "publicationId": "planner-behavior-corpus-v2",
   "schemaVersion": 1,
-  "status": "draft-no-spend",
+  "status": "complete-with-escalations",
   "trainingAuthorized": false
 }

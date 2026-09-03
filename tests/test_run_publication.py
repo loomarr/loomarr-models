@@ -131,7 +131,7 @@ class RunPublicationTests(unittest.TestCase):
             self.assertEqual(
                 Decimal(breakdown["total"]), Decimal(publication["providerCostUsd"])
             )
-            self.assertEqual(posted, Decimal("19.1805365675672820"))
+            self.assertEqual(posted, Decimal("23.2611685675672820"))
             self.assertEqual(outstanding, Decimal("0.10"))
 
 

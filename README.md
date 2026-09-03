@@ -103,6 +103,12 @@ promotion, and corpus freezing are implemented and hash-bound before any paid ca
 authorize retraining. See
 [docs/planner-behavior-corpus-v2.md](docs/planner-behavior-corpus-v2.md).
 
+The completed review settled all 240 calls for exactly `$4.080632`. Both reviewers approved 118
+traces; two disagreements remain pending because the compact reviewer packet did not make the
+contract's title-query and empty-picks confidence semantics explicit enough. The completed plan is
+disabled, and the disputed traces cannot enter training until a corrected independent review resolves
+them.
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a change. Report security issues privately as

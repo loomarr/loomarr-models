@@ -211,9 +211,12 @@ class TargetedCorpusTests(unittest.TestCase):
         self.assertEqual(development_manifest["status"], "frozen-development-only")
 
         plan = json.loads(PLAN_PATH.read_text(encoding="utf-8"))
-        self.assertEqual(plan["status"], "ready-for-review")
-        self.assertTrue(plan["execution"]["paidReviewAuthorized"])
+        self.assertEqual(plan["status"], "complete-with-escalations")
+        self.assertFalse(plan["execution"]["paidReviewAuthorized"])
         self.assertEqual(plan["budget"]["aggregateAuthorizationUsd"], "40.00")
+        policy = (ROOT / "docs/planner-behavior-corpus-v2.md").read_text(encoding="utf-8")
+        self.assertIn("$23.3611685675672820 / $40.00", policy)
+        self.assertNotIn("$19.2805365675672820 / $40.00", policy)
         for value in plan["bindings"].values():
             path = ROOT / value["path"]
             self.assertEqual(value["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())

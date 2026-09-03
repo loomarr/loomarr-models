@@ -2,7 +2,7 @@
   "bindings": {
     "budget": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "d29552f85e01314dea850125568656c747c04dc95b46859f6ddef7c871fcdc86"
+      "sha256": "917b12295be48c40ffa8eb7b7474ce489557256d8221a71c76c1defbd24f60b2"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",
@@ -19,11 +19,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "608423f0a20aa37ee7c5d5000a54814200eb3e2419e60f23fde40d5d9236f500"
+      "sha256": "3a8227d4e117d3f73f4bece43521a04d606487dc53059f46ae9870fef5b46267"
     },
     "disjointnessReport": {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "85b3467a373cd1b9e9cfd69128126f825c9a8570a1aa85f4eeee909f1e0eea3a"
+      "sha256": "12341246ae673f64db1ea500c9ce6141f434286731175a4301d592919788fc12"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -39,6 +39,10 @@
       "path": "corpus/planner-smoke-v1/traces.jsonl",
       "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
     },
+    "publication": {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
+      "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
+    },
     "requestPlan": {
       "count": 240,
       "path": "reviews/planner-behavior-v2/request-plan.jsonl",
@@ -51,7 +55,7 @@
     },
     "reviewPolicy": {
       "path": "docs/planner-behavior-corpus-v2.md",
-      "sha256": "730cd6ef67b614d9400bce19c0a80bb1c185d94f3088d1a6acc89eb33c8625f9"
+      "sha256": "fba556c593967da2e26671e47004200fdc47a5cc6e5239ab788b1ec4d2923d61"
     },
     "reviewPreflightValidator": {
       "path": "src/loomarr_models/behavior_model_review.py",
@@ -59,11 +63,11 @@
     },
     "reviewPublisher": {
       "path": "scripts/publish_planner_behavior_review.py",
-      "sha256": "b0168c43197d953f300cc44227bec0c679227bd0019a7009d3ce5783d3b64b51"
+      "sha256": "44c390dc45f6d4918d05a0edc69d3c304d2eb639120cd57466ca7c4b95b56544"
     },
     "reviewRunner": {
       "path": "scripts/run_planner_behavior_review.py",
-      "sha256": "310cbd0312eba56db2987d4a0c915e8a89f196a288c9f73526e10216a7df2d78"
+      "sha256": "ed11d37acb19efb81a64d7a11dc2f4354a2fdc4497eefbf9f7c24915713bd7ff"
     },
     "reviewValidator": {
       "path": "src/loomarr_models/behavior_review.py",
@@ -84,14 +88,14 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "9bf78b20f3c1504dc586b0b063390e554e8cd7f0dba569c818c497d1019fc348"
+      "sha256": "92814712777cb665759db005208a852bad46a875d86f7b1b8aba6e50212d910d"
     }
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "19.2805365675672820",
-    "projectedMaximumUsd": "34.2805365675672820",
-    "remainingAfterMaximumUsd": "5.7194634324327180",
+    "currentCommittedUsd": "23.3611685675672820",
+    "projectedMaximumUsd": "38.3611685675672820",
+    "remainingAfterMaximumUsd": "1.6388314324327180",
     "reviewReservationUsd": "15.00",
     "worstCaseReviewUsd": "13.906540"
   },
@@ -113,7 +117,7 @@
     "maxOutputTokensPerCall": 3000,
     "multiTraceBatchAuthorized": false,
     "outputDir": ".artifacts/planner-behavior-review-v2",
-    "paidReviewAuthorized": true,
+    "paidReviewAuthorized": false,
     "providerDataCollection": "deny",
     "providerFallback": false,
     "reasoningEffort": "medium",
@@ -127,10 +131,10 @@
   "preflight": {
     "authorizationUsd": "40.00",
     "batchSize": 1,
-    "committedSpendUsd": "19.2805365675672820",
+    "committedSpendUsd": "23.3611685675672820",
     "inputByteUpperBound": 1675120,
     "outputTokenUpperBound": 720000,
-    "projectedSpendUsd": "34.2805365675672820",
+    "projectedSpendUsd": "38.3611685675672820",
     "requestCount": 240,
     "requestPlanSha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062",
     "reservationUsd": "15.00",
@@ -153,5 +157,5 @@
     }
   ],
   "schemaVersion": 1,
-  "status": "ready-for-review"
+  "status": "complete-with-escalations"
 }

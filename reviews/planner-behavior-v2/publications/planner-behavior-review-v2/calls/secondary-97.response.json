@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788444097-jZNOUIjFEcKyTWFfv8M1","object":"chat.completion","created":1788444097,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-18\":{\"criteria\":{\"constraints\":{\"evidence\":\"The Documentary genre constraint is preserved: the recovery search uses genres:[\\\"Documentary\\\"] and the final proposal policy includes genres.include:[\\\"Documentary\\\"]. No must-exclude or audience constraints were specified, and none were violated.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final proposal is JSON with channelName, rationale, picks array containing tmdbId:920098 (grounded in tool result), mediaType:series, name:\\\"Cinder Circuit Fixture 098\\\", confidence:0.91 (reasonable), and policy with genres.include:[\\\"Documentary\\\"]. Schema appears valid and all fields are grounded.\",\"passed\":true},\"grounding\":{\"evidence\":\"The sole pick, tmdbId:920098, name:\\\"Cinder Circuit Fixture 098\\\", mediaType:\\\"series\\\", is directly supported by the catalog_search result from behavior-98-2 which returned exactly that candidate with matching fields.\",\"passed\":true},\"intent\":{\"evidence\":\"Intent is to build a documentary channel around Cinder Circuit Fixture 098 and recover from a fixture timeout. The trace shows a timeout error on the first search, a successful recovery search, and a final documentary channel proposal named \\\"Cinder Recovery\\\" centered on Cinder Circuit Fixture 098.\",\"passed\":true},\"recovery\":{\"evidence\":\"First call behavior-98-1 received error:\\\"synthetic fixture timeout\\\" with empty candidates. The assistant correctly retried with a broader documentary genre search (behavior-98-2) which succeeded and returned the fixture. This is proper recovery behavior for the synthetic-tool-error-recovery trace family.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two tool calls made: behavior-98-1 with query:\\\"Cinder Circuit Fixture 098\\\" (specific search, necessary first attempt), behavior-98-2 with genres:[\\\"Documentary\\\"] (recovery search after timeout). Both use catalog_search with valid arguments matching the catalog-search-v3 schema. No extraneous calls.\",\"passed\":true}},\"summary\":\"The trace correctly demonstrates error recovery from a fixture timeout: an initial specific search fails, a genre-based recovery search succeeds, and the final proposal is grounded in the recovered tool result with valid schema fields and honest confidence. All six criteria pass.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2220,"completion_tokens":547,"total_tokens":2767,"cost":0.014865,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.014865,"upstream_inference_prompt_cost":0.00666,"upstream_inference_completions_cost":0.008205},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

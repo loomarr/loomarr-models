@@ -58,6 +58,9 @@ INDEX_PATH = ROOT / "runs/planner-behavior-corpus-v2/index.json"
 REVIEW_RUNNER_PATH = ROOT / "scripts/run_planner_behavior_review.py"
 REVIEW_PUBLISHER_PATH = ROOT / "scripts/publish_planner_behavior_review.py"
 CORPUS_FINALIZER_PATH = ROOT / "scripts/finalize_planner_behavior_corpus.py"
+REVIEW_PUBLICATION_PATH = (
+    ROOT / "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json"
+)
 
 TRAINING_BASE_ID = 920000
 DEVELOPMENT_BASE_ID = 930000
@@ -471,6 +474,16 @@ def build_outputs() -> dict[Path, bytes]:
     development_manifest_bytes = pretty(development_manifest)
     route_snapshot = json.loads(ROUTE_SNAPSHOT_PATH.read_text(encoding="utf-8"))
     budget = json.loads(BUDGET_PATH.read_text(encoding="utf-8"))
+    publication = None
+    if REVIEW_PUBLICATION_PATH.exists():
+        publication = json.loads(REVIEW_PUBLICATION_PATH.read_text(encoding="utf-8"))
+        if (
+            publication.get("reviewId") != "planner-behavior-review-v2"
+            or publication.get("status") not in {"complete-approved", "complete-with-escalations"}
+            or publication.get("corpusSha256") != training_report.sha256
+            or publication.get("approved", 0) + publication.get("escalations", 0) != 120
+        ):
+            raise ValueError("behavior review publication is not an exact terminal result")
     review_preflight = preflight_review(
         training,
         route_snapshot=route_snapshot,
@@ -488,11 +501,15 @@ def build_outputs() -> dict[Path, bytes]:
         "reviewPublisher": binding(REVIEW_PUBLISHER_PATH),
         "corpusFinalizer": binding(CORPUS_FINALIZER_PATH),
     }
+    if publication is not None:
+        review_bindings["publication"] = binding(REVIEW_PUBLICATION_PATH)
+    review_status = publication["status"] if publication is not None else "ready-for-review"
+    paid_review_authorized = publication is None
     review_plan = {
         "schemaVersion": 1,
         "reviewId": "planner-behavior-review-v2",
         "issue": "https://github.com/loomarr/loomarr-models/issues/9",
-        "status": "ready-for-review",
+        "status": review_status,
         "candidateFamily": "qwen",
         "criteria": ["intent", "tool_calls", "grounding", "recovery", "constraints", "final_proposal"],
         "reviewers": list(review_preflight_contract.REVIEWERS),
@@ -513,7 +530,7 @@ def build_outputs() -> dict[Path, bytes]:
             "providerFallback": False,
             "providerDataCollection": "deny",
             "automaticInferenceRetry": False,
-            "paidReviewAuthorized": True,
+            "paidReviewAuthorized": paid_review_authorized,
         },
         "budget": {
             "aggregateAuthorizationUsd": review_preflight.authorizationUsd,
@@ -598,19 +615,28 @@ def build_outputs() -> dict[Path, bytes]:
         REQUEST_PLAN_PATH: request_plan,
         PREFLIGHT_REPORT_PATH: preflight_report_bytes,
     }
+    index_artifacts = {**outputs, ROUTE_SNAPSHOT_PATH: ROUTE_SNAPSHOT_PATH.read_bytes()}
+    if publication is not None:
+        index_artifacts[REVIEW_PUBLICATION_PATH] = REVIEW_PUBLICATION_PATH.read_bytes()
     index = {
         "schemaVersion": 1,
         "publicationId": "planner-behavior-corpus-v2",
-        "status": "draft-no-spend",
+        "status": review_status if publication is not None else "draft-no-spend",
         "artifacts": [
             {"path": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(data).hexdigest()}
             for path, data in sorted(
-                {**outputs, ROUTE_SNAPSHOT_PATH: ROUTE_SNAPSHOT_PATH.read_bytes()}.items(),
+                index_artifacts.items(),
                 key=lambda item: str(item[0]),
             )
         ],
         "generator": {"path": str(Path(__file__).relative_to(ROOT)), "sha256": generator_sha},
-        "nextGate": "maintainer authorization to enable the paid review runner",
+        "nextGate": (
+            "correct the reviewer packet and publish a new independent review"
+            if publication is not None and publication["escalations"]
+            else "promote unanimous review decisions and freeze the training corpus"
+            if publication is not None
+            else "maintainer authorization to enable the paid review runner"
+        ),
         "trainingAuthorized": False,
     }
     outputs[INDEX_PATH] = pretty(index)
