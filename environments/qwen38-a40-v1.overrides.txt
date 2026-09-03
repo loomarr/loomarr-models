@@ -1,0 +1,5 @@
+# The official Qwen3.8-27B conversational notebook installs these after
+# Unsloth with --no-deps. uv's override keeps the same compatibility choice
+# while still producing one complete hash-bound lock.
+transformers==5.15.1
+trl==0.22.2

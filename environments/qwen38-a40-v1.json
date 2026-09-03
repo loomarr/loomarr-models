@@ -24,9 +24,11 @@
   },
   "requirements": {
     "inputPath": "environments/qwen38-a40-v1.requirements.in",
-    "inputSha256": "199aa127cd103a265a6b1129c37433d570cae5a69763876942cfad4105754f26",
+    "inputSha256": "66a0ddb28458e4d3855a22f383a4fe0440ab382ba580c12410fbacf99b44b825",
+    "overridesPath": "environments/qwen38-a40-v1.overrides.txt",
+    "overridesSha256": "82438e93e067880fe613da780144deb9455511e066c8d93e14553aac600fd5ef",
     "lockPath": "environments/qwen38-a40-v1.requirements.lock",
-    "lockSha256": "cfbc975daca30437ca4e84bc9988b18292c2bbc2d9d9bc12d140ac63f01768ad",
+    "lockSha256": "d7998cb91dc332290985fe09cf1ea1b823306752bf87714e3c8e7c487c66781f",
     "resolvedPackageCount": 104,
     "pythonPlatform": "x86_64-manylinux_2_28",
     "torchBackend": "cu128",
@@ -35,8 +37,8 @@
   "trainingPackages": {
     "unsloth": "2026.9.2",
     "unsloth_zoo": "2026.9.1",
-    "transformers": "5.5.0",
-    "trl": "0.24.0",
+    "transformers": "5.15.1",
+    "trl": "0.22.2",
     "peft": "0.18.0"
   },
   "baseModel": {
@@ -45,14 +47,29 @@
     "license": "Apache-2.0",
     "source": "https://huggingface.co/Qwen/Qwen3.8-27B"
   },
+  "trainingArtifact": {
+    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299",
+    "quantization": "unsloth-bnb-4bit",
+    "license": "Apache-2.0",
+    "source": "https://huggingface.co/unsloth/Qwen3.8-27B-unsloth-bnb-4bit"
+  },
   "framework": {
     "repository": "unslothai/unsloth",
     "release": "v0.1.806-beta",
     "package": "2026.9.2",
     "source": "https://github.com/unslothai/unsloth/releases/tag/v0.1.806-beta"
   },
+  "recipe": {
+    "repository": "unslothai/notebooks",
+    "revision": "24a61a6f128a835de6a8c1f68a01b9cb00d60b4d",
+    "path": "python_scripts/Qwen3.8_(27B)-Conversational.py",
+    "source": "https://github.com/unslothai/notebooks/blob/24a61a6f128a835de6a8c1f68a01b9cb00d60b4d/python_scripts/Qwen3.8_(27B)-Conversational.py"
+  },
   "notes": [
     "The lock is resolved for Linux x86_64 and Python 3.12 with uv's CUDA 12.8 PyTorch backend.",
+    "Transformers 5.15.1 and TRL 0.22.2 intentionally override Unsloth package metadata to match the official Qwen3.8 notebook's post-install compatibility pins.",
+    "Text-only training uses FastModel with the vision tower frozen; the exact dynamic 4-bit artifact is revision-pinned instead of relying on Unsloth's mutable shorthand mapping.",
     "The first GPU run must install the lock in the pinned image and record import/version probes before model acquisition.",
     "The stock Ollama benchmark artifact remains a separate immutable inference identity."
   ]

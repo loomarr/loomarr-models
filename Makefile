@@ -1,4 +1,4 @@
-.PHONY: check test init-review generate-drafts check-generated generate-review check-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus
+.PHONY: check test init-review generate-drafts check-generated generate-review check-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38
 
 PYTHON ?= python3
 UV ?= uv
@@ -27,6 +27,7 @@ check-review:
 lock-qwen38-a40:
 	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }
 	$(UV) pip compile environments/qwen38-a40-v1.requirements.in \
+		--overrides environments/qwen38-a40-v1.overrides.txt \
 		--python-platform x86_64-manylinux_2_28 --python-version 3.12 \
 		--torch-backend cu128 --generate-hashes --only-binary=:all: --emit-index-url \
 		--custom-compile-command 'make lock-qwen38-a40' \
@@ -44,3 +45,6 @@ validate-drafts:
 
 validate-corpus:
 	PYTHONPATH=src $(PYTHON) -m loomarr_models.cli validate corpus/planner-smoke-v1/traces.jsonl
+
+preflight-qwen38:
+	PYTHONPATH=src $(PYTHON) scripts/train_planner_smoke.py --preflight-only

@@ -14,9 +14,9 @@ EXPECTED_PINS = {
     "datasets": "4.3.0",
     "peft": "0.18.0",
     "torch": "2.8.0+cu128",
-    "transformers": "5.5.0",
+    "transformers": "5.15.1",
     "triton": "3.4.0",
-    "trl": "0.24.0",
+    "trl": "0.22.2",
     "unsloth": "2026.9.2",
     "unsloth-zoo": "2026.9.1",
 }
@@ -30,9 +30,12 @@ def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     requirements = manifest["requirements"]
     input_path = ROOT / requirements["inputPath"]
+    overrides_path = ROOT / requirements["overridesPath"]
     lock_path = ROOT / requirements["lockPath"]
     if digest(input_path) != requirements["inputSha256"]:
         raise SystemExit("requirements input digest mismatch")
+    if digest(overrides_path) != requirements["overridesSha256"]:
+        raise SystemExit("requirements overrides digest mismatch")
     if digest(lock_path) != requirements["lockSha256"]:
         raise SystemExit("requirements lock digest mismatch")
 
@@ -49,6 +52,10 @@ def main() -> None:
         raise SystemExit("requirements target differs from the pinned A40 environment")
     if manifest["baseModel"]["revision"] != "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0":
         raise SystemExit("Qwen base revision drifted")
+    if manifest["trainingArtifact"]["revision"] != "8aa5f05d26b7205477066e1449e0af13f762a299":
+        raise SystemExit("Unsloth 4-bit artifact revision drifted")
+    if manifest["recipe"]["revision"] != "24a61a6f128a835de6a8c1f68a01b9cb00d60b4d":
+        raise SystemExit("official Qwen3.8 recipe revision drifted")
     print(json.dumps({"environmentId": manifest["environmentId"], "packages": len(pins), "lockSha256": requirements["lockSha256"]}, sort_keys=True))
 
 

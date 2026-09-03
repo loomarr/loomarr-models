@@ -21,3 +21,8 @@ The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Py
 12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
 container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend. Neither command
 downloads model weights or starts training.
+
+Issue [loomarr/loomarr#938](https://github.com/loomarr/loomarr/issues/938) adds the no-spend QLoRA
+smoke runner. Its checked-in experiment intentionally fails preflight while the 50 traces remain
+pending review. See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the NVIDIA training
+lane, the 64 GB Mac development/evaluation lane, and the paid-run stop point.

@@ -2131,10 +2131,11 @@ tqdm==4.70.0 \
     #   transformers
     #   unsloth
     #   unsloth-zoo
-transformers==5.5.0 \
-    --hash=sha256:821a9ff0961abbb29eb1eb686d78df1c85929fdf213a3fe49dc6bd94f9efa944 \
-    --hash=sha256:c8db656cf51c600cd8c75f06b20ef85c72e8b8ff9abc880c5d3e8bc70e0ddcbd
+transformers==5.15.1 \
+    --hash=sha256:27c996bd9075ddc82d40f8590dfdc81ea45f611bfca477e0db5d7fd257a482f7 \
+    --hash=sha256:b7cdf238ff583e3a58dbc7fa34da1aaf091ce063141f65a30538160bd5afe93f
     # via
+    #   --override environments/qwen38-a40-v1.overrides.txt
     #   -r environments/qwen38-a40-v1.requirements.in
     #   peft
     #   sentence-transformers
@@ -2159,10 +2160,11 @@ triton==3.4.0 \
     #   torch
     #   unsloth
     #   unsloth-zoo
-trl==0.24.0 \
-    --hash=sha256:a9145b7d4a4a33778de117bda48530f0cf5b2ac25acc07db80ad04836f490dfc \
-    --hash=sha256:eee495223725d3da0596be2607581969db89ba0f7c00b075802addc31e61eac9
+trl==0.22.2 \
+    --hash=sha256:343203711339cb4f200b78fee35efa39655b2e6a0f8a63ce0b077973e689c12a \
+    --hash=sha256:b5b058bc2b876f3b9d04e3ac54c6ad085b09f5583becefefd10d88a7cd150e21
     # via
+    #   --override environments/qwen38-a40-v1.overrides.txt
     #   -r environments/qwen38-a40-v1.requirements.in
     #   unsloth
     #   unsloth-zoo

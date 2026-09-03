@@ -2,6 +2,8 @@
 # Resolve only for Linux x86_64, Python 3.12, CUDA 12.8 / PyTorch 2.8.
 unsloth[cu128-torch280]==2026.9.2
 unsloth_zoo==2026.9.1
-transformers==5.5.0
-trl==0.24.0
+# Exact compatibility overrides from the official Qwen3.8-27B conversational
+# notebook at unslothai/notebooks@24a61a6f128a835de6a8c1f68a01b9cb00d60b4d.
+transformers==5.15.1
+trl==0.22.2
 peft==0.18.0

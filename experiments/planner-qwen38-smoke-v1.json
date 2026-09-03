@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "planner-qwen38-smoke-v1",
+  "issue": "https://github.com/loomarr/loomarr/issues/938",
+  "status": "blocked-pending-human-review",
+  "bindings": {
+    "corpus": {
+      "path": "corpus/planner-smoke-v1/drafts.jsonl",
+      "sha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+      "traceCount": 50,
+      "requireApproved": true
+    },
+    "corpusManifest": {
+      "path": "corpus/planner-smoke-v1/draft-manifest.json",
+      "sha256": "924c827dbe0ac8953e7af35a6d8176ce51bd98a54852031a052bcc0af25832e7"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v3.json",
+      "sha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4"
+    },
+    "denylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "7aead23bdac7f5a0140c5499c92e833224308f6bf523b75c556fbc81926aa41e"
+    },
+    "budget": {
+      "path": "budgets/external-spend-v1.json"
+    }
+  },
+  "models": {
+    "upstream": {
+      "repository": "Qwen/Qwen3.8-27B",
+      "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0"
+    },
+    "trainingArtifact": {
+      "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+      "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+    }
+  },
+  "execution": {
+    "platform": "linux-amd64",
+    "gpuSku": "NVIDIA A40",
+    "gpuCount": 1,
+    "minimumVramGb": 48,
+    "maxWallClockSeconds": 9000,
+    "maxReservationUsd": "1.50",
+    "outputDir": ".artifacts/planner-qwen38-smoke-v1",
+    "requireCleanGit": true
+  },
+  "runs": [
+    {
+      "runId": "qwen38-qlora-a40-smoke-v1",
+      "seed": 3407,
+      "maxSeqLength": 1024,
+      "maxSteps": 20,
+      "perDeviceTrainBatchSize": 1,
+      "gradientAccumulationSteps": 4,
+      "warmupSteps": 5,
+      "learningRate": 0.0002,
+      "optimizer": "adamw_8bit",
+      "weightDecay": 0.001,
+      "lrSchedulerType": "linear",
+      "loraR": 8,
+      "loraAlpha": 8,
+      "loraDropout": 0,
+      "finetuneVisionLayers": false,
+      "finetuneLanguageLayers": true,
+      "finetuneAttentionModules": true,
+      "finetuneMlpModules": true,
+      "gradientCheckpointing": "unsloth",
+      "reasoningEffort": "low",
+      "trainOnResponsesOnly": true,
+      "saveMode": "adapter-only"
+    }
+  ]
+}
