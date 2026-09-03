@@ -1,10 +1,13 @@
-.PHONY: check test init-review generate-drafts check-generated generate-review check-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38
+.PHONY: check compile test init-review generate-drafts check-generated generate-review check-review check-finalized finalize-corpus lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: test check-generated check-review check-environment validate-drafts
+check: compile test check-generated check-review check-finalized check-environment validate-drafts
+
+compile:
+	$(PYTHON) -m compileall -q scripts src tests
 
 test:
 	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -v
@@ -23,6 +26,12 @@ generate-review:
 
 check-review:
 	$(PYTHON) scripts/render_review_packet.py --check
+
+check-finalized:
+	$(PYTHON) scripts/finalize_planner_smoke.py --check-if-present
+
+finalize-corpus:
+	$(PYTHON) scripts/finalize_planner_smoke.py
 
 lock-qwen38-a40:
 	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }

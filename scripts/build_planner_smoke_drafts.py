@@ -5,11 +5,18 @@ import argparse
 import copy
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+import loomarr_models.review as review_contract
+from loomarr_models.review import empty_decision, load_review_decisions, trace_review
+
+
 CONTRACT_PATH = ROOT / "contracts/planner-contract-v3.json"
 OUT_PATH = ROOT / "corpus/planner-smoke-v1/drafts.jsonl"
 MANIFEST_PATH = ROOT / "corpus/planner-smoke-v1/draft-manifest.json"
@@ -152,16 +159,7 @@ def expected_trace_ids() -> list[str]:
 
 def default_review_bytes() -> bytes:
     return b"".join(
-        canonical(
-            {
-                "traceId": trace_id,
-                "status": "pending",
-                "reviewer": "",
-                "reviewedAt": None,
-                "notes": "",
-            }
-        )
-        + b"\n"
+        canonical(empty_decision(trace_id)) + b"\n"
         for trace_id in expected_trace_ids()
     )
 
@@ -169,20 +167,7 @@ def default_review_bytes() -> bytes:
 def load_reviews() -> dict[str, dict]:
     if not REVIEW_PATH.exists():
         raise SystemExit(f"{REVIEW_PATH.relative_to(ROOT)} is missing; run with --init-review once")
-    reviews: dict[str, dict] = {}
-    for line_number, raw in enumerate(REVIEW_PATH.read_text(encoding="utf-8").splitlines(), 1):
-        if not raw.strip():
-            continue
-        value = json.loads(raw)
-        if set(value) != {"traceId", "status", "reviewer", "reviewedAt", "notes"}:
-            raise SystemExit(f"{REVIEW_PATH.relative_to(ROOT)}:{line_number}: invalid fields")
-        trace_id = value.pop("traceId")
-        if trace_id in reviews:
-            raise SystemExit(f"{REVIEW_PATH.relative_to(ROOT)}:{line_number}: duplicate {trace_id}")
-        reviews[trace_id] = value
-    if set(reviews) != set(expected_trace_ids()):
-        raise SystemExit("review decisions do not match the exact 50 expected trace ids")
-    return reviews
+    return load_review_decisions(REVIEW_PATH, expected_trace_ids())
 
 
 def build_traces(contract: dict, reviews: dict[str, dict]) -> list[dict]:
@@ -213,7 +198,7 @@ def build_traces(contract: dict, reviews: dict[str, dict]) -> list[dict]:
                         {"role": "user", "content": intent},
                         *body,
                     ],
-                    "review": copy.deepcopy(reviews[trace_id]),
+                    "review": trace_review(reviews[trace_id]),
                     "provenance": {"source": "synthetic", "generator": GENERATOR_ID, "author": "codex:draft"},
                 }
             )
@@ -244,6 +229,9 @@ def build_outputs() -> tuple[bytes, bytes]:
         "environmentId": "qwen38-a40-v1",
         "reviewDecisionsPath": str(REVIEW_PATH.relative_to(ROOT)),
         "reviewDecisionsSha256": hashlib.sha256(REVIEW_PATH.read_bytes()).hexdigest(),
+        "reviewContract": "planner-smoke-review-decision-v1",
+        "reviewValidatorPath": str(Path(review_contract.__file__).relative_to(ROOT)),
+        "reviewValidatorSha256": hashlib.sha256(Path(review_contract.__file__).read_bytes()).hexdigest(),
         "review": {
             "approved": sum(trace["review"]["status"] == "approved" for trace in traces),
             "pending": sum(trace["review"]["status"] == "pending" for trace in traces),
@@ -255,13 +243,25 @@ def build_outputs() -> tuple[bytes, bytes]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--check", action="store_true")
-    parser.add_argument("--init-review", action="store_true")
+    actions = parser.add_mutually_exclusive_group()
+    actions.add_argument("--check", action="store_true")
+    actions.add_argument("--init-review", action="store_true")
+    actions.add_argument("--migrate-pending-review", action="store_true")
     args = parser.parse_args()
     if args.init_review:
         if REVIEW_PATH.exists():
             raise SystemExit(f"{REVIEW_PATH.relative_to(ROOT)} already exists")
         REVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
+        REVIEW_PATH.write_bytes(default_review_bytes())
+        return
+    if args.migrate_pending_review:
+        legacy = [json.loads(line) for line in REVIEW_PATH.read_text(encoding="utf-8").splitlines() if line]
+        expected = [
+            {"traceId": trace_id, "status": "pending", "reviewer": "", "reviewedAt": None, "notes": ""}
+            for trace_id in expected_trace_ids()
+        ]
+        if legacy != expected:
+            raise SystemExit("refusing migration: review file is not the exact unevidenced legacy pending set")
         REVIEW_PATH.write_bytes(default_review_bytes())
         return
     traces, manifest = build_outputs()

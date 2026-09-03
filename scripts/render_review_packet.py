@@ -3,16 +3,24 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from loomarr_models.review import derive_review, load_review_decisions
+
+
 INPUT = ROOT / "corpus/planner-smoke-v1/drafts.jsonl"
 OUTPUT = ROOT / "reviews/planner-smoke-v1.md"
+DECISIONS = ROOT / "reviews/planner-smoke-v1.jsonl"
 
 
 def render() -> bytes:
     traces = [json.loads(line) for line in INPUT.read_text(encoding="utf-8").splitlines() if line]
+    decisions = load_review_decisions(DECISIONS, [trace["traceId"] for trace in traces])
     lines = [
         "# Planner smoke v1 review packet",
         "",
@@ -47,7 +55,15 @@ def render() -> bytes:
             elif message["role"] == "user":
                 interactions.append(f"repair instruction: {message['content']}")
 
-        review = trace["review"]
+        decision = decisions[trace["traceId"]]
+        review = derive_review(decision)
+        primary = decision["primary"]
+        secondary = decision["secondary"]
+        secondary_text = (
+            f"**{secondary['verdict']}** by `{secondary['reviewer'] or '—'}`"
+            if secondary["required"]
+            else "not required"
+        )
         lines.extend(
             [
                 f"## {trace['traceId']}",
@@ -56,7 +72,9 @@ def render() -> bytes:
                 f"- Intent: {user}",
                 f"- Contract: `{trace['contract']['systemPromptSha256']}` / `{trace['contract']['toolSchemaSha256']}`",
                 f"- Flow: {' → '.join(interactions)}",
-                f"- Decision: **{review['status']}**; reviewer `{review['reviewer'] or '—'}`; notes: {review['notes'] or '—'}",
+                f"- Primary review: **{primary['verdict']}** by `{primary['reviewer'] or '—'}`; notes: {primary['notes'] or '—'}",
+                f"- Secondary review: {secondary_text}; notes: {secondary['notes'] or '—'}",
+                f"- Derived artifact status: **{review.status}**",
                 "",
             ]
         )

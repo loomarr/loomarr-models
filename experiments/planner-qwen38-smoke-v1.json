@@ -12,7 +12,7 @@
     },
     "corpusManifest": {
       "path": "corpus/planner-smoke-v1/draft-manifest.json",
-      "sha256": "924c827dbe0ac8953e7af35a6d8176ce51bd98a54852031a052bcc0af25832e7"
+      "sha256": "d9ba65b112fb3d3b721ce3b064645ea3a851a32d64da20eaedc2c81f2e923bd7"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",

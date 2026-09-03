@@ -16,14 +16,17 @@
     "tool-error-recovery": 5
   },
   "generator": "planner-smoke-draft-generator-v1",
-  "generatorSha256": "653fb3ac4366fe97379ee703b4a58a9268ca53838f990a5893a560bb0f90b3ec",
+  "generatorSha256": "7a56f1a40e707413eadfdc2bf2fa146196c26d2fd47feaa134f41198241b73b9",
   "review": {
     "approved": 0,
     "pending": 50,
     "rejected": 0
   },
+  "reviewContract": "planner-smoke-review-decision-v1",
   "reviewDecisionsPath": "reviews/planner-smoke-v1.jsonl",
-  "reviewDecisionsSha256": "fcff88605ddfa36fe17e7bfa09f8792d8a89696f6a689e1b10251c1987f4e788",
+  "reviewDecisionsSha256": "1763b614dd0f38c3fd26ac683c8bda00fedc772f0110a25d7858fae0fa367d5a",
+  "reviewValidatorPath": "src/loomarr_models/review.py",
+  "reviewValidatorSha256": "79ab362b828ca140f97eefaf48df0d5229e94d1f278eef0f09730f22ed785b8e",
   "schemaVersion": 1,
   "status": "draft-pending-human-review",
   "systemPromptSha256": "c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61",
