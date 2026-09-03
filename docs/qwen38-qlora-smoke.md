@@ -22,15 +22,14 @@ unless all 50 traces pass the independent dual-model review, every immutable dig
 the environment, critical runner files are tracked and clean, one training configuration is present,
 the output stays under `.artifacts`, and the budget projects below the aggregate `$40` authorization.
 
-The current config intentionally points at the pending review corpus, so this command must fail
-closed until issue #937 produces the approved artifact:
+The current config points at the reviewed-frozen 50-trace corpus produced by the unanimous v11
+certification. This no-spend preflight must pass from a clean commit before provisioning a GPU:
 
 ```bash
 PYTHONPATH=src python3 scripts/train_planner_smoke.py --preflight-only
 ```
 
-After review, update the corpus path and immutable hashes in one commit, run `make check`, then run
-the same preflight inside the pinned container. Only after that succeeds may the paid command run:
+Run the same preflight inside the pinned container. Only after that succeeds may the paid command run:
 
 ```bash
 PYTHONPATH=src python3 scripts/train_planner_smoke.py

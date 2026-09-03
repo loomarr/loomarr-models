@@ -47,9 +47,9 @@ class ExperimentPreflightTests(unittest.TestCase):
         self.assertEqual(report.sourceCommit, "a" * 40)
         self.assertEqual(report.projectedSpendUsd, "19.814559391125471")
 
-    def test_current_repository_config_refuses_pending_corpus(self):
-        with self.assertRaisesRegex(ValueError, "not approved"):
-            preflight(PROJECT_ROOT, CONFIG_PATH, git_probe=self._clean_git)
+    def test_current_repository_config_accepts_frozen_corpus(self):
+        report = preflight(PROJECT_ROOT, CONFIG_PATH, git_probe=self._clean_git)
+        self.assertEqual((report.traceCount, report.approvedCount), (50, 50))
 
     def test_refuses_pending_trace(self):
         traces = self._load_corpus()
@@ -159,8 +159,8 @@ class ExperimentPreflightTests(unittest.TestCase):
         copy_paths = [
             "contracts/planner-contract-v3.json",
             "contracts/holdout-denylist-v1.json",
-            "corpus/planner-smoke-v1/drafts.jsonl",
-            "corpus/planner-smoke-v1/draft-manifest.json",
+            "corpus/planner-smoke-v1/traces.jsonl",
+            "corpus/planner-smoke-v1/manifest.json",
             "environments/qwen38-a40-v1.json",
             "environments/qwen38-a40-v1.requirements.in",
             "environments/qwen38-a40-v1.overrides.txt",
@@ -194,7 +194,8 @@ class ExperimentPreflightTests(unittest.TestCase):
         return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
     def _write_corpus(self, traces: list[dict]) -> None:
-        path = self.root / "corpus/planner-smoke-v1/drafts.jsonl"
+        config = self._load_config()
+        path = self.root / config["bindings"]["corpus"]["path"]
         path.write_text(
             "".join(
                 json.dumps(trace, sort_keys=True, separators=(",", ":"), ensure_ascii=False)

@@ -18,13 +18,13 @@
   "generator": "planner-smoke-draft-generator-v1",
   "generatorSha256": "fc89f8371801e91dd41643c76323eca4f57ca4ced0b442c1e1ccd98ffd794053",
   "review": {
-    "approved": 0,
-    "pending": 50,
+    "approved": 50,
+    "pending": 0,
     "rejected": 0
   },
   "reviewContract": "planner-smoke-review-decision-v1",
   "reviewDecisionsPath": "reviews/planner-smoke-v1.jsonl",
-  "reviewDecisionsSha256": "8e3827fae52691a2d63cd81426e3f46a9eac750c91a39c797772f58b4b4e0e20",
+  "reviewDecisionsSha256": "b108c21dbfce22efee5fd906e8acf848375d1b25c97c8310352e1c8c4e7045d0",
   "reviewValidatorPath": "src/loomarr_models/review.py",
   "reviewValidatorSha256": "8daef0b0e80ebe9a09a955ac28e8e74581d0d247355c58abb8b50fad4bc902cd",
   "schemaVersion": 1,
@@ -33,5 +33,5 @@
   "toolSchemaSha256": "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853",
   "traceCount": 50,
   "tracesPath": "corpus/planner-smoke-v1/drafts.jsonl",
-  "tracesSha256": "2ac2508c9cda5b70d77db8f72365c0192944a93b1bbd4071e00488b349d824ab"
+  "tracesSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
 }

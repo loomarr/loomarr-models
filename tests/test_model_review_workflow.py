@@ -26,12 +26,12 @@ def clean_git(_root: Path, _paths: object) -> str:
 class ModelReviewWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config = load_config(ROOT / "experiments/planner-model-review-v11.json")
+        cls.config = load_config(ROOT / "tests/fixtures/planner-model-review-v11.json")
         cls.snapshot = json.loads(
             (ROOT / "reviews/planner-smoke-v1/model-review-v10-route-snapshot.json").read_text()
         )
         cls.plan = preflight(
-            ROOT, ROOT / "experiments/planner-model-review-v11.json", git_probe=clean_git
+            ROOT, ROOT / "tests/fixtures/planner-model-review-v11.json", git_probe=clean_git
         )
 
     def test_live_route_check_accepts_exact_snapshot_and_rejects_drift(self):
@@ -274,6 +274,11 @@ class ModelReviewWorkflowTests(unittest.TestCase):
                 publisher.validated_promotion_bytes(public, self.plan.reviewId),
                 decision_bytes,
             )
+            publication = json.loads((public / "publication.json").read_text())
+            publication["approved"] = 49
+            (public / "publication.json").write_text(json.dumps(publication))
+            with self.assertRaisesRegex(ModelReviewError, "unanimous 50-trace"):
+                publisher.validated_promotion_bytes(public, self.plan.reviewId)
 
         secondary = next(
             item

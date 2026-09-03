@@ -21,7 +21,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v11.json"
+CONFIG = ROOT / "tests/fixtures/planner-model-review-v11.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:

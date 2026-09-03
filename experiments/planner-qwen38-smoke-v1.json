@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "experimentId": "planner-qwen38-smoke-v1",
   "issue": "https://github.com/loomarr/loomarr/issues/938",
-  "status": "blocked-pending-independent-review",
+  "status": "ready-for-smoke",
   "bindings": {
     "corpus": {
-      "path": "corpus/planner-smoke-v1/drafts.jsonl",
-      "sha256": "2ac2508c9cda5b70d77db8f72365c0192944a93b1bbd4071e00488b349d824ab",
+      "path": "corpus/planner-smoke-v1/traces.jsonl",
+      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b",
       "traceCount": 50,
       "requireApproved": true
     },
     "corpusManifest": {
-      "path": "corpus/planner-smoke-v1/draft-manifest.json",
-      "sha256": "a63dffddf154075344342684d327081dbf1abcbb6bf882e6370b88dcf76c428e"
+      "path": "corpus/planner-smoke-v1/manifest.json",
+      "sha256": "33e58fe236bdced792d9fecfa1847237ccd8d26b631c9c4ea9c82075634c450a"
     },
     "contract": {
       "path": "contracts/planner-contract-v3.json",
