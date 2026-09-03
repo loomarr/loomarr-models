@@ -1,0 +1,13 @@
+{
+  "batchIndex": 43,
+  "requestSha256": "e369bcb6c84aafd1db13b3ab3f7fad15b9ae656cfa2e74a5e4255da05a67c24c",
+  "responseSha256": "0c4832ca4de9e4e73ed3f6667cd7724395a051d9918bab528ab43d1f9fc781c2",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.022928",
+  "settlementSha256": "0af6c7b5fe7e4517a2ce6d12a0395b3bdf20e71db8b81e2e1f2c9abbd7bca624",
+  "status": "valid",
+  "traceIds": [
+    "planner-smoke-tool-error-recovery-04"
+  ]
+}

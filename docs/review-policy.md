@@ -72,6 +72,14 @@ between response and settlement still stops globally. Provider identity, respons
 settlement, route, or budget failures also still stop the whole run. The v6 evidence is
 `reviews/planner-smoke-v1/model-review-v6-finish-failure.json`.
 
+Review v7 completed all 100 settled observations for `$2.212744`. Gemini produced 50 valid reviews;
+Sonnet produced 18 valid reviews and 32 quarantined invalid responses. The valid evidence yielded 13
+unanimous approvals, four disagreements, and one unanimous rejection; 30 more traces have an invalid
+Sonnet review paired with a Gemini approval, and two pair an invalid Sonnet review with a Gemini
+rejection. The 37 non-approved traces are staged for targeted paid escalation. Partial decisions remain
+inside `reviews/planner-smoke-v1/planner-model-review-v7/` and do not mutate the canonical pending corpus
+until escalation is complete.
+
 The run is limited to one hundred one-trace calls with no automatic inference retry, at most 2,000 output
 tokens per call, and a conservative `$6.00` reservation. Its byte-count token upper bound prices the exact
 v7 request bodies at no more than `$5.845096`, projecting aggregate commitments to

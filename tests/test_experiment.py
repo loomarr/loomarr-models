@@ -45,7 +45,7 @@ class ExperimentPreflightTests(unittest.TestCase):
         self.assertEqual(imported, set())
         self.assertEqual((report.traceCount, report.approvedCount), (50, 50))
         self.assertEqual(report.sourceCommit, "a" * 40)
-        self.assertEqual(report.projectedSpendUsd, "6.351869891125471")
+        self.assertEqual(report.projectedSpendUsd, "8.564613891125471")
 
     def test_current_repository_config_refuses_pending_corpus(self):
         with self.assertRaisesRegex(ValueError, "not approved"):

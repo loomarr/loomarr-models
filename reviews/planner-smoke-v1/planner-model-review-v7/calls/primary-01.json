@@ -1,0 +1,14 @@
+{
+  "batchIndex": 1,
+  "contentError": "planner-smoke-title-search-02: invalid criterion evidence",
+  "requestSha256": "3c156f4dabce6e8780eb1861d21f0639a41a303fbb6027b358c7f7d1d6e1d84b",
+  "responseSha256": "7c4512772ec89d9fe9855808682f673eb1638e6db103118c48bdd8cb9ef8660a",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.021372",
+  "settlementSha256": "13143c4c9b2a603697cab60421ce14fa4dc4cc9a104ee6183affdc1565364969",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-title-search-02"
+  ]
+}

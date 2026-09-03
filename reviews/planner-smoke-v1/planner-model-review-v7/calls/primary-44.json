@@ -1,0 +1,14 @@
+{
+  "batchIndex": 44,
+  "contentError": "planner-smoke-tool-error-recovery-05: invalid review summary",
+  "requestSha256": "411e02f6d1dcfadb6dbc484f3d1d31b9ce18ef49d18d60c5ab0811262754b7aa",
+  "responseSha256": "f5cb34bfa17bdf6a12e55d4948d42c3a7bfb7ea62e4150ea6f846b8b96586708",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.027122",
+  "settlementSha256": "581007e1aaa0807712c0cf054541753f0064f2d91212911683de9d15d84b1249",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-tool-error-recovery-05"
+  ]
+}

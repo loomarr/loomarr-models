@@ -22,6 +22,7 @@ from loomarr_models.model_review import (
     ModelReviewContentError,
     ModelReviewError,
     canonical,
+    load_config,
     preflight,
     validate_completion,
     validate_settlement,
@@ -38,6 +39,10 @@ def main() -> None:
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
     try:
+        repaired = _repair_partial_publication(config_path)
+        if repaired is not None:
+            print(json.dumps(repaired, sort_keys=True))
+            return
         plan = preflight(ROOT, config_path)
         result = publish(plan)
     except (OSError, ModelReviewError, json.JSONDecodeError, subprocess.CalledProcessError) as exc:
@@ -193,10 +198,8 @@ def publish(plan: Any) -> dict[str, Any]:
         raise ModelReviewError("refusing to replace review decisions that contain prior evidence")
 
     shutil.copytree(artifacts, public)
-    drafts.REVIEW_PATH.write_bytes(decision_bytes)
+    (public / "decisions.jsonl").write_bytes(decision_bytes)
     _settle_budget(actual_cost)
-    subprocess.run([sys.executable, "scripts/build_planner_smoke_drafts.py"], cwd=ROOT, check=True)
-    subprocess.run([sys.executable, "scripts/render_review_packet.py"], cwd=ROOT, check=True)
     escalation_path = public / "escalations.json"
     escalation_path.write_text(
         json.dumps(
@@ -223,6 +226,35 @@ def publish(plan: Any) -> dict[str, Any]:
         json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     return result
+
+
+def _repair_partial_publication(config_path: Path) -> dict[str, Any] | None:
+    """Stage decisions from the old partial-publish behavior and restore pristine drafts."""
+    config = load_config(config_path)
+    public = ROOT / "reviews/planner-smoke-v1" / config["reviewId"]
+    if not public.exists():
+        return None
+    decision_path = public / "decisions.jsonl"
+    if decision_path.exists():
+        raise ModelReviewError("published model-review directory already exists")
+    publication = _object(public / "publication.json")
+    decision_bytes = drafts.REVIEW_PATH.read_bytes()
+    if hashlib.sha256(decision_bytes).hexdigest() != publication.get("decisionsSha256"):
+        raise ModelReviewError("cannot repair partial publication: canonical decisions differ")
+    decision_path.write_bytes(decision_bytes)
+    pristine = [empty_decision(trace_id) for trace_id in drafts.expected_trace_ids()]
+    drafts.REVIEW_PATH.write_bytes(b"".join(canonical(item) + b"\n" for item in pristine))
+    subprocess.run([sys.executable, "scripts/build_planner_smoke_drafts.py"], cwd=ROOT, check=True)
+    subprocess.run([sys.executable, "scripts/render_review_packet.py"], cwd=ROOT, check=True)
+    restored_config = load_config(config_path)
+    bindings = restored_config["bindings"]
+    for name, path in (
+        ("corpus", ROOT / bindings["corpus"]["path"]),
+        ("corpusManifest", ROOT / bindings["corpusManifest"]["path"]),
+    ):
+        if hashlib.sha256(path.read_bytes()).hexdigest() != bindings[name]["sha256"]:
+            raise ModelReviewError(f"partial publication repair did not restore {name}")
+    return {"reviewId": config["reviewId"], "status": "partial-decisions-staged"}
 
 
 def _batch(records: list[dict[str, Any]], request: Any) -> list[dict[str, Any]]:
