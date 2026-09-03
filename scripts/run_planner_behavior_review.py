@@ -17,6 +17,8 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from loomarr_models.behavior_model_review import (
+    CORRECTED_PACKET_VERSION,
+    LEGACY_PACKET_VERSION,
     REVIEWERS,
     BehaviorReviewPreflightError,
     preflight,
@@ -85,6 +87,23 @@ EXPECTED_EXECUTION = {
     "providerDataCollection": "deny",
     "automaticInferenceRetry": False,
 }
+CORRECTED_EXPECTED_EXECUTION = {
+    **EXPECTED_EXECUTION,
+    "compactTracePacket": False,
+    "outputDir": ".artifacts/planner-behavior-review-v3",
+}
+REVIEW_PROFILES = {
+    "planner-behavior-review-v2": {
+        "packetVersion": LEGACY_PACKET_VERSION,
+        "execution": EXPECTED_EXECUTION,
+        "requiredBindings": set(),
+    },
+    "planner-behavior-review-v3": {
+        "packetVersion": CORRECTED_PACKET_VERSION,
+        "execution": CORRECTED_EXPECTED_EXECUTION,
+        "requiredBindings": {"priorPublication"},
+    },
+}
 
 
 @dataclass(frozen=True)
@@ -147,7 +166,8 @@ def build_plan(
     config = _object(config_path)
     if set(config) != CONFIG_KEYS or config.get("schemaVersion") != 1:
         raise BehaviorReviewPreflightError("behavior review config fields differ from schema v1")
-    if config.get("reviewId") != "planner-behavior-review-v2":
+    profile = REVIEW_PROFILES.get(config.get("reviewId"))
+    if profile is None:
         raise BehaviorReviewPreflightError("behavior review identity drifted")
     execution = config["execution"]
     authorized = (
@@ -156,7 +176,7 @@ def build_plan(
     )
     if require_authorized and not authorized:
         raise BehaviorReviewPreflightError("paid behavior review is not authorized")
-    expected_execution = {**EXPECTED_EXECUTION, "paidReviewAuthorized": authorized}
+    expected_execution = {**profile["execution"], "paidReviewAuthorized": authorized}
     if execution != expected_execution:
         raise BehaviorReviewPreflightError("behavior review execution envelope drifted")
     status = config.get("status")
@@ -175,7 +195,11 @@ def build_plan(
         raise BehaviorReviewPreflightError("behavior review authority or reviewer identity drifted")
 
     bindings = config["bindings"]
-    expected_bindings = EXPECTED_BINDINGS | ({"publication"} if status in TERMINAL_STATUSES else set())
+    expected_bindings = (
+        EXPECTED_BINDINGS
+        | profile["requiredBindings"]
+        | ({"publication"} if status in TERMINAL_STATUSES else set())
+    )
     if set(bindings) != expected_bindings:
         raise BehaviorReviewPreflightError("behavior review bindings differ from the exact plan")
     bound: dict[str, Path] = {}
@@ -191,6 +215,16 @@ def build_plan(
         publication = _object(bound["publication"])
         if publication.get("status") != status or publication.get("reviewId") != config["reviewId"]:
             raise BehaviorReviewPreflightError("terminal review status differs from publication")
+    if config["reviewId"] == "planner-behavior-review-v3":
+        prior = _object(bound["priorPublication"])
+        if (
+            prior.get("reviewId") != "planner-behavior-review-v2"
+            or prior.get("status") != "complete-with-escalations"
+            or prior.get("corpusSha256") != config["bindings"]["trainingDrafts"]["sha256"]
+            or prior.get("approved") != 118
+            or prior.get("escalations") != 2
+        ):
+            raise BehaviorReviewPreflightError("corrected review lacks the exact prior result")
 
     contract = load_contract(bound["contract"])
     identities, digests = load_denylist(bound["holdoutDenylist"])
@@ -210,6 +244,8 @@ def build_plan(
         batch_size=execution["batchSize"],
         max_output_tokens=execution["maxOutputTokensPerCall"],
         reservation_usd=config["budget"]["reviewReservationUsd"],
+        packet_version=profile["packetVersion"],
+        contract_bundle=contract if profile["packetVersion"] == CORRECTED_PACKET_VERSION else None,
     )
     if checked.summary() != config["preflight"]:
         raise BehaviorReviewPreflightError("committed preflight summary drifted")
@@ -238,6 +274,10 @@ def build_plan(
                 reviewer,
                 [trace],
                 max_output_tokens=execution["maxOutputTokensPerCall"],
+                packet_version=profile["packetVersion"],
+                contract_bundle=(
+                    contract if profile["packetVersion"] == CORRECTED_PACKET_VERSION else None
+                ),
             )
             payload_bytes = json.dumps(
                 payload,

@@ -30,26 +30,23 @@
       "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
     },
     "priorDevelopment": {
-      "count": 50,
       "path": "evaluation/planner-development-v1/cases.jsonl",
       "sha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209"
     },
-    "priorTraining": {
-      "count": 50,
-      "path": "corpus/planner-smoke-v1/traces.jsonl",
-      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
-    },
-    "publication": {
+    "priorPublication": {
       "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
       "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
     },
+    "priorTraining": {
+      "path": "corpus/planner-smoke-v1/traces.jsonl",
+      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+    },
     "requestPlan": {
       "count": 240,
-      "path": "reviews/planner-behavior-v2/request-plan.jsonl",
-      "sha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062"
+      "path": "reviews/planner-behavior-v3/request-plan.jsonl",
+      "sha256": "5759c2b0a9a4dca4a0439ae70ba91512fcabb7e084e492251c6a426f12e35045"
     },
     "reviewDecisions": {
-      "count": 120,
       "path": "reviews/planner-behavior-v2.jsonl",
       "sha256": "8972341262dae7485c0d376b71bb2d4f62f99b77d72444c8b98e4e201f20bc40"
     },
@@ -74,7 +71,7 @@
       "sha256": "a3bcffcbb5a0e1655ec527e4fda50733b3c98b4341e0fea99f88ca1f0d3f3293"
     },
     "routeSnapshot": {
-      "path": "reviews/planner-behavior-v2/route-snapshot.json",
+      "path": "reviews/planner-behavior-v3/route-snapshot.json",
       "sha256": "9d872066442fee414695e189929d28c52cc0368df11a0f4f113c4d595dd1e837"
     },
     "targetedValidator": {
@@ -94,10 +91,10 @@
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
     "currentCommittedUsd": "23.3611685675672820",
-    "projectedMaximumUsd": "38.3611685675672820",
-    "remainingAfterMaximumUsd": "1.6388314324327180",
-    "reviewReservationUsd": "15.00",
-    "worstCaseReviewUsd": "13.906540"
+    "projectedMaximumUsd": "39.8611685675672820",
+    "remainingAfterMaximumUsd": "0.1388314324327180",
+    "reviewReservationUsd": "16.50",
+    "worstCaseReviewUsd": "15.617740"
   },
   "candidateFamily": "qwen",
   "criteria": [
@@ -112,11 +109,11 @@
     "apiBaseUrl": "https://openrouter.ai/api/v1",
     "automaticInferenceRetry": false,
     "batchSize": 1,
-    "compactTracePacket": true,
+    "compactTracePacket": false,
     "maxCalls": 240,
     "maxOutputTokensPerCall": 3000,
     "multiTraceBatchAuthorized": false,
-    "outputDir": ".artifacts/planner-behavior-review-v2",
+    "outputDir": ".artifacts/planner-behavior-review-v3",
     "paidReviewAuthorized": false,
     "providerDataCollection": "deny",
     "providerFallback": false,
@@ -132,16 +129,16 @@
     "authorizationUsd": "40.00",
     "batchSize": 1,
     "committedSpendUsd": "23.3611685675672820",
-    "inputByteUpperBound": 1675120,
+    "inputByteUpperBound": 2359600,
     "outputTokenUpperBound": 720000,
-    "projectedSpendUsd": "38.3611685675672820",
+    "projectedSpendUsd": "39.8611685675672820",
     "requestCount": 240,
-    "requestPlanSha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062",
-    "reservationUsd": "15.00",
+    "requestPlanSha256": "5759c2b0a9a4dca4a0439ae70ba91512fcabb7e084e492251c6a426f12e35045",
+    "reservationUsd": "16.50",
     "traceCount": 120,
-    "worstCaseCostUsd": "13.906540"
+    "worstCaseCostUsd": "15.617740"
   },
-  "reviewId": "planner-behavior-review-v2",
+  "reviewId": "planner-behavior-review-v3",
   "reviewers": [
     {
       "family": "google-gemini",
@@ -157,5 +154,5 @@
     }
   ],
   "schemaVersion": 1,
-  "status": "complete-with-escalations"
+  "status": "planned-no-paid-calls-authorized"
 }
