@@ -31,14 +31,23 @@ and provider data-collection denial. Live route drift stops the run before infer
 
 Review v1 also required OpenRouter ZDR routing. Its pinned Anthropic route rejected that policy before
 inference on 2026-09-03: zero calls completed and `$0` was charged. Because every trace is deliberately
-public synthetic fixture data, review v2 removes only the request-level ZDR filter; provider collection
-remains denied and all route, response, settlement, and cost checks remain unchanged. The immutable
-zero-call failure evidence is `reviews/planner-smoke-v1/model-review-v1-zdr-failure.json`.
+public synthetic fixture data, later reviews remove only the request-level ZDR filter; provider collection
+remains denied. The immutable zero-call failure evidence is
+`reviews/planner-smoke-v1/model-review-v1-zdr-failure.json`.
+
+Review v2 received one Anthropic response but rejected it because its trace IDs did not cover the exact
+batch. The runner had not preserved the response ID before content validation, so the full `$0.067828`
+current-key daily usage observed immediately afterward is conservatively charged to the program. Review
+v3 writes the raw response before validation, settles and accounts for it before content acceptance, and
+records the failing call hashes in run state. Its structured-output schema also requires the five literal
+trace IDs as exact object keys, rather than permitting arbitrary strings. The v2 evidence is
+`reviews/planner-smoke-v1/model-review-v2-coverage-failure.json`.
 
 The run is limited to twenty five-trace calls with no automatic inference retry, at most 6,000 output
 tokens per call, and a conservative `$4.50` reservation. Its byte-count token upper bound prices the exact
-request bodies at no more than `$4.142416`, projecting aggregate commitments to
-`$8.954895891125471 / $20` before any call.
+v3 request bodies at no more than `$4.264136`, projecting aggregate commitments to
+`$9.022723891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
+to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exact ledger value.
 
 ## Disagreement and escalation
 

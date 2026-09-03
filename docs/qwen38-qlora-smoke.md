@@ -20,7 +20,7 @@ result is not treated as equivalent to this CUDA/Unsloth experiment.
 The runner performs all checks before importing Torch or any training framework. It refuses to run
 unless all 50 traces pass the independent dual-model review, every immutable digest matches, both Qwen revisions match
 the environment, critical runner files are tracked and clean, one training configuration is present,
-the output stays under `.artifacts`, and the budget projects below the aggregate `$20` authorization.
+the output stays under `.artifacts`, and the budget projects below the aggregate `$40` authorization.
 
 The current config intentionally points at the pending review corpus, so this command must fail
 closed until issue #937 produces the approved artifact:

@@ -26,12 +26,13 @@ from loomarr_models.model_review import (
     load_config,
     preflight,
     project_live_endpoint,
+    settlement_cost,
     validate_completion,
     validate_settlement,
 )
 
 
-DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v2.json"
+DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v3.json"
 
 
 def main() -> None:
@@ -80,6 +81,16 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
     total_cost = Decimal(0)
     try:
         for request in plan.requests:
+            stem = f"{request.role}-{request.batchIndex:02d}"
+            response_path = calls_dir / f"{stem}.response.json"
+            settlement_path = calls_dir / f"{stem}.settlement.json"
+            summary_path = calls_dir / f"{stem}.json"
+            state["currentCall"] = {
+                "stem": stem,
+                "requestSha256": request.requestSha256,
+                "traceIds": list(request.traceIds),
+            }
+            _write_atomic(output / "run-state.json", _pretty(state))
             response_bytes, response = _request_json(
                 "POST",
                 f"{config['execution']['apiBaseUrl']}/chat/completions",
@@ -88,12 +99,29 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
                 config["execution"]["requestTimeoutSeconds"],
             )
             response_sha = hashlib.sha256(response_bytes).hexdigest()
-            parsed = validate_completion(response, request, response_sha)
-            settlement_bytes, settlement = _settle(config, api_key, response["id"])
-            cost = validate_settlement(settlement, request, response)
+            _write_exclusive(response_path, response_bytes)
+            response_id = response.get("id")
+            if not isinstance(response_id, str) or not response_id:
+                raise ModelReviewError("completion response has no generation id")
+            settlement_bytes, settlement = _settle(config, api_key, response_id)
+            settlement_sha = hashlib.sha256(settlement_bytes).hexdigest()
+            _write_exclusive(settlement_path, settlement_bytes)
+            cost = settlement_cost(settlement)
             total_cost += cost
+            state["actualCostUsd"] = str(total_cost)
+            state["currentCall"].update(
+                {
+                    "responseSha256": response_sha,
+                    "settlementSha256": settlement_sha,
+                    "settledCostUsd": str(cost),
+                }
+            )
+            _write_atomic(output / "run-state.json", _pretty(state))
             if total_cost > Decimal(plan.reservationUsd):
                 raise ModelReviewError("settled review cost exceeded the hard reservation")
+            parsed = validate_completion(response, request, response_sha)
+            if validate_settlement(settlement, request, response) != cost:
+                raise ModelReviewError("generation settlement cost changed during validation")
             reviewed_at = _timestamp()
             for attestation in parsed:
                 attestation.update(
@@ -101,7 +129,7 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
                         "reviewedAt": reviewed_at,
                         "batchIndex": request.batchIndex,
                         "settledCostUsd": str(cost),
-                        "settlementSha256": hashlib.sha256(settlement_bytes).hexdigest(),
+                        "settlementSha256": settlement_sha,
                     }
                 )
             attestations.extend(parsed)
@@ -112,15 +140,9 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
                 "traceIds": list(request.traceIds),
                 "requestSha256": request.requestSha256,
                 "responseSha256": response_sha,
-                "settlementSha256": hashlib.sha256(settlement_bytes).hexdigest(),
+                "settlementSha256": settlement_sha,
                 "settledCostUsd": str(cost),
             }
-            stem = f"{request.role}-{request.batchIndex:02d}"
-            response_path = calls_dir / f"{stem}.response.json"
-            settlement_path = calls_dir / f"{stem}.settlement.json"
-            summary_path = calls_dir / f"{stem}.json"
-            _write_exclusive(response_path, response_bytes)
-            _write_exclusive(settlement_path, settlement_bytes)
             summary_bytes = _pretty(call)
             _write_exclusive(summary_path, summary_bytes)
             call_artifacts.append(
@@ -132,7 +154,7 @@ def run(config: dict[str, Any], plan: Any, api_key: str) -> dict[str, Any]:
                 }
             )
             state["completedCalls"] += 1
-            state["actualCostUsd"] = str(total_cost)
+            del state["currentCall"]
             _write_atomic(output / "run-state.json", _pretty(state))
 
         _validate_attestation_coverage(attestations, plan)

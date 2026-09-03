@@ -297,8 +297,8 @@ def _validate_budget(
         raise PreflightError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise PreflightError("spend ledger does not reconcile")
-    if authorization != Decimal("20.00"):
-        raise PreflightError("aggregate authorization differs from $20")
+    if authorization != Decimal("40.00"):
+        raise PreflightError("aggregate authorization differs from $40")
     if reservation > Decimal("1.50") or reservation <= 0:
         raise PreflightError("experiment reservation exceeds $1.50")
     projected = committed + reservation

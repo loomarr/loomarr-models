@@ -45,7 +45,7 @@ class ExperimentPreflightTests(unittest.TestCase):
         self.assertEqual(imported, set())
         self.assertEqual((report.traceCount, report.approvedCount), (50, 50))
         self.assertEqual(report.sourceCommit, "a" * 40)
-        self.assertEqual(report.projectedSpendUsd, "5.954895891125471")
+        self.assertEqual(report.projectedSpendUsd, "6.022723891125471")
 
     def test_current_repository_config_refuses_pending_corpus(self):
         with self.assertRaisesRegex(ValueError, "not approved"):
@@ -93,9 +93,9 @@ class ExperimentPreflightTests(unittest.TestCase):
     def test_refuses_aggregate_budget_overflow(self):
         budget_path = self.root / "budgets/external-spend-v1.json"
         budget = json.loads(budget_path.read_text(encoding="utf-8"))
-        budget["postedSpendUsd"] = "19.00"
+        budget["postedSpendUsd"] = "39.00"
         budget["outstandingReservationsUsd"] = "0.00"
-        budget["committedSpendUsd"] = "19.00"
+        budget["committedSpendUsd"] = "39.00"
         budget_path.write_text(json.dumps(budget), encoding="utf-8")
         with self.assertRaisesRegex(PreflightError, "exceed aggregate authorization"):
             preflight(self.root, self.config_path, git_probe=self._clean_git)
