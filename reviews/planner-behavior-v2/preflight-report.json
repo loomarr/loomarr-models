@@ -10,7 +10,7 @@
     },
     "reviewPlan": {
       "path": "experiments/planner-behavior-review-v2.json",
-      "sha256": "8ddda75ba58f7fc2f8b60274107ef0f0dddc331bd853628f55605b904c0fca12"
+      "sha256": "44ac67d2b3ab3dc317881b6f82b6241e74a79d0a0777f7154f5f9824912d8d25"
     },
     "routeSnapshot": {
       "path": "reviews/planner-behavior-v2/route-snapshot.json",

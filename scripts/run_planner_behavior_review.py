@@ -101,7 +101,7 @@ REVIEW_PROFILES = {
     "planner-behavior-review-v3": {
         "packetVersion": CORRECTED_PACKET_VERSION,
         "execution": CORRECTED_EXPECTED_EXECUTION,
-        "requiredBindings": {"priorPublication"},
+        "requiredBindings": {"priorPublication", "routeRefresher"},
     },
 }
 

@@ -123,6 +123,8 @@ aggregate commitment is `$39.8611685675672820 / $40.00`. The plan is intentional
 separate reviewed authorization commit.
 
 ```bash
+make check-live-corrected-targeted-review-routes # authenticated metadata GETs; no inference
+make refresh-corrected-targeted-review-routes    # update snapshot and regenerate the disabled plan
 make preflight-corrected-targeted-review
 make run-corrected-targeted-review # refuses while authorization is false
 ```
