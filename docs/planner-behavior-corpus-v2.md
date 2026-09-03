@@ -45,9 +45,9 @@ A clean clone must reproduce the same bytes.
 ## Independent review gate
 
 Every training draft requires blind approvals from `google/gemini-3.1-pro-preview` through the exact
-`google-ai-studio` route and `openai/gpt-5.4` through the exact `openai` route. Each reviewer checks
-the existing six criteria: intent, tool calls, grounding, recovery, constraints, and final proposal.
-They do not see one another's output.
+`google-ai-studio` route and `anthropic/claude-sonnet-4.6` through the exact `anthropic` route. Each
+reviewer checks the existing six criteria: intent, tool calls, grounding, recovery, constraints, and
+final proposal. They do not see one another's output.
 
 The live no-inference check found both exact routes healthy and advertising every required structured
 output parameter. OpenRouter exposes no no-inference proof that an exact multi-trace schema compiles,
@@ -56,7 +56,7 @@ compact trace with the complete intent, tool/result turns, final answer, and con
 only the repeated full system prompt and tool declaration after deterministic validation binds them.
 
 The resulting 240-call plan has a 3,000 output-token ceiling and a conservative byte-as-token input
-bound. Its exact worst case is `$13.4835900`, below the `$15.00` reservation. Provider fallback and data
+bound. Its exact worst case is `$13.906540`, below the `$15.00` reservation. Provider fallback and data
 collection are denied, inference retries are disabled, and every completed generation must settle to
 an exact cost before its output can count. Any rejection, disagreement, invalid completion, route
 drift, or unsettled charge leaves the affected trace pending.
@@ -70,9 +70,8 @@ Its read-only preflight is:
 make preflight-targeted-review
 ```
 
-`make run-targeted-review` currently fails before credential or network access because the checked-in
-plan is not authorized for paid calls. Enabling it requires a separate reviewed commit that changes
-both the plan status and `paidReviewAuthorized` gate, followed by a fresh live route comparison.
+`make run-targeted-review` is enabled by a separate reviewed authorization commit. It still refuses
+before inference if the live route, price, budget, committed source, or exact execution envelope differs.
 
 The complete evidence lifecycle is implemented before any paid call:
 

@@ -193,7 +193,7 @@ class TargetedCorpusTests(unittest.TestCase):
         self.assertEqual(derive_review(first).status, "pending")
         first["secondary"] = {
             "verdict": "approved",
-            "reviewer": "openrouter:openai/gpt-5.4",
+            "reviewer": "openrouter:anthropic/claude-sonnet-4.6",
             "reviewedAt": "2026-09-03T12:00:01Z",
             "notes": "Independent review confirms every criterion.",
         }

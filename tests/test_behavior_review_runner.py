@@ -36,9 +36,12 @@ class BehaviorReviewRunnerTests(unittest.TestCase):
         self.assertEqual(plan.requests[119].role, "primary")
         self.assertEqual(plan.requests[120].role, "secondary")
         self.assertEqual(plan.requests[-1].role, "secondary")
-        self.assertEqual(plan.requests[-1].providerTag, "openai")
-        self.assertEqual(plan.requests[-1].upstreamModel, "openai/gpt-5.4-20260305")
-        self.assertEqual(snapshot["reviewers"][1]["providerTag"], "openai")
+        self.assertEqual(plan.requests[-1].providerTag, "anthropic")
+        self.assertEqual(
+            plan.requests[-1].upstreamModel,
+            "anthropic/claude-4.6-sonnet-20260217",
+        )
+        self.assertEqual(snapshot["reviewers"][1]["providerTag"], "anthropic")
         self.assertEqual(config["execution"]["maxCalls"], len(plan.requests))
 
     def test_execution_refuses_before_key_or_network_while_plan_is_disabled(self):

@@ -6,15 +6,15 @@
     },
     "requestPlan": {
       "path": "reviews/planner-behavior-v2/request-plan.jsonl",
-      "sha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12"
+      "sha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062"
     },
     "reviewPlan": {
       "path": "experiments/planner-behavior-review-v2.json",
-      "sha256": "32098b40bf4edd34a762f56670a8deaf42bd8cd1352fd2f074b7a1a46cbe809c"
+      "sha256": "3e67b39860ef67b04ceeeec3dc2b3930b694f442543a635bfbb0000c0b6e4826"
     },
     "routeSnapshot": {
       "path": "reviews/planner-behavior-v2/route-snapshot.json",
-      "sha256": "1c7947924c1088ab02310dab1ba278e393ed89813ba6f3beb6665b8554231f38"
+      "sha256": "9d872066442fee414695e189929d28c52cc0368df11a0f4f113c4d595dd1e837"
     },
     "trainingDrafts": {
       "path": "corpus/planner-behavior-v2/drafts.jsonl",
@@ -29,17 +29,17 @@
     "authorizationUsd": "40.00",
     "batchSize": 1,
     "committedSpendUsd": "19.2805365675672820",
-    "inputByteUpperBound": 1673200,
+    "inputByteUpperBound": 1675120,
     "outputTokenUpperBound": 720000,
     "projectedSpendUsd": "34.2805365675672820",
     "requestCount": 240,
-    "requestPlanSha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12",
+    "requestPlanSha256": "78c840a10dedbc32b477bd761a958b7ab9eadef61f575e9728e85734a3a8a062",
     "reservationUsd": "15.00",
     "traceCount": 120,
-    "worstCaseCostUsd": "13.4835900"
+    "worstCaseCostUsd": "13.906540"
   },
   "reportId": "planner-behavior-review-v2-preflight",
-  "routeMetadataCapturedAt": "2026-09-03T11:35:28Z",
+  "routeMetadataCapturedAt": "2026-09-03T11:58:04Z",
   "schemaCompilationProof": {
     "available": false,
     "reason": "OpenRouter endpoint metadata advertises structured-output parameters but provides no no-inference proof that an exact multi-trace schema compiles.",
