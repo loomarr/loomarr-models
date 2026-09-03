@@ -55,8 +55,8 @@ make run-planner-eval
 
 It is authorized only after the clean-commit preflight passes on the pinned secure A40 environment.
 The experiment reserves at most `$3.00`, projects aggregate commitment to
-`$22.814559391125471 / $40.00` while the first Runpod charge remains unsettled, and has a four-hour
-alarm. Copy results and logs off the pod, verify their hashes, and delete the pod and unused storage.
+`$21.4977636149929768 / $40.00` after the first Runpod charge settled, and has a four-hour alarm.
+Copy results and logs off the pod, verify their hashes, and delete the pod and unused storage.
 
 The only valid decisions are `adapter-advances-to-single-certification-run` and
 `adapter-rejected-no-release`. Even a development pass authorizes only the separately tracked one-time

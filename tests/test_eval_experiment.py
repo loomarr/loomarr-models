@@ -46,7 +46,7 @@ class EvalExperimentTests(unittest.TestCase):
         }
         self.assertEqual(imported, set())
         self.assertEqual(report.caseCount, 50)
-        self.assertEqual(report.projectedSpendUsd, "22.814559391125471")
+        self.assertEqual(report.projectedSpendUsd, "21.4977636149929768")
         self.assertEqual(report.authorizationUsd, "40.00")
 
     def test_refuses_bound_digest_drift(self):
