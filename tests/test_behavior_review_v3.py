@@ -20,8 +20,8 @@ class CorrectedBehaviorReviewTests(unittest.TestCase):
         index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
 
         self.assertEqual(config["reviewId"], "planner-behavior-review-v3")
-        self.assertEqual(config["status"], "planned-no-paid-calls-authorized")
-        self.assertFalse(config["execution"]["paidReviewAuthorized"])
+        self.assertEqual(config["status"], "ready-for-review")
+        self.assertTrue(config["execution"]["paidReviewAuthorized"])
         self.assertFalse(config["execution"]["compactTracePacket"])
         self.assertEqual(config["preflight"]["traceCount"], 120)
         self.assertEqual(config["preflight"]["requestCount"], 240)
@@ -33,10 +33,10 @@ class CorrectedBehaviorReviewTests(unittest.TestCase):
         )
         self.assertEqual(report["inferenceCalls"], 0)
         self.assertEqual(report["externalCostUsd"], "0")
-        self.assertFalse(report["paidReviewAuthorized"])
-        self.assertEqual(index["status"], "planned-no-paid-calls-authorized")
+        self.assertTrue(report["paidReviewAuthorized"])
+        self.assertEqual(index["status"], "ready-for-review")
         self.assertFalse(index["trainingAuthorized"])
-        self.assertIn("authorize", index["nextGate"])
+        self.assertIn("execute", index["nextGate"])
 
         prior = config["bindings"]["priorPublication"]
         prior_publication = json.loads((ROOT / prior["path"]).read_text(encoding="utf-8"))

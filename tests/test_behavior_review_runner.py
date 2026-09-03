@@ -53,8 +53,8 @@ class BehaviorReviewRunnerTests(unittest.TestCase):
 
     def test_corrected_plan_is_full_independent_and_disabled(self):
         config, plan, _snapshot = self.build(CORRECTED_CONFIG_PATH)
-        self.assertEqual(config["status"], "planned-no-paid-calls-authorized")
-        self.assertFalse(plan.paidReviewAuthorized)
+        self.assertEqual(config["status"], "ready-for-review")
+        self.assertTrue(plan.paidReviewAuthorized)
         self.assertEqual(plan.reviewId, "planner-behavior-review-v3")
         self.assertEqual(plan.requestCount, 240)
         self.assertEqual(plan.traceCount, 120)
@@ -75,8 +75,10 @@ class BehaviorReviewRunnerTests(unittest.TestCase):
         packet = json.loads(plan.requests[0].payload["messages"][1]["content"])
         self.assertIn("auditContract", packet)
         self.assertNotIn("contractBinding", packet)
-        with self.assertRaisesRegex(BehaviorReviewPreflightError, "not authorized"):
-            self.build(CORRECTED_CONFIG_PATH, authorized=True)
+        _config, authorized_plan, _snapshot = self.build(
+            CORRECTED_CONFIG_PATH, authorized=True
+        )
+        self.assertTrue(authorized_plan.paidReviewAuthorized)
 
     def test_execution_and_binding_drift_fail_closed(self):
         config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))

@@ -118,13 +118,14 @@ and corpus validators.
 
 The 240-call envelope retains the 3,000-token output ceiling and has a conservative `$15.617740`
 worst case inside a `$16.50` reservation. Starting from `$23.3611685675672820` committed, the maximum
-aggregate commitment is `$39.8611685675672820 / $40.00`. The plan is intentionally
-`planned-no-paid-calls-authorized`; route health and pricing must be refreshed immediately before a
-separate reviewed authorization commit.
+aggregate commitment is `$39.8611685675672820 / $40.00`. The exact routes and unchanged prices were
+refreshed at `2026-09-03T14:48:13.192940Z`. The separate authorization commit sets only this bound plan
+to `ready-for-review`; the runner still rechecks the live routes, prices, budget, clean source commit,
+and every request hash before its first inference.
 
 ```bash
 make check-live-corrected-targeted-review-routes # authenticated metadata GETs; no inference
-make refresh-corrected-targeted-review-routes    # update snapshot and regenerate the disabled plan
+make refresh-corrected-targeted-review-routes    # allowed only before authorization
 make preflight-corrected-targeted-review
 make run-corrected-targeted-review # refuses while authorization is false
 ```

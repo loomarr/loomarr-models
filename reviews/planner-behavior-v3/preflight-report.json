@@ -14,11 +14,11 @@
     },
     "reviewPlan": {
       "path": "experiments/planner-behavior-review-v3.json",
-      "sha256": "8a1ac13cdf842e3727179a5bbd8102726366d53b1666f7a76f58acd975f6b741"
+      "sha256": "ffa571775222ea87bdf90a01ee8229d14f337f7f4945705359dfaaabfc5ceb77"
     },
     "routeSnapshot": {
       "path": "reviews/planner-behavior-v3/route-snapshot.json",
-      "sha256": "9d872066442fee414695e189929d28c52cc0368df11a0f4f113c4d595dd1e837"
+      "sha256": "6a6f0e29b36938dcefb7ff1ba4108600f349b69127336d2250cf721a75061e66"
     },
     "trainingDrafts": {
       "path": "corpus/planner-behavior-v2/drafts.jsonl",
@@ -28,7 +28,7 @@
   "decision": "contract-complete-full-review-fits-remaining-authorization",
   "externalCostUsd": "0",
   "inferenceCalls": 0,
-  "paidReviewAuthorized": false,
+  "paidReviewAuthorized": true,
   "preflight": {
     "authorizationUsd": "40.00",
     "batchSize": 1,
@@ -43,7 +43,7 @@
     "worstCaseCostUsd": "15.617740"
   },
   "reportId": "planner-behavior-review-v3-preflight",
-  "routeMetadataCapturedAt": "2026-09-03T11:58:04Z",
+  "routeMetadataCapturedAt": "2026-09-03T14:48:13.192940Z",
   "schemaCompilationProof": {
     "available": false,
     "reason": "OpenRouter endpoint metadata advertises structured-output parameters but provides no no-inference proof that an exact multi-trace schema compiles.",

@@ -113,7 +113,8 @@ The no-spend `planner-behavior-review-v3` plan corrects the packet and repeats t
 with both reviewers; it does not selectively retry the two disagreements. Each request now includes
 the exact tool declaration and explicit targeted audit semantics, including `query` title search and
 per-existing-pick confidence. Its conservative worst case is `$15.617740`, within a `$16.50`
-reservation and the maintainer-authorized `$40.00` aggregate cap. Paid execution remains disabled.
+reservation and the maintainer-authorized `$40.00` aggregate cap. A separately reviewed authorization
+commit may enable only this exact plan after a fresh route snapshot.
 
 ## Contributing and security
 
