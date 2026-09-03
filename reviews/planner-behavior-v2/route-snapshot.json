@@ -1,0 +1,47 @@
+{
+  "capturedAt": "2026-09-03T11:35:28Z",
+  "reviewers": [
+    {
+      "completionPriceUsdPerToken": "0.000012",
+      "family": "google-gemini",
+      "model": "google/gemini-3.1-pro-preview",
+      "promptPriceUsdPerToken": "0.000002",
+      "providerDisplayName": "Google AI Studio",
+      "providerTag": "google-ai-studio",
+      "requiredParameters": [
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs"
+      ],
+      "role": "primary",
+      "upstreamModel": "google/gemini-3.1-pro-preview-20260219"
+    },
+    {
+      "completionPriceUsdPerToken": "0.000015",
+      "family": "openai",
+      "model": "openai/gpt-5.4",
+      "promptPriceUsdPerToken": "0.0000025",
+      "providerDisplayName": "OpenAI",
+      "providerTag": "openai",
+      "requiredParameters": [
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs"
+      ],
+      "role": "secondary",
+      "upstreamModel": "openai/gpt-5.4-20260305"
+    }
+  ],
+  "schemaCompilationProof": {
+    "available": false,
+    "reason": "OpenRouter endpoint metadata advertises structured-output parameters but provides no no-inference proof that an exact multi-trace schema compiles.",
+    "selectedBatchSize": 1
+  },
+  "schemaVersion": 1,
+  "sources": [
+    "https://openrouter.ai/api/v1/models/google/gemini-3.1-pro-preview/endpoints",
+    "https://openrouter.ai/api/v1/models/openai/gpt-5.4/endpoints"
+  ]
+}

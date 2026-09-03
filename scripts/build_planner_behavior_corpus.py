@@ -15,8 +15,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import loomarr_models.behavior_review as review_contract
+import loomarr_models.behavior_model_review as review_preflight_contract
 import loomarr_models.targeted as targeted_contract
 from loomarr_models.behavior_review import empty_decision, load_review_decisions, trace_review
+from loomarr_models.behavior_model_review import preflight as preflight_review
+from loomarr_models.behavior_model_review import request_plan_bytes
 from loomarr_models.evaluation import load_cases
 from loomarr_models.targeted import (
     BEHAVIORS,
@@ -36,10 +39,14 @@ from loomarr_models.validator import load_contract, load_denylist, load_jsonl
 
 CONTRACT_PATH = ROOT / "contracts/planner-contract-v3.json"
 DENYLIST_PATH = ROOT / "contracts/holdout-denylist-v1.json"
+BUDGET_PATH = ROOT / "budgets/external-spend-v1.json"
 PRIOR_TRAINING_PATH = ROOT / "corpus/planner-smoke-v1/traces.jsonl"
 PRIOR_DEVELOPMENT_PATH = ROOT / "evaluation/planner-development-v1/cases.jsonl"
 REVIEW_POLICY_PATH = ROOT / "docs/planner-behavior-corpus-v2.md"
 REVIEW_DECISIONS_PATH = ROOT / "reviews/planner-behavior-v2.jsonl"
+ROUTE_SNAPSHOT_PATH = ROOT / "reviews/planner-behavior-v2/route-snapshot.json"
+REQUEST_PLAN_PATH = ROOT / "reviews/planner-behavior-v2/request-plan.jsonl"
+PREFLIGHT_REPORT_PATH = ROOT / "reviews/planner-behavior-v2/preflight-report.json"
 TRAINING_PATH = ROOT / "corpus/planner-behavior-v2/drafts.jsonl"
 TRAINING_MANIFEST_PATH = ROOT / "corpus/planner-behavior-v2/draft-manifest.json"
 DEVELOPMENT_PATH = ROOT / "evaluation/planner-behavior-development-v2/cases.jsonl"
@@ -458,6 +465,22 @@ def build_outputs() -> dict[Path, bytes]:
         "bindings": source_bindings,
     }
     development_manifest_bytes = pretty(development_manifest)
+    route_snapshot = json.loads(ROUTE_SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    budget = json.loads(BUDGET_PATH.read_text(encoding="utf-8"))
+    review_preflight = preflight_review(
+        training,
+        route_snapshot=route_snapshot,
+        budget=budget,
+    )
+    request_plan = request_plan_bytes(review_preflight)
+    if hashlib.sha256(request_plan).hexdigest() != review_preflight.requestPlanSha256:
+        raise AssertionError("review request-plan digest calculation diverged")
+    review_bindings = {
+        **source_bindings,
+        "budget": binding(BUDGET_PATH),
+        "routeSnapshot": binding(ROUTE_SNAPSHOT_PATH),
+        "reviewPreflightValidator": binding(Path(review_preflight_contract.__file__)),
+    }
     review_plan = {
         "schemaVersion": 1,
         "reviewId": "planner-behavior-review-v2",
@@ -465,24 +488,15 @@ def build_outputs() -> dict[Path, bytes]:
         "status": "planned-no-paid-calls-authorized",
         "candidateFamily": "qwen",
         "criteria": ["intent", "tool_calls", "grounding", "recovery", "constraints", "final_proposal"],
-        "reviewers": [
-            {
-                "role": "primary",
-                "family": "google-gemini",
-                "model": "google/gemini-3.1-pro-preview",
-                "providerTag": "google-ai-studio",
-            },
-            {
-                "role": "secondary",
-                "family": "openai",
-                "model": "openai/gpt-5.4",
-                "providerTag": "openai/fast",
-            },
-        ],
+        "reviewers": list(review_preflight_contract.REVIEWERS),
         "execution": {
-            "preferredBatchSize": 3,
-            "fallbackBatchSize": 1,
-            "batchThreeRequiresLiveNoInferenceSchemaProof": True,
+            "apiBaseUrl": "https://openrouter.ai/api/v1",
+            "batchSize": review_preflight.batchSize,
+            "maxCalls": review_preflight.requestCount,
+            "maxOutputTokensPerCall": 3000,
+            "reasoningEffort": "medium",
+            "compactTracePacket": True,
+            "multiTraceBatchAuthorized": False,
             "strictStructuredOutput": True,
             "providerFallback": False,
             "providerDataCollection": "deny",
@@ -490,14 +504,16 @@ def build_outputs() -> dict[Path, bytes]:
             "paidReviewAuthorized": False,
         },
         "budget": {
-            "aggregateAuthorizationUsd": "40.00",
-            "currentCommittedUsd": "19.2805365675672820",
-            "reviewReservationUsd": "15.00",
-            "projectedMaximumUsd": "34.2805365675672820",
+            "aggregateAuthorizationUsd": review_preflight.authorizationUsd,
+            "currentCommittedUsd": review_preflight.committedSpendUsd,
+            "reviewReservationUsd": review_preflight.reservationUsd,
+            "projectedMaximumUsd": review_preflight.projectedSpendUsd,
             "remainingAfterMaximumUsd": "5.7194634324327180",
+            "worstCaseReviewUsd": review_preflight.worstCaseCostUsd,
         },
+        "preflight": review_preflight.summary(),
         "bindings": {
-            **source_bindings,
+            **review_bindings,
             "trainingDrafts": {
                 "path": str(TRAINING_PATH.relative_to(ROOT)),
                 "sha256": training_report.sha256,
@@ -520,9 +536,43 @@ def build_outputs() -> dict[Path, bytes]:
                 "path": str(DISJOINTNESS_PATH.relative_to(ROOT)),
                 "sha256": hashlib.sha256(disjointness_bytes).hexdigest(),
             },
+            "requestPlan": {
+                "path": str(REQUEST_PLAN_PATH.relative_to(ROOT)),
+                "sha256": review_preflight.requestPlanSha256,
+                "count": review_preflight.requestCount,
+            },
         },
     }
     review_plan_bytes = pretty(review_plan)
+    preflight_report = {
+        "schemaVersion": 1,
+        "reportId": "planner-behavior-review-v2-preflight",
+        "status": "passed-no-inference",
+        "paidReviewAuthorized": False,
+        "inferenceCalls": 0,
+        "externalCostUsd": "0",
+        "routeMetadataCapturedAt": route_snapshot["capturedAt"],
+        "schemaCompilationProof": route_snapshot["schemaCompilationProof"],
+        "decision": "compact-single-trace-plan-fits-reservation",
+        "preflight": review_preflight.summary(),
+        "bindings": {
+            "reviewPlan": {
+                "path": str(REVIEW_PLAN_PATH.relative_to(ROOT)),
+                "sha256": hashlib.sha256(review_plan_bytes).hexdigest(),
+            },
+            "requestPlan": {
+                "path": str(REQUEST_PLAN_PATH.relative_to(ROOT)),
+                "sha256": review_preflight.requestPlanSha256,
+            },
+            "routeSnapshot": binding(ROUTE_SNAPSHOT_PATH),
+            "budget": binding(BUDGET_PATH),
+            "trainingDrafts": {
+                "path": str(TRAINING_PATH.relative_to(ROOT)),
+                "sha256": training_report.sha256,
+            },
+        },
+    }
+    preflight_report_bytes = pretty(preflight_report)
     outputs = {
         TRAINING_PATH: training_bytes,
         TRAINING_MANIFEST_PATH: training_manifest_bytes,
@@ -530,6 +580,8 @@ def build_outputs() -> dict[Path, bytes]:
         DEVELOPMENT_MANIFEST_PATH: development_manifest_bytes,
         DISJOINTNESS_PATH: disjointness_bytes,
         REVIEW_PLAN_PATH: review_plan_bytes,
+        REQUEST_PLAN_PATH: request_plan,
+        PREFLIGHT_REPORT_PATH: preflight_report_bytes,
     }
     index = {
         "schemaVersion": 1,
@@ -537,10 +589,13 @@ def build_outputs() -> dict[Path, bytes]:
         "status": "draft-no-spend",
         "artifacts": [
             {"path": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(data).hexdigest()}
-            for path, data in sorted(outputs.items(), key=lambda item: str(item[0]))
+            for path, data in sorted(
+                {**outputs, ROUTE_SNAPSHOT_PATH: ROUTE_SNAPSHOT_PATH.read_bytes()}.items(),
+                key=lambda item: str(item[0]),
+            )
         ],
         "generator": {"path": str(Path(__file__).relative_to(ROOT)), "sha256": generator_sha},
-        "nextGate": "live no-inference route/schema and pricing preflight before any paid review",
+        "nextGate": "maintainer authorization to enable the paid review runner",
         "trainingAuthorized": False,
     }
     outputs[INDEX_PATH] = pretty(index)

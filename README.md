@@ -96,7 +96,8 @@ The no-spend first stage of
 [loomarr-models#9](https://github.com/loomarr/loomarr-models/issues/9) generates 120 targeted pending
 training drafts and a separate 60-case development gate across the six observed corrective behaviors.
 All four planner splits pass pairwise identity and normalized-content leakage checks. The review plan
-is hash-bound but keeps paid calls disabled; it does not authorize retraining. See
+is hash-bound and its compact 240-call envelope passes a `$13.4835900` worst-case preflight, but paid
+calls remain disabled and it does not authorize retraining. See
 [docs/planner-behavior-corpus-v2.md](docs/planner-behavior-corpus-v2.md).
 
 ## Contributing and security

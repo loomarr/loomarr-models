@@ -45,22 +45,27 @@ A clean clone must reproduce the same bytes.
 ## Independent review gate
 
 Every training draft requires blind approvals from `google/gemini-3.1-pro-preview` through the exact
-`google-ai-studio` route and `openai/gpt-5.4` through the exact `openai/fast` route. Each reviewer checks
+`google-ai-studio` route and `openai/gpt-5.4` through the exact `openai` route. Each reviewer checks
 the existing six criteria: intent, tool calls, grounding, recovery, constraints, and final proposal.
 They do not see one another's output.
 
-The planned three-trace batch size is conditional. Before inference, a live no-inference check must
-prove that each exact route supports the compiled strict-output schema. Otherwise the review must use
-one trace per call or stop. Provider fallback and data collection are denied, inference retries are
-disabled, and every completed generation must settle to an exact cost before its output can count.
-Any rejection, disagreement, invalid completion, route drift, or unsettled charge leaves the affected
-trace pending.
+The live no-inference check found both exact routes healthy and advertising every required structured
+output parameter. OpenRouter exposes no no-inference proof that an exact multi-trace schema compiles,
+so multi-trace batching remains disabled. The plan uses one trace per call. Each request contains a
+compact trace with the complete intent, tool/result turns, final answer, and contract identity; it omits
+only the repeated full system prompt and tool declaration after deterministic validation binds them.
+
+The resulting 240-call plan has a 3,000 output-token ceiling and a conservative byte-as-token input
+bound. Its exact worst case is `$13.4835900`, below the `$15.00` reservation. Provider fallback and data
+collection are denied, inference retries are disabled, and every completed generation must settle to
+an exact cost before its output can count. Any rejection, disagreement, invalid completion, route
+drift, or unsettled charge leaves the affected trace pending.
 
 The review reservation ceiling is `$15.00`. Aggregate external commitment is currently
 `$19.2805365675672820 / $40.00`, so the planned maximum would be
 `$34.2805365675672820 / $40.00`. Route availability and worst-case pricing must be refreshed
-immediately before authorization. The checked-in plan has `paidReviewAuthorized: false`; it cannot be
-used as permission to call OpenRouter.
+immediately before authorization. The route snapshot and no-inference preflight cost `$0`. The
+checked-in plan has `paidReviewAuthorized: false`; it cannot be used as permission to call OpenRouter.
 
 ## Stop point
 

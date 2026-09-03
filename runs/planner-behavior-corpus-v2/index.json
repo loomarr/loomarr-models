@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "corpus/planner-behavior-v2/draft-manifest.json",
-      "sha256": "ae941cf84983727f22e068c7a7af21b8507cbfd22fc837dab9dba6f2dcb67627"
+      "sha256": "514d155e244b0d123f09fbed02c6b35e5bd55de0ac63a41c7e45f7bf8a82df2c"
     },
     {
       "path": "corpus/planner-behavior-v2/drafts.jsonl",
@@ -14,22 +14,34 @@
     },
     {
       "path": "evaluation/planner-behavior-development-v2/manifest.json",
-      "sha256": "77708686a20ba908287320c59552ca958721fdfef585f3a99a9613944c537eac"
+      "sha256": "2a6286480160a892df4ef7488cb319186bd24f6569972e06c0799e4656042762"
     },
     {
       "path": "experiments/planner-behavior-review-v2.json",
-      "sha256": "f085832bf2654d889aad6ea2d9115aed8101ffa0a4e2c973b452fc8842b28fb0"
+      "sha256": "4701744802b265c66afacea172e7ec01046787aa3bb6db6bc623d3d8ff96f2d1"
     },
     {
       "path": "reports/planner-behavior-v2-disjointness.json",
-      "sha256": "5414e3ffebf9262c0199633d272ad9f9e935c3457317978a59c27e11b9a05c21"
+      "sha256": "851046b8fdac5305cbcb757894e2ece4f971643408451f0fc3274a3f7eadeecb"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/preflight-report.json",
+      "sha256": "9afb1f19f38a158936287b12ab6d8bf9de4af696b81f9c8c2ae471d8526b3f41"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/request-plan.jsonl",
+      "sha256": "24e059397392a1e4f518ee230a4842ef692ca5d4ff3185d0564db58dad1bcb12"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/route-snapshot.json",
+      "sha256": "1c7947924c1088ab02310dab1ba278e393ed89813ba6f3beb6665b8554231f38"
     }
   ],
   "generator": {
     "path": "scripts/build_planner_behavior_corpus.py",
-    "sha256": "1cd2884a600d78219bc83a954359e0310c135d2533079862ad3ffd6a5d19fc4f"
+    "sha256": "28128b737b1efde4b7e0520b0baaf0ac49242b004ce19db49b9c76ba17b96c63"
   },
-  "nextGate": "live no-inference route/schema and pricing preflight before any paid review",
+  "nextGate": "maintainer authorization to enable the paid review runner",
   "publicationId": "planner-behavior-corpus-v2",
   "schemaVersion": 1,
   "status": "draft-no-spend",
