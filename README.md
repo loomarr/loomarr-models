@@ -16,3 +16,8 @@ make check
 
 `validate-corpus` accepts reviewed artifacts only. Draft validation is available explicitly for the
 human-review workflow and never promotes a draft into training data.
+
+The candidate NVIDIA environment is resolved with uv 0.12.9 for Linux x86_64, Python 3.12, CUDA
+12.8, and PyTorch 2.8. `make lock-qwen38-a40` reproduces the hash-bound lock; inside the pinned
+container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend. Neither command
+downloads model weights or starts training.

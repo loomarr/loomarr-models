@@ -1,8 +1,10 @@
-.PHONY: check test init-review generate-drafts check-generated generate-review check-review validate-drafts validate-corpus
+.PHONY: check test init-review generate-drafts check-generated generate-review check-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus
 
 PYTHON ?= python3
+UV ?= uv
+UV_VERSION := 0.12.9
 
-check: test check-generated check-review validate-drafts
+check: test check-generated check-review check-environment validate-drafts
 
 test:
 	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -v
@@ -21,6 +23,21 @@ generate-review:
 
 check-review:
 	$(PYTHON) scripts/render_review_packet.py --check
+
+lock-qwen38-a40:
+	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }
+	$(UV) pip compile environments/qwen38-a40-v1.requirements.in \
+		--python-platform x86_64-manylinux_2_28 --python-version 3.12 \
+		--torch-backend cu128 --generate-hashes --only-binary=:all: --emit-index-url \
+		--custom-compile-command 'make lock-qwen38-a40' \
+		--output-file environments/qwen38-a40-v1.requirements.lock
+
+check-environment:
+	$(PYTHON) scripts/verify_environment.py
+
+sync-qwen38-a40:
+	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }
+	$(UV) pip sync --torch-backend cu128 --require-hashes environments/qwen38-a40-v1.requirements.lock
 
 validate-drafts:
 	PYTHONPATH=src $(PYTHON) -m loomarr_models.cli validate --allow-pending corpus/planner-smoke-v1/drafts.jsonl

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "environmentId": "qwen38-a40-v1",
-  "status": "candidate-unmeasured",
+  "status": "candidate-locked-unmeasured",
   "platform": {
     "os": "linux",
     "architecture": "amd64",
@@ -16,6 +16,22 @@
     "pytorch": "2.8.0"
   },
   "python": "3.12",
+  "resolver": {
+    "name": "uv",
+    "version": "0.12.9",
+    "releaseAssetSha256": "301f72afaf54060f92da7016cb0115bd077f43a9c8e39c1d8170a0bac80fd398",
+    "source": "https://github.com/astral-sh/uv/releases/tag/0.12.9"
+  },
+  "requirements": {
+    "inputPath": "environments/qwen38-a40-v1.requirements.in",
+    "inputSha256": "199aa127cd103a265a6b1129c37433d570cae5a69763876942cfad4105754f26",
+    "lockPath": "environments/qwen38-a40-v1.requirements.lock",
+    "lockSha256": "cfbc975daca30437ca4e84bc9988b18292c2bbc2d9d9bc12d140ac63f01768ad",
+    "resolvedPackageCount": 104,
+    "pythonPlatform": "x86_64-manylinux_2_28",
+    "torchBackend": "cu128",
+    "hashesRequired": true
+  },
   "trainingPackages": {
     "unsloth": "2026.9.2",
     "unsloth_zoo": "2026.9.1",
@@ -36,8 +52,8 @@
     "source": "https://github.com/unslothai/unsloth/releases/tag/v0.1.806-beta"
   },
   "notes": [
-    "Package versions are compatibility pins, not a resolved Linux wheel lock.",
-    "Resolve and hash the complete Linux/CUDA dependency set inside the pinned image before any GPU run.",
+    "The lock is resolved for Linux x86_64 and Python 3.12 with uv's CUDA 12.8 PyTorch backend.",
+    "The first GPU run must install the lock in the pinned image and record import/version probes before model acquisition.",
     "The stock Ollama benchmark artifact remains a separate immutable inference identity."
   ]
 }
