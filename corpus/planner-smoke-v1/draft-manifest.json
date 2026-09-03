@@ -16,7 +16,7 @@
     "tool-error-recovery": 5
   },
   "generator": "planner-smoke-draft-generator-v1",
-  "generatorSha256": "d00832bfc381cf44a45def157036adf9ed7dbf26fd895df590850ab670e4c99c",
+  "generatorSha256": "627fed8df76a920eeae244e1d50e5a1d11ccbd012165158206299208a644bafe",
   "review": {
     "approved": 0,
     "pending": 50,
@@ -33,5 +33,5 @@
   "toolSchemaSha256": "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853",
   "traceCount": 50,
   "tracesPath": "corpus/planner-smoke-v1/drafts.jsonl",
-  "tracesSha256": "d9deeb9d48bb639ffe586ea5e66802cf645fc7b676f1c97cc854cbf1aa4c2557"
+  "tracesSha256": "54e3d370b7834bca63279d5b9bbc10fbba194432c10626004a8379e72a903968"
 }

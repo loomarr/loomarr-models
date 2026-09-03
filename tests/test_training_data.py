@@ -54,6 +54,7 @@ class TrainingDataTests(unittest.TestCase):
                 "keyword-discovery",
                 "must-include",
                 "ambiguous-intent",
+                "conflicting-intent",
                 "tool-error-recovery",
             )
         }
@@ -74,6 +75,19 @@ class TrainingDataTests(unittest.TestCase):
             self.assertEqual(
                 arguments["genres"], trace["messages"][3]["content"]["candidates"][0]["genres"]
             )
+            mood = trace["messages"][1]["content"].split("feels ", 1)[1].split(",", 1)[0]
+            overview = trace["messages"][3]["content"]["candidates"][0]["overview"]
+            self.assertIn(mood, overview)
+        for trace in by_axis["conflicting-intent"]:
+            candidate = trace["messages"][3]["content"]["candidates"][0]
+            arguments = trace["messages"][2]["toolCalls"][0]["arguments"]
+            proposal = json.loads(trace["messages"][4]["content"])
+            self.assertEqual(arguments, {"query": candidate["name"]})
+            self.assertEqual(candidate["genres"], ["Horror"])
+            self.assertEqual(trace["messages"][1]["content"].count(candidate["name"]), 2)
+            self.assertEqual(proposal["picks"], [])
+            self.assertIn("excludes", proposal["rationale"])
+            self.assertEqual(proposal["policy"]["genres"]["include"], ["Horror"])
         for trace in by_axis["tool-error-recovery"]:
             first = trace["messages"][2]["toolCalls"][0]["arguments"]
             second = trace["messages"][4]["toolCalls"][0]["arguments"]

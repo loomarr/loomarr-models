@@ -103,6 +103,15 @@ does not ground a requested mood and that synthetic fixture-group language is no
 the production search contract. Those are generator defects to correct before replacement review; the
 canonical corpus remains unchanged.
 
+Review v9 applies both corrections across their complete five-trace families. Mood candidates now state
+the requested tone in synthetic overview evidence. Conflicting-intent traces ask for one named synthetic
+horror title while also excluding that same title; the planner performs one contract-valid title search
+and returns an empty proposal that explains the contradiction. V9 re-reviews all 50 resulting traces so
+every attestation binds the corrected corpus. It retains one hundred one-trace calls and no inference
+retry, but raises the per-call output ceiling to 4,000 tokens because eight v8 GPT-5.4 calls spent their
+entire 2,000-token allowance on hidden reasoning. The exact byte-count upper bound is `$9.498421`, within
+a `$10` reservation and a projected aggregate commitment of `$19.562591391125471 / $40`.
+
 ## Disagreement and escalation
 
 Only two approvals with all twelve criterion decisions passing derive an approved trace. Two rejections

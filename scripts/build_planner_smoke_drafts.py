@@ -79,7 +79,13 @@ def tool_result(call_id: str, *, candidates: list[dict] | None = None, error: st
     }
 
 
-def final_message(title: str, picks: list[dict], policy: dict | None = None) -> dict:
+def final_message(
+    title: str,
+    picks: list[dict],
+    policy: dict | None = None,
+    *,
+    rationale: str = "A grounded proposal using only synthetic catalog evidence.",
+) -> dict:
     selected = [
         {
             "mediaType": item["mediaType"],
@@ -92,7 +98,7 @@ def final_message(title: str, picks: list[dict], policy: dict | None = None) -> 
     ]
     final = {
         "channelName": title,
-        "rationale": "A grounded proposal using only synthetic catalog evidence.",
+        "rationale": rationale,
         "picks": selected,
         "policy": policy or {},
     }
@@ -137,11 +143,22 @@ def family_messages(family: str, variant: int, item_number: int) -> tuple[str, l
             ("windswept and adventurous", "Adventure"),
         )[variant]
         item = candidate(item_number, media_type=item["mediaType"], genre=genre)
+        item["overview"] = f"A wholly synthetic {genre.lower()} story with a {mood} tone."
         intent = f"Build something synthetic that feels {mood}, without inventing titles."
         messages = [tool_call(call_1, {"genres": [genre]}), tool_result(call_1, candidates=[item]), final_message(f"{ADJECTIVES[variant]} Moods", [item])]
     elif family == "conflicting-intent":
-        intent = f"Build an all-horror synthetic channel that excludes every horror title in fixture group {variant}."
-        messages = [tool_call(call_1, {"genres": ["Horror"]}), tool_result(call_1, candidates=[]), tool_call(call_2, {"query": f"synthetic horror group {variant}"}), tool_result(call_2, candidates=[]), final_message(f"{ADJECTIVES[variant]} Abstains", [])]
+        item = candidate(item_number, media_type=item["mediaType"], genre="Horror")
+        intent = f"Build a synthetic horror channel that must include {item['name']} but also excludes {item['name']}."
+        messages = [
+            tool_call(call_1, {"query": item["name"]}),
+            tool_result(call_1, candidates=[item]),
+            final_message(
+                f"{ADJECTIVES[variant]} Abstains",
+                [],
+                {"genres": {"include": ["Horror"]}},
+                rationale=f"No proposal can include {item['name']} because the same request excludes it.",
+            ),
+        ]
     elif family == "empty-results":
         token = f"absent-synthetic-motif-{variant}"
         intent = f"Build a channel about the nonexistent synthetic motif {token}."

@@ -56,10 +56,10 @@ EXECUTION = {
     "apiBaseUrl": "https://openrouter.ai/api/v1",
     "batchSize": 1,
     "maxCalls": 100,
-    "maxOutputTokensPerCall": 2000,
-    "maxReservationUsd": "7.50",
+    "maxOutputTokensPerCall": 4000,
+    "maxReservationUsd": "10.00",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v8",
+    "outputDir": ".artifacts/planner-model-review-v9",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 60,
@@ -536,7 +536,7 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v8"
+        config["reviewId"] != "planner-model-review-v9"
         or config["promptVersion"] != "planner-model-review-v4"
     ):
         raise ModelReviewError("unexpected model-review identity")
@@ -616,7 +616,7 @@ def _validate_budget(
         raise ModelReviewError("invalid spend ledger") from exc
     if posted + outstanding != committed:
         raise ModelReviewError("spend ledger does not reconcile")
-    if authorization != Decimal("40.00") or reservation != Decimal("7.50"):
+    if authorization != Decimal("40.00") or reservation != Decimal("10.00"):
         raise ModelReviewError("review authorization or reservation drifted")
     projected = committed + reservation
     if projected > authorization:

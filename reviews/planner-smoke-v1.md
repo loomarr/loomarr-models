@@ -307,9 +307,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-conflicting-intent-01
 
 - Axis: `conflicting-intent`
-- Intent: Build an all-horror synthetic channel that excludes every horror title in fixture group 0.
+- Intent: Build a synthetic horror channel that must include Cobalt Harbor 31 but also excludes Cobalt Harbor 31.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 0"}` → result candidates: none → final picks: none (abstain)
+- Flow: call `catalog_search` `{"query": "Cobalt Harbor 31"}` → result candidates: `Cobalt Harbor 31` → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -317,9 +317,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-conflicting-intent-02
 
 - Axis: `conflicting-intent`
-- Intent: Build an all-horror synthetic channel that excludes every horror title in fixture group 1.
+- Intent: Build a synthetic horror channel that must include Juniper Harbor 32 but also excludes Juniper Harbor 32.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 1"}` → result candidates: none → final picks: none (abstain)
+- Flow: call `catalog_search` `{"query": "Juniper Harbor 32"}` → result candidates: `Juniper Harbor 32` → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -327,9 +327,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-conflicting-intent-03
 
 - Axis: `conflicting-intent`
-- Intent: Build an all-horror synthetic channel that excludes every horror title in fixture group 2.
+- Intent: Build a synthetic horror channel that must include Lunar Harbor 33 but also excludes Lunar Harbor 33.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 2"}` → result candidates: none → final picks: none (abstain)
+- Flow: call `catalog_search` `{"query": "Lunar Harbor 33"}` → result candidates: `Lunar Harbor 33` → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -337,9 +337,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-conflicting-intent-04
 
 - Axis: `conflicting-intent`
-- Intent: Build an all-horror synthetic channel that excludes every horror title in fixture group 3.
+- Intent: Build a synthetic horror channel that must include Velvet Harbor 34 but also excludes Velvet Harbor 34.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 3"}` → result candidates: none → final picks: none (abstain)
+- Flow: call `catalog_search` `{"query": "Velvet Harbor 34"}` → result candidates: `Velvet Harbor 34` → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
@@ -347,9 +347,9 @@ Edit review decisions in `reviews/planner-smoke-v1.jsonl`, not this generated pa
 ## planner-smoke-conflicting-intent-05
 
 - Axis: `conflicting-intent`
-- Intent: Build an all-horror synthetic channel that excludes every horror title in fixture group 4.
+- Intent: Build a synthetic horror channel that must include Amber Signal 35 but also excludes Amber Signal 35.
 - Contract: `c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61` / `16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853`
-- Flow: call `catalog_search` `{"genres": ["Horror"]}` → result candidates: none → call `catalog_search` `{"query": "synthetic horror group 4"}` → result candidates: none → final picks: none (abstain)
+- Flow: call `catalog_search` `{"query": "Amber Signal 35"}` → result candidates: `Amber Signal 35` → final picks: none (abstain)
 - Primary review: **pending** by `—`; notes: —
 - Secondary review: **pending** by `—`; notes: —
 - Derived artifact status: **pending**
