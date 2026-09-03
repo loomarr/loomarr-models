@@ -47,9 +47,9 @@ class ExperimentPreflightTests(unittest.TestCase):
         self.assertEqual(report.sourceCommit, "a" * 40)
         self.assertEqual(report.projectedSpendUsd, "19.814559391125471")
 
-    def test_current_repository_config_accepts_frozen_corpus(self):
-        report = preflight(PROJECT_ROOT, CONFIG_PATH, git_probe=self._clean_git)
-        self.assertEqual((report.traceCount, report.approvedCount), (50, 50))
+    def test_current_repository_config_refuses_completed_experiment(self):
+        with self.assertRaisesRegex(PreflightError, "not ready-for-smoke"):
+            preflight(PROJECT_ROOT, CONFIG_PATH, git_probe=self._clean_git)
 
     def test_refuses_pending_trace(self):
         traces = self._load_corpus()
@@ -172,6 +172,11 @@ class ExperimentPreflightTests(unittest.TestCase):
             destination = self.root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(PROJECT_ROOT / relative, destination)
+        budget_path = self.root / "budgets/external-spend-v1.json"
+        budget = json.loads(budget_path.read_text(encoding="utf-8"))
+        budget["outstandingReservationsUsd"] = "0.10"
+        budget["committedSpendUsd"] = "18.314559391125471"
+        budget_path.write_text(json.dumps(budget, indent=2) + "\n", encoding="utf-8")
         traces = self._load_corpus()
         for trace in traces:
             trace["review"] = {

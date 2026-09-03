@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "runId": "qwen38-qlora-a40-smoke-v1",
+  "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/4",
+  "status": "passed-pending-cost-settlement",
+  "runManifestPath": "runs/planner-qwen38-smoke-v1/run-manifest.json",
+  "runManifestSha256": "168b880e351b041e156bda45f961cd7651859e8576c78060554ffcb70616b5fa",
+  "provider": "runpod",
+  "hardware": {
+    "cloud": "SECURE",
+    "dataCenterId": "CA-MTL-1",
+    "gpu": "NVIDIA A40",
+    "gpuHourlyUsd": "0.44",
+    "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851"
+  },
+  "providerCostUsd": null,
+  "reservationUsd": "1.50",
+  "rawArtifacts": {
+    "retention": "local-gitignored",
+    "path": ".artifacts/runpod-qwen38-qlora-smoke-v1",
+    "trainingLogSha256": "ac1d42bb3c879bf831742607103c8ac744558afe3d8abeb34adf6ad8a016598c",
+    "preflightLogSha256": "6e55223b83b66557b3bfec312e0f81047fc681c3739bc7f8a8c2fb5bc34ce097"
+  },
+  "tokenLengths": {
+    "minimum": 3179,
+    "median": 3213,
+    "p95": 3283,
+    "maximum": 3287,
+    "maximumResponseStart": 3204,
+    "configuredMaximum": 4096
+  },
+  "decision": "continue-qlora-evaluation-no-release"
+}

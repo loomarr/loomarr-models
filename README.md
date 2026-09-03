@@ -7,8 +7,10 @@ separate from the Go application: Loomarr consumes released model bytes through 
 boundary and never imports this toolchain.
 
 The first milestone is [loomarr/loomarr#937](https://github.com/loomarr/loomarr/issues/937): a
-validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract and
-the pinned Qwen 3.8 / Unsloth candidate environment. No GPU training or model download occurs here.
+validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract,
+the pinned Qwen 3.8 / Unsloth candidate environment, and the reproducible evidence from the first
+bounded GPU smoke. Model weights, adapters, caches, and raw logs remain local ignored artifacts;
+only compact hash-bound evidence is committed.
 
 ## Checks
 
@@ -69,9 +71,11 @@ container, `make sync-qwen38-a40` installs it using uv's `cu128` package backend
 downloads model weights or starts training.
 
 Issue [loomarr/loomarr#938](https://github.com/loomarr/loomarr/issues/938) owns the bounded QLoRA smoke
-runner. Its checked-in experiment now binds the reviewed-frozen 50-trace corpus and is ready for a
-clean-commit no-spend preflight. See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the NVIDIA
-training lane, the 64 GB Mac development/evaluation lane, and the paid-run stop point.
+runner. The first pinned A40 run completed all 20 steps against the reviewed-frozen 50-trace corpus;
+its compact publication is under `runs/planner-qwen38-smoke-v1/`. The result proves the environment,
+memory envelope, and adapter-only save path, but does not certify or authorize the adapter for release.
+See [docs/qwen38-qlora-smoke.md](docs/qwen38-qlora-smoke.md) for the result, the NVIDIA training lane,
+and the 64 GB Mac development/evaluation lane.
 
 ## Contributing and security
 

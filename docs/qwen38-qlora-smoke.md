@@ -43,6 +43,33 @@ The pinned tokenizer renders the certified traces at 3,179–3,287 tokens, with 
 response beginning as late as token 3,204. The smoke therefore uses a 4,096-token ceiling; 1,024
 truncated the response marker and was rejected before the first training step.
 
+## First run result
+
+The pinned secure Runpod A40 run completed all 20 steps on September 3, 2026. Training took
+780.09 seconds; model preparation plus training took 850.25 seconds. Peak reserved GPU memory was
+26.74 GB of 47.71 GB available, so one A40 has ample headroom for this recipe. The adapter-only
+artifact is 233,605,480 bytes with SHA-256
+`08a166aa73ec1aaf965cf5a53af61a728d4542c841859b477af72305e5cb35f7`.
+
+The observed training loss was 0.38348. That is a compatibility signal, not a quality result: all
+50 reviewed traces were training inputs and no holdout was evaluated. The adapter remains local and
+unreleased. The decision is to continue with a deterministic held-out comparison of stock Qwen and
+the adapter before considering packaging, serving, or a larger training run.
+
+The compact run manifest and publication record are committed under
+`runs/planner-qwen38-smoke-v1/`. Raw logs, checkpoints, caches, and adapter bytes remain under the
+gitignored `.artifacts/runpod-qwen38-qlora-smoke-v1/` directory. Runpod has not yet posted the exact
+pod charge, so the entire `$1.50` allowance remains reserved in the aggregate ledger until settlement.
+
+The run exposed and fixed four pre-step integration defects: the resolver checksum had targeted
+Apple silicon instead of Linux x86_64, Unsloth was imported after the training stack, the A40 guard
+compared decimal marketed capacity with binary GiB, and the original context ceiling truncated the
+response marker. Each failure stopped before a paid training step and now has regression coverage.
+
+For another ephemeral pod, keep the virtual environment on the faster container disk while placing
+the model cache and retained artifacts on persistent workspace storage. Network-backed environment
+imports dominated setup time in this first run.
+
 ## Recipe provenance
 
 The code follows Unsloth's official Qwen3.8-27B conversational recipe at repository revision
