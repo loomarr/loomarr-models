@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "contractId": "loomarr-planner-holdout-denylist-v1",
+  "sourceRepository": "https://github.com/loomarr/loomarr",
+  "identities": [
+    "planner-certification-v1",
+    "planner-certification-v2",
+    "planner-certification-v3",
+    "planner-certification-v4",
+    "planner-certification-v5",
+    "planner-catalog-v1"
+  ],
+  "sha256": [
+    "33ae10b7042a27c86941c0d754e9850764409032e239d8542c43bbd16d315b8f",
+    "70934f608f7e3a2ebc1e00e9c92b402b231805caccb5cb3c6d5dda5d6f2969da",
+    "41463640d18c99fb029743fbf0cc044d2574d0a7daef65c010adcf9ce2ead3f8",
+    "5ca0534e2290e5cfa182386fde791474e9ce3c816c08ebd28519dfd7072667dd",
+    "36a393258d1b89a43de8e12c16eb90aa6c5f67096eaa8d34dd46ad2676426f1a",
+    "3c40ae9834cf5652388d09334721459296bab2424c939358d8fc10ae71823d89"
+  ]
+}

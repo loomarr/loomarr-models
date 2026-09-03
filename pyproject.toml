@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "loomarr-models"
+version = "0.0.1"
+description = "Offline, reproducible model research for Loomarr"
+requires-python = ">=3.12,<3.15"
+dependencies = []
+
+[project.scripts]
+loomarr-corpus = "loomarr_models.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/loomarr_models"]

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://loomarr.dev/schemas/planner-trace-v1.schema.json",
+  "title": "Loomarr planner supervised trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "traceId", "split", "axes", "contract", "tools", "messages", "review", "provenance"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "traceId": {"type": "string", "pattern": "^planner-[a-z0-9-]+$"},
+    "split": {"enum": ["smoke", "train", "development"]},
+    "axes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["promptVersion", "systemPromptSha256", "toolSchemaVersion", "toolSchemaSha256", "messageTemplateVersion", "fixtureId"],
+      "properties": {
+        "promptVersion": {"type": "string"},
+        "systemPromptSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "toolSchemaVersion": {"type": "string"},
+        "toolSchemaSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "messageTemplateVersion": {"type": "string"},
+        "fixtureId": {"type": "string"}
+      }
+    },
+    "tools": {"type": "array", "minItems": 1},
+    "messages": {"type": "array", "minItems": 3},
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewer", "reviewedAt", "notes"],
+      "properties": {
+        "status": {"enum": ["pending", "approved", "rejected"]},
+        "reviewer": {"type": "string"},
+        "reviewedAt": {"type": ["string", "null"]},
+        "notes": {"type": "string"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "generator", "author"],
+      "properties": {
+        "source": {"const": "synthetic"},
+        "generator": {"type": "string"},
+        "author": {"type": "string"}
+      }
+    }
+  }
+}

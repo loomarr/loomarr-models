@@ -1,0 +1,34 @@
+{
+  "contractId": "loomarr-planner-contract-v3",
+  "contractSourceRevision": "d4718491584730a95fd3ad462074557a2e095564",
+  "corpusId": "planner-smoke-v1",
+  "environmentId": "qwen38-a40-v1",
+  "familyCounts": {
+    "ambiguous-intent": 5,
+    "conflicting-intent": 5,
+    "empty-results": 5,
+    "genre-discovery": 5,
+    "keyword-discovery": 5,
+    "malformed-final-repair": 5,
+    "must-exclude": 5,
+    "must-include": 5,
+    "title-search": 5,
+    "tool-error-recovery": 5
+  },
+  "generator": "planner-smoke-draft-generator-v1",
+  "generatorSha256": "653fb3ac4366fe97379ee703b4a58a9268ca53838f990a5893a560bb0f90b3ec",
+  "review": {
+    "approved": 0,
+    "pending": 50,
+    "rejected": 0
+  },
+  "reviewDecisionsPath": "reviews/planner-smoke-v1.jsonl",
+  "reviewDecisionsSha256": "fcff88605ddfa36fe17e7bfa09f8792d8a89696f6a689e1b10251c1987f4e788",
+  "schemaVersion": 1,
+  "status": "draft-pending-human-review",
+  "systemPromptSha256": "c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61",
+  "toolSchemaSha256": "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853",
+  "traceCount": 50,
+  "tracesPath": "corpus/planner-smoke-v1/drafts.jsonl",
+  "tracesSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92"
+}

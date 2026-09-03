@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "environmentId": "qwen38-a40-v1",
+  "status": "candidate-unmeasured",
+  "platform": {
+    "os": "linux",
+    "architecture": "amd64",
+    "gpuClass": "nvidia-48gb",
+    "validatedSku": "NVIDIA A40"
+  },
+  "container": {
+    "image": "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404",
+    "indexDigest": "sha256:0a360022e8de4375af99430f84e8b38951acc397252163a37ceac7204d01be35",
+    "linuxAmd64Digest": "sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851",
+    "cuda": "12.8.1",
+    "pytorch": "2.8.0"
+  },
+  "python": "3.12",
+  "trainingPackages": {
+    "unsloth": "2026.9.2",
+    "unsloth_zoo": "2026.9.1",
+    "transformers": "5.5.0",
+    "trl": "0.24.0",
+    "peft": "0.18.0"
+  },
+  "baseModel": {
+    "repository": "Qwen/Qwen3.8-27B",
+    "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "license": "Apache-2.0",
+    "source": "https://huggingface.co/Qwen/Qwen3.8-27B"
+  },
+  "framework": {
+    "repository": "unslothai/unsloth",
+    "release": "v0.1.806-beta",
+    "package": "2026.9.2",
+    "source": "https://github.com/unslothai/unsloth/releases/tag/v0.1.806-beta"
+  },
+  "notes": [
+    "Package versions are compatibility pins, not a resolved Linux wheel lock.",
+    "Resolve and hash the complete Linux/CUDA dependency set inside the pinned image before any GPU run.",
+    "The stock Ollama benchmark artifact remains a separate immutable inference identity."
+  ]
+}
