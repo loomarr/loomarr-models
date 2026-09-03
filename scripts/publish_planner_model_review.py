@@ -28,9 +28,9 @@ from loomarr_models.model_review import (
 from loomarr_models.review import derive_review, empty_decision
 
 
-CONFIG = ROOT / "experiments/planner-model-review-v1.json"
-ARTIFACTS = ROOT / ".artifacts/planner-model-review-v1"
-PUBLIC = ROOT / "reviews/planner-smoke-v1/model-review-v1"
+CONFIG = ROOT / "experiments/planner-model-review-v2.json"
+ARTIFACTS = ROOT / ".artifacts/planner-model-review-v2"
+PUBLIC = ROOT / "reviews/planner-smoke-v1/model-review-v2"
 
 
 def main() -> None:

@@ -56,7 +56,7 @@ EXECUTION = {
     "maxOutputTokensPerCall": 6000,
     "maxReservationUsd": "4.50",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v1",
+    "outputDir": ".artifacts/planner-model-review-v2",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 12,
@@ -429,7 +429,6 @@ def _request_payload(
             "allow_fallbacks": False,
             "require_parameters": True,
             "data_collection": "deny",
-            "zdr": True,
         },
     }
     if reviewer["family"] == "google-gemini":
@@ -468,7 +467,10 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 
 def _validate_config(config: dict[str, Any]) -> None:
-    if config["reviewId"] != "planner-model-review-v1" or config["promptVersion"] != config["reviewId"]:
+    if (
+        config["reviewId"] != "planner-model-review-v2"
+        or config["promptVersion"] != "planner-model-review-v1"
+    ):
         raise ModelReviewError("unexpected model-review identity")
     if config["issue"] != "https://github.com/loomarr/loomarr-models/issues/2":
         raise ModelReviewError("unexpected model-review tracking issue")

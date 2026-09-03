@@ -27,11 +27,17 @@ traces in separate calls without seeing each other's output. Neither belongs to 
 The route snapshot, exact prices, supported parameters, request hashes, response bytes, provider and model
 identity, finish reasons, native token counts, generation settlement, and costs are immutable evidence.
 Every request requires strict structured output, a single provider, no fallback, parameter support,
-data-collection denial, and ZDR routing. Live route drift stops the run before inference.
+and provider data-collection denial. Live route drift stops the run before inference.
+
+Review v1 also required OpenRouter ZDR routing. Its pinned Anthropic route rejected that policy before
+inference on 2026-09-03: zero calls completed and `$0` was charged. Because every trace is deliberately
+public synthetic fixture data, review v2 removes only the request-level ZDR filter; provider collection
+remains denied and all route, response, settlement, and cost checks remain unchanged. The immutable
+zero-call failure evidence is `reviews/planner-smoke-v1/model-review-v1-zdr-failure.json`.
 
 The run is limited to twenty five-trace calls with no automatic inference retry, at most 6,000 output
 tokens per call, and a conservative `$4.50` reservation. Its byte-count token upper bound prices the exact
-request bodies at no more than `$4.142856`, projecting aggregate commitments to
+request bodies at no more than `$4.142416`, projecting aggregate commitments to
 `$8.954895891125471 / $20` before any call.
 
 ## Disagreement and escalation

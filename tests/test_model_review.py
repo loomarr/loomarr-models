@@ -20,7 +20,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v1.json"
+CONFIG = ROOT / "experiments/planner-model-review-v2.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:
@@ -87,7 +87,7 @@ class ModelReviewPreflightTests(unittest.TestCase):
             + [("secondary", index, 5) for index in range(10)],
         )
 
-    def test_every_request_is_blind_strict_zdr_single_route_and_no_fallback(self):
+    def test_every_request_is_blind_strict_single_route_and_no_fallback(self):
         for request in self.plan.requests:
             provider = request.payload["provider"]
             self.assertEqual(provider["only"], [request.providerTag])
@@ -98,9 +98,9 @@ class ModelReviewPreflightTests(unittest.TestCase):
                     "allow_fallbacks": False,
                     "require_parameters": True,
                     "data_collection": "deny",
-                    "zdr": True,
                 },
             )
+            self.assertNotIn("zdr", provider)
             self.assertEqual(request.payload["response_format"]["type"], "json_schema")
             self.assertTrue(request.payload["response_format"]["json_schema"]["strict"])
             self.assertNotIn("reviewer output", request.payload["messages"][1]["content"].lower())

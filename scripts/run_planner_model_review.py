@@ -31,7 +31,7 @@ from loomarr_models.model_review import (
 )
 
 
-DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v1.json"
+DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v2.json"
 
 
 def main() -> None:
