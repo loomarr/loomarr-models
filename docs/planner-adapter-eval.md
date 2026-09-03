@@ -17,8 +17,9 @@ Both candidates receive the same ordered cases, system prompt, tool schema, scri
 greedy decoding, 4,096-token context, 768-token per-turn ceiling, seed, and single trial. Stock runs
 first and the adapter second on the same A40. The 2.37 GB untied embedding table remains on the GPU:
 the pinned 48 GB envelope has sufficient headroom, and Unsloth's automatic CPU offload made the
-first inference attempt transfer-bound. Raw generations are captured before deterministic
-scoring.
+first inference attempt transfer-bound. Torch/Unsloth runtime compilation is disabled before the
+Unsloth import because the pinned Qwen 3.8 delta-net inference path otherwise recompiles across
+changing conversation shapes. Raw generations are captured before deterministic scoring.
 
 The scorer reports grounded completion, correct tool operation, argument validity, schema validity,
 policy accuracy, exact fixture proposal quality, recovery, latency, tool calls, hard failures, and

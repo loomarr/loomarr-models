@@ -172,6 +172,29 @@ Copper Meridian 12
             "comparison_config['offloadEmbedding']",
         )
 
+    def test_compile_is_disabled_before_unsloth_import(self):
+        source = (ROOT / "src/loomarr_models/eval_runtime.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        function = next(
+            node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "run_evaluation"
+        )
+        unsloth_import_line = next(
+            node.lineno
+            for node in ast.walk(function)
+            if isinstance(node, ast.ImportFrom) and node.module == "unsloth"
+        )
+        assignments = {
+            node.targets[0].slice.value: node.lineno
+            for node in ast.walk(function)
+            if isinstance(node, ast.Assign)
+            and isinstance(node.targets[0], ast.Subscript)
+            and isinstance(node.targets[0].value, ast.Attribute)
+            and node.targets[0].value.attr == "environ"
+            and isinstance(node.targets[0].slice, ast.Constant)
+        }
+        self.assertLess(assignments["TORCH_COMPILE_DISABLE"], unsloth_import_line)
+        self.assertLess(assignments["UNSLOTH_COMPILE_DISABLE"], unsloth_import_line)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -4,6 +4,7 @@ import gc
 import hashlib
 import importlib.metadata
 import json
+import os
 import platform
 import re
 import time
@@ -23,14 +24,18 @@ def run_evaluation(
     config_path: Path,
     preflight: EvalPreflightReport,
 ) -> dict[str, Any]:
+    config = load_eval_experiment(config_path)
+    comparison_config = config["comparison"]
+    if comparison_config["disableCompile"]:
+        os.environ["TORCH_COMPILE_DISABLE"] = "1"
+        os.environ["UNSLOTH_COMPILE_DISABLE"] = "1"
+
     from unsloth import FastModel
 
     import torch
     from peft import PeftModel
 
-    config = load_eval_experiment(config_path)
     execution = config["execution"]
-    comparison_config = config["comparison"]
     if platform.system() != "Linux" or platform.machine() != "x86_64":
         raise PreflightError("live planner evaluation requires Linux amd64")
     if not torch.cuda.is_available() or torch.cuda.device_count() < execution["gpuCount"]:
