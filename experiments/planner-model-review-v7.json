@@ -41,7 +41,7 @@
     "maxOutputTokensPerCall": 2000,
     "maxReservationUsd": "6.00",
     "noAutomaticRetry": true,
-    "outputDir": ".artifacts/planner-model-review-v6",
+    "outputDir": ".artifacts/planner-model-review-v7",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": true,
     "settlementAttempts": 60,
@@ -49,7 +49,7 @@
   },
   "issue": "https://github.com/loomarr/loomarr-models/issues/2",
   "promptVersion": "planner-model-review-v4",
-  "reviewId": "planner-model-review-v6",
+  "reviewId": "planner-model-review-v7",
   "reviewers": [
     {
       "family": "anthropic",

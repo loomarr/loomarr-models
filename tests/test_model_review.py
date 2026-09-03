@@ -21,7 +21,7 @@ from loomarr_models.model_review import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "experiments/planner-model-review-v6.json"
+CONFIG = ROOT / "experiments/planner-model-review-v7.json"
 
 
 def clean_git(_root: Path, _paths: object) -> str:
@@ -78,7 +78,7 @@ class ModelReviewPreflightTests(unittest.TestCase):
         self.assertEqual((self.plan.traceCount, self.plan.requestCount), (50, 100))
         self.assertEqual(self.plan.outputTokenUpperBound, 200000)
         self.assertLessEqual(Decimal(self.plan.worstCaseCostUsd), Decimal("6.00"))
-        self.assertEqual(self.plan.projectedSpendUsd, "10.625559891125471")
+        self.assertEqual(self.plan.projectedSpendUsd, "10.851869891125471")
         self.assertEqual(self.plan.authorizationUsd, "40")
         self.assertEqual(
             [(item.role, item.batchIndex, len(item.traceIds)) for item in self.plan.requests],
@@ -191,7 +191,7 @@ class ModelReviewEvidenceTests(unittest.TestCase):
                     validate_completion(response, self.request, "b" * 64)
         response = valid_response(self.request)
         response["choices"][0]["finish_reason"] = "length"
-        with self.assertRaisesRegex(ModelReviewError, "finish normally"):
+        with self.assertRaisesRegex(ModelReviewContentError, "finish reason is 'length'"):
             validate_completion(response, self.request, "b" * 64)
         response = valid_response(self.request)
         del response["usage"]["cost"]
@@ -214,12 +214,29 @@ class ModelReviewEvidenceTests(unittest.TestCase):
         settlement["data"]["provider_name"] = "Other"
         with self.assertRaisesRegex(ModelReviewError, "provider differs"):
             validate_settlement(settlement, self.request, response)
+        response = valid_response(self.request)
+        response["choices"][0]["finish_reason"] = "length"
+        response["choices"][0]["native_finish_reason"] = "max_tokens"
         settlement = {
             "data": {
                 "id": "gen-test",
                 "provider_name": self.request.providerDisplayName,
                 "model": self.request.model,
-                "finish_reason": "stop",
+                "finish_reason": "length",
+                "native_finish_reason": "max_tokens",
+                "total_cost": 0.01,
+            }
+        }
+        self.assertEqual(validate_settlement(settlement, self.request, response), Decimal("0.01"))
+        settlement["data"]["finish_reason"] = "stop"
+        with self.assertRaisesRegex(ModelReviewError, "finish reason differs"):
+            validate_settlement(settlement, self.request, response)
+        settlement = {
+            "data": {
+                "id": "gen-test",
+                "provider_name": self.request.providerDisplayName,
+                "model": self.request.model,
+                "finish_reason": "length",
                 "native_finish_reason": "end_turn",
                 "total_cost": 0.01,
             }

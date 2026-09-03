@@ -59,7 +59,7 @@ EXECUTION = {
     "maxOutputTokensPerCall": 2000,
     "maxReservationUsd": "6.00",
     "noAutomaticRetry": True,
-    "outputDir": ".artifacts/planner-model-review-v6",
+    "outputDir": ".artifacts/planner-model-review-v7",
     "requestTimeoutSeconds": 180,
     "requireCleanGit": True,
     "settlementAttempts": 60,
@@ -300,8 +300,6 @@ def validate_completion(
     if not isinstance(choices, list) or len(choices) != 1 or not isinstance(choices[0], dict):
         raise ModelReviewError("completion response must contain exactly one choice")
     choice = choices[0]
-    if choice.get("finish_reason") != "stop":
-        raise ModelReviewError("completion did not finish normally")
     message = choice.get("message")
     content = message.get("content") if isinstance(message, dict) else None
     usage = response.get("usage")
@@ -312,6 +310,10 @@ def validate_completion(
             raise ModelReviewError(f"completion usage has invalid {field}")
     if usage["total_tokens"] < usage["prompt_tokens"] + usage["completion_tokens"]:
         raise ModelReviewError("completion usage total is inconsistent")
+    if choice.get("finish_reason") != "stop":
+        raise ModelReviewContentError(
+            f"completion finish reason is {choice.get('finish_reason')!r}"
+        )
     if not isinstance(content, str):
         raise ModelReviewContentError("completion response has no text content")
     try:
@@ -351,9 +353,14 @@ def validate_settlement(
     settled_model = data.get("model")
     if settled_model not in {request.model, request.upstreamModel}:
         raise ModelReviewError("generation model differs from pinned route")
-    if data.get("finish_reason") != "stop":
-        raise ModelReviewError("generation settlement has a non-stop finish reason")
     choices = response.get("choices")
+    response_finish = (
+        choices[0].get("finish_reason")
+        if isinstance(choices, list) and len(choices) == 1 and isinstance(choices[0], dict)
+        else None
+    )
+    if not isinstance(response_finish, str) or data.get("finish_reason") != response_finish:
+        raise ModelReviewError("generation finish reason differs from the response")
     response_native = (
         choices[0].get("native_finish_reason")
         if isinstance(choices, list) and len(choices) == 1 and isinstance(choices[0], dict)
@@ -529,7 +536,7 @@ def _validate_review_output(value: Any, trace_ids: tuple[str, ...]) -> list[dict
 
 def _validate_config(config: dict[str, Any]) -> None:
     if (
-        config["reviewId"] != "planner-model-review-v6"
+        config["reviewId"] != "planner-model-review-v7"
         or config["promptVersion"] != "planner-model-review-v4"
     ):
         raise ModelReviewError("unexpected model-review identity")

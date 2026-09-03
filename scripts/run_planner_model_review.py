@@ -33,7 +33,7 @@ from loomarr_models.model_review import (
 )
 
 
-DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v6.json"
+DEFAULT_CONFIG = ROOT / "experiments/planner-model-review-v7.json"
 
 
 class OpenRouterHTTPError(ModelReviewError):

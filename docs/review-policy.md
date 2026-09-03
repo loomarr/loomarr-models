@@ -59,16 +59,23 @@ trace key and six exact criterion keys. The zero-cost v4 evidence is
 
 Review v5 settled one valid response and then received a second response containing short placeholder
 evidence and a verdict inconsistent with its own criteria. It stopped after the local validator rejected
-that content, with both calls settling at `$0.038452` total. Review v6 retains the strict validator but
-quarantines a settled, model-authored content failure as an invalid review observation and proceeds to the
-next planned trace without retrying inference. Provider identity, response envelope, finish, usage,
-settlement, route, or budget failures still stop the whole run. The v5 evidence is
+that content, with both calls settling at `$0.038452` total. Review v6 retained the strict validator,
+quarantined settled model-authored content failures as invalid observations, and proceeded to the next
+planned trace without retrying inference. The v5 evidence is
 `reviews/planner-smoke-v1/model-review-v5-content-failure.json`.
+
+Review v6 then settled ten completed observations and an eleventh response that reached its exact output
+limit. The response and settlement agreed on `length` / `max_tokens`, but v6 classified every non-stop
+finish as an infrastructure failure and stopped after `$0.226310`. Review v7 classifies a settled,
+identity-bound non-stop completion as invalid model content and continues; finish-reason disagreement
+between response and settlement still stops globally. Provider identity, response envelope, usage,
+settlement, route, or budget failures also still stop the whole run. The v6 evidence is
+`reviews/planner-smoke-v1/model-review-v6-finish-failure.json`.
 
 The run is limited to one hundred one-trace calls with no automatic inference retry, at most 2,000 output
 tokens per call, and a conservative `$6.00` reservation. Its byte-count token upper bound prices the exact
-v6 request bodies at no more than `$5.845096`, projecting aggregate commitments to
-`$10.625559891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
+v7 request bodies at no more than `$5.845096`, projecting aggregate commitments to
+`$10.851869891125471 / $40` before any call. The maintainer raised the aggregate authorization from `$20`
 to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exact ledger value.
 
 ## Disagreement and escalation
@@ -76,9 +83,10 @@ to `$40` on 2026-09-03; both model-review and QLoRA preflights enforce that exac
 Only two approvals with all twelve criterion decisions passing derive an approved trace. Two rejections
 derive rejected; any disagreement derives pending. A settled model-authored malformed output becomes an
 explicit invalid observation, keeps its trace pending, and remains part of the exact 100-observation
-denominator. Missing request coverage, route/model drift, provider failure, abnormal finish, or unsettled
-cost invalidates the run. Rejected, disputed, or invalid traces go into a targeted paid escalation packet
-and never enter training data. Corrected traces require a new hash-bound review generation.
+denominator. Missing request coverage, route/model drift, provider failure, response/settlement finish
+disagreement, or unsettled cost invalidates the run. Rejected, disputed, or invalid traces go into a
+targeted paid escalation packet and never enter training data. Corrected traces require a new hash-bound
+review generation.
 
 After review, regenerate with `make generate-drafts generate-review`, inspect the decisions, and run
 `make finalize-corpus`. Finalization creates `traces.jsonl`, `manifest.json`, and

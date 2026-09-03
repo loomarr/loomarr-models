@@ -1,0 +1,47 @@
+{
+  "accounting": {
+    "settledCallCount": 11,
+    "settledCostUsd": "0.226310"
+  },
+  "completedCalls": 10,
+  "completedObservations": {
+    "invalid": 6,
+    "valid": 4
+  },
+  "error": "generation settlement has a non-stop finish reason",
+  "failedAt": "2026-09-03T03:42:05.184976Z",
+  "inferenceResponsesReceived": 11,
+  "lastResponse": {
+    "costUsd": "0.034446",
+    "finishReason": "length",
+    "generationId": "gen-1788406890-VXMxEt5vo8t74LvZAcEX",
+    "nativeFinishReason": "max_tokens",
+    "responseSha256": "b945d17c16dffffbb6c46fb056ea1569b978e327426ea15e186ded72abc2524c",
+    "settlementSha256": "95429ae39cb84500c09e6a5fde9d26e559d5184f2fcbb734e4274aac83fe360a",
+    "traceId": "planner-smoke-keyword-discovery-01"
+  },
+  "preflight": {
+    "authorizationUsd": "40",
+    "committedSpendUsd": "4.625559891125471",
+    "configSha256": "54b087cba3c2d194243a334dd59c98fcddd9bf636c7c4edce8472358a9bef0a5",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1822548,
+    "outputDir": ".artifacts/planner-model-review-v6",
+    "outputTokenUpperBound": 200000,
+    "projectedSpendUsd": "10.625559891125471",
+    "requestCount": 100,
+    "reservationUsd": "6",
+    "reviewId": "planner-model-review-v6",
+    "schemaVersion": 1,
+    "sourceCommit": "4eeff838ade70203f87fce7a9f56d870cbc77a76",
+    "traceCount": 50,
+    "worstCaseCostUsd": "5.845096"
+  },
+  "reason": "The response and settlement agreed exactly on a length/max_tokens completion. This is settled unusable model output and should be quarantined as an invalid observation, not treated as route or accounting drift.",
+  "reservationUsd": "6",
+  "reviewId": "planner-model-review-v6",
+  "runStateSha256": "116a6080a637694e061afcf6689d078ee7e72d180fbb610d8645ee84b9d123e1",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:38:29.438614Z",
+  "status": "failed-after-eleventh-response"
+}
