@@ -9,8 +9,12 @@
       "sha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
     },
     {
+      "path": "docs/planner-qwen38-qlora-v2-runbook.md",
+      "sha256": "1e9123248783ba703f9c8009444b29fc60580e37918d7c5ad1b0dc0343ccb914"
+    },
+    {
       "path": "docs/planner-qwen38-qlora-v2.md",
-      "sha256": "3ca6a5a1584499f1aeb7370d43d0209283ce4b6651196229c02dcb6df31d978c"
+      "sha256": "86b19cb683db7f741b033ab974c44bc9eb72d722d0c1b8cac69031c7291187b1"
     },
     {
       "path": "environments/qwen38-a40-v1.json",
@@ -31,6 +35,10 @@
     {
       "path": "experiments/planner-qwen38-qlora-v2.json",
       "sha256": "bf3deb9099b14fb3991e89ef862ff47ba4c791c249fdfec97af532b55d520f52"
+    },
+    {
+      "path": "scripts/verify_planner_qwen38_qlora_v2_artifact.py",
+      "sha256": "77019352de42f79b93a82d19c18a357090e7bd01348e3cb0b6be991b095480f6"
     }
   ],
   "budget": {
@@ -43,7 +51,7 @@
   },
   "generator": {
     "path": "scripts/build_planner_qwen38_qlora_v2.py",
-    "sha256": "18828219a8d60ef8ef2b73b04c1b9bc228ed579aa9abf3e9b61c689a0edba457"
+    "sha256": "29152458a9f54eb8b92239c6e2666a28c657c46b521db2a404b3ef93a52852e5"
   },
   "nextGate": "review and separately authorize the exact training reservation",
   "paidTrainingAuthorized": false,

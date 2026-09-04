@@ -30,6 +30,9 @@ review rationales, household data, and the untouched development cases are exclu
   120 traces, matching the first run's approximately 1.56-epoch exposure without adding a new tuning
   variable.
 - Output: adapter and tokenizer only under `.artifacts`; no merged model or base-weight mutation.
+- Artifact proof: the runner reloads the saved adapter into a fresh pinned base-model instance and
+  performs a tiny deterministic generation before writing the run manifest. The separate artifact
+  verifier then checks all 45 steps, identities, runtime, hashes, adapter-only inventory, and probe.
 
 The 45-step runtime is expected to be roughly 30–35 minutes from the measured 20-step A40 run, but
 the hard alarm remains 9,000 seconds. Runtime estimates are not promotion evidence.
@@ -56,6 +59,11 @@ for training and `$3.00` for evaluation, producing a maximum aggregate commitmen
 The checked-in plan has `paidTrainingAuthorized: false`. A later clean authorization commit must
 refresh the ledger projection, change only the reviewed authorization state, pass CI, and be published
 before any paid command runs. There is one configuration, no sweep, and no automatic paid retry.
+
+The exact provision, detached execution, retrieval, cost supervision, and teardown sequence is in
+[`planner-qwen38-qlora-v2-runbook.md`](planner-qwen38-qlora-v2-runbook.md). Runpod currently has no
+working provider-side stop/terminate timer, so an uninterrupted supervisor must own the resource and
+delete it by the recorded 9,000-second provider deadline.
 
 ## Promotion gate
 

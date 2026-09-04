@@ -1,4 +1,4 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 verify-qlora-v2-artifact generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
@@ -90,6 +90,9 @@ preflight-qlora-v2-plan:
 
 preflight-qlora-v2:
 	PYTHONPATH=src $(PYTHON) scripts/train_planner_smoke.py --config experiments/planner-qwen38-qlora-v2.json --preflight-only
+
+verify-qlora-v2-artifact:
+	$(PYTHON) scripts/verify_planner_qwen38_qlora_v2_artifact.py
 
 generate-review:
 	$(PYTHON) scripts/render_review_packet.py

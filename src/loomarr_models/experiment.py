@@ -167,6 +167,8 @@ def preflight(
     ]
     if spec.get("generatorPath"):
         critical_paths.append(root / spec["generatorPath"])
+    if spec.get("postRunVerifierPath"):
+        critical_paths.append(root / spec["postRunVerifierPath"])
     probe = git_probe or _git_probe
     source_commit = probe(root, critical_paths)
 
@@ -219,6 +221,7 @@ def _validate_shape(config: dict[str, Any]) -> dict[str, Any]:
             "plannedStatus": "planned-no-paid-run-authorized",
             "readyStatus": "ready-for-training",
             "generatorPath": "scripts/build_planner_qwen38_qlora_v2.py",
+            "postRunVerifierPath": "scripts/verify_planner_qwen38_qlora_v2_artifact.py",
             "execution": {
                 "platform": "linux-amd64",
                 "gpuSku": "NVIDIA A40",

@@ -16,6 +16,8 @@ CONFIG_PATH = ROOT / f"experiments/{EXPERIMENT_ID}.json"
 EVAL_PLAN_PATH = ROOT / "experiments/planner-adapter-eval-v2-plan.json"
 INDEX_PATH = ROOT / f"runs/{EXPERIMENT_ID}/index.json"
 DOC_PATH = ROOT / "docs/planner-qwen38-qlora-v2.md"
+RUNBOOK_PATH = ROOT / "docs/planner-qwen38-qlora-v2-runbook.md"
+ARTIFACT_VERIFIER_PATH = ROOT / "scripts/verify_planner_qwen38_qlora_v2_artifact.py"
 CORPUS_PATH = ROOT / "corpus/planner-behavior-v2/traces.jsonl"
 CORPUS_MANIFEST_PATH = ROOT / "corpus/planner-behavior-v2/manifest.json"
 CASES_PATH = ROOT / "evaluation/planner-behavior-development-v2/cases.jsonl"
@@ -190,6 +192,8 @@ def build_outputs() -> dict[Path, bytes]:
         CASES_MANIFEST_PATH: CASES_MANIFEST_PATH.read_bytes(),
         ENVIRONMENT_PATH: ENVIRONMENT_PATH.read_bytes(),
         DOC_PATH: DOC_PATH.read_bytes(),
+        RUNBOOK_PATH: RUNBOOK_PATH.read_bytes(),
+        ARTIFACT_VERIFIER_PATH: ARTIFACT_VERIFIER_PATH.read_bytes(),
     }
     index = {
         "schemaVersion": 1,
