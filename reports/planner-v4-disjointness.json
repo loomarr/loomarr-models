@@ -10,7 +10,7 @@
     },
     "developmentExposure": {
       "path": "reviews/planner-v4-local-screen/development-exposure.json",
-      "sha256": "365a86040bb4958ba1accbba09e220ab2f7cee1f890d518438d6a3b5081ebd3e"
+      "sha256": "701811c978a213a600dbff69a5504b9c56f229e6563324894c34328d88ea7713"
     },
     "foundationalGenerator": {
       "path": "scripts/build_planner_behavior_corpus.py",

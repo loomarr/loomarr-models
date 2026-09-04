@@ -42,7 +42,14 @@ def build_config() -> dict[str, Any]:
         if exposure == {
             "schemaVersion": 1,
             "corpusId": "planner-development-v4",
-            "status": "unexposed",
+            "status": "local-screen-reserved",
+            "reservation": {
+                "screenId": SCREEN_ID,
+                "candidateIds": ["qwen38-27b-mlx-nvfp4", "gemma4-12b-q4-k-m"],
+                "caseCount": 120,
+                "externalCostUsd": "0",
+                "modelRunsPerCandidate": 1,
+            },
             "exposures": [],
         }
         else "complete-local-screen"

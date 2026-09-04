@@ -370,15 +370,25 @@ def load_development_exposure() -> dict[str, Any]:
         "schemaVersion",
         "corpusId",
         "status",
+        "reservation",
         "exposures",
     }:
         raise ValueError("planner v4 development exposure fields differ from schema v1")
     if value.get("schemaVersion") != 1 or value.get("corpusId") != "planner-development-v4":
         raise ValueError("planner v4 development exposure identity drifted")
     exposures = value["exposures"]
-    if value["status"] == "unexposed":
+    expected_reservation = {
+        "screenId": "planner-v4-local-screen-v1",
+        "candidateIds": ["qwen38-27b-mlx-nvfp4", "gemma4-12b-q4-k-m"],
+        "caseCount": 120,
+        "externalCostUsd": "0",
+        "modelRunsPerCandidate": 1,
+    }
+    if value.get("reservation") != expected_reservation:
+        raise ValueError("planner v4 development reservation drifted")
+    if value["status"] == "local-screen-reserved":
         if exposures != []:
-            raise ValueError("unexposed planner v4 development gate carries exposure evidence")
+            raise ValueError("reserved planner v4 development gate carries exposure evidence")
         return value
     if value["status"] != "local-screen-complete" or not isinstance(exposures, list) or len(exposures) != 1:
         raise ValueError("planner v4 development exposure status is invalid")
@@ -502,8 +512,8 @@ def build_outputs() -> dict[Path, bytes]:
         "schemaVersion": 1,
         "corpusId": "planner-development-v4",
         "status": (
-            "frozen-development-only-no-model-exposure"
-            if development_exposure["status"] == "unexposed"
+            "frozen-development-only-local-screen-reserved"
+            if development_exposure["status"] == "local-screen-reserved"
             else "frozen-development-only-local-screen-exposed"
         ),
         "caseCount": development_report.records,

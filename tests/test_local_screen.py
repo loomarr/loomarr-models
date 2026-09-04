@@ -32,7 +32,7 @@ class LocalScreenTests(unittest.TestCase):
     def tearDown(self):
         self.temporary.cleanup()
 
-    def test_accepts_exact_unexposed_v4_screen_without_network(self):
+    def test_accepts_exact_reserved_v4_screen_without_network(self):
         config, plan, snapshot = build_plan(
             self.root,
             self.config_path,
@@ -61,7 +61,7 @@ class LocalScreenTests(unittest.TestCase):
             exposure_path.read_bytes()
         ).hexdigest()
         self._write_config(config)
-        with self.assertRaisesRegex(PreflightError, "already exposed"):
+        with self.assertRaisesRegex(PreflightError, "reservation is unavailable"):
             self._preflight()
 
     def test_refuses_authority_or_candidate_drift(self):

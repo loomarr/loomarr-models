@@ -103,6 +103,13 @@ def publish(config_path: Path, *, completed_at: str | None = None) -> dict[str, 
         "schemaVersion": 1,
         "corpusId": "planner-development-v4",
         "status": "local-screen-complete",
+        "reservation": {
+            "screenId": SCREEN_ID,
+            "candidateIds": list(CANDIDATE_IDS),
+            "caseCount": plan.caseCount,
+            "externalCostUsd": "0",
+            "modelRunsPerCandidate": 1,
+        },
         "exposures": [
             {
                 "screenId": SCREEN_ID,

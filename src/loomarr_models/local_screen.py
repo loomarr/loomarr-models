@@ -161,7 +161,7 @@ def build_plan(
     manifest = _object(bound["casesManifest"])
     if (
         manifest.get("corpusId") != "planner-development-v4"
-        or manifest.get("status") != "frozen-development-only-no-model-exposure"
+        or manifest.get("status") != "frozen-development-only-local-screen-reserved"
         or manifest.get("caseCount") != 120
         or manifest.get("casesSha256") != report.sha256
         or manifest.get("contractId") != contract["contractId"]
@@ -171,10 +171,17 @@ def build_plan(
     if exposure != {
         "schemaVersion": 1,
         "corpusId": "planner-development-v4",
-        "status": "unexposed",
+        "status": "local-screen-reserved",
+        "reservation": {
+            "screenId": SCREEN_ID,
+            "candidateIds": list(CANDIDATE_IDS),
+            "caseCount": 120,
+            "externalCostUsd": "0",
+            "modelRunsPerCandidate": 1,
+        },
         "exposures": [],
     }:
-        raise PreflightError("local screen development gate was already exposed")
+        raise PreflightError("local screen development reservation is unavailable")
     snapshot = _object(bound["ollamaSnapshot"])
     _validate_snapshot(snapshot, config["candidates"])
     source_commit = (git_probe or _git_probe)(
