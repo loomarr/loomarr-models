@@ -1,0 +1,76 @@
+{
+  "adapterBinding": null,
+  "bindings": {
+    "cases": {
+      "caseCount": 60,
+      "path": "evaluation/planner-behavior-development-v2/cases.jsonl",
+      "sha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-behavior-development-v2/manifest.json",
+      "sha256": "c89e5af52c8a42cfb3f8f1bf2cad285d2d1dbdc4e8d8a92a4e4e7e7ee7847874"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v3.json",
+      "sha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4"
+    },
+    "denylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "trainingConfig": {
+      "path": "experiments/planner-qwen38-qlora-v2.json",
+      "sha256": "bf3deb9099b14fb3991e89ef862ff47ba4c791c249fdfec97af532b55d520f52"
+    },
+    "trainingCorpus": {
+      "path": "corpus/planner-behavior-v2/traces.jsonl",
+      "sha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
+    }
+  },
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "27.9826615675672820",
+    "evaluationReservationUsd": "3.00",
+    "maximumAggregateCommitmentUsd": "32.4826615675672820",
+    "remainingAfterMaximumUsd": "7.5173384324327180",
+    "trainingReservationUsd": "1.50"
+  },
+  "candidateOrder": [
+    "stock",
+    "adapter"
+  ],
+  "comparison": {
+    "disableCompile": true,
+    "doSample": false,
+    "maxModelCallsPerCase": 5,
+    "maxNewTokens": 768,
+    "maxSeqLength": 4096,
+    "offloadEmbedding": false,
+    "reasoningEffort": "low",
+    "seed": 3407,
+    "trials": 1
+  },
+  "experimentId": "planner-adapter-eval-v2",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/20",
+  "paidEvaluationAuthorized": false,
+  "promotion": {
+    "certifiedPillars": [
+      "channel-curation"
+    ],
+    "maximumAuthorityViolations": 0,
+    "maximumExecutableEnvelopeRegressions": 0,
+    "maximumUnsupportedIds": 0,
+    "requireMeaningfulAggregateGain": true,
+    "requireTargetFamilyImprovement": true,
+    "uncertifiedPillars": [
+      "channel-recommendation",
+      "filler-curation"
+    ]
+  },
+  "schemaVersion": 1,
+  "status": "waiting-for-hash-bound-adapter"
+}

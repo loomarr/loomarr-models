@@ -22,11 +22,14 @@ def main() -> None:
         default=Path("experiments/planner-qwen38-smoke-v1.json"),
     )
     parser.add_argument("--preflight-only", action="store_true")
+    parser.add_argument("--plan-check-only", action="store_true")
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
     try:
-        report = preflight(ROOT, config_path)
-        if args.preflight_only:
+        if args.preflight_only and args.plan_check_only:
+            raise PreflightError("choose either preflight-only or plan-check-only")
+        report = preflight(ROOT, config_path, require_authorized=not args.plan_check_only)
+        if args.preflight_only or args.plan_check_only:
             print(json.dumps(report.as_dict(), sort_keys=True))
             return
         config = load_experiment(config_path)

@@ -1,0 +1,55 @@
+{
+  "artifacts": [
+    {
+      "path": "corpus/planner-behavior-v2/manifest.json",
+      "sha256": "8a645823ec17cf6b4a3f832a9e22e3f3278a668e576b154aa31a367e1ae6c104"
+    },
+    {
+      "path": "corpus/planner-behavior-v2/traces.jsonl",
+      "sha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
+    },
+    {
+      "path": "docs/planner-qwen38-qlora-v2.md",
+      "sha256": "3ca6a5a1584499f1aeb7370d43d0209283ce4b6651196229c02dcb6df31d978c"
+    },
+    {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    {
+      "path": "evaluation/planner-behavior-development-v2/cases.jsonl",
+      "sha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115"
+    },
+    {
+      "path": "evaluation/planner-behavior-development-v2/manifest.json",
+      "sha256": "c89e5af52c8a42cfb3f8f1bf2cad285d2d1dbdc4e8d8a92a4e4e7e7ee7847874"
+    },
+    {
+      "path": "experiments/planner-adapter-eval-v2-plan.json",
+      "sha256": "a5bb61cc7a796ace102525b6eb84b5006c81e0905a5f7b31f688ba6f8b94cbac"
+    },
+    {
+      "path": "experiments/planner-qwen38-qlora-v2.json",
+      "sha256": "bf3deb9099b14fb3991e89ef862ff47ba4c791c249fdfec97af532b55d520f52"
+    }
+  ],
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "27.9826615675672820",
+    "evaluationReservationUsd": "3.00",
+    "maximumAggregateCommitmentUsd": "32.4826615675672820",
+    "remainingAfterMaximumUsd": "7.5173384324327180",
+    "trainingReservationUsd": "1.50"
+  },
+  "generator": {
+    "path": "scripts/build_planner_qwen38_qlora_v2.py",
+    "sha256": "18828219a8d60ef8ef2b73b04c1b9bc228ed579aa9abf3e9b61c689a0edba457"
+  },
+  "nextGate": "review and separately authorize the exact training reservation",
+  "paidTrainingAuthorized": false,
+  "publicationId": "planner-qwen38-qlora-v2",
+  "releaseAuthorized": false,
+  "schemaVersion": 1,
+  "status": "planned-no-paid-run-authorized",
+  "trainingAuthorized": false
+}

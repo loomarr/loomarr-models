@@ -111,11 +111,12 @@ def preflight(
     config_path: Path,
     *,
     git_probe: GitProbe | None = None,
+    require_authorized: bool = True,
 ) -> PreflightReport:
     root = root.resolve(strict=True)
     config_path = _input_path(root, config_path)
     config = load_experiment(config_path)
-    _validate_shape(config)
+    spec = _validate_shape(config)
 
     bindings = config["bindings"]
     bound: dict[str, Path] = {}
@@ -142,8 +143,11 @@ def preflight(
     )
     if report.traces != corpus_binding["traceCount"] or report.approved != report.traces:
         raise PreflightError("corpus is not the exact fully approved trace set")
-    if config["status"] != "ready-for-smoke":
-        raise PreflightError("experiment status is not ready-for-smoke")
+    if require_authorized:
+        if config["status"] != spec["readyStatus"]:
+            raise PreflightError(f"experiment status is not {spec['readyStatus']}")
+    elif config["status"] not in {spec["plannedStatus"], spec["readyStatus"]}:
+        raise PreflightError("experiment status is not a valid planned or authorized state")
 
     environment = _load_object(bound["environment"], "environment")
     _validate_environment(root, environment, config["models"])
@@ -161,6 +165,8 @@ def preflight(
         root / "src/loomarr_models/training_data.py",
         root / "scripts/train_planner_smoke.py",
     ]
+    if spec.get("generatorPath"):
+        critical_paths.append(root / spec["generatorPath"])
     probe = git_probe or _git_probe
     source_commit = probe(root, critical_paths)
 
@@ -190,10 +196,46 @@ def preflight(
     )
 
 
-def _validate_shape(config: dict[str, Any]) -> None:
-    if config["experimentId"] != "planner-qwen38-smoke-v1":
+def _validate_shape(config: dict[str, Any]) -> dict[str, Any]:
+    specs = {
+        "planner-qwen38-smoke-v1": {
+            "issue": "https://github.com/loomarr/loomarr/issues/938",
+            "plannedStatus": "ready-for-smoke",
+            "readyStatus": "ready-for-smoke",
+            "execution": {
+                "platform": "linux-amd64",
+                "gpuSku": "NVIDIA A40",
+                "gpuCount": 1,
+                "minimumVramGb": 48,
+                "maxWallClockSeconds": 9000,
+                "maxReservationUsd": "1.50",
+                "outputDir": ".artifacts/planner-qwen38-smoke-v1",
+                "requireCleanGit": True,
+            },
+            "run": _v1_run(),
+        },
+        "planner-qwen38-qlora-v2": {
+            "issue": "https://github.com/loomarr/loomarr-models/issues/20",
+            "plannedStatus": "planned-no-paid-run-authorized",
+            "readyStatus": "ready-for-training",
+            "generatorPath": "scripts/build_planner_qwen38_qlora_v2.py",
+            "execution": {
+                "platform": "linux-amd64",
+                "gpuSku": "NVIDIA A40",
+                "gpuCount": 1,
+                "minimumVramGb": 48,
+                "maxWallClockSeconds": 9000,
+                "maxReservationUsd": "1.50",
+                "outputDir": ".artifacts/planner-qwen38-qlora-v2",
+                "requireCleanGit": True,
+            },
+            "run": _v2_run(),
+        },
+    }
+    spec = specs.get(config["experimentId"])
+    if spec is None:
         raise PreflightError("unexpected experiment identity")
-    if config["issue"] != "https://github.com/loomarr/loomarr/issues/938":
+    if config["issue"] != spec["issue"]:
         raise PreflightError("unexpected experiment tracking issue")
     if set(config["bindings"]) != BINDING_KEYS:
         raise PreflightError("experiment bindings differ from schema v1")
@@ -210,18 +252,15 @@ def _validate_shape(config: dict[str, Any]) -> None:
     if not isinstance(run, dict) or set(run) != RUN_KEYS:
         raise PreflightError("training configuration fields differ from schema v1")
     execution = config["execution"]
-    if execution != {
-        "platform": "linux-amd64",
-        "gpuSku": "NVIDIA A40",
-        "gpuCount": 1,
-        "minimumVramGb": 48,
-        "maxWallClockSeconds": 9000,
-        "maxReservationUsd": "1.50",
-        "outputDir": ".artifacts/planner-qwen38-smoke-v1",
-        "requireCleanGit": True,
-    }:
+    if execution != spec["execution"]:
         raise PreflightError("execution safety envelope drifted")
-    required_run = {
+    if run != spec["run"]:
+        raise PreflightError("immutable training configuration drifted")
+    return spec
+
+
+def _v1_run() -> dict[str, Any]:
+    return {
         "runId": "qwen38-qlora-a40-smoke-v1",
         "seed": 3407,
         "maxSeqLength": 4096,
@@ -245,8 +284,19 @@ def _validate_shape(config: dict[str, Any]) -> None:
         "trainOnResponsesOnly": True,
         "saveMode": "adapter-only",
     }
-    if run != required_run:
-        raise PreflightError("immutable training configuration drifted")
+
+
+def _v2_run() -> dict[str, Any]:
+    run = _v1_run()
+    run.update(
+        {
+            "runId": "qwen38-qlora-a40-v2",
+            # Preserve the proven v1 recipe and scale only the step count from
+            # 80 examples consumed to 180: exactly 1.5 passes over 120 traces.
+            "maxSteps": 45,
+        }
+    )
+    return run
 
 
 def _validate_environment(root: Path, environment: dict[str, Any], models: dict[str, Any]) -> None:
