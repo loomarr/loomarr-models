@@ -8,6 +8,10 @@
       "path": "src/loomarr_models/validator.py",
       "sha256": "6de20a3d717f41b29ea12622ba8a3fef4731eaa55ba3e78acdd33b38a524a508"
     },
+    "developmentExposure": {
+      "path": "reviews/planner-v4-local-screen/development-exposure.json",
+      "sha256": "365a86040bb4958ba1accbba09e220ab2f7cee1f890d518438d6a3b5081ebd3e"
+    },
     "foundationalGenerator": {
       "path": "scripts/build_planner_behavior_corpus.py",
       "sha256": "9dd36bdf6ac7d3836e32b786392304787ce8302b2de9a72f4de5aaaaa4dac277"

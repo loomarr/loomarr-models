@@ -5,6 +5,7 @@ import argparse
 import copy
 import hashlib
 import json
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -47,6 +48,7 @@ TRAINING_MANIFEST_PATH = ROOT / "corpus/planner-v4-delta/draft-manifest.json"
 DEVELOPMENT_PATH = ROOT / "evaluation/planner-development-v4/cases.jsonl"
 DEVELOPMENT_MANIFEST_PATH = ROOT / "evaluation/planner-development-v4/manifest.json"
 DISJOINTNESS_PATH = ROOT / "reports/planner-v4-disjointness.json"
+DEVELOPMENT_EXPOSURE_PATH = ROOT / "reviews/planner-v4-local-screen/development-exposure.json"
 
 PRIOR_SPLITS = {
     "planner-smoke-v1": ROOT / "corpus/planner-smoke-v1/traces.jsonl",
@@ -362,10 +364,54 @@ def binding(path: Path, *, count: int | None = None) -> dict[str, Any]:
     return value
 
 
+def load_development_exposure() -> dict[str, Any]:
+    value = json.loads(DEVELOPMENT_EXPOSURE_PATH.read_text(encoding="utf-8"))
+    if not isinstance(value, dict) or set(value) != {
+        "schemaVersion",
+        "corpusId",
+        "status",
+        "exposures",
+    }:
+        raise ValueError("planner v4 development exposure fields differ from schema v1")
+    if value.get("schemaVersion") != 1 or value.get("corpusId") != "planner-development-v4":
+        raise ValueError("planner v4 development exposure identity drifted")
+    exposures = value["exposures"]
+    if value["status"] == "unexposed":
+        if exposures != []:
+            raise ValueError("unexposed planner v4 development gate carries exposure evidence")
+        return value
+    if value["status"] != "local-screen-complete" or not isinstance(exposures, list) or len(exposures) != 1:
+        raise ValueError("planner v4 development exposure status is invalid")
+    exposure = exposures[0]
+    if not isinstance(exposure, dict) or set(exposure) != {
+        "screenId",
+        "sourceCommit",
+        "completedAt",
+        "publicationPath",
+        "publicationSha256",
+        "candidateIds",
+        "caseCount",
+    }:
+        raise ValueError("planner v4 development exposure entry is invalid")
+    if (
+        exposure["screenId"] != "planner-v4-local-screen-v1"
+        or re.fullmatch(r"[0-9a-f]{40}", exposure["sourceCommit"]) is None
+        or not isinstance(exposure["completedAt"], str)
+        or exposure["candidateIds"] != ["qwen38-27b-mlx-nvfp4", "gemma4-12b-q4-k-m"]
+        or exposure["caseCount"] != 120
+    ):
+        raise ValueError("planner v4 development exposure evidence drifted")
+    publication = (ROOT / exposure["publicationPath"]).resolve(strict=True)
+    if not publication.is_relative_to(ROOT) or sha256(publication) != exposure["publicationSha256"]:
+        raise ValueError("planner v4 development exposure publication digest mismatch")
+    return value
+
+
 def build_outputs() -> dict[Path, bytes]:
     contract = load_contract(CONTRACT_PATH)
     identities, digests = load_denylist(DENYLIST_PATH)
     decisions = load_review_decisions(REVIEW_PATH, trace_ids())
+    development_exposure = load_development_exposure()
     training = build_training(contract, decisions)
     development = build_development(contract)
     training_report = validate_delta_training(
@@ -398,6 +444,7 @@ def build_outputs() -> dict[Path, bytes]:
         "v4Validator": binding(Path(v4_contract.__file__)),
         "corpusValidator": binding(Path(corpus_validator.__file__)),
         "reviewValidator": binding(Path(review_contract.__file__)),
+        "developmentExposure": binding(DEVELOPMENT_EXPOSURE_PATH),
         **{name: binding(path) for name, path in PRIOR_SPLITS.items()},
     }
     disjointness = {
@@ -454,7 +501,11 @@ def build_outputs() -> dict[Path, bytes]:
     development_manifest = {
         "schemaVersion": 1,
         "corpusId": "planner-development-v4",
-        "status": "frozen-development-only-no-model-exposure",
+        "status": (
+            "frozen-development-only-no-model-exposure"
+            if development_exposure["status"] == "unexposed"
+            else "frozen-development-only-local-screen-exposed"
+        ),
         "caseCount": development_report.records,
         "behaviorCounts": development_report.behavior_counts,
         "casesPath": str(DEVELOPMENT_PATH.relative_to(ROOT)),

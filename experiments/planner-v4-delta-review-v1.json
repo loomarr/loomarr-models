@@ -10,7 +10,7 @@
     },
     "corpusGenerator": {
       "path": "scripts/build_planner_v4_delta.py",
-      "sha256": "11e6e0ac473a3c2adeb46088d1fd24470c2e7932599ac43a04043605d9d7d044"
+      "sha256": "c2de904e48c584b4c8ff797bb20671bb86d456579bfc431e08de222f7a2e5465"
     },
     "corpusValidator": {
       "path": "src/loomarr_models/validator.py",
@@ -23,11 +23,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-development-v4/manifest.json",
-      "sha256": "831dc9a35c4d4cf317a34cfd14d451054a688c80a3464c80bf5dfafe7605c488"
+      "sha256": "386c676752a75520b75eea4a2a31463cf49c2f13219572545b515f550a9c6e45"
     },
     "disjointnessReport": {
       "path": "reports/planner-v4-disjointness.json",
-      "sha256": "96e037dd17b21eaf01eb80104862efcaab5e4d82a8da38b3c330dd2a3f05c086"
+      "sha256": "6d868c7207eb4cea24b3d8e7c0966834d82461461bdedf3a3bafa2c9035ee7be"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -70,7 +70,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-v4-delta/draft-manifest.json",
-      "sha256": "b1dedc8f30342c268680f73bcbee0036bddd7e26de51ae8ab5e64d0f70944206"
+      "sha256": "ad62cd64c1ca82bed74fe0438c668757c3aa6ce5cc9e0b5fc331dc909066435d"
     },
     "v4Validator": {
       "path": "src/loomarr_models/planner_v4.py",

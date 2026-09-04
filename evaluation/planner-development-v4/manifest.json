@@ -22,6 +22,10 @@
       "path": "src/loomarr_models/validator.py",
       "sha256": "6de20a3d717f41b29ea12622ba8a3fef4731eaa55ba3e78acdd33b38a524a508"
     },
+    "developmentExposure": {
+      "path": "reviews/planner-v4-local-screen/development-exposure.json",
+      "sha256": "365a86040bb4958ba1accbba09e220ab2f7cee1f890d518438d6a3b5081ebd3e"
+    },
     "foundationalGenerator": {
       "path": "scripts/build_planner_behavior_corpus.py",
       "sha256": "9dd36bdf6ac7d3836e32b786392304787ce8302b2de9a72f4de5aaaaa4dac277"
@@ -67,10 +71,10 @@
   "contractSourceRevision": "6ab634855d69ba322d54f61b489f6ddc94e5bc52",
   "corpusId": "planner-development-v4",
   "disjointnessReportPath": "reports/planner-v4-disjointness.json",
-  "disjointnessReportSha256": "96e037dd17b21eaf01eb80104862efcaab5e4d82a8da38b3c330dd2a3f05c086",
+  "disjointnessReportSha256": "6d868c7207eb4cea24b3d8e7c0966834d82461461bdedf3a3bafa2c9035ee7be",
   "fixtureId": "planner-v4-development-catalog-v1",
   "generator": "planner-v4-development-generator-v1",
-  "generatorSha256": "11e6e0ac473a3c2adeb46088d1fd24470c2e7932599ac43a04043605d9d7d044",
+  "generatorSha256": "c2de904e48c584b4c8ff797bb20671bb86d456579bfc431e08de222f7a2e5465",
   "schemaVersion": 1,
   "status": "frozen-development-only-no-model-exposure",
   "trainingDraftsPath": "corpus/planner-v4-delta/drafts.jsonl",
