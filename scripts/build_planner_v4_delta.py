@@ -218,7 +218,10 @@ def trace_ids() -> list[str]:
     ]
 
 
-def build_training(contract: dict[str, Any]) -> list[dict[str, Any]]:
+def build_training(
+    contract: dict[str, Any],
+    decisions: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
     traces: list[dict[str, Any]] = []
     for behavior_index, behavior in enumerate(ENTITY_BEHAVIORS):
         for variant in range(TRAINING_PER_BEHAVIOR):
@@ -276,7 +279,7 @@ def build_training(contract: dict[str, Any]) -> list[dict[str, Any]]:
                         },
                         {"role": "assistant", "content": json.dumps(final, separators=(",", ":"))},
                     ],
-                    "review": trace_review(empty_decision(trace_id)),
+                    "review": trace_review(decisions[trace_id]),
                     "provenance": {
                         "source": "synthetic",
                         "generator": TRAINING_GENERATOR_ID,
@@ -363,7 +366,7 @@ def build_outputs() -> dict[Path, bytes]:
     contract = load_contract(CONTRACT_PATH)
     identities, digests = load_denylist(DENYLIST_PATH)
     decisions = load_review_decisions(REVIEW_PATH, trace_ids())
-    training = build_training(contract)
+    training = build_training(contract, decisions)
     development = build_development(contract)
     training_report = validate_delta_training(
         training,
@@ -420,10 +423,18 @@ def build_outputs() -> dict[Path, bytes]:
         },
     }
     disjointness_bytes = pretty(disjointness)
+    review_counts = {
+        status: sum(trace["review"]["status"] == status for trace in training)
+        for status in ("approved", "pending", "rejected")
+    }
     training_manifest = {
         "schemaVersion": 1,
         "corpusId": "planner-v4-delta",
-        "status": "draft-pending-independent-review",
+        "status": (
+            "reviewed-approved-training-delta"
+            if review_counts == {"approved": 60, "pending": 0, "rejected": 0}
+            else "draft-pending-independent-review"
+        ),
         "traceCount": training_report.records,
         "behaviorCounts": training_report.behavior_counts,
         "tracesPath": str(TRAINING_PATH.relative_to(ROOT)),
@@ -437,7 +448,7 @@ def build_outputs() -> dict[Path, bytes]:
         "developmentCasesSha256": development_report.sha256,
         "disjointnessReportPath": str(DISJOINTNESS_PATH.relative_to(ROOT)),
         "disjointnessReportSha256": hashlib.sha256(disjointness_bytes).hexdigest(),
-        "review": {"approved": 0, "pending": 60, "rejected": 0},
+        "review": review_counts,
         "bindings": source_bindings,
     }
     development_manifest = {

@@ -18,6 +18,7 @@ import loomarr_models.planner_v4 as v4_validator
 import loomarr_models.v4_model_review as review_preflight
 import loomarr_models.v4_review as review_validator
 import loomarr_models.validator as corpus_validator
+import publish_planner_v4_review as review_publisher
 import run_planner_v4_review as review_runner
 from loomarr_models.model_review import CRITERIA
 from loomarr_models.v4_model_review import REVIEWERS, preflight, request_plan_bytes
@@ -114,6 +115,7 @@ def build_outputs() -> dict[Path, bytes]:
             "reviewValidator": binding(Path(review_validator.__file__)),
             "reviewPreflightValidator": binding(Path(review_preflight.__file__)),
             "reviewRunner": binding(Path(review_runner.__file__)),
+            "reviewPublisher": binding(Path(review_publisher.__file__)),
             "corpusGenerator": binding(Path(corpus_generator.__file__)),
             "requestPlan": generated_binding(REQUEST_PLAN_PATH, request_bytes, count=120),
         },

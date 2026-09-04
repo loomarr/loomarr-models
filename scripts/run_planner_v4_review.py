@@ -60,6 +60,7 @@ EXPECTED_BINDINGS = {
     "reviewValidator",
     "reviewPreflightValidator",
     "reviewRunner",
+    "reviewPublisher",
     "corpusGenerator",
     "requestPlan",
 }
