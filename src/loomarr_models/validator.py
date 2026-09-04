@@ -208,6 +208,21 @@ def validate_tool_call_compatibility(
     )
 
 
+def validate_catalog_search_arguments(
+    arguments: Any,
+    *,
+    contract_bundle: dict[str, Any],
+    context: str,
+) -> None:
+    """Validate one scripted/model-authored argument object against a frozen contract."""
+    _validate_tool_call(
+        context,
+        {"id": "argument-validation", "name": "catalog_search", "arguments": arguments},
+        {},
+        _catalog_argument_names(contract_bundle),
+    )
+
+
 def _validate_trace(
     trace: dict[str, Any],
     denylisted_identities: set[str],

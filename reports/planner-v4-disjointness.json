@@ -1,0 +1,73 @@
+{
+  "bindings": {
+    "contract": {
+      "path": "contracts/planner-contract-v4.json",
+      "sha256": "53708f6cc2281a2c67c34ab6fdd698d3455e55ec1fcf75bc5565b2d6538329d7"
+    },
+    "corpusValidator": {
+      "path": "src/loomarr_models/validator.py",
+      "sha256": "6de20a3d717f41b29ea12622ba8a3fef4731eaa55ba3e78acdd33b38a524a508"
+    },
+    "foundationalGenerator": {
+      "path": "scripts/build_planner_behavior_corpus.py",
+      "sha256": "9dd36bdf6ac7d3836e32b786392304787ce8302b2de9a72f4de5aaaaa4dac277"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "planner-behavior-development-v2": {
+      "path": "evaluation/planner-behavior-development-v2/cases.jsonl",
+      "sha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115"
+    },
+    "planner-behavior-v2": {
+      "path": "corpus/planner-behavior-v2/traces.jsonl",
+      "sha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
+    },
+    "planner-development-v1": {
+      "path": "evaluation/planner-development-v1/cases.jsonl",
+      "sha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209"
+    },
+    "planner-development-v4": {
+      "count": 120,
+      "path": "evaluation/planner-development-v4/cases.jsonl",
+      "sha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34"
+    },
+    "planner-smoke-v1": {
+      "path": "corpus/planner-smoke-v1/traces.jsonl",
+      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+    },
+    "planner-v4-delta": {
+      "count": 60,
+      "path": "corpus/planner-v4-delta/drafts.jsonl",
+      "sha256": "58b408e641133e8b941fd12981f577aca40d620458101d4f181c010c553241f2"
+    },
+    "reviewDecisions": {
+      "count": 60,
+      "path": "reviews/planner-v4-delta.jsonl",
+      "sha256": "c0b104a378c3e6b19083f66bbbafb576d67d340c3f011ecea9fe28165ca48c10"
+    },
+    "reviewValidator": {
+      "path": "src/loomarr_models/v4_review.py",
+      "sha256": "74cd4c0e48c7995a525c232d626754555bad67c211e4e35e18ddfa04911eeb43"
+    },
+    "v4Validator": {
+      "path": "src/loomarr_models/planner_v4.py",
+      "sha256": "f6cc98528fe88d2ca9cca0401e7c342ff7ea784e85faf0921573aa90773cfb4a"
+    }
+  },
+  "denylistDigestCount": 6,
+  "denylistIdentityCount": 6,
+  "pairwiseComparisons": 15,
+  "reportId": "planner-v4-disjointness",
+  "schemaVersion": 1,
+  "splits": {
+    "planner-behavior-development-v2": 60,
+    "planner-behavior-v2": 120,
+    "planner-development-v1": 50,
+    "planner-development-v4": 120,
+    "planner-smoke-v1": 50,
+    "planner-v4-delta": 60
+  },
+  "status": "passed"
+}
