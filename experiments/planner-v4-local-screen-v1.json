@@ -38,11 +38,11 @@
     },
     "preflight": {
       "path": "src/loomarr_models/local_screen.py",
-      "sha256": "1720be12f7af1fd86a277eced5a09b5710f76ad69d4054976576c2237434b0cb"
+      "sha256": "77c1fd755d73b91a77c2d585c4d31a8b5400d149c97ce0c0cdb0522bc62ce3c1"
     },
     "publisher": {
       "path": "scripts/publish_planner_v4_local_screen.py",
-      "sha256": "b7fecc4ffe918b551200f55b8a24847c989143bbaffbb811c2e1c22e4e5d9b6f"
+      "sha256": "987735589838de3668df2d03a6efc8df01c04c435fdae5b3ced8b076187a8938"
     },
     "runner": {
       "path": "scripts/run_planner_v4_local_screen.py",

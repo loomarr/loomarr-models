@@ -136,7 +136,7 @@ def build_plan(
     root = root.resolve(strict=True)
     config_path = _input_path(root, config_path)
     config = load_config(config_path)
-    _validate_shape(config)
+    validate_config(config)
     bindings = config["bindings"]
     bound: dict[str, Path] = {}
     for name, binding in bindings.items():
@@ -206,7 +206,7 @@ def build_plan(
     )
 
 
-def _validate_shape(config: dict[str, Any]) -> None:
+def validate_config(config: dict[str, Any]) -> None:
     if (
         config["screenId"] != SCREEN_ID
         or config["issue"] != "https://github.com/loomarr/loomarr-models/issues/22"

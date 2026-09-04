@@ -15,32 +15,42 @@ class LocalScreenPublicationTests(unittest.TestCase):
     def test_qwen_pass_means_training_is_not_justified_by_screen(self):
         decision = publication._decision(
             {
-                "qwen38-27b-mlx-nvfp4": self._summary(),
-                "gemma4-12b-q4-k-m": self._summary(proposalQualityRate=0.8),
+                "qwen38-27b-mlx-nvfp4": {"status": "complete", "summary": self._summary()},
+                "gemma4-12b-q4-k-m": {
+                    "status": "complete",
+                    "summary": self._summary(proposalQualityRate=0.8),
+                },
             }
         )
         self.assertEqual(decision["outcome"], "qlora-not-justified-by-local-screen")
         self.assertFalse(decision["trainingAuthorized"])
         self.assertFalse(decision["releaseAuthorized"])
 
-    def test_only_gemma_pass_means_reconsider_base_before_training(self):
+    def test_qwen_host_failure_and_gemma_pass_still_require_authoritative_baseline(self):
         decision = publication._decision(
             {
-                "qwen38-27b-mlx-nvfp4": self._summary(policyAccuracyRate=0.8),
-                "gemma4-12b-q4-k-m": self._summary(),
+                "qwen38-27b-mlx-nvfp4": {"status": "failed"},
+                "gemma4-12b-q4-k-m": {"status": "complete", "summary": self._summary()},
             }
         )
-        self.assertEqual(decision["outcome"], "change-base-candidate-before-training")
+        self.assertEqual(
+            decision["outcome"],
+            "gemma-local-candidate-viable-qwen-authoritative-baseline-required",
+        )
 
     def test_two_failures_require_authoritative_baseline(self):
         decision = publication._decision(
             {
-                "qwen38-27b-mlx-nvfp4": self._summary(schemaValidityRate=0.5),
-                "gemma4-12b-q4-k-m": self._summary(hardFailureCount=1),
+                "qwen38-27b-mlx-nvfp4": {"status": "failed"},
+                "gemma4-12b-q4-k-m": {
+                    "status": "complete",
+                    "summary": self._summary(hardFailureCount=1),
+                },
             }
         )
         self.assertEqual(
-            decision["outcome"], "authoritative-a40-baseline-required-before-training"
+            decision["outcome"],
+            "local-screen-rejects-gemma-qwen-authoritative-baseline-required",
         )
         self.assertFalse(decision["certificationAuthority"])
 
