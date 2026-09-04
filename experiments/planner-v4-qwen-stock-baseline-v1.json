@@ -1,0 +1,136 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "developmentOnly": true,
+    "qloraDecisionAuthority": true,
+    "releaseAuthority": false,
+    "trainingAuthority": false
+  },
+  "bindings": {
+    "authorization": {
+      "path": "reviews/planner-v4-qwen-stock-baseline/authorization.json",
+      "sha256": "11c7a6c17e1c441902519bd1b4d3a1abc3e67e018904f73fff27ef4217478856"
+    },
+    "budgetLedger": {
+      "path": "budgets/external-spend-v1.json"
+    },
+    "cases": {
+      "count": 120,
+      "path": "evaluation/planner-development-v4/cases.jsonl",
+      "sha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-development-v4/manifest.json",
+      "sha256": "1acc344f31dffbd1a02cb57fcb0c69df0f478e3afce42df8f73ad74194258ee8"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v4.json",
+      "sha256": "53708f6cc2281a2c67c34ab6fdd698d3455e55ec1fcf75bc5565b2d6538329d7"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "generator": {
+      "path": "scripts/build_planner_v4_stock_baseline.py",
+      "sha256": "73abf67c54ece53bf5cd0c6893f8f8407f53abd0ce9f795706b7099d4c18508d"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "localScreenPublication": {
+      "path": "runs/planner-v4-local-screen-v1/publication.json",
+      "sha256": "67c9d2b01e4de003b39867444c955a6ab70a80b236f9b9c59b99db878faa8a92"
+    },
+    "preflight": {
+      "path": "src/loomarr_models/stock_baseline.py",
+      "sha256": "58c12557b83167ed629fcc5cbd8c85de77e18ddf50651c2f212b6151dc5b7809"
+    },
+    "publisher": {
+      "path": "scripts/publish_planner_v4_stock_baseline.py",
+      "sha256": "2a348fee77d4cd269a41d6b091538afbfcd735ccd861efa8532c0022012a0bb6"
+    },
+    "runner": {
+      "path": "scripts/run_planner_v4_stock_baseline.py",
+      "sha256": "dc0ec6c52b9ebab6f18081b925e5bcc7922c60327b599681378dbb62218f4bb3"
+    },
+    "runpodCatalogSnapshot": {
+      "path": "reviews/planner-v4-qwen-stock-baseline/runpod-catalog-snapshot.json",
+      "sha256": "a9386706d09f7aa0cd90f2efabb7048df311e73ba5226b48996c05714ae93bc9"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/stock_runtime.py",
+      "sha256": "559f72cdd5b0a904bc9417c41ae858d504fcebe42eb728b47af8f29d6e8e039c"
+    }
+  },
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "28.6967677051754599875",
+    "projectedCommitmentUsd": "30.1967677051754599875",
+    "proposedReservationUsd": "1.50",
+    "remainingAfterMaximumUsd": "9.8032322948245400125"
+  },
+  "comparison": {
+    "disableCompile": true,
+    "doSample": false,
+    "maxModelCallsPerCase": 5,
+    "maxNewTokens": 768,
+    "maxSeqLength": 4096,
+    "offloadEmbedding": false,
+    "reasoningEffort": "low",
+    "seed": 3407,
+    "temperature": null,
+    "topP": null,
+    "trials": 1
+  },
+  "execution": {
+    "automaticRetry": false,
+    "cloud": "SECURE",
+    "containerDiskGb": 40,
+    "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851",
+    "gpuCount": 1,
+    "gpuSku": "NVIDIA A40",
+    "maxReservationUsd": "1.50",
+    "maxWallClockSeconds": 9000,
+    "minimumCudaVersion": "12.8",
+    "minimumVramGb": 48,
+    "networkVolumeGb": 40,
+    "outputDir": ".artifacts/planner-v4-qwen-stock-baseline-v1",
+    "platform": "linux-amd64",
+    "requireCleanGit": true
+  },
+  "experimentId": "planner-v4-qwen-stock-baseline-v1",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/22",
+  "model": {
+    "candidateId": "qwen38-27b-unsloth-bnb-4bit",
+    "quantization": "unsloth-bnb-4bit",
+    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+  },
+  "paidBaselineAuthorized": false,
+  "schemaVersion": 1,
+  "scoring": {
+    "qualityMargin": 0.02,
+    "scorerVersion": "planner-development-scorer-v1",
+    "thresholds": {
+      "maxP95ToolCalls": 3,
+      "minCorrectToolOperationRate": 0.9,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 0.8,
+      "minSchemaValidityRate": 0.98
+    },
+    "weights": {
+      "correctToolOperation": 0.2,
+      "groundedCompletion": 0.2,
+      "policyAccuracy": 0.15,
+      "proposalQuality": 0.25,
+      "recovery": 0.1,
+      "schemaValidity": 0.1
+    }
+  },
+  "status": "planned-no-paid-baseline-authorized"
+}

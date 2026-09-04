@@ -8,5 +8,5 @@
   "traces": 50,
   "tracesSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b",
   "validatorPath": "src/loomarr_models/validator.py",
-  "validatorSha256": "208a1b3921619bf742eb316ab0b22784c91d26e5d88abaabdd74fea4ddf5d91b"
+  "validatorSha256": "6de20a3d717f41b29ea12622ba8a3fef4731eaa55ba3e78acdd33b38a524a508"
 }

@@ -1,16 +1,21 @@
-.PHONY: check compile test init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test check-budget-reconciliation init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus init-v4-review generate-v4-corpus check-v4-corpus generate-v4-review-plan check-v4-review-plan preflight-v4-review run-v4-review publish-v4-review promote-v4-review generate-v4-local-screen check-v4-local-screen preflight-v4-local-screen run-v4-local-screen-qwen run-v4-local-screen-gemma publish-v4-local-screen generate-v4-stock-baseline check-v4-stock-baseline preflight-v4-stock-baseline run-v4-stock-baseline publish-v4-stock-baseline generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 verify-qlora-v2-artifact generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: compile test check-generated check-development-eval check-targeted-corpus check-corrected-targeted-review check-targeted-finalized check-review check-finalized check-environment validate-drafts
+check: compile test check-budget-reconciliation check-generated check-development-eval check-targeted-corpus check-v4-corpus check-v4-review-plan check-v4-local-screen check-v4-stock-baseline check-corrected-targeted-review check-targeted-finalized check-qlora-v2-plan check-review check-finalized check-environment validate-drafts
 
 compile:
 	$(PYTHON) -m compileall -q scripts src tests
 
 test:
 	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -v
+
+check-budget-reconciliation:
+	PYTHONPATH=src $(PYTHON) -m loomarr_models.budget_reconciliation \
+		budgets/runpod-pod-billing-2026-09-03-v1.json budgets/external-spend-v1.json
+	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -p 'test_budget_reconciliation.py' -v
 
 init-review:
 	$(PYTHON) scripts/build_planner_smoke_drafts.py --init-review
@@ -35,6 +40,66 @@ generate-targeted-corpus:
 
 check-targeted-corpus:
 	$(PYTHON) scripts/build_planner_behavior_corpus.py --check
+
+init-v4-review:
+	$(PYTHON) scripts/build_planner_v4_delta.py --init-review
+
+generate-v4-corpus:
+	$(PYTHON) scripts/build_planner_v4_delta.py
+
+check-v4-corpus:
+	$(PYTHON) scripts/build_planner_v4_delta.py --check
+
+generate-v4-review-plan:
+	$(PYTHON) scripts/build_planner_v4_review.py
+
+check-v4-review-plan:
+	$(PYTHON) scripts/build_planner_v4_review.py --check
+
+preflight-v4-review:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_review.py --preflight-only
+
+run-v4-review:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_review.py
+
+publish-v4-review:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_v4_review.py
+
+promote-v4-review:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_v4_review.py --promote-approved
+
+generate-v4-local-screen:
+	$(PYTHON) scripts/build_planner_v4_local_screen.py
+
+check-v4-local-screen:
+	$(PYTHON) scripts/build_planner_v4_local_screen.py --check
+
+preflight-v4-local-screen:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_local_screen.py --preflight-only
+
+run-v4-local-screen-qwen:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_local_screen.py --candidate qwen38-27b-mlx-nvfp4
+
+run-v4-local-screen-gemma:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_local_screen.py --candidate gemma4-12b-q4-k-m
+
+publish-v4-local-screen:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_v4_local_screen.py
+
+generate-v4-stock-baseline:
+	$(PYTHON) scripts/build_planner_v4_stock_baseline.py
+
+check-v4-stock-baseline:
+	$(PYTHON) scripts/build_planner_v4_stock_baseline.py --check
+
+preflight-v4-stock-baseline:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_stock_baseline.py --preflight-only
+
+run-v4-stock-baseline:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_v4_stock_baseline.py
+
+publish-v4-stock-baseline:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_v4_stock_baseline.py
 
 generate-corrected-targeted-review:
 	$(PYTHON) scripts/build_planner_behavior_review_v3.py
@@ -78,6 +143,21 @@ finalize-targeted-corpus:
 
 check-targeted-finalized:
 	PYTHONPATH=src $(PYTHON) scripts/finalize_planner_behavior_corpus.py --check-if-present
+
+generate-qlora-v2-plan:
+	$(PYTHON) scripts/build_planner_qwen38_qlora_v2.py
+
+check-qlora-v2-plan:
+	$(PYTHON) scripts/build_planner_qwen38_qlora_v2.py --check
+
+preflight-qlora-v2-plan:
+	PYTHONPATH=src $(PYTHON) scripts/train_planner_smoke.py --config experiments/planner-qwen38-qlora-v2.json --plan-check-only
+
+preflight-qlora-v2:
+	PYTHONPATH=src $(PYTHON) scripts/train_planner_smoke.py --config experiments/planner-qwen38-qlora-v2.json --preflight-only
+
+verify-qlora-v2-artifact:
+	$(PYTHON) scripts/verify_planner_qwen38_qlora_v2_artifact.py
 
 generate-review:
 	$(PYTHON) scripts/render_review_packet.py

@@ -13,7 +13,12 @@ from typing import Any, Callable, Iterable
 from .validator import ALLOWED_MEDIA_TYPES, DISCOVERY_ARGUMENTS, SEARCH_ARGUMENTS
 
 
-RECOVERY_AXES = {"empty-results", "tool-error-recovery", "malformed-final-repair"}
+RECOVERY_AXES = {
+    "empty-results",
+    "tool-error-recovery",
+    "synthetic-tool-error-recovery",
+    "malformed-final-repair",
+}
 FORBIDDEN_AUTHORITY_KEYS = {
     "approved",
     "authorized",

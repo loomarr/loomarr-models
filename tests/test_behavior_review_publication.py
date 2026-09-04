@@ -130,8 +130,8 @@ class BehaviorReviewPublicationTests(unittest.TestCase):
         self.assertEqual(manifest["invalidReviewCount"], 0)
         self.assertEqual(manifest["actualCostUsd"], publication["actualCostUsd"])
         budget = json.loads((ROOT / "budgets/external-spend-v1.json").read_text(encoding="utf-8"))
-        self.assertEqual(budget["postedSpendUsd"], "27.8826615675672820")
-        self.assertEqual(budget["committedSpendUsd"], "27.9826615675672820")
+        self.assertEqual(budget["postedSpendUsd"], "28.6967677051754599875")
+        self.assertEqual(budget["committedSpendUsd"], "28.6967677051754599875")
 
 
 if __name__ == "__main__":
