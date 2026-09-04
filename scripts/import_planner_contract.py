@@ -9,10 +9,10 @@ import subprocess
 from pathlib import Path
 
 
-PROMPT_VERSION = "suggester-prompt-v3"
-PROMPT_SHA256 = "c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61"
-TOOL_SCHEMA_VERSION = "catalog-search-v3"
-TOOL_SCHEMA_SHA256 = "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853"
+PROMPT_VERSION = "suggester-prompt-v4"
+PROMPT_SHA256 = "3666d0f134076eb0d294d1b962e1b52194edfaa073677d38c0e9590c1d28dd13"
+TOOL_SCHEMA_VERSION = "catalog-search-v4"
+TOOL_SCHEMA_SHA256 = "876af81bcb942b55c5a2f3df2bafa540edaa7124b9d6a01e90505fcd46d8548e"
 MESSAGE_TEMPLATE_VERSION = "planner-tool-result-finalization-v1"
 
 
@@ -40,8 +40,8 @@ def catalog_tool() -> dict:
         "Description": (
             "Find real titles from the library + TMDB. Provide `query` to search by title, `genres` "
             "to discover genre/era matches, or `keywords` to discover holidays, motifs, franchises, and topics. "
-            "Discovery may also use explicitly requested country, original-language, runtime, and vote filters. "
-            "Returns real external ids, genres, a short overview, available language/country/runtime/vote/keyword evidence, "
+            "Discovery may also use explicitly requested country, original-language, runtime, vote, movie cast/creator, and TV network filters. "
+            "Returns real external ids, genres, a short overview, available language/country/runtime/vote/keyword/network/person evidence, "
             "and an inLibrary flag. Missing fields mean unknown. This is the ONLY way to find titles."
         ),
         "Parameters": {
@@ -58,6 +58,25 @@ def catalog_tool() -> dict:
                 "runtime_max": {"type": "integer", "minimum": 1, "maximum": 1440},
                 "vote_average_min": {"type": "number", "exclusiveMinimum": 0, "maximum": 10},
                 "vote_count_min": {"type": "integer", "minimum": 1, "maximum": 100000000},
+                "network": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "exact TV network name; requires media_type=series",
+                },
+                "cast": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {"type": "string", "maxLength": 100},
+                    "description": "exact cast names; requires media_type=movie",
+                },
+                "creators": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {"type": "string", "maxLength": 100},
+                    "description": "exact director/writer/crew names; requires media_type=movie",
+                },
             },
         },
     }
@@ -92,7 +111,7 @@ def main() -> None:
     ).stdout.strip()
     contract = {
         "schemaVersion": 1,
-        "contractId": "loomarr-planner-contract-v3",
+        "contractId": "loomarr-planner-contract-v4",
         "sourceRepository": "https://github.com/loomarr/loomarr",
         "sourceRevision": revision,
         "promptVersion": PROMPT_VERSION,
