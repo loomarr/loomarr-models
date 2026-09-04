@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "screenId": "planner-v4-local-screen-v1",
+  "candidateId": "qwen38-27b-mlx-nvfp4",
+  "status": "failed",
+  "sourceCommit": "9d12de2be6b36f8ad25ee040075f1f9181694361",
+  "configSha256": "0e5cba22f83a0e75609b0e5e70a841ccc7fb1a047acc8defaec60206c2e8a447",
+  "casesSha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34",
+  "plannedCaseCount": 120,
+  "completedCaseCount": 0,
+  "contractId": "loomarr-planner-contract-v4",
+  "externalCostUsd": "0",
+  "startedAt": "2026-09-04T09:08:48Z",
+  "failedAt": "2026-09-04T09:10:07Z",
+  "host": {
+    "platform": "darwin-arm64",
+    "chip": "Apple M5 Pro",
+    "memoryBytes": 25769803776
+  },
+  "ollama": {
+    "serverVersion": "0.33.0",
+    "model": "qwen3.8:27b-mlx",
+    "digest": "5642e97495e1a088883805981563dcdc4a040c2f53388b7a41d1f24d3622cf7e"
+  },
+  "failure": {
+    "kind": "metal-out-of-memory",
+    "httpStatus": 500,
+    "phase": "first-case-prefill",
+    "promptTokenCount": 3235,
+    "peakModelMemoryBytesApprox": 21184926188,
+    "message": "MLX Metal command buffer failed with kIOGPUCommandBufferCallbackErrorOutOfMemory"
+  },
+  "disposition": "ineligible-on-24gb-host-no-automatic-retry",
+  "authority": {
+    "screenOnly": true,
+    "certificationAuthority": false,
+    "trainingAuthority": false,
+    "releaseAuthority": false,
+    "purpose": "zero-cost base-model selection and QLoRA necessity screen"
+  }
+}

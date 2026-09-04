@@ -23,11 +23,11 @@
     },
     "developmentManifest": {
       "path": "evaluation/planner-development-v4/manifest.json",
-      "sha256": "a3fe8cc5eebb56b38437e3398937b0e7fd6dfae71a052bbdb5588629d710424a"
+      "sha256": "1acc344f31dffbd1a02cb57fcb0c69df0f478e3afce42df8f73ad74194258ee8"
     },
     "disjointnessReport": {
       "path": "reports/planner-v4-disjointness.json",
-      "sha256": "3e2639b8b1bfb48d71e5c30cf6b63e588876505bfdf7b19e969899a6e3040863"
+      "sha256": "adf3da5a54c86aaca2bcfa501a90ce2232e67bc93c5e4975c27c08061c5402ac"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -70,7 +70,7 @@
     },
     "trainingManifest": {
       "path": "corpus/planner-v4-delta/draft-manifest.json",
-      "sha256": "efd832045f8efc52882b9e54b4e277667e66745b8017250bfd75e7b198545ae7"
+      "sha256": "1d1fd9cd620d7ef571ddb5947904238d211afa1efa9f1246c7d7b12b56e54ddf"
     },
     "v4Validator": {
       "path": "src/loomarr_models/planner_v4.py",

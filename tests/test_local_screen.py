@@ -25,9 +25,28 @@ class LocalScreenTests(unittest.TestCase):
             destination = self.root / binding["path"]
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
+        config["status"] = "ready-for-local-screen"
+        manifest_path = self.root / config["bindings"]["casesManifest"]["path"]
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["status"] = "frozen-development-only-local-screen-reserved"
+        manifest_path.write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        exposure_path = self.root / config["bindings"]["developmentExposure"]["path"]
+        exposure = json.loads(exposure_path.read_text(encoding="utf-8"))
+        exposure["status"] = "local-screen-reserved"
+        exposure["exposures"] = []
+        exposure_path.write_text(
+            json.dumps(exposure, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        for name in ("casesManifest", "developmentExposure"):
+            path = self.root / config["bindings"][name]["path"]
+            config["bindings"][name]["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
         self.config_path = self.root / CONFIG.relative_to(ROOT)
         self.config_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(CONFIG, self.config_path)
+        self.config_path.write_text(
+            json.dumps(config, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
 
     def tearDown(self):
         self.temporary.cleanup()
@@ -43,6 +62,14 @@ class LocalScreenTests(unittest.TestCase):
         self.assertEqual(plan.externalCostUsd, "0")
         self.assertFalse(config["authority"]["certificationAuthority"])
         self.assertEqual(len(snapshot["candidates"]), 2)
+
+    def test_refuses_completed_screen(self):
+        with self.assertRaisesRegex(PreflightError, "identity or status drifted"):
+            build_plan(
+                ROOT,
+                CONFIG,
+                git_probe=lambda _root, _paths: "a" * 40,
+            )
 
     def test_refuses_bound_source_drift(self):
         scorer = self.root / self._config()["bindings"]["scorer"]["path"]
@@ -71,7 +98,8 @@ class LocalScreenTests(unittest.TestCase):
         with self.assertRaisesRegex(PreflightError, "authority boundary drifted"):
             self._preflight()
 
-        config = json.loads(CONFIG.read_text(encoding="utf-8"))
+        config = self._config()
+        config["authority"]["trainingAuthority"] = False
         config["candidates"].reverse()
         self._write_config(config)
         with self.assertRaisesRegex(PreflightError, "candidates differ"):

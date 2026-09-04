@@ -18,7 +18,7 @@
     },
     "developmentExposure": {
       "path": "reviews/planner-v4-local-screen/development-exposure.json",
-      "sha256": "701811c978a213a600dbff69a5504b9c56f229e6563324894c34328d88ea7713"
+      "sha256": "0cf1a18877812fa7ed99e4a130b74332d92ce970f15e3854b64c4628196c2611"
     },
     "foundationalGenerator": {
       "path": "scripts/build_planner_behavior_corpus.py",
@@ -64,7 +64,7 @@
   "developmentCasesPath": "evaluation/planner-development-v4/cases.jsonl",
   "developmentCasesSha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34",
   "disjointnessReportPath": "reports/planner-v4-disjointness.json",
-  "disjointnessReportSha256": "3e2639b8b1bfb48d71e5c30cf6b63e588876505bfdf7b19e969899a6e3040863",
+  "disjointnessReportSha256": "adf3da5a54c86aaca2bcfa501a90ce2232e67bc93c5e4975c27c08061c5402ac",
   "fixtureId": "planner-v4-delta-training-catalog-v1",
   "generator": "planner-v4-delta-generator-v1",
   "generatorSha256": "82caadcf45a8737c297e7bcebf66313ac6f8e2a784d8c207a9bd76b6c29fc055",

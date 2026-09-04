@@ -14,7 +14,7 @@
     },
     "casesManifest": {
       "path": "evaluation/planner-development-v4/manifest.json",
-      "sha256": "1acc344f31dffbd1a02cb57fcb0c69df0f478e3afce42df8f73ad74194258ee8"
+      "sha256": "a3fe8cc5eebb56b38437e3398937b0e7fd6dfae71a052bbdb5588629d710424a"
     },
     "contract": {
       "path": "contracts/planner-contract-v4.json",
@@ -22,7 +22,7 @@
     },
     "developmentExposure": {
       "path": "reviews/planner-v4-local-screen/development-exposure.json",
-      "sha256": "0cf1a18877812fa7ed99e4a130b74332d92ce970f15e3854b64c4628196c2611"
+      "sha256": "701811c978a213a600dbff69a5504b9c56f229e6563324894c34328d88ea7713"
     },
     "holdoutDenylist": {
       "path": "contracts/holdout-denylist-v1.json",
@@ -38,11 +38,11 @@
     },
     "preflight": {
       "path": "src/loomarr_models/local_screen.py",
-      "sha256": "77c1fd755d73b91a77c2d585c4d31a8b5400d149c97ce0c0cdb0522bc62ce3c1"
+      "sha256": "1720be12f7af1fd86a277eced5a09b5710f76ad69d4054976576c2237434b0cb"
     },
     "publisher": {
       "path": "scripts/publish_planner_v4_local_screen.py",
-      "sha256": "987735589838de3668df2d03a6efc8df01c04c435fdae5b3ced8b076187a8938"
+      "sha256": "b7fecc4ffe918b551200f55b8a24847c989143bbaffbb811c2e1c22e4e5d9b6f"
     },
     "runner": {
       "path": "scripts/run_planner_v4_local_screen.py",
@@ -156,5 +156,5 @@
     }
   },
   "screenId": "planner-v4-local-screen-v1",
-  "status": "complete-local-screen"
+  "status": "ready-for-local-screen"
 }

@@ -1,16 +1,29 @@
 {
-  "schemaVersion": 1,
   "corpusId": "planner-development-v4",
-  "status": "local-screen-reserved",
+  "exposures": [
+    {
+      "candidateIds": [
+        "qwen38-27b-mlx-nvfp4",
+        "gemma4-12b-q4-k-m"
+      ],
+      "caseCount": 120,
+      "completedAt": "2026-09-04T11:03:44.476955Z",
+      "publicationPath": "runs/planner-v4-local-screen-v1/publication.json",
+      "publicationSha256": "67c9d2b01e4de003b39867444c955a6ab70a80b236f9b9c59b99db878faa8a92",
+      "screenId": "planner-v4-local-screen-v1",
+      "sourceCommit": "9d12de2be6b36f8ad25ee040075f1f9181694361"
+    }
+  ],
   "reservation": {
-    "screenId": "planner-v4-local-screen-v1",
     "candidateIds": [
       "qwen38-27b-mlx-nvfp4",
       "gemma4-12b-q4-k-m"
     ],
     "caseCount": 120,
     "externalCostUsd": "0",
-    "modelRunsPerCandidate": 1
+    "modelRunsPerCandidate": 1,
+    "screenId": "planner-v4-local-screen-v1"
   },
-  "exposures": []
+  "schemaVersion": 1,
+  "status": "local-screen-complete"
 }

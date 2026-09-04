@@ -151,7 +151,7 @@ class LocalScreenRuntimeTests(unittest.TestCase):
     def test_candidate_run_writes_replayable_hash_bound_artifacts(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            config_source = ROOT / "experiments/planner-v4-local-screen-v1.json"
+            config_source = ROOT / "runs/planner-v4-local-screen-v1/source-experiment.json"
             config = json.loads(config_source.read_text(encoding="utf-8"))
             config_path = root / config_source.relative_to(ROOT)
             config_path.parent.mkdir(parents=True)
