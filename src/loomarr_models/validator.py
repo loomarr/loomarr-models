@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import math
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -11,20 +12,21 @@ from typing import Any, Iterable
 
 ALLOWED_SPLITS = {"smoke", "train", "development"}
 ALLOWED_MEDIA_TYPES = {"movie", "series"}
-SEARCH_ARGUMENTS = {
-    "query",
+DISCOVERY_ARGUMENTS = {
     "genres",
     "keywords",
     "era",
-    "media_type",
     "original_language",
     "origin_country",
     "runtime_min",
     "runtime_max",
     "vote_average_min",
     "vote_count_min",
+    "network",
+    "cast",
+    "creators",
 }
-DISCOVERY_ARGUMENTS = SEARCH_ARGUMENTS - {"query"}
+SEARCH_ARGUMENTS = DISCOVERY_ARGUMENTS | {"query", "media_type"}
 TRACE_KEYS = {
     "schemaVersion",
     "traceId",
@@ -59,6 +61,13 @@ class ValidationReport:
     approved: int
     pending: int
     sha256: str
+
+
+@dataclass(frozen=True)
+class ToolCallCompatibilityReport:
+    traces: int
+    tool_calls: int
+    target_contract_id: str
 
 
 def load_denylist(path: Path) -> tuple[set[str], set[str]]:
@@ -149,6 +158,53 @@ def validate_corpus(
         approved=approved,
         pending=pending,
         sha256=hashlib.sha256(corpus_bytes).hexdigest(),
+    )
+
+
+def validate_tool_call_compatibility(
+    traces: Iterable[dict[str, Any]],
+    *,
+    target_contract_bundle: dict[str, Any],
+) -> ToolCallCompatibilityReport:
+    """Prove that response-side tool calls remain executable under a target contract.
+
+    Callers must separately validate each trace against its immutable source contract. This
+    target-only pass exists for response-only training mixtures, where historical system and
+    tool declarations remain source-bound while assistant tool calls must also be valid under
+    the current production schema.
+    """
+    trace_list = list(traces)
+    if not trace_list:
+        raise ValidationError("tool-call compatibility corpus is empty")
+    allowed_arguments = _catalog_argument_names(target_contract_bundle)
+    target_contract_id = target_contract_bundle.get("contractId")
+    if not isinstance(target_contract_id, str) or not target_contract_id:
+        raise ValidationError("target contract lacks contractId")
+
+    tool_calls = 0
+    for trace in trace_list:
+        trace_id = trace.get("traceId", "<missing>") if isinstance(trace, dict) else "<missing>"
+        messages = trace.get("messages") if isinstance(trace, dict) else None
+        if not isinstance(messages, list):
+            raise ValidationError(f"{trace_id}: compatibility source lacks messages")
+        for message in messages:
+            if not isinstance(message, dict) or message.get("role") != "assistant":
+                continue
+            calls = message.get("toolCalls")
+            if calls is None:
+                continue
+            if not isinstance(calls, list) or not calls:
+                raise ValidationError(f"{trace_id}: malformed assistant tool-call turn")
+            turn_calls: dict[str, str] = {}
+            for call in calls:
+                _validate_tool_call(trace_id, call, turn_calls, allowed_arguments)
+                tool_calls += 1
+    if tool_calls == 0:
+        raise ValidationError("tool-call compatibility corpus contains no tool calls")
+    return ToolCallCompatibilityReport(
+        traces=len(trace_list),
+        tool_calls=tool_calls,
+        target_contract_id=target_contract_id,
     )
 
 
@@ -248,6 +304,7 @@ def _validate_messages(trace_id: str, messages: Any, bundle: dict[str, Any]) -> 
         raise ValidationError(f"{trace_id}: second message must be the synthetic intent")
 
     pending_calls: dict[str, str] = {}
+    allowed_arguments = _catalog_argument_names(bundle)
     surfaced: dict[tuple[str, int], str] = {}
     final: dict[str, Any] | None = None
 
@@ -259,7 +316,7 @@ def _validate_messages(trace_id: str, messages: Any, bundle: dict[str, Any]) -> 
             if set(message) != {"role", "toolCalls"} or not message["toolCalls"]:
                 raise ValidationError(f"{trace_id}: malformed assistant tool-call turn")
             for call in message["toolCalls"]:
-                _validate_tool_call(trace_id, call, pending_calls)
+                _validate_tool_call(trace_id, call, pending_calls, allowed_arguments)
         elif role == "tool":
             _validate_tool_result(trace_id, message, pending_calls, surfaced)
         elif role == "assistant" and "content" in message:
@@ -284,7 +341,27 @@ def _validate_messages(trace_id: str, messages: Any, bundle: dict[str, Any]) -> 
     _validate_final(trace_id, final, surfaced)
 
 
-def _validate_tool_call(trace_id: str, call: Any, pending_calls: dict[str, str]) -> None:
+def _catalog_argument_names(bundle: dict[str, Any]) -> set[str]:
+    tools = bundle.get("tools")
+    if not isinstance(tools, list) or len(tools) != 1 or not isinstance(tools[0], dict):
+        raise ValidationError("target contract must declare exactly one catalog_search tool")
+    tool = tools[0]
+    parameters = tool.get("Parameters")
+    properties = parameters.get("properties") if isinstance(parameters, dict) else None
+    if tool.get("Name") != "catalog_search" or not isinstance(properties, dict) or not properties:
+        raise ValidationError("target contract has invalid catalog_search schema")
+    names = set(properties)
+    if names - SEARCH_ARGUMENTS:
+        raise ValidationError("target contract declares unsupported catalog_search arguments")
+    return names
+
+
+def _validate_tool_call(
+    trace_id: str,
+    call: Any,
+    pending_calls: dict[str, str],
+    allowed_arguments: set[str],
+) -> None:
     if not isinstance(call, dict) or set(call) != {"id", "name", "arguments"}:
         raise ValidationError(f"{trace_id}: malformed tool call")
     if call["name"] != "catalog_search" or not isinstance(call["id"], str) or not call["id"]:
@@ -294,9 +371,11 @@ def _validate_tool_call(trace_id: str, call: Any, pending_calls: dict[str, str])
     args = call["arguments"]
     if not isinstance(args, dict) or not args or set(args) - SEARCH_ARGUMENTS:
         raise ValidationError(f"{trace_id}: invalid catalog_search arguments")
+    if set(args) - allowed_arguments:
+        raise ValidationError(f"{trace_id}: catalog_search argument is not declared by target contract")
     if "query" in args and set(args) & DISCOVERY_ARGUMENTS:
         raise ValidationError(f"{trace_id}: title query mixed with discovery filters")
-    if not ({"query", "genres", "keywords"} & set(args)):
+    if not ({"query"} | DISCOVERY_ARGUMENTS) & set(args):
         raise ValidationError(f"{trace_id}: catalog_search has no search selector")
     if "query" in args and (not isinstance(args["query"], str) or not args["query"].strip()):
         raise ValidationError(f"{trace_id}: empty title query")
@@ -304,12 +383,98 @@ def _validate_tool_call(trace_id: str, call: Any, pending_calls: dict[str, str])
         if key in args and (
             not isinstance(args[key], list)
             or not args[key]
-            or not all(isinstance(value, str) and value for value in args[key])
+            or not all(isinstance(value, str) and value.strip() for value in args[key])
         ):
             raise ValidationError(f"{trace_id}: invalid {key}")
     if "media_type" in args and args["media_type"] not in ALLOWED_MEDIA_TYPES:
         raise ValidationError(f"{trace_id}: invalid media_type")
+    if "era" in args and not _valid_era(args["era"]):
+        raise ValidationError(f"{trace_id}: invalid era")
+    for key in ("original_language", "origin_country"):
+        value = args.get(key)
+        if key in args and (
+            not isinstance(value, str) or re.fullmatch(r"[A-Za-z]{2}", value.strip()) is None
+        ):
+            raise ValidationError(f"{trace_id}: invalid {key}")
+    for key, maximum in (
+        ("runtime_min", 1440),
+        ("runtime_max", 1440),
+        ("vote_count_min", 100_000_000),
+    ):
+        value = args.get(key)
+        if key in args and (
+            not isinstance(value, int) or isinstance(value, bool) or not 1 <= value <= maximum
+        ):
+            raise ValidationError(f"{trace_id}: invalid {key}")
+    if (
+        "runtime_min" in args
+        and "runtime_max" in args
+        and args["runtime_min"] > args["runtime_max"]
+    ):
+        raise ValidationError(f"{trace_id}: runtime_min exceeds runtime_max")
+    if "vote_average_min" in args:
+        value = args["vote_average_min"]
+        if (
+            not isinstance(value, (int, float))
+            or isinstance(value, bool)
+            or not math.isfinite(value)
+            or not 0 < value <= 10
+        ):
+            raise ValidationError(f"{trace_id}: invalid vote_average_min")
+
+    has_network = "network" in args
+    if has_network:
+        network = args["network"]
+        if not isinstance(network, str) or not network.strip() or len(network.strip()) > 100:
+            raise ValidationError(f"{trace_id}: invalid network")
+    has_people = False
+    for key in ("cast", "creators"):
+        if key not in args:
+            continue
+        has_people = True
+        values = args[key]
+        if (
+            not isinstance(values, list)
+            or not 1 <= len(values) <= 4
+            or not all(
+                isinstance(value, str) and value.strip() and len(value.strip()) <= 100
+                for value in values
+            )
+        ):
+            raise ValidationError(f"{trace_id}: invalid {key}")
+        normalized = [value.strip().lower() for value in values]
+        if len(set(normalized)) != len(normalized):
+            raise ValidationError(f"{trace_id}: duplicate {key}")
+    if has_network and has_people:
+        raise ValidationError(f"{trace_id}: network and person constraints cannot be combined")
+    if has_network and args.get("media_type") != "series":
+        raise ValidationError(f"{trace_id}: network requires media_type series")
+    if has_people and args.get("media_type") != "movie":
+        raise ValidationError(f"{trace_id}: cast and creators require media_type movie")
     pending_calls[call["id"]] = call["name"]
+
+
+def _valid_era(value: Any) -> bool:
+    if not isinstance(value, str):
+        return False
+    era = value.strip().lower()
+    if not era:
+        return False
+    if era.endswith("s") and _valid_year(era[:-1]):
+        return True
+    normalized = era.replace(" to ", "-").replace("–", "-").replace("—", "-")
+    if "-" in normalized:
+        start, end = normalized.split("-", 1)
+        return _valid_year(start) and _valid_year(end)
+    return _valid_year(era)
+
+
+def _valid_year(value: str) -> bool:
+    try:
+        year = int(value.strip())
+    except ValueError:
+        return False
+    return 1900 <= year <= 2099 or 0 <= year <= 99
 
 
 def _validate_tool_result(

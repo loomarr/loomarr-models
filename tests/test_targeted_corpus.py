@@ -19,7 +19,14 @@ from loomarr_models.targeted import (
     validate_targeted_development,
     validate_targeted_training,
 )
-from loomarr_models.validator import ValidationError, load_contract, load_denylist, load_jsonl
+from loomarr_models.validator import (
+    ValidationError,
+    load_contract,
+    load_denylist,
+    load_jsonl,
+    validate_corpus,
+    validate_tool_call_compatibility,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +38,8 @@ PRIOR_TRAINING_PATH = ROOT / "corpus/planner-smoke-v1/traces.jsonl"
 PRIOR_DEVELOPMENT_PATH = ROOT / "evaluation/planner-development-v1/cases.jsonl"
 DENYLIST_PATH = ROOT / "contracts/holdout-denylist-v1.json"
 CONTRACT_PATH = ROOT / "contracts/planner-contract-v3.json"
+TARGET_CONTRACT_PATH = ROOT / "contracts/planner-contract-v4.json"
+FROZEN_TRAINING_PATH = ROOT / "corpus/planner-behavior-v2/traces.jsonl"
 REVIEW_PATH = ROOT / "reviews/planner-behavior-v2.jsonl"
 PLAN_PATH = ROOT / "experiments/planner-behavior-review-v2.json"
 INDEX_PATH = ROOT / "runs/planner-behavior-corpus-v2/index.json"
@@ -40,8 +49,10 @@ class TargetedCorpusTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.contract = load_contract(CONTRACT_PATH)
+        cls.target_contract = load_contract(TARGET_CONTRACT_PATH)
         cls.identities, cls.digests = load_denylist(DENYLIST_PATH)
         cls.training = load_jsonl(TRAINING_PATH)
+        cls.frozen_training = load_jsonl(FROZEN_TRAINING_PATH)
         cls.development = load_cases(DEVELOPMENT_PATH)
         cls.prior_training = load_jsonl(PRIOR_TRAINING_PATH)
         cls.prior_development = load_cases(PRIOR_DEVELOPMENT_PATH)
@@ -84,6 +95,23 @@ class TargetedCorpusTests(unittest.TestCase):
         self.assertEqual(report.pairCount, 6)
         self.assertEqual(report.splits["planner-behavior-v2"]["records"], 120)
         self.assertEqual(report.splits["planner-behavior-development-v2"]["records"], 60)
+
+    def test_frozen_v3_training_tool_calls_are_a_valid_v4_subset(self):
+        source = validate_corpus(
+            self.frozen_training,
+            denylisted_identities=self.identities,
+            denylisted_sha256=self.digests,
+            contract_bundle=self.contract,
+        )
+        compatibility = validate_tool_call_compatibility(
+            self.frozen_training,
+            target_contract_bundle=self.target_contract,
+        )
+        self.assertEqual((source.traces, source.approved), (120, 120))
+        self.assertEqual(
+            (compatibility.traces, compatibility.tool_calls, compatibility.target_contract_id),
+            (120, 160, "loomarr-planner-contract-v4"),
+        )
 
     def test_training_rejects_each_observed_failure_class(self):
         sabotages = []
