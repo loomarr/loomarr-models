@@ -1,0 +1,141 @@
+{
+  "bindings": {
+    "budget": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "daa7d72eafbd7b52d5dd790d6013033aa1ed90be4cf9125adeb89d86dbab25c9"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v4.json",
+      "sha256": "53708f6cc2281a2c67c34ab6fdd698d3455e55ec1fcf75bc5565b2d6538329d7"
+    },
+    "corpusGenerator": {
+      "path": "scripts/build_planner_v4_delta.py",
+      "sha256": "7fa9b171eaa7cda178b2552d7c6a69063e00ea4de3b2424ada7870e52bc6dd7c"
+    },
+    "corpusValidator": {
+      "path": "src/loomarr_models/validator.py",
+      "sha256": "6de20a3d717f41b29ea12622ba8a3fef4731eaa55ba3e78acdd33b38a524a508"
+    },
+    "developmentCases": {
+      "count": 120,
+      "path": "evaluation/planner-development-v4/cases.jsonl",
+      "sha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34"
+    },
+    "developmentManifest": {
+      "path": "evaluation/planner-development-v4/manifest.json",
+      "sha256": "cc3282ac5f873e40b82f417104de708f665dda90a338648e03be03703e1c240c"
+    },
+    "disjointnessReport": {
+      "path": "reports/planner-v4-disjointness.json",
+      "sha256": "96e037dd17b21eaf01eb80104862efcaab5e4d82a8da38b3c330dd2a3f05c086"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "requestPlan": {
+      "count": 120,
+      "path": "reviews/planner-v4-delta/request-plan.jsonl",
+      "sha256": "c5c656d11a6388fb4a82fb9fb5f8a0638208d0f79659e678544ee222e5e7fa5f"
+    },
+    "reviewDecisions": {
+      "count": 60,
+      "path": "reviews/planner-v4-delta.jsonl",
+      "sha256": "c0b104a378c3e6b19083f66bbbafb576d67d340c3f011ecea9fe28165ca48c10"
+    },
+    "reviewPreflightValidator": {
+      "path": "src/loomarr_models/v4_model_review.py",
+      "sha256": "a737fbce92aa2ffdb77dbe592547ff2d78e2211276abfdc64f0e9d35025cdb64"
+    },
+    "reviewRunner": {
+      "path": "scripts/run_planner_v4_review.py",
+      "sha256": "692abb43f1d05524ee808a620f2e01fec5defd8406684f978ad990edaa8caf78"
+    },
+    "reviewValidator": {
+      "path": "src/loomarr_models/v4_review.py",
+      "sha256": "74cd4c0e48c7995a525c232d626754555bad67c211e4e35e18ddfa04911eeb43"
+    },
+    "routeSnapshot": {
+      "path": "reviews/planner-behavior-v3/route-snapshot.json",
+      "sha256": "6a6f0e29b36938dcefb7ff1ba4108600f349b69127336d2250cf721a75061e66"
+    },
+    "trainingDrafts": {
+      "count": 60,
+      "path": "corpus/planner-v4-delta/drafts.jsonl",
+      "sha256": "58b408e641133e8b941fd12981f577aca40d620458101d4f181c010c553241f2"
+    },
+    "trainingManifest": {
+      "path": "corpus/planner-v4-delta/draft-manifest.json",
+      "sha256": "efbf455e9e6cdf463c8e6f4ec0c1b12c2baffe014481f061b3d1075e60aa3852"
+    },
+    "v4Validator": {
+      "path": "src/loomarr_models/planner_v4.py",
+      "sha256": "f6cc98528fe88d2ca9cca0401e7c342ff7ea784e85faf0921573aa90773cfb4a"
+    }
+  },
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "27.9826615675672820",
+    "projectedMaximumUsd": "35.9826615675672820",
+    "remainingAfterMaximumUsd": "4.0173384324327180",
+    "reviewReservationUsd": "8.00",
+    "worstCaseReviewUsd": "7.975315"
+  },
+  "candidateFamily": "qwen",
+  "criteria": [
+    "intent",
+    "tool_calls",
+    "grounding",
+    "recovery",
+    "constraints",
+    "final_proposal"
+  ],
+  "execution": {
+    "apiBaseUrl": "https://openrouter.ai/api/v1",
+    "automaticInferenceRetry": false,
+    "batchSize": 1,
+    "maxCalls": 120,
+    "maxOutputTokensPerCall": 3000,
+    "outputDir": ".artifacts/planner-v4-delta-review-v1",
+    "paidReviewAuthorized": false,
+    "providerDataCollection": "deny",
+    "providerFallback": false,
+    "reasoningEffort": "medium",
+    "requestTimeoutSeconds": 180,
+    "requireCleanGit": true,
+    "settlementAttempts": 60,
+    "settlementDelaySeconds": 1,
+    "strictStructuredOutput": true
+  },
+  "issue": "https://github.com/loomarr/loomarr-models/issues/22",
+  "preflight": {
+    "authorization_usd": "40.00",
+    "batch_size": 1,
+    "committed_spend_usd": "27.9826615675672820",
+    "input_byte_upper_bound": 1246378,
+    "output_token_upper_bound": 360000,
+    "projected_spend_usd": "35.9826615675672820",
+    "request_count": 120,
+    "request_plan_sha256": "c5c656d11a6388fb4a82fb9fb5f8a0638208d0f79659e678544ee222e5e7fa5f",
+    "reservation_usd": "8.00",
+    "trace_count": 60,
+    "worst_case_cost_usd": "7.975315"
+  },
+  "reviewId": "planner-v4-delta-review-v1",
+  "reviewers": [
+    {
+      "family": "google-gemini",
+      "model": "google/gemini-3.1-pro-preview",
+      "providerTag": "google-ai-studio",
+      "role": "primary"
+    },
+    {
+      "family": "anthropic-claude",
+      "model": "anthropic/claude-sonnet-4.6",
+      "providerTag": "anthropic",
+      "role": "secondary"
+    }
+  ],
+  "schemaVersion": 1,
+  "status": "planned-no-paid-calls-authorized"
+}
