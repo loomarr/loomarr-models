@@ -27,10 +27,12 @@ PATHS = {
     "localScreenPublication": ROOT / "runs/planner-v4-local-screen-v1/publication.json",
     "runpodCatalogSnapshot": ROOT
     / "reviews/planner-v4-qwen-stock-baseline/runpod-catalog-snapshot.json",
+    "authorization": ROOT / "reviews/planner-v4-qwen-stock-baseline/authorization.json",
     "generator": Path(__file__).resolve(),
     "preflight": ROOT / "src/loomarr_models/stock_baseline.py",
     "runtime": ROOT / "src/loomarr_models/stock_runtime.py",
     "runner": ROOT / "scripts/run_planner_v4_stock_baseline.py",
+    "publisher": ROOT / "scripts/publish_planner_v4_stock_baseline.py",
 }
 BUDGET = ROOT / "budgets/external-spend-v1.json"
 
@@ -49,17 +51,31 @@ def binding(path: Path, *, count: int | None = None) -> dict[str, Any]:
 def content() -> bytes:
     ledger = json.loads(BUDGET.read_text(encoding="utf-8"))
     environment = json.loads(PATHS["environment"].read_text(encoding="utf-8"))
+    execution_authorization = json.loads(
+        PATHS["authorization"].read_text(encoding="utf-8")
+    )
     committed = Decimal(ledger["committedSpendUsd"])
     authorization = Decimal(ledger["authorizationUsd"])
     reservation = Decimal(EXECUTION["maxReservationUsd"])
     projected = committed + reservation
     artifact = environment["trainingArtifact"]
+    if execution_authorization["status"] == "not-authorized":
+        status = "planned-no-paid-baseline-authorized"
+        paid_authorized = False
+    elif execution_authorization["status"] == "authorized":
+        status = "ready-for-paid-baseline"
+        paid_authorized = True
+    elif execution_authorization["status"] == "complete":
+        status = "complete-settled"
+        paid_authorized = False
+    else:
+        raise ValueError("stock baseline authorization status is invalid")
     config = {
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
         "issue": ISSUE,
-        "status": "planned-no-paid-baseline-authorized",
-        "paidBaselineAuthorized": False,
+        "status": status,
+        "paidBaselineAuthorized": paid_authorized,
         "bindings": {
             "cases": binding(PATHS["cases"], count=120),
             "casesManifest": binding(PATHS["casesManifest"]),
@@ -68,11 +84,13 @@ def content() -> bytes:
             "environment": binding(PATHS["environment"]),
             "localScreenPublication": binding(PATHS["localScreenPublication"]),
             "runpodCatalogSnapshot": binding(PATHS["runpodCatalogSnapshot"]),
+            "authorization": binding(PATHS["authorization"]),
             "budgetLedger": {"path": str(BUDGET.relative_to(ROOT))},
             "generator": binding(PATHS["generator"]),
             "preflight": binding(PATHS["preflight"]),
             "runtime": binding(PATHS["runtime"]),
             "runner": binding(PATHS["runner"]),
+            "publisher": binding(PATHS["publisher"]),
         },
         "model": {
             "candidateId": "qwen38-27b-unsloth-bnb-4bit",

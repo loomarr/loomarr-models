@@ -43,7 +43,9 @@ or editing the baseline.
 
 The checked-in plan deliberately reports `paidBaselineAuthorized: false`. Before any volume or pod
 is created, the maintainer must separately authorize the exact plan commit and `$1.50` ceiling, and
-a subsequent authorization commit must make the runner executable. The supervisor must record the
-pod and volume IDs, enforce the provider-creation deadline, retrieve and hash the artifacts, delete
-the pod, settle the exact Runpod charge, and delete the volume. Any failure is published as terminal
-evidence rather than retried.
+a subsequent authorization commit must update the bound authorization ledger and make the runner
+executable. The supervisor must record the pod and volume IDs, enforce the provider-creation
+deadline, retrieve and hash the artifacts, delete the pod, settle the exact Runpod charge, and
+delete the volume. `make publish-v4-stock-baseline` replays the scores, verifies redaction and
+teardown evidence, settles the budget, and makes the experiment terminal. Any failure is published
+as terminal evidence rather than retried.

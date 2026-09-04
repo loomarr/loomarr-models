@@ -39,11 +39,13 @@ BINDING_KEYS = {
     "environment",
     "localScreenPublication",
     "runpodCatalogSnapshot",
+    "authorization",
     "budgetLedger",
     "generator",
     "preflight",
     "runtime",
     "runner",
+    "publisher",
 }
 EXECUTION = {
     "platform": "linux-amd64",
@@ -160,6 +162,7 @@ def preflight(
     _validate_environment(_object(bound["environment"]), config)
     _validate_local_screen(_object(bound["localScreenPublication"]), report.sha256)
     _validate_catalog_snapshot(_object(bound["runpodCatalogSnapshot"]), config)
+    _validate_authorization(_object(bound["authorization"]), config)
 
     budget_path = _input_path(root, Path(config["bindings"]["budgetLedger"]["path"]))
     committed, reservation, projected, authorization = _validate_budget(
@@ -198,6 +201,8 @@ def preflight(
 def _validate_shape(config: dict[str, Any], *, require_authorized: bool) -> None:
     if config["experimentId"] != EXPERIMENT_ID or config["issue"] != ISSUE:
         raise PreflightError("stock baseline identity drifted")
+    if config["status"] == "complete-settled":
+        raise PreflightError("stock baseline is terminal and cannot run again")
     expected_status = (
         "ready-for-paid-baseline"
         if config["paidBaselineAuthorized"]
@@ -219,6 +224,44 @@ def _validate_shape(config: dict[str, Any], *, require_authorized: bool) -> None
         raise PreflightError("stock baseline scoring protocol drifted")
     if config["authority"] != AUTHORITY:
         raise PreflightError("stock baseline authority boundary drifted")
+
+
+def _validate_authorization(authorization: dict[str, Any], config: dict[str, Any]) -> None:
+    if set(authorization) != {
+        "schemaVersion",
+        "experimentId",
+        "status",
+        "maxReservationUsd",
+        "authorizedBy",
+        "authorizedAt",
+        "authorizedPlanCommit",
+    } or authorization.get("schemaVersion") != 1:
+        raise PreflightError("stock baseline authorization fields differ from schema v1")
+    if (
+        authorization["experimentId"] != EXPERIMENT_ID
+        or authorization["maxReservationUsd"] != EXECUTION["maxReservationUsd"]
+    ):
+        raise PreflightError("stock baseline authorization identity drifted")
+    if not config["paidBaselineAuthorized"]:
+        if authorization != {
+            "schemaVersion": 1,
+            "experimentId": EXPERIMENT_ID,
+            "status": "not-authorized",
+            "maxReservationUsd": "1.50",
+            "authorizedBy": None,
+            "authorizedAt": None,
+            "authorizedPlanCommit": None,
+        }:
+            raise PreflightError("stock baseline carries unauthorized execution evidence")
+        return
+    if (
+        authorization["status"] != "authorized"
+        or authorization["authorizedBy"] != "loomarr-maintainer"
+        or not isinstance(authorization["authorizedAt"], str)
+        or not isinstance(authorization["authorizedPlanCommit"], str)
+        or re.fullmatch(r"[0-9a-f]{40}", authorization["authorizedPlanCommit"]) is None
+    ):
+        raise PreflightError("stock baseline authorization is incomplete")
 
 
 def _validate_development_manifest(

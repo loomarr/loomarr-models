@@ -1,0 +1,9 @@
+{
+  "authorizedAt": null,
+  "authorizedBy": null,
+  "authorizedPlanCommit": null,
+  "experimentId": "planner-v4-qwen-stock-baseline-v1",
+  "maxReservationUsd": "1.50",
+  "schemaVersion": 1,
+  "status": "not-authorized"
+}

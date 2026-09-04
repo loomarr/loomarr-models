@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -26,6 +27,17 @@ class StockBaselinePreflightTests(unittest.TestCase):
         self.assertEqual(report.reservationUsd, "1.50")
         self.assertEqual(report.projectedSpendUsd, "29.4826615675672820")
         self.assertFalse(report.paidBaselineAuthorized)
+        config = json.loads(CONFIG.read_text(encoding="utf-8"))
+        authorization = ROOT / config["bindings"]["authorization"]["path"]
+        publisher = ROOT / config["bindings"]["publisher"]["path"]
+        self.assertEqual(
+            config["bindings"]["authorization"]["sha256"],
+            hashlib.sha256(authorization.read_bytes()).hexdigest(),
+        )
+        self.assertEqual(
+            config["bindings"]["publisher"]["sha256"],
+            hashlib.sha256(publisher.read_bytes()).hexdigest(),
+        )
 
     def test_paid_execution_refuses_before_heavy_import_or_network(self):
         with self.assertRaisesRegex(PreflightError, "not authorized"):
