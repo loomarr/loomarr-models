@@ -52,9 +52,9 @@ grounding, or authority failure.
 
 ## Budget and authorization
 
-The live ledger currently commits `$27.9826615675672820 / $40.00`. The plan reserves at most `$1.50`
+The reconciled live ledger currently commits `$28.6967677051754599875 / $40.00`. The plan reserves at most `$1.50`
 for training and `$3.00` for evaluation, producing a maximum aggregate commitment of
-`$32.4826615675672820 / $40.00` and leaving `$7.5173384324327180` uncommitted.
+`$33.1967677051754599875 / $40.00` and leaving `$6.8032322948245400125` uncommitted.
 
 The checked-in plan has `paidTrainingAuthorized: false`. A later clean authorization commit must
 refresh the ledger projection, change only the reviewed authorization state, pass CI, and be published

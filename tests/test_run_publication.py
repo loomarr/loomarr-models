@@ -58,7 +58,7 @@ class RunPublicationTests(unittest.TestCase):
                 Decimal(publication["providerCostUsd"]),
                 Decimal("0.1832042238675058"),
             )
-            self.assertGreaterEqual(outstanding, Decimal("0.10"))
+            self.assertEqual(outstanding, Decimal("0"))
 
     def test_eval_publication_is_hash_bound_rejected_and_unreleased(self):
         publication = json.loads(EVAL_PUBLICATION_PATH.read_text(encoding="utf-8"))
@@ -131,8 +131,8 @@ class RunPublicationTests(unittest.TestCase):
             self.assertEqual(
                 Decimal(breakdown["total"]), Decimal(publication["providerCostUsd"])
             )
-            self.assertEqual(posted, Decimal("27.8826615675672820"))
-            self.assertEqual(outstanding, Decimal("0.10"))
+            self.assertEqual(posted, Decimal("28.6967677051754599875"))
+            self.assertEqual(outstanding, Decimal("0"))
 
 
 if __name__ == "__main__":
