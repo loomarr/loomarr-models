@@ -21,6 +21,10 @@
       "path": "budgets/external-spend-v1.json",
       "sha256": "2ccfcc6c78ed2789552ca83c2b87ae6c07fcf7f64d1245e651956a153de8882c"
     },
+    "budgetReconciliationExtender": {
+      "path": "scripts/extend_runpod_budget_reconciliation.py",
+      "sha256": "8d4d815cce6f53608c7d9ec3bec99c7a4bb9a90939d2c5c0794ce4390d2a130e"
+    },
     "cases": {
       "path": "evaluation/planner-current-v1/cases.jsonl",
       "records": 24,
@@ -40,7 +44,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline_v3.py",
-      "sha256": "4d3a9ab7200878a44e259bbd0dade64ed34c1b9192783973e26c6996cff7f2df"
+      "sha256": "029b9e911d906cd94110ee4f530bfacb2db134c9fd5ea3e7632c2b2d5d1087d0"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -48,7 +52,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline_v3.py",
-      "sha256": "28cab0ccca556c7a8bcb5266611377206779acfb9f3df5f9cdc3b78c447375d3"
+      "sha256": "b44ab8b160a3ff585f851bddfa6e3b2c4f1b44859af1e24249adf35bb90624f6"
     },
     "promptCapacityChecker": {
       "path": "scripts/check_planner_current_prompt_capacity.py",

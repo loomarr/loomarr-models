@@ -80,6 +80,7 @@ HOSTED_COMPARISON = {
 BASE_BINDING_KEYS = {
     "authorization",
     "authorizer",
+    "budgetReconciliationExtender",
     "budgetLedger",
     "cases",
     "casesManifest",

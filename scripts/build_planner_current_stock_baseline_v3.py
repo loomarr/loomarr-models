@@ -124,6 +124,7 @@ def content() -> bytes:
     bindings = {
         "authorization": _binding("reviews/planner-current-qwen-stock-baseline-v3/authorization.json"),
         "authorizer": _binding("scripts/authorize_planner_current_stock_baseline_v3.py"),
+        "budgetReconciliationExtender": _binding("scripts/extend_runpod_budget_reconciliation.py"),
         "budgetLedger": _binding("budgets/external-spend-v1.json"),
         "cases": _binding("evaluation/planner-current-v1/cases.jsonl", records=24),
         "casesManifest": _binding("evaluation/planner-current-v1/manifest.json"),

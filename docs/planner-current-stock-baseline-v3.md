@@ -10,6 +10,8 @@ The plan remains deliberately non-executable until v2 billing is exactly settled
 
 After the immutable v2 failure publication and refreshed ledger are committed, the authorization transition requires a UTC timestamp and a direct link to the maintainer's explicit authorization comment on issue #29. The authorizer binds that prior publication, the exact clean plan commit, and the `$1.50` reservation; it cannot convert the current plan while the v2 publication is absent.
 
+The committed reconciliation extender converts the exact v2 provider evidence and publication into the next canonical Runpod reconciliation. It combines pod-persistent storage with disk billing, preserves the historical buckets, adds the hashed v2 resource, and verifies the resulting aggregate against the updated ledger. The same path supports the later v3 settlement.
+
 Training, certification, deployment, and release authority remain false.
 
 ```bash
