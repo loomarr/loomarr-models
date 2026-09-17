@@ -1,7 +1,7 @@
 {
   "authorizedAt": "2026-09-17T02:32:20Z",
   "authorizedBy": "loomarr-maintainer",
-  "authorizedPlanCommit": "1bd481c2cabd48a9fade02c2c750508cf4905de2",
+  "authorizedPlanCommit": "5c826f83940de4d9e50b7a0f3777b97a5137998c",
   "experimentId": "planner-current-qwen-stock-baseline-v2",
   "maxReservationUsd": "1.50",
   "schemaVersion": 1,

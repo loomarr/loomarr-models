@@ -11,7 +11,7 @@
   "bindings": {
     "authorization": {
       "path": "reviews/planner-current-qwen-stock-baseline/authorization-v2.json",
-      "sha256": "9abd3fba5de0c8699758c59ac95ef3ddf11a332ec6633d1d47f670246e2aa893"
+      "sha256": "803f1cd2bfcee5117448c475feb0674279c14dcb949a31610d1a86044d6cfe58"
     },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
@@ -36,7 +36,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline.py",
-      "sha256": "5dccd2237f3e13fc79dc1c0db270b89a6d55e16136da3ab5c0b1f5d956125bdd"
+      "sha256": "ae064895da964d780bef509141311421c40287f6636372c976b83599c8fddbd8"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -44,7 +44,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline.py",
-      "sha256": "7fcdae7f57f0c32774df0dd7fd377253579d85c0939c3f12ee01f1f84bee7a91"
+      "sha256": "3eed9e33c91a5155ecf6017d525ce01da96e5baeb0ceeaf01c5b499761c9025b"
     },
     "publisher": {
       "path": "scripts/publish_planner_current_stock_baseline.py",

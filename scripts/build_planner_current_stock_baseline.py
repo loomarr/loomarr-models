@@ -14,7 +14,7 @@ OUTPUT = Path("experiments/planner-current-qwen-stock-baseline-v2.json")
 AUTHORIZATION_PATH = Path("reviews/planner-current-qwen-stock-baseline/authorization-v2.json")
 EXPERIMENT_ID = "planner-current-qwen-stock-baseline-v2"
 RESERVATION_USD = Decimal("1.50")
-AUTHORIZED_PLAN_COMMIT = "1bd481c2cabd48a9fade02c2c750508cf4905de2"
+AUTHORIZED_PLAN_COMMIT = "5c826f83940de4d9e50b7a0f3777b97a5137998c"
 AUTHORIZED_AT = "2026-09-17T02:32:20Z"
 
 

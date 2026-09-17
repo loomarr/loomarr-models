@@ -677,7 +677,7 @@ def _validate_authorization(authorization: dict[str, Any], config: dict[str, Any
         "maxReservationUsd": "1.50",
         "authorizedBy": "loomarr-maintainer",
         "authorizedAt": "2026-09-17T02:32:20Z",
-        "authorizedPlanCommit": "1bd481c2cabd48a9fade02c2c750508cf4905de2",
+        "authorizedPlanCommit": "5c826f83940de4d9e50b7a0f3777b97a5137998c",
     }
     if authorization != expected or config["budget"]["proposedReservationUsd"] != expected["maxReservationUsd"]:
         raise PreflightError("current stock baseline authorization evidence drifted")

@@ -1,6 +1,6 @@
 # Current-contract stock baseline harness
 
-Issue [#25](https://github.com/loomarr/loomarr-models/issues/25) turns the current-contract preregistration from #22 into a fail-closed, replayable baseline harness. The maintainer authorized the exact plan at commit `1bd481c2cabd48a9fade02c2c750508cf4905de2` with a hard `$1.50` reservation. At the launch-time secure A40 rate of `$0.49/hour`, the 9,000-second GPU maximum is `$1.225`; container-disk and short-lived pod-persistent storage charges must fit inside the same reservation. Training, certification, deployment, and release authority remain false.
+Issue [#25](https://github.com/loomarr/loomarr-models/issues/25) turns the current-contract preregistration from #22 into a fail-closed, replayable baseline harness. The maintainer authorized the exact launch plan at commit `5c826f83940de4d9e50b7a0f3777b97a5137998c` with a hard `$1.50` reservation. At the launch-time secure A40 rate of `$0.49/hour`, the 9,000-second GPU maximum is `$1.225`; container-disk and short-lived pod-persistent storage charges must fit inside the same reservation. Training, certification, deployment, and release authority remain false.
 
 The harness evaluates the exact 24-case development artifact in committed order against `planner-contract-v5`. It renders the production user and finalization turns, requires exact scripted tool arguments, preserves tool results as production JSON strings, and accepts only complete final Proposal JSON with surfaced catalog keys and unchanged `dateMeaning`.
 
