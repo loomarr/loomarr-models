@@ -11,6 +11,7 @@ from loomarr_models.current_review import (
     build_promotion_artifacts,
     jsonl_bytes,
     load_review_state,
+    render_review_packet,
 )
 from loomarr_models.validator import ValidationError
 
@@ -50,6 +51,21 @@ class CurrentReviewTests(unittest.TestCase):
             [decision["traceId"] for decision in state.decisions],
             [trace["traceId"] for trace in state.drafts],
         )
+        packet = render_review_packet(state).decode()
+        for trace in state.drafts:
+            for message in trace["messages"][1:]:
+                if "toolCalls" in message:
+                    self.assertIn(
+                        json.dumps(
+                            message["toolCalls"],
+                            indent=2,
+                            sort_keys=True,
+                            ensure_ascii=False,
+                        ),
+                        packet,
+                    )
+                else:
+                    self.assertIn(message["content"].rstrip(), packet)
         with self.assertRaisesRegex(ValidationError, "requires 24 approved"):
             build_promotion_artifacts(state)
 

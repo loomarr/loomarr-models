@@ -40,7 +40,7 @@
     },
     "reviewValidator": {
       "path": "src/loomarr_models/current_review.py",
-      "sha256": "d45f44633583b1bd2f20b83f614bbc4a7000cc1d2b2a32a216bd7ffb89e9c85d"
+      "sha256": "544209736c154240933ae37b68958ea4d5338d8131872af9bd43613a509a3f28"
     }
   },
   "criteria": [

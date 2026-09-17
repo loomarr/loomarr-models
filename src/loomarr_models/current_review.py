@@ -260,31 +260,6 @@ def render_review_packet(state: CurrentReviewState) -> bytes:
     for trace, digest, decision in zip(
         state.drafts, state.draft_hashes, state.decisions, strict=True
     ):
-        user = trace["messages"][1]["content"].split(
-            "\nSubmitted Intent source coordinates", 1
-        )[0]
-        flow: list[str] = []
-        for message in trace["messages"][2:]:
-            if message["role"] == "assistant" and "toolCalls" in message:
-                call = message["toolCalls"][0]
-                flow.append(
-                    f"call `{call['name']}` `{json.dumps(call['arguments'], sort_keys=True, separators=(',', ':'))}`"
-                )
-            elif message["role"] == "tool":
-                payload = json.loads(message["content"])
-                if isinstance(payload, list):
-                    values = [f"{item['name']} [{item['key']}]" for item in payload]
-                    flow.append("result " + (", ".join(values) or "empty"))
-                else:
-                    flow.append(f"result error `{payload.get('error', '<missing>')}`")
-            elif message["role"] == "assistant":
-                final = json.loads(message["content"])
-                picks = [f"{item['name']} [{item['key']}]" for item in final["picks"]]
-                flow.append(
-                    "final "
-                    + (", ".join(picks) or "structured abstention")
-                    + f"; dateMeaning `{json.dumps(final['dateMeaning'], sort_keys=True, separators=(',', ':'))}`"
-                )
         criteria = ", ".join(
             f"{name}={decision['criteria'][name]}" for name in CRITERIA
         )
@@ -294,14 +269,39 @@ def render_review_packet(state: CurrentReviewState) -> bytes:
                 "",
                 f"- Draft SHA-256: `{digest}`",
                 f"- Capability: `{trace['axes'][0]}`",
-                f"- Intent: {user}",
-                f"- Flow: {' → '.join(flow)}",
+                f"- Contract: `{trace['contract']['systemPromptSha256']}` / `{trace['contract']['toolSchemaSha256']}`",
                 f"- Verdict: **{decision['verdict']}** by `{decision['reviewer'] or '—'}` at `{decision['reviewedAt'] or '—'}`",
                 f"- Criteria: {criteria}",
                 f"- Notes: {decision['notes'] or '—'}",
                 "",
+                "### Exact non-repeated turns",
+                "",
             ]
         )
+        for number, message in enumerate(trace["messages"][1:], start=1):
+            if message["role"] == "assistant" and "toolCalls" in message:
+                value: Any = message["toolCalls"]
+                kind = "json"
+                label = "assistant tool call"
+            else:
+                value = message["content"]
+                kind = "json" if message["role"] in {"tool", "assistant"} else "text"
+                label = message["role"]
+            rendered = (
+                json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False)
+                if not isinstance(value, str)
+                else value.rstrip()
+            )
+            lines.extend(
+                [
+                    f"#### {number}. {label}",
+                    "",
+                    f"```{kind}",
+                    rendered,
+                    "```",
+                    "",
+                ]
+            )
     return "\n".join(lines).rstrip().encode() + b"\n"
 
 

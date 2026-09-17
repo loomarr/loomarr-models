@@ -4,7 +4,7 @@ Issue [#27](https://github.com/loomarr/loomarr-models/issues/27) owns the indepe
 
 The editable artifact is `reviews/planner-current-v1/decisions.jsonl`. Each row binds one draft by its exact line hash and requires a reviewer distinct from the draft generator, an RFC 3339 UTC timestamp, a verdict, and explicit results for contract conformance, grounding, constraint behavior, recovery evidence, and synthetic/private-data safety. Approval requires every criterion. Rejection requires at least one failed criterion and explanatory notes. Pending rows cannot carry review evidence.
 
-The generated packet at `reviews/planner-current-v1/review-packet.md` omits the repeated system prompt and tool schema for readability while keeping their source bytes hash-bound. It shows the intent, capability, exact calls, synthetic result identities, final selection, date meaning, and current decision for each trace.
+The generated packet at `reviews/planner-current-v1/review-packet.md` omits only the repeated system prompt and tool schema for readability while keeping their source bytes hash-bound. It shows every other turn exactly, including source coordinates, tool arguments, complete synthetic evidence, the finalization instruction, final Proposal JSON, capability, draft hash, and current decision for each trace.
 
 While decisions remain pending or rejected, regenerate and check the packet with:
 
