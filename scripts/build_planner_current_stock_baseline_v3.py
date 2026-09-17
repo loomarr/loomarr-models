@@ -58,6 +58,7 @@ def content() -> bytes:
             "generator": _binding("scripts/build_planner_current_stock_baseline_v3.py"),
             "holdoutDenylist": _binding("contracts/planner-holdout-denylist-v2.json"),
             "preflight": _binding("src/loomarr_models/current_baseline_v3.py"),
+            "publicationValidator": _binding("src/loomarr_models/current_publication_v3.py"),
             "promptCapacityChecker": _binding("scripts/check_planner_current_prompt_capacity.py"),
             "promptCapacityModule": _binding("src/loomarr_models/prompt_capacity.py"),
             "promptCapacityReport": _binding("reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json"),

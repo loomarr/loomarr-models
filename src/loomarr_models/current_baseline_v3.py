@@ -79,6 +79,7 @@ BINDING_KEYS = {
     "generator",
     "holdoutDenylist",
     "preflight",
+    "publicationValidator",
     "promptCapacityChecker",
     "promptCapacityModule",
     "promptCapacityReport",
