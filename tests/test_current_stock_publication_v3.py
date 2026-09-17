@@ -9,6 +9,8 @@ import tempfile
 import unittest
 from decimal import Decimal
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 from loomarr_models.current_baseline import (
     baseline_decision,
@@ -27,6 +29,9 @@ from tests.test_current_stock_baseline import oracle
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "experiments/planner-current-qwen-stock-baseline-v3.json"
+sys.path.insert(0, str(ROOT / "scripts"))
+
+import publish_planner_current_stock_baseline_v3 as publisher
 
 
 class CurrentStockPublicationV3Tests(unittest.TestCase):
@@ -178,6 +183,100 @@ class CurrentStockPublicationV3Tests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 2)
         self.assertIn("paid current stock v3 execution is not authorized", result.stderr)
+
+    def test_publisher_immutably_settles_and_terminalizes_each_quality_outcome(self):
+        for justified in (False, True):
+            with self.subTest(qlora_justified=justified), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                artifact_dir = root / ".artifacts/run"
+                artifact_dir.mkdir(parents=True)
+                (artifact_dir / "run-manifest.json").write_text("{}\n", encoding="utf-8")
+                config_path = root / "experiment.json"
+                config_path.write_text("{}\n", encoding="utf-8")
+                authorization_path = root / "authorization.json"
+                authorization_path.write_text(
+                    json.dumps({"status": "authorized", "authorizedPlanCommit": "a" * 40}),
+                    encoding="utf-8",
+                )
+                budget_path = root / "budget.json"
+                budget_path.write_text(
+                    json.dumps(
+                        {
+                            "postedSpendUsd": "29.00",
+                            "outstandingReservationsUsd": "0",
+                            "committedSpendUsd": "29.00",
+                            "authorizationUsd": "40.00",
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                provider_path = root / "provider.json"
+                provider_path.write_text("{}\n", encoding="utf-8")
+                runs = root / "runs/v3"
+                plan = SimpleNamespace(outputDir=".artifacts/run", sourceCommit="b" * 40)
+                config = {
+                    "execution": {},
+                    "authority": {
+                        "paidBaselineAuthorized": True,
+                        "modelDownloadAuthorized": True,
+                        "gpuAuthorized": True,
+                        "trainingAuthorized": False,
+                        "certificationAuthority": False,
+                        "deploymentAuthority": False,
+                        "releaseAuthority": False,
+                    },
+                }
+                provider = {
+                    "capturedAt": "2026-09-17T05:00:00Z",
+                    "costUsd": {"total": "0.52"},
+                }
+                settled = {
+                    "postedSpendUsd": "29.52",
+                    "outstandingReservationsUsd": "0",
+                    "committedSpendUsd": "29.52",
+                    "authorizationUsd": "40.00",
+                }
+                decision = {"qloraJustified": justified, "trainingAuthorized": False}
+                terminal = b'{"status":"complete-settled"}\n'
+                with (
+                    patch.object(publisher, "ROOT", root),
+                    patch.object(publisher, "RUNS", runs),
+                    patch.object(publisher, "CONFIG", config_path),
+                    patch.object(publisher, "AUTHORIZATION", authorization_path),
+                    patch.object(publisher, "BUDGET", budget_path),
+                    patch.object(publisher, "preflight", return_value=plan),
+                    patch.object(publisher, "load_config", return_value=config),
+                    patch.object(publisher, "_git_probe", return_value="c" * 40),
+                    patch.object(
+                        publisher,
+                        "validate_run",
+                        return_value=({}, {"caseCount": 24}, decision),
+                    ),
+                    patch.object(
+                        publisher, "validate_provider_evidence", return_value=provider
+                    ),
+                    patch.object(publisher, "settle_budget", return_value=settled),
+                    patch.object(publisher.builder, "content", return_value=terminal),
+                ):
+                    publication = publisher.publish(provider_path)
+
+                expected_status = (
+                    "qlora-justified-settled"
+                    if justified
+                    else "qlora-not-justified-settled"
+                )
+                self.assertEqual(publication["status"], expected_status)
+                self.assertFalse(publication["authority"]["paidBaselineAuthorized"])
+                self.assertFalse(publication["authority"]["trainingAuthorized"])
+                self.assertTrue((runs / "evidence/run-manifest.json").is_file())
+                self.assertTrue((runs / "source-experiment.json").is_file())
+                self.assertTrue((runs / "provider-settlement.json").is_file())
+                self.assertEqual(config_path.read_bytes(), terminal)
+                completed = json.loads(authorization_path.read_text(encoding="utf-8"))
+                self.assertEqual(completed["status"], "complete")
+                self.assertEqual(completed["publicationPath"], "runs/v3/publication.json")
+                posted = json.loads(budget_path.read_text(encoding="utf-8"))
+                self.assertEqual(posted["postedSpendUsd"], "29.52")
 
 
 if __name__ == "__main__":
