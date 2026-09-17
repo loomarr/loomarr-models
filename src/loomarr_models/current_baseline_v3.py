@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import datetime as dt
 import json
+import re
 import sys
 from dataclasses import asdict, dataclass
 from decimal import Decimal, InvalidOperation
@@ -31,6 +33,12 @@ AUTHORITY = {
     "certificationAuthority": False,
     "deploymentAuthority": False,
     "releaseAuthority": False,
+}
+PAID_AUTHORITY = {
+    **AUTHORITY,
+    "paidBaselineAuthorized": True,
+    "modelDownloadAuthorized": True,
+    "gpuAuthorized": True,
 }
 EXECUTION = {
     "platform": "linux-amd64",
@@ -69,8 +77,9 @@ HOSTED_COMPARISON = {
     "historicalScoresComparable": False,
     "certificationAuthority": False,
 }
-BINDING_KEYS = {
+BASE_BINDING_KEYS = {
     "authorization",
+    "authorizer",
     "budgetLedger",
     "cases",
     "casesManifest",
@@ -179,20 +188,12 @@ def preflight(
     ):
         raise PreflightError("current stock v3 environment or model drifted")
     authorization = _object(bound["authorization"])
-    if authorization != {
-        "schemaVersion": 1,
-        "experimentId": EXPERIMENT_ID,
-        "status": "not-authorized",
-        "maxReservationUsd": "1.50",
-        "authorizedBy": None,
-        "authorizedAt": None,
-        "authorizedPlanCommit": None,
-    }:
-        raise PreflightError("current stock v3 authorization evidence drifted")
+    ledger = _object(bound["budgetLedger"])
+    _validate_authorization(authorization, config, bound, ledger)
     _validate_prompt_capacity_report(
         _object(bound["promptCapacityReport"]), config, cases
     )
-    committed, reservation, projected, aggregate = _validate_budget(config, _object(bound["budgetLedger"]))
+    committed, reservation, projected, aggregate = _validate_budget(config, ledger)
     output = _output_path(root, Path(config["execution"]["outputDir"]))
     source_commit = (git_probe or _git_probe)(root, [config_path, *bound.values()])
     imported = sorted(name for name in sys.modules if name.split(".", 1)[0] in HEAVY_MODULE_PREFIXES)
@@ -212,7 +213,7 @@ def preflight(
         proposedReservationUsd=str(reservation),
         projectedSpendUsd=str(projected),
         authorizationUsd=str(aggregate),
-        paidBaselineAuthorized=False,
+        paidBaselineAuthorized=config["authority"]["paidBaselineAuthorized"],
         promptCapacityStatus=config["promptCapacity"]["status"],
         sourceCommit=source_commit,
         outputDir=str(output.relative_to(root)),
@@ -227,17 +228,24 @@ def _validate_shape(config: dict[str, Any], *, require_authorized: bool) -> None
     }
     if set(config) != required or config["experimentId"] != EXPERIMENT_ID or config["issue"] != ISSUE:
         raise PreflightError("current stock v3 identity or fields drifted")
-    if require_authorized:
+    status = config.get("status")
+    if status == "complete-settled":
+        raise PreflightError("current stock v3 baseline is terminal and cannot run again")
+    expected_bindings = BASE_BINDING_KEYS | (
+        {"priorBaselinePublication"} if status == "ready-for-paid-baseline" else set()
+    )
+    expected_authority = PAID_AUTHORITY if status == "ready-for-paid-baseline" else AUTHORITY
+    if require_authorized and expected_authority != PAID_AUTHORITY:
         raise PreflightError("paid current stock v3 execution is not authorized")
     if (
-        config["status"] != "planned-billing-settlement-required"
-        or set(config["bindings"]) != BINDING_KEYS
+        status not in {"planned-billing-settlement-required", "ready-for-paid-baseline"}
+        or set(config["bindings"]) != expected_bindings
         or config["model"] != MODEL
         or config["execution"] != EXECUTION
         or config["comparison"] != COMPARISON
         or config["scoring"] != SCORING
         or config["hostedProductionComparison"] != HOSTED_COMPARISON
-        or config["authority"] != AUTHORITY
+        or config["authority"] != expected_authority
         or config["promptCapacity"] != {
             "status": "passed",
             "exactPinnedProcessorRequired": True,
@@ -254,6 +262,77 @@ def _validate_shape(config: dict[str, Any], *, require_authorized: bool) -> None
         "applicationRecoveryBlocker": "https://github.com/loomarr/loomarr/issues/1195",
     }:
         raise PreflightError("current stock v3 decision contract drifted")
+
+
+def _validate_authorization(
+    authorization: dict[str, Any],
+    config: dict[str, Any],
+    bound: dict[str, Path],
+    ledger: dict[str, Any],
+) -> None:
+    base = {
+        "schemaVersion": 1,
+        "experimentId": EXPERIMENT_ID,
+        "maxReservationUsd": "1.50",
+    }
+    if config["status"] == "planned-billing-settlement-required":
+        expected = {
+            **base,
+            "status": "not-authorized",
+            "authorizedBy": None,
+            "authorizedAt": None,
+            "authorizedPlanCommit": None,
+        }
+        if authorization != expected:
+            raise PreflightError("current stock v3 authorization evidence drifted")
+        return
+    if set(authorization) != {
+        *base,
+        "status",
+        "authorizedBy",
+        "authorizedAt",
+        "authorizedPlanCommit",
+        "authorizationReference",
+        "priorBaselinePublication",
+    } or any(authorization.get(key) != value for key, value in base.items()):
+        raise PreflightError("current stock v3 paid authorization fields drifted")
+    if (
+        authorization["status"] != "authorized"
+        or authorization["authorizedBy"] != "loomarr-maintainer"
+        or re.fullmatch(
+            r"https://github\.com/loomarr/loomarr-models/issues/29#issuecomment-\d+",
+            authorization.get("authorizationReference", ""),
+        )
+        is None
+        or not _timestamp(authorization["authorizedAt"])
+        or re.fullmatch(r"[0-9a-f]{40}", authorization["authorizedPlanCommit"] or "") is None
+        or authorization["priorBaselinePublication"]
+        != config["bindings"].get("priorBaselinePublication")
+    ):
+        raise PreflightError("current stock v3 paid authorization identity drifted")
+    publication = _object(bound["priorBaselinePublication"])
+    budget_after = publication.get("budgetAfterSettlement", {})
+    if (
+        publication.get("experimentId") != "planner-current-qwen-stock-baseline-v2"
+        or publication.get("status") != "baseline-invalid-settled"
+        or publication.get("decision", {}).get("failureClass")
+        != "runtime-configuration-failure"
+        or publication.get("decision", {}).get("qloraJustified") is not False
+        or budget_after.get("postedSpendUsd") != ledger.get("postedSpendUsd")
+        or budget_after.get("committedSpendUsd") != ledger.get("committedSpendUsd")
+        or budget_after.get("authorizationUsd") != ledger.get("authorizationUsd")
+    ):
+        raise PreflightError("current stock v3 prior failure settlement drifted")
+
+
+def _timestamp(value: Any) -> bool:
+    if not isinstance(value, str) or not value.endswith("Z"):
+        return False
+    try:
+        dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return True
 
 
 def _validate_budget(config: dict[str, Any], ledger: dict[str, Any]) -> tuple[Decimal, Decimal, Decimal, Decimal]:

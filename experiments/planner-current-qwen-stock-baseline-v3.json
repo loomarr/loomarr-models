@@ -13,6 +13,10 @@
       "path": "reviews/planner-current-qwen-stock-baseline-v3/authorization.json",
       "sha256": "30272f948731c03d522927f487d110bc9b98a1fc97781a9545523eb850e4e4f2"
     },
+    "authorizer": {
+      "path": "scripts/authorize_planner_current_stock_baseline_v3.py",
+      "sha256": "f227c67c947c40ef388e070dfdb15bed8613e0b2c2346302a22de7c3e63cd75d"
+    },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
       "sha256": "2ccfcc6c78ed2789552ca83c2b87ae6c07fcf7f64d1245e651956a153de8882c"
@@ -36,7 +40,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline_v3.py",
-      "sha256": "005e1fc756683b6df9e32edcd17fc375f128ad9e964a880e68ca1f1ee3947482"
+      "sha256": "9d1e3226138c17163be8ff3d4720fe5f7091dad7f4b6f63cd1b96f787e4a0d40"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -44,7 +48,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline_v3.py",
-      "sha256": "71a496b5a39edb2106cf4b2dc482a68f853f2d2adb42e48d64f218a3151d7276"
+      "sha256": "46030c0a18b808e9153430eb00f6388cce4544e19e427e54c7784110967e18a7"
     },
     "promptCapacityChecker": {
       "path": "scripts/check_planner_current_prompt_capacity.py",
