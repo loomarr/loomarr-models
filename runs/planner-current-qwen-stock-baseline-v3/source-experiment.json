@@ -2,16 +2,16 @@
   "authority": {
     "certificationAuthority": false,
     "deploymentAuthority": false,
-    "gpuAuthorized": false,
-    "modelDownloadAuthorized": false,
-    "paidBaselineAuthorized": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
     "releaseAuthority": false,
     "trainingAuthorized": false
   },
   "bindings": {
     "authorization": {
       "path": "reviews/planner-current-qwen-stock-baseline-v3/authorization.json",
-      "sha256": "cbc550231bc7666cd614c19873ec4eac3524d76023f2eee555f61c9b0ca55eac"
+      "sha256": "4789bde38b49c13d02d1d1c41c4b8ce9497a4baf396cd0315ca75f38e6f11897"
     },
     "authorizer": {
       "path": "scripts/authorize_planner_current_stock_baseline_v3.py",
@@ -19,7 +19,7 @@
     },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "ffc4c701f2799cb2232b1d73dca69702654f9cd7550912aa62660f3f07dcd82e"
+      "sha256": "3c2f19303179c5cab3af94990450caa68a5d6d7c65cb4e8b253f87aa4863caf8"
     },
     "budgetReconciliationExtender": {
       "path": "scripts/extend_runpod_budget_reconciliation.py",
@@ -89,11 +89,11 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "29.1962968898326090175",
+    "currentCommittedUsd": "28.8046085599664530175",
     "outstandingReservationsUsd": "0",
-    "projectedCommitmentUsd": "29.1962968898326090175",
-    "proposedReservationUsd": "0",
-    "remainingAuthorizationUsd": "10.8037031101673909825"
+    "projectedCommitmentUsd": "30.3046085599664530175",
+    "proposedReservationUsd": "1.50",
+    "remainingAuthorizationUsd": "9.6953914400335469825"
   },
   "comparison": {
     "disableCompile": true,
@@ -170,5 +170,5 @@
       "minSchemaValidityRate": 0.98
     }
   },
-  "status": "complete-settled"
+  "status": "ready-for-paid-baseline"
 }

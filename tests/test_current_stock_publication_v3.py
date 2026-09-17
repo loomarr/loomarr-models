@@ -16,7 +16,7 @@ from loomarr_models.current_baseline import (
     evaluate_current_case,
     summarize_current_candidate,
 )
-from loomarr_models.current_baseline_v3 import preflight
+from loomarr_models.current_baseline_v3 import CurrentBaselineV3Plan
 from loomarr_models.current_contract import read_jsonl
 from loomarr_models.experiment import PreflightError
 from loomarr_models.current_publication_v3 import (
@@ -29,6 +29,8 @@ from tests.test_current_stock_baseline import oracle
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "experiments/planner-current-qwen-stock-baseline-v3.json"
+SOURCE_CONFIG = ROOT / "runs/planner-current-qwen-stock-baseline-v3/source-experiment.json"
+RUN_MANIFEST = ROOT / "runs/planner-current-qwen-stock-baseline-v3/evidence/run-manifest.json"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import publish_planner_current_stock_baseline_v3 as publisher
@@ -37,12 +39,14 @@ import publish_planner_current_stock_baseline_v3 as publisher
 class CurrentStockPublicationV3Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.config = json.loads(CONFIG.read_text(encoding="utf-8"))
+        cls.config = json.loads(SOURCE_CONFIG.read_text(encoding="utf-8"))
         contract = json.loads(
             (ROOT / cls.config["bindings"]["contract"]["path"]).read_text(encoding="utf-8")
         )
         cls.cases = read_jsonl(ROOT / cls.config["bindings"]["cases"]["path"])
-        cls.plan = preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
+        cls.plan = CurrentBaselineV3Plan(
+            **json.loads(RUN_MANIFEST.read_text(encoding="utf-8"))["preflight"]
+        )
         cls.results = [
             evaluate_current_case(
                 case,
@@ -166,6 +170,9 @@ class CurrentStockPublicationV3Tests(unittest.TestCase):
         budget = json.loads(
             (ROOT / self.config["bindings"]["budgetLedger"]["path"]).read_text(encoding="utf-8")
         )
+        budget["postedSpendUsd"] = self.plan.committedSpendUsd
+        budget["outstandingReservationsUsd"] = "0"
+        budget["committedSpendUsd"] = self.plan.committedSpendUsd
         settled = settle_budget(budget, Decimal("0.52"), self.plan)
         self.assertEqual(
             Decimal(settled["postedSpendUsd"]), Decimal(budget["postedSpendUsd"]) + Decimal("0.52")
@@ -175,17 +182,21 @@ class CurrentStockPublicationV3Tests(unittest.TestCase):
 
     def test_publisher_refuses_before_reading_provider_evidence_when_unauthorized(self):
         missing = ROOT / ".artifacts/provider-evidence-must-not-be-read.json"
-        with (
-            patch.object(
-                publisher,
-                "preflight",
-                side_effect=PreflightError("paid current stock v3 execution is not authorized"),
-            ),
-            self.assertRaisesRegex(
-                PreflightError, "paid current stock v3 execution is not authorized"
-            ),
-        ):
-            publisher.publish(missing)
+        with tempfile.TemporaryDirectory() as temporary:
+            with (
+                patch.object(publisher, "RUNS", Path(temporary) / "unpublished-v3"),
+                patch.object(
+                    publisher,
+                    "preflight",
+                    side_effect=PreflightError(
+                        "paid current stock v3 execution is not authorized"
+                    ),
+                ),
+                self.assertRaisesRegex(
+                    PreflightError, "paid current stock v3 execution is not authorized"
+                ),
+            ):
+                publisher.publish(missing)
         self.assertFalse(missing.exists())
 
     def test_publisher_immutably_settles_and_terminalizes_each_quality_outcome(self):

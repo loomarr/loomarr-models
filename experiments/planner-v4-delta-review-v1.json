@@ -2,7 +2,7 @@
   "bindings": {
     "budget": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "3c2f19303179c5cab3af94990450caa68a5d6d7c65cb4e8b253f87aa4863caf8"
+      "sha256": "ffc4c701f2799cb2232b1d73dca69702654f9cd7550912aa62660f3f07dcd82e"
     },
     "contract": {
       "path": "contracts/planner-contract-v4.json",
@@ -79,9 +79,9 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "28.8046085599664530175",
-    "projectedMaximumUsd": "36.8046085599664530175",
-    "remainingAfterMaximumUsd": "3.1953914400335469825",
+    "currentCommittedUsd": "29.1962968898326090175",
+    "projectedMaximumUsd": "37.1962968898326090175",
+    "remainingAfterMaximumUsd": "2.8037031101673909825",
     "reviewReservationUsd": "8.00",
     "worstCaseReviewUsd": "7.975315"
   },
@@ -115,10 +115,10 @@
   "preflight": {
     "authorization_usd": "40.00",
     "batch_size": 1,
-    "committed_spend_usd": "28.8046085599664530175",
+    "committed_spend_usd": "29.1962968898326090175",
     "input_byte_upper_bound": 1246378,
     "output_token_upper_bound": 360000,
-    "projected_spend_usd": "36.8046085599664530175",
+    "projected_spend_usd": "37.1962968898326090175",
     "request_count": 120,
     "request_plan_sha256": "c5c656d11a6388fb4a82fb9fb5f8a0638208d0f79659e678544ee222e5e7fa5f",
     "reservation_usd": "8.00",

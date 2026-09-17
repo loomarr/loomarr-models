@@ -33,10 +33,10 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "28.8046085599664530175",
+    "currentCommittedUsd": "29.1962968898326090175",
     "evaluationReservationUsd": "3.00",
-    "maximumAggregateCommitmentUsd": "33.3046085599664530175",
-    "remainingAfterMaximumUsd": "6.6953914400335469825",
+    "maximumAggregateCommitmentUsd": "33.6962968898326090175",
+    "remainingAfterMaximumUsd": "6.3037031101673909825",
     "trainingReservationUsd": "1.50"
   },
   "candidateOrder": [

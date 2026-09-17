@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from extend_runpod_budget_reconciliation import _costs, extend
 
 
-RECONCILIATION = ROOT / "budgets/runpod-pod-billing-current-stock-baseline-v2-v1.json"
+RECONCILIATION = ROOT / "budgets/runpod-pod-billing-current-stock-baseline-v3-v1.json"
 BASE_RECONCILIATION = ROOT / "budgets/runpod-pod-billing-2026-09-03-v1.json"
 LEDGER = ROOT / "budgets/external-spend-v1.json"
 
