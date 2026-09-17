@@ -40,7 +40,7 @@ class QLoRAV2PlanTests(unittest.TestCase):
         self.assertFalse(index["paidTrainingAuthorized"])
         self.assertFalse(index["trainingAuthorized"])
         self.assertFalse(index["releaseAuthorized"])
-        self.assertEqual(index["budget"]["maximumAggregateCommitmentUsd"], "33.1967677051754599875")
+        self.assertEqual(index["budget"]["maximumAggregateCommitmentUsd"], "33.3046085599664530175")
         self.assertLessEqual(
             Decimal(index["budget"]["maximumAggregateCommitmentUsd"]),
             Decimal(index["budget"]["aggregateAuthorizationUsd"]),
@@ -56,7 +56,7 @@ class QLoRAV2PlanTests(unittest.TestCase):
         self.assertEqual((report.traceCount, report.approvedCount), (120, 120))
         self.assertEqual(report.corpusSha256, "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57")
         self.assertEqual(report.reservationUsd, "1.50")
-        self.assertEqual(report.projectedSpendUsd, "30.1967677051754599875")
+        self.assertEqual(report.projectedSpendUsd, "30.3046085599664530175")
         with self.assertRaisesRegex(PreflightError, "not ready-for-training"):
             preflight(
                 ROOT,

@@ -2,20 +2,20 @@
   "authority": {
     "certificationAuthority": false,
     "deploymentAuthority": false,
-    "gpuAuthorized": false,
-    "modelDownloadAuthorized": false,
-    "paidBaselineAuthorized": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
     "releaseAuthority": false,
     "trainingAuthorized": false
   },
   "bindings": {
     "authorization": {
       "path": "reviews/planner-current-qwen-stock-baseline/authorization-v2.json",
-      "sha256": "e8f0ebd3c6d5f86342290eacfa7633f4a6ea992924999404894740b0ac147959"
+      "sha256": "803f1cd2bfcee5117448c475feb0674279c14dcb949a31610d1a86044d6cfe58"
     },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "3c2f19303179c5cab3af94990450caa68a5d6d7c65cb4e8b253f87aa4863caf8"
+      "sha256": "2ccfcc6c78ed2789552ca83c2b87ae6c07fcf7f64d1245e651956a153de8882c"
     },
     "cases": {
       "path": "evaluation/planner-current-v1/cases.jsonl",
@@ -61,11 +61,11 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "28.8046085599664530175",
+    "currentCommittedUsd": "28.6967677051754599875",
     "outstandingReservationsUsd": "0",
-    "projectedCommitmentUsd": "28.8046085599664530175",
-    "proposedReservationUsd": "0",
-    "remainingAuthorizationUsd": "11.1953914400335469825"
+    "projectedCommitmentUsd": "30.1967677051754599875",
+    "proposedReservationUsd": "1.50",
+    "remainingAuthorizationUsd": "9.8032322948245400125"
   },
   "comparison": {
     "disableCompile": true,
@@ -132,5 +132,5 @@
       "minSchemaValidityRate": 0.98
     }
   },
-  "status": "complete-settled"
+  "status": "ready-for-paid-baseline"
 }

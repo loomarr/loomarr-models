@@ -30,7 +30,7 @@
     },
     {
       "path": "experiments/planner-adapter-eval-v2-plan.json",
-      "sha256": "cfdb166789f6c98d4080a10c09da8fd7c27e01c92c3cfb6ec063466b2f8d7976"
+      "sha256": "9a3e2096baba68c2849dda571ea5b7a67813663f8296286b9ee05344a0d6a72b"
     },
     {
       "path": "experiments/planner-qwen38-qlora-v2.json",
@@ -43,10 +43,10 @@
   ],
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "28.6967677051754599875",
+    "currentCommittedUsd": "28.8046085599664530175",
     "evaluationReservationUsd": "3.00",
-    "maximumAggregateCommitmentUsd": "33.1967677051754599875",
-    "remainingAfterMaximumUsd": "6.8032322948245400125",
+    "maximumAggregateCommitmentUsd": "33.3046085599664530175",
+    "remainingAfterMaximumUsd": "6.6953914400335469825",
     "trainingReservationUsd": "1.50"
   },
   "generator": {

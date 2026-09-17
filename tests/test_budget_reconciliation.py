@@ -14,14 +14,29 @@ from loomarr_models.budget_reconciliation import validate_budget_reconciliation
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from extend_runpod_budget_reconciliation import extend
+from extend_runpod_budget_reconciliation import _costs, extend
 
 
-RECONCILIATION = ROOT / "budgets/runpod-pod-billing-2026-09-03-v1.json"
+RECONCILIATION = ROOT / "budgets/runpod-pod-billing-current-stock-baseline-v2-v1.json"
+BASE_RECONCILIATION = ROOT / "budgets/runpod-pod-billing-2026-09-03-v1.json"
 LEDGER = ROOT / "budgets/external-spend-v1.json"
 
 
 class BudgetReconciliationContractTests(unittest.TestCase):
+    def test_provider_display_rounding_is_preserved_with_a_strict_bound(self):
+        provider = {
+            "costUsd": {
+                "gpu": "0.10506307706236839",
+                "disk": "0.002777777728624642",
+                "persistentStorage": "0",
+                "total": "0.10784085479099303",
+            }
+        }
+        self.assertEqual(_costs(provider)["total"], Decimal("0.10784085479099303"))
+        provider["costUsd"]["total"] = "0.1078408547909"
+        with self.assertRaisesRegex(ValueError, "components"):
+            _costs(provider)
+
     def assert_reconciliation_rejected(self, mutate, expected: str):
         payload = json.loads(RECONCILIATION.read_text(encoding="utf-8"))
         mutate(payload)
@@ -73,7 +88,7 @@ class BudgetReconciliationContractTests(unittest.TestCase):
         )
 
     def test_extends_canonical_reconciliation_with_exact_settled_baseline(self):
-        base = json.loads(RECONCILIATION.read_text(encoding="utf-8"))
+        base = json.loads(BASE_RECONCILIATION.read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
             directory = Path(temporary)
             provider_path = directory / "provider-settlement.json"

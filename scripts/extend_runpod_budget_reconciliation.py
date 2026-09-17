@@ -30,6 +30,7 @@ ALLOCATIONS = {
         "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/29",
     },
 }
+_COMPONENT_ROUNDING_TOLERANCE = Decimal("0.0000000000000001")
 
 
 def main() -> None:
@@ -171,7 +172,9 @@ def _costs(provider: dict[str, Any]) -> dict[str, Decimal]:
     }:
         raise ValueError("provider cost fields are invalid")
     result = {name: _decimal(amount, f"provider.costUsd.{name}") for name, amount in value.items()}
-    if result["gpu"] + result["disk"] + result["persistentStorage"] != result["total"]:
+    if abs(
+        result["gpu"] + result["disk"] + result["persistentStorage"] - result["total"]
+    ) > _COMPONENT_ROUNDING_TOLERANCE:
         raise ValueError("provider cost components do not equal total")
     return result
 

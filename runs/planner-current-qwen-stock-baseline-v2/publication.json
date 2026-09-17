@@ -1,0 +1,46 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "budgetAfterSettlement": {
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "28.8046085599664530175",
+    "outstandingReservationsUsd": "0",
+    "postedSpendUsd": "28.8046085599664530175"
+  },
+  "completedAt": "2026-09-17T11:47:03Z",
+  "decision": {
+    "certificationAuthority": false,
+    "failureClass": "runtime-configuration-failure",
+    "outcome": "baseline-invalid-no-training-decision",
+    "qloraJustified": false,
+    "releaseAuthorized": false,
+    "thresholdFailures": [],
+    "trainingAuthorized": false
+  },
+  "experimentId": "planner-current-qwen-stock-baseline-v2",
+  "failureManifest": {
+    "path": "runs/planner-current-qwen-stock-baseline-v2/evidence/failure-manifest.json",
+    "sha256": "5e44e9dadb645fe707ef25a6e51c6f3ff7f8c48b88a5bd03b3e5750535a48ec4"
+  },
+  "providerCostUsd": "0.10784085479099303",
+  "providerEvidence": {
+    "path": "runs/planner-current-qwen-stock-baseline-v2/provider-settlement.json",
+    "sha256": "26cae63d3a4b3bf7053a7449dd2ad8763bb2b3214176eab4263804c24f14b1fb"
+  },
+  "publicationCommit": "f503ad1a2eed7ffef788a099947dd16ead2d7e44",
+  "schemaVersion": 1,
+  "sourceCommit": "3faa65dedb13462b637ab13f7b5706b19d575963",
+  "sourceExperiment": {
+    "path": "runs/planner-current-qwen-stock-baseline-v2/source-experiment.json",
+    "sha256": "d4d871ffe4f354947c7c12f2be9753919d382405e1ce1d6b99711efcb91e53a8"
+  },
+  "status": "baseline-invalid-settled",
+  "summary": null
+}

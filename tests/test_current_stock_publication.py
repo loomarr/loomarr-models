@@ -14,7 +14,6 @@ from loomarr_models.current_baseline import (
     AUTHORITY,
     baseline_decision,
     evaluate_current_case,
-    preflight,
     summarize_current_candidate,
 )
 from loomarr_models.current_contract import read_jsonl
@@ -31,6 +30,11 @@ from tests.test_current_stock_baseline import oracle
 CONFIG = ROOT / "experiments/planner-current-qwen-stock-baseline-v2.json"
 
 
+class PublicationPlan(SimpleNamespace):
+    def as_dict(self):
+        return self.preflight
+
+
 class CurrentStockPublicationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -39,7 +43,11 @@ class CurrentStockPublicationTests(unittest.TestCase):
             (ROOT / cls.config["bindings"]["contract"]["path"]).read_text(encoding="utf-8")
         )
         cls.cases = read_jsonl(ROOT / cls.config["bindings"]["cases"]["path"])
-        cls.plan = preflight(ROOT, CONFIG, require_authorized=False, git_probe=lambda *_: "a" * 40)
+        cls.plan = PublicationPlan(
+            candidateId=cls.config["model"]["candidateId"],
+            reservationUsd="1.50",
+            preflight={"experimentId": cls.config["experimentId"], "sourceCommit": "a" * 40},
+        )
         cls.results = [
             evaluate_current_case(
                 case,

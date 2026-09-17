@@ -2,8 +2,11 @@
   "authorizedAt": "2026-09-17T02:32:20Z",
   "authorizedBy": "loomarr-maintainer",
   "authorizedPlanCommit": "5c826f83940de4d9e50b7a0f3777b97a5137998c",
+  "completedAt": "2026-09-17T11:47:03Z",
   "experimentId": "planner-current-qwen-stock-baseline-v2",
   "maxReservationUsd": "1.50",
+  "publicationPath": "runs/planner-current-qwen-stock-baseline-v2/publication.json",
+  "publicationSha256": "a2b7cdc02392a75b8dded9d0711ec003cd23698088c41b4194ffa40d5c529804",
   "schemaVersion": 1,
-  "status": "authorized"
+  "status": "complete"
 }
