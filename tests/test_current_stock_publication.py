@@ -177,6 +177,43 @@ class CurrentStockPublicationTests(unittest.TestCase):
         with self.assertRaisesRegex(Exception, "exceeds authorization"):
             publication.settle_budget(budget, Decimal("1.51"), plan)
 
+    def test_failure_settlement_preserves_provider_display_rounding(self):
+        evidence = {
+            "schemaVersion": 2,
+            "experimentId": self.config["experimentId"],
+            "provider": "runpod",
+            "status": "settled-resources-deleted",
+            "capturedAt": "2026-09-17T11:47:03Z",
+            "cloud": "SECURE",
+            "dataCenterId": "EU-SE-1",
+            "gpuSku": "NVIDIA A40",
+            "gpuHourlyUsd": "0.49",
+            "createdAt": "2026-09-17T02:45:05.698Z",
+            "deletedAt": "2026-09-17T02:58:13Z",
+            "podIdSha256": "a" * 64,
+            "zeroActivePods": True,
+            "storageMode": "pod-persistent",
+            "persistentStorageDeletedWithPod": True,
+            "costUsd": {
+                "gpu": "0.10506307706236839",
+                "disk": "0.002777777728624642",
+                "persistentStorage": "0",
+                "total": "0.10784085479099303",
+            },
+        }
+        self.assertIs(
+            failure_publication.validate_failure_provider_evidence(
+                evidence, self.config["execution"], self.plan
+            ),
+            evidence,
+        )
+        drifted = copy.deepcopy(evidence)
+        drifted["costUsd"]["total"] = "0.1078408547909"
+        with self.assertRaisesRegex(Exception, "rounding drift"):
+            failure_publication.validate_failure_provider_evidence(
+                drifted, self.config["execution"], self.plan
+            )
+
     def test_runtime_failure_publication_requires_hash_bound_logs(self):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)

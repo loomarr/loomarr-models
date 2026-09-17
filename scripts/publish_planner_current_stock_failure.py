@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import re
 import shutil
@@ -63,7 +64,7 @@ def publish(failure_path: Path, provider_path: Path) -> dict[str, Any]:
     if plan.sourceCommit != failure["sourceCommit"] or plan.configSha256 != failure["sourceConfigSha256"]:
         raise PreflightError("failure evidence source identity differs from the authorized plan")
     publication_commit = _git_probe(ROOT, [Path(__file__), CONFIG, AUTHORIZATION, BUDGET])
-    provider = validate_provider_evidence(
+    provider = validate_failure_provider_evidence(
         json.loads(provider_path.read_text(encoding="utf-8")), config["execution"], plan
     )
     cost = Decimal(provider["costUsd"]["total"])
@@ -128,6 +129,25 @@ def publish(failure_path: Path, provider_path: Path) -> dict[str, Any]:
         build_planner_current_stock_baseline.content()
     )
     return publication
+
+
+def validate_failure_provider_evidence(
+    evidence: dict[str, Any], execution: dict[str, Any], plan: Any
+) -> dict[str, Any]:
+    """Preserve exact provider fields while tolerating provider display rounding."""
+    try:
+        costs = {name: Decimal(value) for name, value in evidence["costUsd"].items()}
+        component_sum = costs["gpu"] + costs["disk"] + costs["persistentStorage"]
+        component_drift = abs(costs["total"] - component_sum)
+    except (KeyError, ValueError) as exc:
+        raise PreflightError("current Runpod settlement values are invalid") from exc
+    if component_drift > Decimal("0.0000000000000001"):
+        raise PreflightError("current Runpod settlement component rounding drift is too large")
+
+    normalized = copy.deepcopy(evidence)
+    normalized["costUsd"]["total"] = str(component_sum)
+    validate_provider_evidence(normalized, execution, plan)
+    return evidence
 
 
 def validate_failure(path: Path) -> dict[str, Any]:
