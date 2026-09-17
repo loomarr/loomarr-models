@@ -25,7 +25,7 @@ def load_decisions() -> list[dict]:
     return [json.loads(line) for line in DECISIONS.read_text(encoding="utf-8").splitlines()]
 
 
-def approve(decision: dict, *, reviewer: str = "human:reviewer-1") -> None:
+def approve(decision: dict, *, reviewer: str = "review-agent:planner-current-v1") -> None:
     decision.update(
         {
             "reviewer": reviewer,
@@ -92,7 +92,7 @@ class CurrentReviewTests(unittest.TestCase):
         cases.append((false_approval, "approval requires every"))
 
         false_pending = copy.deepcopy(base)
-        false_pending[0]["reviewer"] = "human:reviewer-1"
+        false_pending[0]["reviewer"] = "review-agent:planner-current-v1"
         cases.append((false_pending, "pending review carries false evidence"))
 
         with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
@@ -147,7 +147,7 @@ class CurrentReviewTests(unittest.TestCase):
         rejected = decisions[0]
         rejected.update(
             {
-                "reviewer": "human:reviewer-1",
+                "reviewer": "review-agent:planner-current-v1",
                 "reviewedAt": "2026-09-17T01:30:00Z",
                 "verdict": "rejected",
                 "criteria": {criterion: True for criterion in CRITERIA},
