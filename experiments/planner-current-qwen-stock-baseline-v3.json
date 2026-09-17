@@ -48,7 +48,7 @@
     },
     "promptCapacityChecker": {
       "path": "scripts/check_planner_current_prompt_capacity.py",
-      "sha256": "0900ff56f8b17cc344acd816f8a857d4b489367954fd3cdf0ca7220f516f250a"
+      "sha256": "0c99810c306d77988f73de36dfbdfb8f639a4f23f4ec9288e754a3a967cdd90c"
     },
     "promptCapacityModule": {
       "path": "src/loomarr_models/prompt_capacity.py",

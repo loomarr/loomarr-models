@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -21,6 +22,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Measure every current-baseline prompt stage")
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--runtime-image")
+    parser.add_argument("--source-commit")
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
     config = json.loads(config_path.read_text(encoding="utf-8"))
@@ -59,17 +62,17 @@ def main() -> None:
         "loadedCommit": _loaded_commit(tokenizer, nested_tokenizer),
     }
     report["runtime"] = {
+        "containerImage": args.runtime_image,
         "python": ".".join(str(part) for part in sys.version_info[:3]),
         "transformers": importlib.metadata.version("transformers"),
         "tokenizers": importlib.metadata.version("tokenizers"),
     }
-    report["sourceCommit"] = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=ROOT,
-        text=True,
-        capture_output=True,
-        check=True,
+    source_commit = args.source_commit or subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True, check=True
     ).stdout.strip()
+    if re.fullmatch(r"[0-9a-f]{40}", source_commit) is None:
+        parser.error("source commit must be a lowercase 40-character Git object ID")
+    report["sourceCommit"] = source_commit
     encoded = json.dumps(report, indent=2, sort_keys=True) + "\n"
     if args.output:
         output = args.output if args.output.is_absolute() else ROOT / args.output
