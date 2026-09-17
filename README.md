@@ -6,6 +6,12 @@ Offline research assets for Loomarr-specific model experiments. This repository 
 separate from the Go application: Loomarr consumes released model bytes through its existing provider
 boundary and never imports this toolchain.
 
+The active custom-planner lane is being rebuilt against the current production contract under
+[loomarr-models#22](https://github.com/loomarr/loomarr-models/issues/22). Historical v3/v4 corpora are
+preserved but excluded; the replacement no-spend artifacts, disjointness proof, stock-baseline
+preregistration, and stop conditions are documented in
+[docs/planner-current-contract-v1.md](docs/planner-current-contract-v1.md).
+
 The first milestone is [loomarr/loomarr#937](https://github.com/loomarr/loomarr/issues/937): a
 validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract,
 the pinned Qwen 3.8 / Unsloth candidate environment, and the reproducible evidence from the first

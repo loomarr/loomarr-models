@@ -1,0 +1,75 @@
+{
+  "activeMixture": [],
+  "candidateMixtureAfterIndependentReview": [
+    "corpus/planner-current-v1/drafts.jsonl"
+  ],
+  "contract": {
+    "path": "contracts/planner-contract-v5.json",
+    "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+  },
+  "decision": "exclude-all-historical-v3-v4-training-and-development-records",
+  "historicalArtifacts": [
+    {
+      "currentContractCompatibleRecords": 0,
+      "excludedFromActiveMixture": true,
+      "path": "corpus/planner-behavior-v2/traces.jsonl",
+      "reasonCounts": {
+        "final-missing-dateMeaning": 120,
+        "final-missing-exact-key": 100,
+        "obsolete-final-external-ids": 100,
+        "retired-era-tool-argument": 20,
+        "stale-contract": 120,
+        "tool-call-missing-dateMeaning": 120,
+        "unsupported-tool-operation": 20
+      },
+      "records": 120,
+      "sha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
+    },
+    {
+      "currentContractCompatibleRecords": 0,
+      "excludedFromActiveMixture": true,
+      "path": "corpus/planner-v4-delta/drafts.jsonl",
+      "reasonCounts": {
+        "final-missing-dateMeaning": 60,
+        "final-missing-exact-key": 60,
+        "obsolete-final-external-ids": 60,
+        "stale-contract": 60,
+        "tool-call-missing-dateMeaning": 60
+      },
+      "records": 60,
+      "sha256": "58b408e641133e8b941fd12981f577aca40d620458101d4f181c010c553241f2"
+    },
+    {
+      "currentContractCompatibleRecords": 0,
+      "excludedFromActiveMixture": true,
+      "path": "evaluation/planner-development-v1/cases.jsonl",
+      "reasonCounts": {
+        "expectation-missing-dateMeaning": 50,
+        "obsolete-expectation-external-ids": 50,
+        "retired-era-tool-argument": 5,
+        "stale-contract": 50,
+        "tool-call-missing-dateMeaning": 50,
+        "unsupported-tool-operation": 5
+      },
+      "records": 50,
+      "sha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209"
+    },
+    {
+      "currentContractCompatibleRecords": 0,
+      "excludedFromActiveMixture": true,
+      "path": "evaluation/planner-development-v4/cases.jsonl",
+      "reasonCounts": {
+        "expectation-missing-dateMeaning": 120,
+        "obsolete-expectation-external-ids": 120,
+        "retired-era-tool-argument": 10,
+        "stale-contract": 120,
+        "tool-call-missing-dateMeaning": 120,
+        "unsupported-tool-operation": 10
+      },
+      "records": 120,
+      "sha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34"
+    }
+  ],
+  "reportId": "planner-current-contract-compatibility-v1",
+  "schemaVersion": 1
+}

@@ -1,0 +1,86 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "paidBaselineAuthorized": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "budgetLedger": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "2ccfcc6c78ed2789552ca83c2b87ae6c07fcf7f64d1245e651956a153de8882c"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "dataPlan": {
+      "path": "plans/planner-current-data-v1.json"
+    },
+    "development": {
+      "path": "evaluation/planner-current-v1/cases.jsonl",
+      "records": 24,
+      "sha256": "ea3ea7f8e117f8310599df830aeedf3b0111c1aa0a8ec0dfe4893ece85c9bef9"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/planner-holdout-denylist-v2.json",
+      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+    }
+  },
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "28.6967677051754599875",
+    "outstandingReservationsUsd": "0",
+    "proposedReservationUsd": "0"
+  },
+  "comparison": {
+    "doSample": false,
+    "maxModelCallsPerCase": 3,
+    "maxNewTokens": 2048,
+    "sameCasesAndOrderRequiredForAdapter": true,
+    "seed": 3407,
+    "temperature": null
+  },
+  "decision": {
+    "applicationRecoveryBlocker": "https://github.com/loomarr/loomarr/issues/1195",
+    "passingStockStopsTraining": true,
+    "requiresObservedRecoveryFault": true,
+    "runtimeOrInfrastructureFailureJustifiesTraining": false
+  },
+  "experimentId": "planner-current-qwen-stock-baseline-v1",
+  "hostedProductionComparison": {
+    "certificationAuthority": false,
+    "exactCurrentContractRequired": true,
+    "historicalScoresComparable": false,
+    "sameCasesAndOrderRequired": true,
+    "status": "preregistered-no-provider-inference-authorized"
+  },
+  "issue": "https://github.com/loomarr/loomarr-models/issues/22",
+  "model": {
+    "candidateId": "qwen38-27b-unsloth-bnb-4bit",
+    "quantization": "unsloth-bnb-4bit",
+    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+  },
+  "schemaVersion": 1,
+  "scoring": {
+    "passingStockStopsTraining": true,
+    "scorerVersion": "planner-current-development-scorer-v1",
+    "thresholds": {
+      "maxP95ToolCalls": 2,
+      "minCorrectToolOperationRate": 0.9,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 1.0,
+      "minSchemaValidityRate": 0.98
+    }
+  },
+  "status": "preregistered-no-paid-execution-authorized"
+}
