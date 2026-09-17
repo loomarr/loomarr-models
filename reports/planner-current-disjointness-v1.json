@@ -1,0 +1,23 @@
+{
+  "catalogKeyOverlap": 0,
+  "holdoutMaterialized": false,
+  "identityOverlap": 0,
+  "normalizedSemanticOverlap": 0,
+  "pairCount": 1,
+  "reportId": "planner-current-disjointness-v1",
+  "schemaVersion": 1,
+  "sealedHoldoutFamilies": [
+    "sports-league-era-identity",
+    "anthology-installment-boundaries",
+    "multilingual-diaspora-comedy",
+    "silent-film-restoration-periods",
+    "public-broadcasting-editorial-epochs",
+    "cross-medium-remake-exclusion",
+    "nested-season-and-audience-conflict",
+    "multi-fault-recovery-ordering"
+  ],
+  "splitCounts": {
+    "current-development": 24,
+    "current-training": 24
+  }
+}

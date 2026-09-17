@@ -1,0 +1,81 @@
+{
+  "authority": {
+    "certificationAuthorized": false,
+    "externalSpendUsd": "0",
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "providerInferenceAuthorized": false,
+    "trainingAuthorized": false
+  },
+  "capabilityMatrix": [
+    "exact-key-final",
+    "date-movie-release",
+    "date-series-premiere",
+    "date-series-airing",
+    "date-disjoint-intervals",
+    "date-ambiguity",
+    "collection-evidence",
+    "franchise-boundary",
+    "network-editorial-epoch",
+    "cast-routing",
+    "creator-routing",
+    "exact-title-unfamiliar",
+    "constraint-conflict-abstention",
+    "ownership-acquisition-balance",
+    "refinement-preservation",
+    "audience-ceiling",
+    "season-window",
+    "medium-constraint",
+    "language-constraint",
+    "region-constraint",
+    "thin-results",
+    "empty-results",
+    "malformed-tool-result",
+    "observed-fault-recovery"
+  ],
+  "contract": {
+    "path": "contracts/planner-contract-v5.json",
+    "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+  },
+  "development": {
+    "modelExposure": "none",
+    "path": "evaluation/planner-current-v1/cases.jsonl",
+    "records": 24,
+    "sha256": "ea3ea7f8e117f8310599df830aeedf3b0111c1aa0a8ec0dfe4893ece85c9bef9"
+  },
+  "historicalCompatibility": {
+    "path": "reports/planner-current-contract-compatibility-v1.json"
+  },
+  "holdoutDenylist": {
+    "path": "contracts/planner-holdout-denylist-v2.json",
+    "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+  },
+  "issue": "https://github.com/loomarr/loomarr-models/issues/22",
+  "planId": "planner-current-data-v1",
+  "recoveryEvidence": {
+    "applicationBlocker": "https://github.com/loomarr/loomarr/issues/1195",
+    "requiresInjectedFault": true,
+    "requiresObservedFault": true
+  },
+  "schemaVersion": 1,
+  "sealedHoldout": {
+    "families": [
+      "sports-league-era-identity",
+      "anthology-installment-boundaries",
+      "multilingual-diaspora-comedy",
+      "silent-film-restoration-periods",
+      "public-broadcasting-editorial-epochs",
+      "cross-medium-remake-exclusion",
+      "nested-season-and-audience-conflict",
+      "multi-fault-recovery-ordering"
+    ],
+    "materialized": false,
+    "modelExposure": "none"
+  },
+  "training": {
+    "path": "corpus/planner-current-v1/drafts.jsonl",
+    "records": 24,
+    "reviewStatus": "pending",
+    "sha256": "fc1997a5af5aae1e41a57049aa76fb6d52521083047809ffa3fa1e56ae7e02c5"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "path": "contracts/planner-contract-v5.json",
+    "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+  },
+  "corpusId": "planner-current-training-v1",
+  "generator": {
+    "id": "planner-current-contract-generator-v1",
+    "path": "scripts/build_planner_current_contract.py",
+    "sha256": "bb6def4d50e2311fb7f598a813f46911cee786067a057c58b9a1697fd27db6ae"
+  },
+  "holdoutDenylist": {
+    "path": "contracts/planner-holdout-denylist-v2.json",
+    "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+  },
+  "records": 24,
+  "reviewStatus": "pending",
+  "schemaVersion": 1,
+  "sha256": "fc1997a5af5aae1e41a57049aa76fb6d52521083047809ffa3fa1e56ae7e02c5",
+  "trainingAuthorized": false
+}
