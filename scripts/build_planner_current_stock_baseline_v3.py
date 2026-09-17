@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import re
@@ -56,25 +57,41 @@ def _authorization() -> dict[str, Any]:
         "authorizedPlanCommit": None,
     }:
         return value
-    if (
-        set(value)
-        == {
-            *base,
-            "status",
-            "authorizedBy",
-            "authorizedAt",
-            "authorizedPlanCommit",
-            "authorizationReference",
-            "priorBaselinePublication",
-        }
-        and value.get("status") == "authorized"
+    lifecycle_keys = {
+        *base,
+        "status",
+        "authorizedBy",
+        "authorizedAt",
+        "authorizedPlanCommit",
+        "authorizationReference",
+        "priorBaselinePublication",
+    }
+    common_identity = (
+        all(value.get(key) == expected for key, expected in base.items())
         and value.get("authorizedBy") == "loomarr-maintainer"
         and re.fullmatch(r"[0-9a-f]{40}", value.get("authorizedPlanCommit", ""))
-        and isinstance(value.get("authorizedAt"), str)
+        and _utc_timestamp(value.get("authorizedAt"))
         and re.fullmatch(
             r"https://github\.com/loomarr/loomarr-models/issues/29#issuecomment-\d+",
             value.get("authorizationReference", ""),
         )
+        and value.get("priorBaselinePublication", {}).get("path")
+        == "runs/planner-current-qwen-stock-baseline-v2/publication.json"
+        and value["priorBaselinePublication"].get("sha256")
+        == _sha(Path(value["priorBaselinePublication"]["path"]))
+    )
+    if set(value) == lifecycle_keys and value.get("status") == "authorized" and common_identity:
+        return value
+    if (
+        set(value)
+        == lifecycle_keys | {"completedAt", "publicationPath", "publicationSha256"}
+        and value.get("status") == "complete"
+        and common_identity
+        and _utc_timestamp(value.get("completedAt"))
+        and re.fullmatch(r"[0-9a-f]{64}", value.get("publicationSha256", ""))
+        and value.get("publicationPath")
+        == "runs/planner-current-qwen-stock-baseline-v3/publication.json"
+        and value["publicationSha256"] == _sha(Path(value["publicationPath"]))
         and value.get("priorBaselinePublication", {}).get("path")
         == "runs/planner-current-qwen-stock-baseline-v2/publication.json"
         and value["priorBaselinePublication"].get("sha256")
@@ -84,13 +101,26 @@ def _authorization() -> dict[str, Any]:
     raise ValueError("current stock v3 authorization lifecycle is invalid")
 
 
+def _utc_timestamp(value: Any) -> bool:
+    if not isinstance(value, str) or re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value
+    ) is None:
+        return False
+    try:
+        dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return True
+
+
 def content() -> bytes:
     budget = json.loads((ROOT / "budgets/external-spend-v1.json").read_text(encoding="utf-8"))
     committed = Decimal(budget["committedSpendUsd"])
     aggregate = Decimal(budget["authorizationUsd"])
-    reservation = Decimal("1.50")
     authorization = _authorization()
     authorized = authorization["status"] == "authorized"
+    complete = authorization["status"] == "complete"
+    reservation = Decimal("0") if complete else Decimal("1.50")
     bindings = {
         "authorization": _binding("reviews/planner-current-qwen-stock-baseline-v3/authorization.json"),
         "authorizer": _binding("scripts/authorize_planner_current_stock_baseline_v3.py"),
@@ -102,6 +132,7 @@ def content() -> bytes:
         "generator": _binding("scripts/build_planner_current_stock_baseline_v3.py"),
         "holdoutDenylist": _binding("contracts/planner-holdout-denylist-v2.json"),
         "preflight": _binding("src/loomarr_models/current_baseline_v3.py"),
+        "publisher": _binding("scripts/publish_planner_current_stock_baseline_v3.py"),
         "publicationValidator": _binding("src/loomarr_models/current_publication_v3.py"),
         "promptCapacityChecker": _binding("scripts/check_planner_current_prompt_capacity.py"),
         "promptCapacityModule": _binding("src/loomarr_models/prompt_capacity.py"),
@@ -109,13 +140,19 @@ def content() -> bytes:
         "runner": _binding("scripts/run_planner_current_stock_baseline_v3.py"),
         "runtime": _binding("src/loomarr_models/current_stock_runtime_v3.py"),
     }
-    if authorized:
+    if authorized or complete:
         bindings["priorBaselinePublication"] = authorization["priorBaselinePublication"]
     value = {
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
         "issue": ISSUE,
-        "status": "ready-for-paid-baseline" if authorized else "planned-billing-settlement-required",
+        "status": (
+            "complete-settled"
+            if complete
+            else "ready-for-paid-baseline"
+            if authorized
+            else "planned-billing-settlement-required"
+        ),
         "bindings": bindings,
         "model": MODEL,
         "execution": EXECUTION,

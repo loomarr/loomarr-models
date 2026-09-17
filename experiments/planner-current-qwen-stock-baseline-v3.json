@@ -40,7 +40,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline_v3.py",
-      "sha256": "9d1e3226138c17163be8ff3d4720fe5f7091dad7f4b6f63cd1b96f787e4a0d40"
+      "sha256": "4d3a9ab7200878a44e259bbd0dade64ed34c1b9192783973e26c6996cff7f2df"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -48,7 +48,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline_v3.py",
-      "sha256": "46030c0a18b808e9153430eb00f6388cce4544e19e427e54c7784110967e18a7"
+      "sha256": "28cab0ccca556c7a8bcb5266611377206779acfb9f3df5f9cdc3b78c447375d3"
     },
     "promptCapacityChecker": {
       "path": "scripts/check_planner_current_prompt_capacity.py",
@@ -65,6 +65,10 @@
     "publicationValidator": {
       "path": "src/loomarr_models/current_publication_v3.py",
       "sha256": "48dab137e78c6b8e720828ab04380e07bbb7f9f3147b39371b30b62abb68236e"
+    },
+    "publisher": {
+      "path": "scripts/publish_planner_current_stock_baseline_v3.py",
+      "sha256": "59d9aaa0674d27d36eb17a511fe8464b779ca4a88cbc32443f6b3c9961bfc77b"
     },
     "runner": {
       "path": "scripts/run_planner_current_stock_baseline_v3.py",

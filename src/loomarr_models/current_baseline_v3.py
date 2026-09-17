@@ -88,6 +88,7 @@ BASE_BINDING_KEYS = {
     "generator",
     "holdoutDenylist",
     "preflight",
+    "publisher",
     "publicationValidator",
     "promptCapacityChecker",
     "promptCapacityModule",

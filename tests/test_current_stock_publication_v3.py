@@ -3,6 +3,8 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from decimal import Decimal
@@ -165,6 +167,17 @@ class CurrentStockPublicationV3Tests(unittest.TestCase):
         )
         with self.assertRaisesRegex(Exception, "exceeds authorization"):
             settle_budget(budget, Decimal("1.51"), self.plan)
+
+    def test_publisher_refuses_before_reading_provider_evidence_when_unauthorized(self):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "scripts/publish_planner_current_stock_baseline_v3.py")],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("paid current stock v3 execution is not authorized", result.stderr)
 
 
 if __name__ == "__main__":
