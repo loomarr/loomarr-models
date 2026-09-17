@@ -36,7 +36,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline_v3.py",
-      "sha256": "6225e7e588e518978a8487185a5f063a41b2c16d519a2cfb4975424984c2dbeb"
+      "sha256": "92e6239c21eb625f8cdd1630dc1ff8e332f4b06d113017fec10e0382330e7727"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -44,7 +44,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline_v3.py",
-      "sha256": "e81a03bdd47ff8ae39e92abb140c10f5eed1fe9df0c6e71f561bcdea13c0f668"
+      "sha256": "4dbdfc796be20e2fc501fbedf96a456670b4b6daa4fc679403c7261369863ec7"
     },
     "promptCapacityChecker": {
       "path": "scripts/check_planner_current_prompt_capacity.py",
@@ -57,6 +57,14 @@
     "promptCapacityReport": {
       "path": "reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json",
       "sha256": "ae39b9b93e57e3aed6f8704da6f0e1bf0bcf4f26797656c96dcd8605dddefea5"
+    },
+    "runner": {
+      "path": "scripts/run_planner_current_stock_baseline_v3.py",
+      "sha256": "db1ace91a4e95be269fe6481e9503c9292dc5e8278aa7b223305244fdbbe0631"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/current_stock_runtime_v3.py",
+      "sha256": "07b22f723c89658cffab76de2695f62f1699a3b8703d07b9352becd58ebda5b6"
     }
   },
   "budget": {

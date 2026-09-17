@@ -13,4 +13,5 @@ Training, certification, deployment, and release authority remain false.
 ```bash
 python3 scripts/build_planner_current_stock_baseline_v3.py
 PYTHONPATH=src python3 scripts/preflight_planner_current_stock_baseline_v3.py
+PYTHONPATH=src python3 scripts/run_planner_current_stock_baseline_v3.py  # refuses until separately authorized
 ```

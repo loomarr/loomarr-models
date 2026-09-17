@@ -61,6 +61,8 @@ def content() -> bytes:
             "promptCapacityChecker": _binding("scripts/check_planner_current_prompt_capacity.py"),
             "promptCapacityModule": _binding("src/loomarr_models/prompt_capacity.py"),
             "promptCapacityReport": _binding("reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json"),
+            "runner": _binding("scripts/run_planner_current_stock_baseline_v3.py"),
+            "runtime": _binding("src/loomarr_models/current_stock_runtime_v3.py"),
         },
         "model": MODEL,
         "execution": EXECUTION,

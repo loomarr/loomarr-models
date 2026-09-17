@@ -82,6 +82,8 @@ BINDING_KEYS = {
     "promptCapacityChecker",
     "promptCapacityModule",
     "promptCapacityReport",
+    "runner",
+    "runtime",
 }
 GitProbe = Callable[[Path, Iterable[Path]], str]
 
