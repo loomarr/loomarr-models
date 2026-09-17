@@ -118,8 +118,9 @@ def _measurement(
         add_generation_prompt=True,
         reasoning_effort=reasoning_effort,
     )
-    encoded = tokenizer(text=rendered, return_tensors="pt")
-    input_tokens = int(encoded["input_ids"].shape[-1])
+    encoded = tokenizer(text=rendered)
+    input_ids = encoded["input_ids"]
+    input_tokens = len(input_ids[0]) if input_ids and isinstance(input_ids[0], list) else len(input_ids)
     return {
         "caseId": case_id,
         "stage": stage,

@@ -12,18 +12,12 @@ from loomarr_models.prompt_capacity import measure_prompt_capacity
 ROOT = Path(__file__).resolve().parents[1]
 
 
-class _Shape:
-    def __init__(self, tokens: int):
-        self.shape = (1, tokens)
-
-
 class FakeTokenizer:
     def apply_chat_template(self, messages, *, tools, **_kwargs):
         return json.dumps({"messages": messages, "tools": tools}, sort_keys=True)
 
-    def __call__(self, *, text, return_tensors):
-        self.assert_return_tensors = return_tensors
-        return {"input_ids": _Shape(len(text) // 4)}
+    def __call__(self, *, text):
+        return {"input_ids": list(range(len(text) // 4))}
 
 
 class PromptCapacityTests(unittest.TestCase):
