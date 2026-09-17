@@ -6,7 +6,9 @@ import json
 import sys
 import tempfile
 import unittest
+from decimal import Decimal
 from pathlib import Path
+from types import SimpleNamespace
 
 from loomarr_models.current_baseline import (
     AUTHORITY,
@@ -154,6 +156,25 @@ class CurrentStockPublicationTests(unittest.TestCase):
         charged["costUsd"]["total"] = "1.51"
         with self.assertRaisesRegex(Exception, "reservation"):
             publication.validate_provider_evidence(charged, self.config["execution"], self.plan)
+
+    def test_settlement_posts_exact_cost_without_consuming_a_reservation(self):
+        budget = {
+            "authorizationUsd": "40.00",
+            "postedSpendUsd": "28.6967677051754599875",
+            "outstandingReservationsUsd": "0",
+            "committedSpendUsd": "28.6967677051754599875",
+        }
+        plan = SimpleNamespace(
+            committedSpendUsd="28.6967677051754599875",
+            reservationUsd="1.50",
+        )
+        settled = publication.settle_budget(budget, Decimal("0.52"), plan)
+        self.assertEqual(settled["postedSpendUsd"], "29.2167677051754599875")
+        self.assertEqual(settled["committedSpendUsd"], "29.2167677051754599875")
+        self.assertEqual(settled["outstandingReservationsUsd"], "0")
+
+        with self.assertRaisesRegex(Exception, "exceeds authorization"):
+            publication.settle_budget(budget, Decimal("1.51"), plan)
 
 
 if __name__ == "__main__":

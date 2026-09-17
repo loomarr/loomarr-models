@@ -627,6 +627,8 @@ def _validate_config_shape(config: dict[str, Any], *, require_authorized: bool) 
         raise PreflightError("current stock baseline identity drifted")
     if set(config["bindings"]) != BINDING_KEYS:
         raise PreflightError("current stock baseline bindings drifted")
+    if config["status"] == "complete-settled":
+        raise PreflightError("current stock baseline is terminal and cannot run again")
     if config["authority"] != AUTHORITY:
         raise PreflightError("current stock baseline authority drifted")
     if config["status"] != "ready-for-paid-baseline":

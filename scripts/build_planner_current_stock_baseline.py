@@ -31,15 +31,28 @@ def binding(path: Path) -> dict[str, str]:
 
 
 def authorization() -> dict[str, Any]:
-    return {
+    expected = {
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
-        "status": "authorized",
         "maxReservationUsd": str(RESERVATION_USD),
         "authorizedBy": "loomarr-maintainer",
         "authorizedAt": AUTHORIZED_AT,
         "authorizedPlanCommit": AUTHORIZED_PLAN_COMMIT,
     }
+    value = json.loads((ROOT / AUTHORIZATION_PATH).read_text(encoding="utf-8"))
+    if any(value.get(key) != expected_value for key, expected_value in expected.items()):
+        raise ValueError("current stock baseline authorization identity drifted")
+    if value.get("status") == "authorized" and set(value) == {*expected, "status"}:
+        return value
+    if value.get("status") == "complete" and set(value) == {
+        *expected,
+        "status",
+        "completedAt",
+        "publicationPath",
+        "publicationSha256",
+    }:
+        return value
+    raise ValueError("current stock baseline authorization lifecycle is invalid")
 
 
 def config(authorization_blob: bytes) -> dict[str, Any]:
@@ -48,6 +61,18 @@ def config(authorization_blob: bytes) -> dict[str, Any]:
     budget = json.loads((ROOT / budget_path).read_text(encoding="utf-8"))
     committed = Decimal(budget["committedSpendUsd"])
     aggregate = Decimal(budget["authorizationUsd"])
+    authorization_value = json.loads(authorization_blob)
+    complete = authorization_value["status"] == "complete"
+    reservation = Decimal("0") if complete else RESERVATION_USD
+    authority = {
+        "paidBaselineAuthorized": not complete,
+        "modelDownloadAuthorized": not complete,
+        "gpuAuthorized": not complete,
+        "trainingAuthorized": False,
+        "certificationAuthority": False,
+        "deploymentAuthority": False,
+        "releaseAuthority": False,
+    }
     bindings: dict[str, Any] = {
         "authorization": {
             "path": AUTHORIZATION_PATH.as_posix(),
@@ -69,7 +94,7 @@ def config(authorization_blob: bytes) -> dict[str, Any]:
         "schemaVersion": 2,
         "experimentId": EXPERIMENT_ID,
         "issue": "https://github.com/loomarr/loomarr-models/issues/25",
-        "status": "ready-for-paid-baseline",
+        "status": "complete-settled" if complete else "ready-for-paid-baseline",
         "bindings": bindings,
         "model": {
             "candidateId": "qwen38-27b-unsloth-bnb-4bit",
@@ -136,44 +161,31 @@ def config(authorization_blob: bytes) -> dict[str, Any]:
             "aggregateAuthorizationUsd": str(aggregate),
             "currentCommittedUsd": str(committed),
             "outstandingReservationsUsd": budget["outstandingReservationsUsd"],
-            "proposedReservationUsd": str(RESERVATION_USD),
-            "projectedCommitmentUsd": str(committed + RESERVATION_USD),
-            "remainingAuthorizationUsd": str(aggregate - committed - RESERVATION_USD),
+            "proposedReservationUsd": str(reservation),
+            "projectedCommitmentUsd": str(committed + reservation),
+            "remainingAuthorizationUsd": str(aggregate - committed - reservation),
         },
-        "authority": {
-            "paidBaselineAuthorized": True,
-            "modelDownloadAuthorized": True,
-            "gpuAuthorized": True,
-            "trainingAuthorized": False,
-            "certificationAuthority": False,
-            "deploymentAuthority": False,
-            "releaseAuthority": False,
-        },
+        "authority": authority,
     }
 
 
-def outputs() -> dict[Path, bytes]:
+def content() -> bytes:
     authorization_blob = encoded(authorization())
-    return {
-        AUTHORIZATION_PATH: authorization_blob,
-        OUTPUT: encoded(config(authorization_blob)),
-    }
+    return encoded(config(authorization_blob))
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    generated = outputs()
+    expected = content()
     if args.check:
-        drift = [path.as_posix() for path, expected in generated.items() if not (ROOT / path).is_file() or (ROOT / path).read_bytes() != expected]
-        if drift:
-            raise SystemExit("generated current stock baseline artifacts drifted: " + ", ".join(drift))
+        if not (ROOT / OUTPUT).is_file() or (ROOT / OUTPUT).read_bytes() != expected:
+            raise SystemExit("generated current stock baseline artifact drifted: " + OUTPUT.as_posix())
         return
-    for path, content in generated.items():
-        target = ROOT / path
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(content)
+    target = ROOT / OUTPUT
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(expected)
 
 
 if __name__ == "__main__":

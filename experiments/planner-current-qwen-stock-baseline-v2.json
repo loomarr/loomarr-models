@@ -36,7 +36,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline.py",
-      "sha256": "a873eb0d901f9b3c754ef2765d7ce4a5b9f097df4dd8bf626617683757318aac"
+      "sha256": "0f41ccc250ea76dcf2cb34b4e45788ddc1ad208581d806447d457fc194566652"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -44,11 +44,11 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline.py",
-      "sha256": "745ab13dcb4f3049fb86a5d4ac102481cb0916d399864d27dadb7267fa5b5167"
+      "sha256": "e0cddde80db55fa114aa1e02cca4b66b064629913dc69de26beeb1e0f71dfc56"
     },
     "publisher": {
       "path": "scripts/publish_planner_current_stock_baseline.py",
-      "sha256": "5e68693ba872059ee2d35e3d285c5e9bdf376f17a7e1a560f0bed172ec702867"
+      "sha256": "1d9febae3de94d058af830491abbcf1177d98a1173e2ff9984226663913a2a0c"
     },
     "runner": {
       "path": "scripts/run_planner_current_stock_baseline.py",
