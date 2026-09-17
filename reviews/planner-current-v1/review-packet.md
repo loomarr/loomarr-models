@@ -65,9 +65,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `73795bf4c95112c3167d19fa8d7342a2b64e262d32b82e1ad10766a041f3c233`
 - Capability: `date-movie-release`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-repaired` at `2026-09-17T02:19:40Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The anchored 1980s movie-release interval is preserved; Adventure and desert are supported by the search arguments and returned metadata; only the surfaced key is selected.
 
 ### Exact non-repeated turns
 
@@ -146,9 +146,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `a105d821f5720ba0dc240b3a0753b690827f563030a8d6f0d1df181ebe0a629b`
 - Capability: `date-series-premiere`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-repaired` at `2026-09-17T02:19:40Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The anchored 1990s series-premiere interval is preserved; Comedy and workplace are supported by the search arguments and returned metadata; only the surfaced key is selected.
 
 ### Exact non-repeated turns
 
@@ -227,9 +227,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `2ba1be6849c8de68da99879e6d81c5187241904250a901e7761835370757d6de`
 - Capability: `date-series-airing`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-repaired` at `2026-09-17T02:19:40Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The 2000s series-airing constraint is preserved without an invented genre; returned evidence supports seasons 3 through 8 and the final applies that exact playback window.
 
 ### Exact non-repeated turns
 
@@ -302,9 +302,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `163760d2e22b56f2fd222df31bade1029e07f86743a9e5c0a69b1a18b6d31ac0`
 - Capability: `date-disjoint-intervals`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-repaired` at `2026-09-17T02:19:40Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Both disjoint movie-release intervals are preserved; Science Fiction and space are supported by arguments and returned metadata; only the surfaced key is selected.
 
 ### Exact non-repeated turns
 
@@ -1491,9 +1491,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `01e52adb6e081b44aed0a3f53cbcd8a3479cd3d8e90fdeeff086810a545bb799`
 - Capability: `observed-fault-recovery`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-repaired` at `2026-09-17T02:19:40Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The trace retries only after the injected observed fault, preserves the same arguments, and selects a returned candidate with Mystery, lunar, and detective evidence.
 
 ### Exact non-repeated turns
 

@@ -1,0 +1,38 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "externalSpendUsd": "0",
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "providerInferenceAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "decisions": {
+      "path": "reviews/planner-current-v1/decisions.jsonl",
+      "sha256": "bbdb3c0936146ef7b54b9f4a0887be13ab4d7e9de8a06cac326d12ad7c751c87"
+    },
+    "manifest": {
+      "path": "corpus/planner-current-v1/manifest.json",
+      "sha256": "9e810062a01e462b45763832fdd788d0b801b0967dfd7a30dd5f4e3682fa510f"
+    },
+    "plan": {
+      "path": "reviews/planner-current-v1/review-plan.json",
+      "sha256": "5e38610ac19639ea276cf8e2585beea95b7fa3a5b7402c35b6539fa5da7121e3"
+    },
+    "training": {
+      "path": "corpus/planner-current-v1/traces.jsonl",
+      "sha256": "a4ce7ac3e3365148ee4bd057928cfe3f72847637fe9c8ae7ebbadc29b608dcfa"
+    }
+  },
+  "publicationId": "planner-current-training-review-v1",
+  "schemaVersion": 1,
+  "status": "complete-independent-review",
+  "summary": {
+    "approved": 24,
+    "pending": 0,
+    "rejected": 0
+  }
+}
