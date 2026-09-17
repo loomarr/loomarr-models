@@ -149,6 +149,10 @@ Copper Meridian 12
         self.assertEqual(converted[3]["tool_call_id"], "call-1")
         self.assertEqual(converted[3]["content"], '{"candidates":[]}')
 
+        messages[3]["content"] = '[{"key":"movie:synthetic:1"}]'
+        converted = _to_huggingface_messages(messages)
+        self.assertEqual(converted[3]["content"], '[{"key":"movie:synthetic:1"}]')
+
     def test_unsloth_import_precedes_torch_and_peft(self):
         source = (ROOT / "src/loomarr_models/eval_runtime.py").read_text(encoding="utf-8")
         tree = ast.parse(source)

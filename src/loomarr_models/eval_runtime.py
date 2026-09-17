@@ -266,13 +266,16 @@ def _to_huggingface_messages(messages: list[dict[str, Any]]) -> list[dict[str, A
                 }
             )
         elif role == "tool":
+            content = message["content"]
             converted.append(
                 {
                     "role": "tool",
                     "tool_call_id": message["toolCallId"],
                     "name": message["name"],
-                    "content": json.dumps(
-                        message["content"], sort_keys=True, separators=(",", ":")
+                    "content": (
+                        content
+                        if isinstance(content, str)
+                        else json.dumps(content, sort_keys=True, separators=(",", ":"))
                     ),
                 }
             )

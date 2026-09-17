@@ -12,6 +12,11 @@ preserved but excluded; the replacement no-spend artifacts, disjointness proof, 
 preregistration, and stop conditions are documented in
 [docs/planner-current-contract-v1.md](docs/planner-current-contract-v1.md).
 
+The follow-on no-spend baseline harness is tracked in
+[loomarr-models#25](https://github.com/loomarr/loomarr-models/issues/25) and documented in
+[docs/planner-current-stock-baseline.md](docs/planner-current-stock-baseline.md). It adds current-contract
+scoring, preflight, runtime, and publication replay while all execution authority remains disabled.
+
 The first milestone is [loomarr/loomarr#937](https://github.com/loomarr/loomarr/issues/937): a
 validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract,
 the pinned Qwen 3.8 / Unsloth candidate environment, and the reproducible evidence from the first
