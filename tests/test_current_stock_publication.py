@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import publish_planner_current_stock_baseline as publication
+import publish_planner_current_stock_failure as failure_publication
 from tests.test_current_stock_baseline import oracle
 
 
@@ -175,6 +176,43 @@ class CurrentStockPublicationTests(unittest.TestCase):
 
         with self.assertRaisesRegex(Exception, "exceeds authorization"):
             publication.settle_budget(budget, Decimal("1.51"), plan)
+
+    def test_runtime_failure_publication_requires_hash_bound_logs(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            bindings = {}
+            for name, filename in (
+                ("archive", "failure.tgz"),
+                ("baselineLog", "baseline.log"),
+                ("setupLog", "setup.log"),
+            ):
+                artifact = directory / filename
+                artifact.write_bytes(name.encode())
+                bindings[name] = {
+                    "path": filename,
+                    "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                }
+            manifest = {
+                "schemaVersion": 1,
+                "experimentId": self.config["experimentId"],
+                "status": "failed-unsettled",
+                "completionClass": "runtime-configuration-failure",
+                "sourceCommit": "a" * 40,
+                "sourceConfigSha256": "b" * 64,
+                "providerCostUsd": None,
+                "error": {
+                    "exitCode": 2,
+                    "message": "evaluation prompt leaves only -729 generation tokens within context",
+                },
+                "artifacts": bindings,
+                "authority": AUTHORITY,
+            }
+            path = directory / "failure-manifest.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            self.assertEqual(failure_publication.validate_failure(path), manifest)
+            (directory / "baseline.log").write_text("drift", encoding="utf-8")
+            with self.assertRaisesRegex(Exception, "digest mismatch"):
+                failure_publication.validate_failure(path)
 
 
 if __name__ == "__main__":
