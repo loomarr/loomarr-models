@@ -18,7 +18,7 @@ class CurrentStockBaselineV3Tests(unittest.TestCase):
         report = preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
         self.assertEqual(report.caseCount, 24)
         self.assertEqual(report.proposedReservationUsd, "1.50")
-        self.assertEqual(report.promptCapacityStatus, "required-not-run")
+        self.assertEqual(report.promptCapacityStatus, "passed")
         self.assertEqual(report.outputDir, ".artifacts/planner-current-qwen-stock-baseline-v3")
         self.assertFalse(report.paidBaselineAuthorized)
         with self.assertRaisesRegex(PreflightError, "not authorized"):

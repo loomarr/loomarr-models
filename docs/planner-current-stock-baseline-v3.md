@@ -2,9 +2,11 @@
 
 Issue [#29](https://github.com/loomarr/loomarr-models/issues/29) owns the correction for the terminal v2 context-capacity failure. V2 produced no model-quality result and grants no training justification.
 
-V3 preserves the exact model revision, 24-case current-contract development gate, scoring thresholds, secure A40, pinned environment, deterministic decoding, 9,000-second deadline, `$1.50` maximum reservation, and no-retry policy. Its candidate context is 16,384 tokens with a 2,048-token completion budget.
+V3 preserves the exact model revision, 24-case current-contract development gate, scoring thresholds, secure A40, pinned environment, deterministic decoding, 9,000-second deadline, `$1.50` maximum reservation, and no-retry policy. Its context is 16,384 tokens with a 2,048-token completion budget.
 
-The plan is deliberately non-executable. Before paid authorization, the exact pinned Qwen processor must render every scripted initial, tool-result, retry, and finalization turn. Every stage must retain all 2,048 completion tokens, and the resulting report must be committed and hash-bound into the experiment. V2 billing must also be exactly settled before the aggregate-spend check is refreshed.
+The exact pinned Qwen processor rendered every scripted initial, tool-result, retry, and finalization turn in the committed, hash-bound capacity report. The maximum input was 5,260 tokens and the minimum remaining capacity was 11,124 tokens, so all 50 stages retain the full 2,048-token completion budget.
+
+The plan remains deliberately non-executable until v2 billing is exactly settled and the aggregate-spend check is refreshed. No paid v3 authorization follows from the capacity result alone.
 
 Training, certification, deployment, and release authority remain false.
 

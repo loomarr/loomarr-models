@@ -14,7 +14,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from loomarr_models.current_baseline import MODEL, SCORING
-from loomarr_models.current_baseline_v3 import AUTHORITY, COMPARISON, EXECUTION, EXPERIMENT_ID, HOSTED_COMPARISON, ISSUE
+from loomarr_models.current_baseline_v3 import (
+    AUTHORITY,
+    COMPARISON,
+    EXECUTION,
+    EXPERIMENT_ID,
+    HOSTED_COMPARISON,
+    ISSUE,
+    PROMPT_CAPACITY_CONFIG_SHA256,
+)
 
 
 OUTPUT = Path("experiments/planner-current-qwen-stock-baseline-v3.json")
@@ -39,7 +47,7 @@ def content() -> bytes:
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
         "issue": ISSUE,
-        "status": "planned-token-preflight-required",
+        "status": "planned-billing-settlement-required",
         "bindings": {
             "authorization": _binding("reviews/planner-current-qwen-stock-baseline-v3/authorization.json"),
             "budgetLedger": _binding("budgets/external-spend-v1.json"),
@@ -52,6 +60,7 @@ def content() -> bytes:
             "preflight": _binding("src/loomarr_models/current_baseline_v3.py"),
             "promptCapacityChecker": _binding("scripts/check_planner_current_prompt_capacity.py"),
             "promptCapacityModule": _binding("src/loomarr_models/prompt_capacity.py"),
+            "promptCapacityReport": _binding("reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json"),
         },
         "model": MODEL,
         "execution": EXECUTION,
@@ -65,10 +74,11 @@ def content() -> bytes:
         },
         "hostedProductionComparison": HOSTED_COMPARISON,
         "promptCapacity": {
-            "status": "required-not-run",
+            "status": "passed",
             "exactPinnedProcessorRequired": True,
             "fullGenerationBudgetRequiredAtEveryStage": True,
-            "report": None,
+            "preflightConfigSha256": PROMPT_CAPACITY_CONFIG_SHA256,
+            "report": _binding("reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json"),
         },
         "budget": {
             "aggregateAuthorizationUsd": str(aggregate),

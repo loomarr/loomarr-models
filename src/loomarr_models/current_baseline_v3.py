@@ -19,6 +19,10 @@ from .experiment import HEAVY_MODULE_PREFIXES, PreflightError, _git_probe, _inpu
 
 EXPERIMENT_ID = "planner-current-qwen-stock-baseline-v3"
 ISSUE = "https://github.com/loomarr/loomarr-models/issues/29"
+PROMPT_CAPACITY_REPORT_SHA256 = "ae39b9b93e57e3aed6f8704da6f0e1bf0bcf4f26797656c96dcd8605dddefea5"
+PROMPT_CAPACITY_CONFIG_SHA256 = "e0d31e5244c735ea68103c56a040ba129d04ab2fcbb31536f69efb26cfb2c40d"
+PROMPT_CAPACITY_MEASUREMENTS_SHA256 = "48e2953bf4830f80251ad5fd7fa696473b94dd609a6d1a60581043b140d957e8"
+PROMPT_CAPACITY_SOURCE_COMMIT = "eab8296218bf53135c0e1e17c74d92d8e9095ee9"
 AUTHORITY = {
     "paidBaselineAuthorized": False,
     "modelDownloadAuthorized": False,
@@ -77,6 +81,7 @@ BINDING_KEYS = {
     "preflight",
     "promptCapacityChecker",
     "promptCapacityModule",
+    "promptCapacityReport",
 }
 GitProbe = Callable[[Path, Iterable[Path]], str]
 
@@ -181,6 +186,9 @@ def preflight(
         "authorizedPlanCommit": None,
     }:
         raise PreflightError("current stock v3 authorization evidence drifted")
+    _validate_prompt_capacity_report(
+        _object(bound["promptCapacityReport"]), config, cases
+    )
     committed, reservation, projected, aggregate = _validate_budget(config, _object(bound["budgetLedger"]))
     output = _output_path(root, Path(config["execution"]["outputDir"]))
     source_commit = (git_probe or _git_probe)(root, [config_path, *bound.values()])
@@ -219,7 +227,7 @@ def _validate_shape(config: dict[str, Any], *, require_authorized: bool) -> None
     if require_authorized:
         raise PreflightError("paid current stock v3 execution is not authorized")
     if (
-        config["status"] != "planned-token-preflight-required"
+        config["status"] != "planned-billing-settlement-required"
         or set(config["bindings"]) != BINDING_KEYS
         or config["model"] != MODEL
         or config["execution"] != EXECUTION
@@ -228,10 +236,11 @@ def _validate_shape(config: dict[str, Any], *, require_authorized: bool) -> None
         or config["hostedProductionComparison"] != HOSTED_COMPARISON
         or config["authority"] != AUTHORITY
         or config["promptCapacity"] != {
-            "status": "required-not-run",
+            "status": "passed",
             "exactPinnedProcessorRequired": True,
             "fullGenerationBudgetRequiredAtEveryStage": True,
-            "report": None,
+            "preflightConfigSha256": PROMPT_CAPACITY_CONFIG_SHA256,
+            "report": config["bindings"].get("promptCapacityReport"),
         }
     ):
         raise PreflightError("current stock v3 protocol or authority drifted")
@@ -266,6 +275,72 @@ def _validate_budget(config: dict[str, Any], ledger: dict[str, Any]) -> tuple[De
     }:
         raise PreflightError("current stock v3 budget projection drifted")
     return committed, reservation, projected, aggregate
+
+
+def _validate_prompt_capacity_report(
+    report: dict[str, Any], config: dict[str, Any], cases: list[dict[str, Any]]
+) -> None:
+    measurements = report.get("measurements")
+    expected_stages = [
+        (case["caseId"], stage)
+        for case in cases
+        for stage in [
+            *(f"tool-call-{index}" for index in range(1, len(case["script"]) + 1)),
+            "finalization",
+        ]
+    ]
+    if (
+        config["bindings"]["promptCapacityReport"]["sha256"]
+        != PROMPT_CAPACITY_REPORT_SHA256
+        or report.get("schemaVersion") != 1
+        or report.get("experimentId") != EXPERIMENT_ID
+        or report.get("caseCount") != len(cases)
+        or report.get("stageCount") != len(expected_stages)
+        or report.get("maxSeqLength") != COMPARISON["maxSeqLength"]
+        or report.get("requiredGenerationTokens") != COMPARISON["maxNewTokens"]
+        or report.get("maxInputTokens") != 5260
+        or report.get("minAvailableGenerationTokens") != 11124
+        or report.get("measurementsSha256") != PROMPT_CAPACITY_MEASUREMENTS_SHA256
+        or report.get("sourceCommit") != PROMPT_CAPACITY_SOURCE_COMMIT
+        or report.get("runtime") != {
+            "containerImage": "python@sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7",
+            "python": "3.12.11",
+            "tokenizers": "0.22.2",
+            "torch": "2.8.0+cpu",
+            "torchvision": "0.23.0+cpu",
+            "transformers": "5.15.1",
+        }
+        or report.get("processor") != {
+            "class": "transformers.models.qwen3_vl.processing_qwen3_vl.Qwen3VLProcessor",
+            "loadedCommit": None,
+            "tokenizerClass": "transformers.models.qwen2.tokenization_qwen2.Qwen2Tokenizer",
+        }
+    ):
+        raise PreflightError("current stock v3 prompt-capacity evidence drifted")
+    inputs = report.get("inputs", {})
+    if (
+        inputs.get("config", {}).get("sha256") != PROMPT_CAPACITY_CONFIG_SHA256
+        or inputs.get("contract") != config["bindings"]["contract"]
+        or inputs.get("cases") != config["bindings"]["cases"]
+        or inputs.get("environment") != config["bindings"]["environment"]
+        or inputs.get("model") != config["model"]
+    ):
+        raise PreflightError("current stock v3 prompt-capacity input identity drifted")
+    if not isinstance(measurements, list) or [
+        (item.get("caseId"), item.get("stage")) for item in measurements
+    ] != expected_stages:
+        raise PreflightError("current stock v3 prompt-capacity stage coverage drifted")
+    for item in measurements:
+        input_tokens = item.get("inputTokens")
+        available = item.get("availableGenerationTokens")
+        if (
+            not isinstance(input_tokens, int)
+            or not isinstance(available, int)
+            or item.get("requiredGenerationTokens") != COMPARISON["maxNewTokens"]
+            or available != COMPARISON["maxSeqLength"] - input_tokens
+            or available < COMPARISON["maxNewTokens"]
+        ):
+            raise PreflightError("current stock v3 prompt-capacity measurement failed")
 
 
 def _object(path: Path) -> dict[str, Any]:
