@@ -1,0 +1,72 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "externalSpendUsd": "0",
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "providerInferenceAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "development": {
+      "path": "evaluation/planner-current-v1/cases.jsonl",
+      "sha256": "ea3ea7f8e117f8310599df830aeedf3b0111c1aa0a8ec0dfe4893ece85c9bef9"
+    },
+    "developmentManifest": {
+      "path": "evaluation/planner-current-v1/manifest.json",
+      "sha256": "ea24c2bd2ad78097f57429672c63acf5b0d7eb7e740f20f6e6045cd3e0b4e966"
+    },
+    "draftManifest": {
+      "path": "corpus/planner-current-v1/draft-manifest.json",
+      "sha256": "be3f5c1faa25aacad7a67881ef9e576046b64a99e9417ec1b7ffc52234505ca3"
+    },
+    "drafts": {
+      "path": "corpus/planner-current-v1/drafts.jsonl",
+      "sha256": "fc1997a5af5aae1e41a57049aa76fb6d52521083047809ffa3fa1e56ae7e02c5"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/planner-holdout-denylist-v2.json",
+      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+    },
+    "reviewGenerator": {
+      "path": "scripts/build_planner_current_review.py",
+      "sha256": "7b45f121879cdd585dd765860e8f91c4ecc8aefa03bdd21ca783db3b23133027"
+    },
+    "reviewValidator": {
+      "path": "src/loomarr_models/current_review.py",
+      "sha256": "d45f44633583b1bd2f20b83f614bbc4a7000cc1d2b2a32a216bd7ffb89e9c85d"
+    }
+  },
+  "criteria": [
+    "contractConformant",
+    "toolAndFinalGrounded",
+    "constraintBehaviorCorrect",
+    "recoveryEvidenceCorrect",
+    "syntheticAndPrivateSafe"
+  ],
+  "decisionPath": "reviews/planner-current-v1/decisions.jsonl",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/27",
+  "outputs": {
+    "manifest": "corpus/planner-current-v1/manifest.json",
+    "publication": "reviews/planner-current-v1/publication.json",
+    "training": "corpus/planner-current-v1/traces.jsonl"
+  },
+  "packetPath": "reviews/planner-current-v1/review-packet.md",
+  "planId": "planner-current-training-review-v1",
+  "requiredRecords": 24,
+  "reviewPolicy": {
+    "approvalRequiresAllCriteria": true,
+    "partialPromotionAllowed": false,
+    "rejectionRequiresNotes": true,
+    "reviewerMustDifferFromDraftAuthor": true,
+    "timestampsRequireRfc3339Utc": true
+  },
+  "schemaVersion": 1,
+  "status": "pending-independent-review"
+}

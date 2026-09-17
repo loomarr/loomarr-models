@@ -17,6 +17,11 @@ The follow-on no-spend baseline harness is tracked in
 [docs/planner-current-stock-baseline.md](docs/planner-current-stock-baseline.md). It adds current-contract
 scoring, preflight, runtime, and publication replay while all execution authority remains disabled.
 
+Independent review of the current-contract training drafts is tracked in
+[loomarr-models#27](https://github.com/loomarr/loomarr-models/issues/27) and documented in
+[docs/planner-current-review.md](docs/planner-current-review.md). Pending, rejected, stale, or self-reviewed
+rows cannot enter the active training corpus.
+
 The first milestone is [loomarr/loomarr#937](https://github.com/loomarr/loomarr/issues/937): a
 validated 50-trace planner smoke corpus. Current files establish the fail-closed trace contract,
 the pinned Qwen 3.8 / Unsloth candidate environment, and the reproducible evidence from the first
