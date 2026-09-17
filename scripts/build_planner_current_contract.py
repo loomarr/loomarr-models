@@ -269,25 +269,35 @@ def capability_spec(capability: str, index: int, split: str) -> dict[str, Any]:
     elif capability == "date-movie-release":
         meaning = date_meaning(description, "1980s" if split == "train" else "1990s", "movie_release", [(1980, 1989)] if split == "train" else [(1990, 1999)])
         primary["year"] = 1984 if split == "train" else 1994
-        primary["genres"] = ["Thriller", "Adventure"]
-        arguments = {"genres": ["Thriller"], "media_type": "movie", "dateMeaning": meaning}
+        genre, keyword = (("Adventure", "desert") if split == "train" else ("Thriller", "coastal"))
+        primary["genres"] = [genre]
+        primary["keywords"] = [keyword]
+        primary["overview"] = f"A synthetic {keyword} {genre.lower()} released in {primary['year']}."
+        arguments = {"genres": [genre], "keywords": [keyword], "media_type": "movie", "dateMeaning": meaning}
     elif capability == "date-series-premiere":
         phrase, years = (("1990s", (1990, 1999)) if split == "train" else ("2000s", (2000, 2009)))
         meaning = date_meaning(description, phrase, "series_premiere", [years])
         primary["year"] = 1995 if split == "train" else 2005
-        primary["genres"] = ["Drama"]
-        arguments = {"genres": ["Drama"], "media_type": "series", "dateMeaning": meaning}
+        genre, keyword = (("Comedy", "workplace") if split == "train" else ("Drama", "newsroom"))
+        primary["genres"] = [genre]
+        primary["keywords"] = [keyword]
+        primary["overview"] = f"A synthetic {keyword} {genre.lower()} that premiered in {primary['year']}."
+        arguments = {"genres": [genre], "keywords": [keyword], "media_type": "series", "dateMeaning": meaning}
     elif capability == "date-series-airing":
         phrase, years = (("2000s", (2000, 2009)) if split == "train" else ("2010s", (2010, 2019)))
         meaning = date_meaning(description, phrase, "series_airing", [years])
         primary["year"] = 1998 if split == "train" else 2008
-        arguments = {"genres": ["Drama"], "media_type": "series", "dateMeaning": meaning}
+        primary["overview"] = f"A synthetic series with seasons 3 through 8 airing from {years[0]} through {years[1]}."
+        arguments = {"media_type": "series", "dateMeaning": meaning}
     elif capability == "date-disjoint-intervals":
         phrase, years = (("1970s or 2010s", [(1970, 1979), (2010, 2019)]) if split == "train" else ("1960s or 2020s", [(1960, 1969), (2020, 2029)]))
         meaning = date_meaning(description, phrase, "movie_release", years)
         primary["year"] = 1975 if split == "train" else 2025
-        primary["genres"] = ["Adventure"]
-        arguments = {"genres": ["Adventure"], "media_type": "movie", "dateMeaning": meaning}
+        genre, keyword = (("Science Fiction", "space") if split == "train" else ("Adventure", "road"))
+        primary["genres"] = [genre]
+        primary["keywords"] = [keyword]
+        primary["overview"] = f"A synthetic {keyword} {genre.lower()} released in {primary['year']}."
+        arguments = {"genres": [genre], "keywords": [keyword], "media_type": "movie", "dateMeaning": meaning}
     elif capability == "date-ambiguity":
         phrase = "early classics" if split == "train" else "late classics"
         meaning = ambiguous_meaning(description, phrase)
@@ -370,7 +380,12 @@ def capability_spec(capability: str, index: int, split: str) -> dict[str, Any]:
     elif capability == "malformed-tool-result":
         results, selected, abstain = [{"error": "malformed_catalog_response"}], [], True
     elif capability == "observed-fault-recovery":
-        arguments = {"genres": ["Mystery" if split == "train" else "Adventure"], "dateMeaning": meaning}
+        genre = "Mystery" if split == "train" else "Adventure"
+        keywords = ["lunar", "detective"] if split == "train" else ["polar", "expedition"]
+        primary["genres"] = [genre]
+        primary["keywords"] = keywords
+        primary["overview"] = f"A synthetic {genre.lower()} about a {' '.join(keywords)}."
+        arguments = {"genres": [genre], "keywords": keywords, "dateMeaning": meaning}
         results = [
             {"error": "transient_catalog_failure", "fault": {"injected": True, "observed": True}},
             [primary],
@@ -420,8 +435,10 @@ def final_payload(spec: dict[str, Any]) -> str:
             "rationale": "The exact synthetic catalog evidence satisfies the submitted constraints.",
             "confidence": 0.91,
         }
-        if spec["capability"] == "season-window":
+        if spec["capability"] in {"date-series-airing", "season-window"}:
             pick["seasonMin"], pick["seasonMax"] = 1, 3
+        if spec["capability"] == "date-series-airing":
+            pick["seasonMin"], pick["seasonMax"] = 3, 8
         picks.append(pick)
     policy: dict[str, Any] = {}
     if spec["capability"] == "audience-ceiling":

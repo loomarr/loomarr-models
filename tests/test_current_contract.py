@@ -114,6 +114,32 @@ class CurrentContractTests(unittest.TestCase):
         dated_result = json.loads(dated_movie["script"][0]["result"])[0]
         self.assertLessEqual(1990, dated_result["year"])
         self.assertLessEqual(dated_result["year"], 1999)
+        self.assertEqual(dated_movie["script"][0]["arguments"]["genres"], ["Thriller"])
+        self.assertEqual(dated_movie["script"][0]["arguments"]["keywords"], ["coastal"])
+        self.assertEqual(dated_result["genres"], ["Thriller"])
+        self.assertEqual(dated_result["keywords"], ["coastal"])
+
+        premiered = cases["date-series-premiere"]
+        premiered_result = json.loads(premiered["script"][0]["result"])[0]
+        self.assertEqual(premiered["script"][0]["arguments"]["genres"], ["Drama"])
+        self.assertEqual(premiered["script"][0]["arguments"]["keywords"], ["newsroom"])
+        self.assertEqual(premiered_result["genres"], ["Drama"])
+        self.assertEqual(premiered_result["keywords"], ["newsroom"])
+
+        airing = cases["date-series-airing"]
+        self.assertNotIn("genres", airing["script"][0]["arguments"])
+        self.assertIn("seasons 3 through 8", json.loads(airing["script"][0]["result"])[0]["overview"])
+
+        disjoint = cases["date-disjoint-intervals"]
+        disjoint_result = json.loads(disjoint["script"][0]["result"])[0]
+        self.assertEqual(disjoint["script"][0]["arguments"]["keywords"], ["road"])
+        self.assertEqual(disjoint_result["keywords"], ["road"])
+
+        recovery = cases["observed-fault-recovery"]
+        recovered_result = json.loads(recovery["script"][1]["result"])[0]
+        self.assertEqual(recovery["script"][1]["arguments"]["keywords"], ["polar", "expedition"])
+        self.assertEqual(recovered_result["genres"], ["Adventure"])
+        self.assertEqual(recovered_result["keywords"], ["polar", "expedition"])
 
         refinement = next(trace for trace in self.training if trace["axes"] == ["refinement-preservation"])
         refinement_prompt = refinement["messages"][1]["content"]

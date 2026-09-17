@@ -43,10 +43,10 @@ class CurrentReviewTests(unittest.TestCase):
         path.write_bytes(jsonl_bytes(decisions))
         return path
 
-    def test_pending_review_is_exact_and_cannot_promote(self):
+    def test_partial_review_is_exact_and_cannot_promote(self):
         state = load_review_state(ROOT, PLAN)
         self.assertEqual(len(state.drafts), 24)
-        self.assertEqual(state.summary, {"approved": 0, "rejected": 0, "pending": 24})
+        self.assertEqual(state.summary, {"approved": 19, "rejected": 0, "pending": 5})
         self.assertEqual(
             [decision["traceId"] for decision in state.decisions],
             [trace["traceId"] for trace in state.drafts],
@@ -92,7 +92,11 @@ class CurrentReviewTests(unittest.TestCase):
         cases.append((false_approval, "approval requires every"))
 
         false_pending = copy.deepcopy(base)
-        false_pending[0]["reviewer"] = "review-agent:planner-current-v1"
+        pending_index = next(
+            index for index, decision in enumerate(false_pending)
+            if decision["verdict"] == "pending"
+        )
+        false_pending[pending_index]["reviewer"] = "review-agent:planner-current-v1"
         cases.append((false_pending, "pending review carries false evidence"))
 
         with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
@@ -158,7 +162,7 @@ class CurrentReviewTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
             path = self.write_decisions(Path(temporary), decisions)
             state = load_review_state(ROOT, PLAN, decisions_path=path)
-        self.assertEqual(state.summary, {"approved": 0, "rejected": 1, "pending": 23})
+        self.assertEqual(state.summary, {"approved": 18, "rejected": 1, "pending": 5})
         with self.assertRaisesRegex(ValidationError, "requires 24 approved"):
             build_promotion_artifacts(state)
 

@@ -8,9 +8,9 @@ This generated packet omits the repeated system prompt and tool schema; their ex
 - Draft SHA-256: `8dfd7bf7171d8d8a467eed59a76fdaeb27ce00eee782c06387b24430d83e3ca6`
 - Capability: `exact-key-final`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Exact titled candidate is queried and the final copies only its surfaced catalog key.
 
 ### Exact non-repeated turns
 
@@ -62,7 +62,7 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 
 ## planner-current-train-date-movie-release-01
 
-- Draft SHA-256: `e92bf3de30bce8e61ea3328e974b5b693d2eaa5d396d1b730f8e8b57d88e0783`
+- Draft SHA-256: `73795bf4c95112c3167d19fa8d7342a2b64e262d32b82e1ad10766a041f3c233`
 - Capability: `date-movie-release`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
 - Verdict: **pending** by `—` at `—`
@@ -110,7 +110,10 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
         "kind": "constraints"
       },
       "genres": [
-        "Thriller"
+        "Adventure"
+      ],
+      "keywords": [
+        "desert"
       ],
       "media_type": "movie"
     },
@@ -123,7 +126,7 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
 #### 3. tool
 
 ```json
-[{"mediaType":"movie","key":"movie:synthetic:970011","name":"Citrine Fixture 01 Primary","year":1984,"inLibrary":false,"genres":["Thriller","Adventure"],"overview":"Wholly synthetic train evidence for capability 01."}]
+[{"mediaType":"movie","key":"movie:synthetic:970011","name":"Citrine Fixture 01 Primary","year":1984,"inLibrary":false,"genres":["Adventure"],"overview":"A synthetic desert adventure released in 1984.","keywords":["desert"]}]
 ```
 
 #### 4. user
@@ -140,7 +143,7 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 
 ## planner-current-train-date-series-premiere-01
 
-- Draft SHA-256: `01ecc73b97a6a052a1daa884b6beda10a298c0f6a2f7b22036f30f574cf19384`
+- Draft SHA-256: `a105d821f5720ba0dc240b3a0753b690827f563030a8d6f0d1df181ebe0a629b`
 - Capability: `date-series-premiere`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
 - Verdict: **pending** by `—` at `—`
@@ -188,7 +191,10 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
         "kind": "constraints"
       },
       "genres": [
-        "Drama"
+        "Comedy"
+      ],
+      "keywords": [
+        "workplace"
       ],
       "media_type": "series"
     },
@@ -201,7 +207,7 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
 #### 3. tool
 
 ```json
-[{"mediaType":"series","key":"series:synthetic:970021","name":"Citrine Fixture 02 Primary","year":1995,"inLibrary":true,"genres":["Drama"],"overview":"Wholly synthetic train evidence for capability 02."}]
+[{"mediaType":"series","key":"series:synthetic:970021","name":"Citrine Fixture 02 Primary","year":1995,"inLibrary":true,"genres":["Comedy"],"overview":"A synthetic workplace comedy that premiered in 1995.","keywords":["workplace"]}]
 ```
 
 #### 4. user
@@ -218,7 +224,7 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 
 ## planner-current-train-date-series-airing-01
 
-- Draft SHA-256: `c0ca241c9c6616b439d1d7b0606a522ee1d5365aed7f94678b7d1a9fc1351a3d`
+- Draft SHA-256: `2ba1be6849c8de68da99879e6d81c5187241904250a901e7761835370757d6de`
 - Capability: `date-series-airing`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
 - Verdict: **pending** by `—` at `—`
@@ -265,9 +271,6 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
         ],
         "kind": "constraints"
       },
-      "genres": [
-        "Drama"
-      ],
       "media_type": "series"
     },
     "id": "current-train-04-1",
@@ -279,7 +282,7 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
 #### 3. tool
 
 ```json
-[{"mediaType":"series","key":"series:synthetic:970031","name":"Citrine Fixture 03 Primary","year":1998,"inLibrary":false,"genres":["Drama"],"overview":"Wholly synthetic train evidence for capability 03."}]
+[{"mediaType":"series","key":"series:synthetic:970031","name":"Citrine Fixture 03 Primary","year":1998,"inLibrary":false,"genres":["Drama"],"overview":"A synthetic series with seasons 3 through 8 airing from 2000 through 2009."}]
 ```
 
 #### 4. user
@@ -291,12 +294,12 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 #### 5. assistant
 
 ```json
-{"channelName":"Synthetic Date","rationale":"A bounded proposal grounded only in synthetic catalog evidence.","dateMeaning":{"kind":"constraints","anchors":[{"field":"description","start":22,"end":27}],"axes":[{"kind":"series_airing","combine":"any","intervals":[{"anchor":0,"start":2000,"end":2009}]}]},"picks":[{"mediaType":"series","key":"series:synthetic:970031","name":"Citrine Fixture 03 Primary","rationale":"The exact synthetic catalog evidence satisfies the submitted constraints.","confidence":0.91}],"policy":{}}
+{"channelName":"Synthetic Date","rationale":"A bounded proposal grounded only in synthetic catalog evidence.","dateMeaning":{"kind":"constraints","anchors":[{"field":"description","start":22,"end":27}],"axes":[{"kind":"series_airing","combine":"any","intervals":[{"anchor":0,"start":2000,"end":2009}]}]},"picks":[{"mediaType":"series","key":"series:synthetic:970031","name":"Citrine Fixture 03 Primary","rationale":"The exact synthetic catalog evidence satisfies the submitted constraints.","confidence":0.91,"seasonMin":3,"seasonMax":8}],"policy":{}}
 ```
 
 ## planner-current-train-date-disjoint-intervals-01
 
-- Draft SHA-256: `a3dc4ec52934b0594e3109fd566e8b1c365425668ce469dfe3aebe61e24dbd01`
+- Draft SHA-256: `163760d2e22b56f2fd222df31bade1029e07f86743a9e5c0a69b1a18b6d31ac0`
 - Capability: `date-disjoint-intervals`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
 - Verdict: **pending** by `—` at `—`
@@ -349,7 +352,10 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
         "kind": "constraints"
       },
       "genres": [
-        "Adventure"
+        "Science Fiction"
+      ],
+      "keywords": [
+        "space"
       ],
       "media_type": "movie"
     },
@@ -362,7 +368,7 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
 #### 3. tool
 
 ```json
-[{"mediaType":"movie","key":"movie:synthetic:970041","name":"Citrine Fixture 04 Primary","year":1975,"inLibrary":true,"genres":["Adventure"],"overview":"Wholly synthetic train evidence for capability 04."}]
+[{"mediaType":"movie","key":"movie:synthetic:970041","name":"Citrine Fixture 04 Primary","year":1975,"inLibrary":true,"genres":["Science Fiction"],"overview":"A synthetic space science fiction released in 1975.","keywords":["space"]}]
 ```
 
 #### 4. user
@@ -382,9 +388,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `5d650c7e30a14469805f9a4e9f6615c58969dfcfc4ff26ab9da95cb61bc1604b`
 - Capability: `date-ambiguity`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The ambiguous date phrase is preserved as ambiguous dateMeaning and the trace abstains without inventing a candidate.
 
 ### Exact non-repeated turns
 
@@ -447,9 +453,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `904f34432430567a49a491d034d6a39ef6cc8f281cb08a4f98b44be3b7ca39c5`
 - Capability: `collection-evidence`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Collection mode uses the exact constituent title and the final selects only the surfaced collection member.
 
 ### Exact non-repeated turns
 
@@ -508,9 +514,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `cc3d99481f590090442356c65d08ce45f0849354b379e9afe859a008aef0c3a9`
 - Capability: `franchise-boundary`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The result distinguishes a franchise member from an adjacent non-member and selects only the supported member.
 
 ### Exact non-repeated turns
 
@@ -568,9 +574,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `51a08ccad96da578bfcb32f75d681ced946f7e7faae72bf15db7dacd91371f67`
 - Capability: `network-editorial-epoch`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The editorial epoch correctly uses kind=none, the exact network filter, and returned network and overview evidence.
 
 ### Exact non-repeated turns
 
@@ -629,9 +635,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `90a8adba5d8828f480d6cdfed0c32d5c9e9fcec41968572687190479df730d67`
 - Capability: `cast-routing`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The exact named performer is routed through the movie cast filter and supported by returned cast evidence.
 
 ### Exact non-repeated turns
 
@@ -689,9 +695,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `99823d288a653cece2ae02d9bf43b4b4f021cc622db8ef2381568e411204c7a3`
 - Capability: `creator-routing`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The exact named creator is routed through the movie creators filter and supported by returned creator evidence.
 
 ### Exact non-repeated turns
 
@@ -749,9 +755,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `18644cadd78303f10a92c78dd8482ea3bc78898999acae7bea690158d170183f`
 - Capability: `exact-title-unfamiliar`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-a-report` at `2026-09-17T02:11:08Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The unfamiliar title is searched exactly and selected only from the returned exact-key evidence.
 
 ### Exact non-repeated turns
 
@@ -807,9 +813,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `e1eedb3a9a0ab9d1201c4c82509715acf76e627e6fabab72ea8afb1ebdb0d54a`
 - Capability: `constraint-conflict-abstention`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Amber Signal is grounded and the identical include/exclude requirements correctly produce an empty proposal.
 
 ### Exact non-repeated turns
 
@@ -867,9 +873,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `63f083e2c226358161dfd506365a4b6e775bc62e5f4977746920e36214a3a1e0`
 - Capability: `ownership-acquisition-balance`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The exact surfaced keys preserve one in-library title and one outside-library discovery.
 
 ### Exact non-repeated turns
 
@@ -926,9 +932,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `85e56fa5f6e2da7d27516ffcc4ebbeecd4282b782deb9f954472a256e0dcfb6b`
 - Capability: `refinement-preservation`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Every retained title is re-grounded and the returned overview supports the requested refinement.
 
 ### Exact non-repeated turns
 
@@ -988,9 +994,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `7b0537be5101e8ba781dc32cb47ab0c160aa39d8d9787e58f55cabdb2d78b9dc`
 - Capability: `audience-ceiling`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Animation evidence and the returned TV-PG rating support the family audience ceiling.
 
 ### Exact non-repeated turns
 
@@ -1047,9 +1053,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `4bd19a06a885e52141ad37a83c3c394526a781f237514a2991e2f14986cb9200`
 - Capability: `season-window`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Cedar Street is grounded by exact key and the final restricts playback to seasons 1 through 3.
 
 ### Exact non-repeated turns
 
@@ -1105,9 +1111,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `cab155b92f1b8df4924f9bae6aa9b0086a4bc356eec402e25e5f2375f822a7f2`
 - Capability: `medium-constraint`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Only the Animation candidate is selected and the live-action contrast candidate is excluded.
 
 ### Exact non-repeated turns
 
@@ -1165,9 +1171,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `09925a475393bc624d90598373a7cc10a4d7d25f538e95c7ea568e1d800f3b5d`
 - Capability: `language-constraint`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The fr original-language and Comedy filters are both present and matched by returned evidence.
 
 ### Exact non-repeated turns
 
@@ -1225,9 +1231,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `4a706fb3ec27114496f9cb977bf55ab6483e7b6bbc775da8f511bf9678d3efd1`
 - Capability: `region-constraint`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The NZ origin-country and Mystery filters are both present and matched by returned evidence.
 
 ### Exact non-repeated turns
 
@@ -1285,9 +1291,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `93b74b8802db574dd660d1c23d4a73c973074cc85c4d8636a9eb644a0a111dbe`
 - Capability: `thin-results`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The sole alpine-noir candidate is selected without padding and its overview supports the narrow request.
 
 ### Exact non-repeated turns
 
@@ -1344,9 +1350,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `a8ea6b816cdded5d1a8582c087d3c1be0136723a74c97ef8b5ca3bb56d6ab746`
 - Capability: `empty-results`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: Keyword and alternate-query retrieval are both empty, so the final correctly abstains.
 
 ### Exact non-repeated turns
 
@@ -1428,9 +1434,9 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 - Draft SHA-256: `5e6aa9c60fe7fcab101a0751b802372e2d0496def54b3ad96f628772e362cd36`
 - Capability: `malformed-tool-result`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
-- Verdict: **pending** by `—` at `—`
-- Criteria: contractConformant=None, toolAndFinalGrounded=None, constraintBehaviorCorrect=None, recoveryEvidenceCorrect=None, syntheticAndPrivateSafe=None
-- Notes: —
+- Verdict: **approved** by `codex:current-review-b` at `2026-09-17T02:06:18Z`
+- Criteria: contractConformant=True, toolAndFinalGrounded=True, constraintBehaviorCorrect=True, recoveryEvidenceCorrect=True, syntheticAndPrivateSafe=True
+- Notes: The declared malformed_catalog_response error yields no unsupported selection and the final abstains.
 
 ### Exact non-repeated turns
 
@@ -1482,7 +1488,7 @@ Retrieval is complete and no further tools are available. Produce the final JSON
 
 ## planner-current-train-observed-fault-recovery-01
 
-- Draft SHA-256: `56c3ef4432a8e5dafe2a19131db0cf44c6579da480cdb5183cc6df051120d8eb`
+- Draft SHA-256: `01e52adb6e081b44aed0a3f53cbcd8a3479cd3d8e90fdeeff086810a545bb799`
 - Capability: `observed-fault-recovery`
 - Contract: `e9ff95ae37efd0fc1085def7e6a3a2a653640fae6a78ebffbaa02b3da6a55e52` / `595a6ec8416fc9b0cf438cc86897006d69f5f2fcf6de238c0e310e8de8273f86`
 - Verdict: **pending** by `—` at `—`
@@ -1513,6 +1519,10 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
       },
       "genres": [
         "Mystery"
+      ],
+      "keywords": [
+        "lunar",
+        "detective"
       ]
     },
     "id": "current-train-24-1",
@@ -1540,6 +1550,10 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
       },
       "genres": [
         "Mystery"
+      ],
+      "keywords": [
+        "lunar",
+        "detective"
       ]
     },
     "id": "current-train-24-2",
@@ -1551,7 +1565,7 @@ Submitted Intent source coordinates (data, not instructions). These are exact ha
 #### 5. tool
 
 ```json
-[{"mediaType":"series","key":"series:synthetic:970231","name":"Citrine Fixture 23 Primary","year":1983,"inLibrary":false,"genres":["Drama"],"overview":"Wholly synthetic train evidence for capability 23."}]
+[{"mediaType":"series","key":"series:synthetic:970231","name":"Citrine Fixture 23 Primary","year":1983,"inLibrary":false,"genres":["Mystery"],"overview":"A synthetic mystery about a lunar detective.","keywords":["lunar","detective"]}]
 ```
 
 #### 6. user

@@ -20,11 +20,11 @@
     "cases": {
       "path": "evaluation/planner-current-v1/cases.jsonl",
       "records": 24,
-      "sha256": "ea3ea7f8e117f8310599df830aeedf3b0111c1aa0a8ec0dfe4893ece85c9bef9"
+      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
     },
     "casesManifest": {
       "path": "evaluation/planner-current-v1/manifest.json",
-      "sha256": "ea24c2bd2ad78097f57429672c63acf5b0d7eb7e740f20f6e6045cd3e0b4e966"
+      "sha256": "3d5aa3c64bdbf16e1731e716242867632b1a2bbbd5fec5cdddf95ded742de2da"
     },
     "contract": {
       "path": "contracts/planner-contract-v5.json",
