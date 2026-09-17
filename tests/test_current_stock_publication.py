@@ -141,10 +141,10 @@ class CurrentStockPublicationTests(unittest.TestCase):
             "createdAt": "2026-09-17T00:00:00Z",
             "deletedAt": "2026-09-17T01:00:00Z",
             "podIdSha256": "a" * 64,
-            "networkVolumeIdSha256": "b" * 64,
             "zeroActivePods": True,
-            "networkVolumeDeleted": True,
-            "costUsd": {"gpu": "0.49", "disk": "0.01", "networkVolume": "0.02", "total": "0.52"},
+            "storageMode": "pod-persistent",
+            "persistentStorageDeletedWithPod": True,
+            "costUsd": {"gpu": "0.49", "disk": "0.01", "persistentStorage": "0.02", "total": "0.52"},
         }
         self.assertIs(
             publication.validate_provider_evidence(evidence, self.config["execution"], self.plan),
@@ -152,7 +152,7 @@ class CurrentStockPublicationTests(unittest.TestCase):
         )
         charged = copy.deepcopy(evidence)
         charged["costUsd"]["disk"] = "1.00"
-        charged["costUsd"]["networkVolume"] = "0.02"
+        charged["costUsd"]["persistentStorage"] = "0.02"
         charged["costUsd"]["total"] = "1.51"
         with self.assertRaisesRegex(Exception, "reservation"):
             publication.validate_provider_evidence(charged, self.config["execution"], self.plan)

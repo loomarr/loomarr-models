@@ -36,7 +36,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline.py",
-      "sha256": "0f41ccc250ea76dcf2cb34b4e45788ddc1ad208581d806447d457fc194566652"
+      "sha256": "5dccd2237f3e13fc79dc1c0db270b89a6d55e16136da3ab5c0b1f5d956125bdd"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -44,11 +44,11 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline.py",
-      "sha256": "e0cddde80db55fa114aa1e02cca4b66b064629913dc69de26beeb1e0f71dfc56"
+      "sha256": "7fcdae7f57f0c32774df0dd7fd377253579d85c0939c3f12ee01f1f84bee7a91"
     },
     "publisher": {
       "path": "scripts/publish_planner_current_stock_baseline.py",
-      "sha256": "1d9febae3de94d058af830491abbcf1177d98a1173e2ff9984226663913a2a0c"
+      "sha256": "c72fd3b25df1c13f4e83436891db5bf71e86becce83494bd1a9f8a59be1a9e5a"
     },
     "runner": {
       "path": "scripts/run_planner_current_stock_baseline.py",
@@ -97,10 +97,11 @@
     "maxWallClockSeconds": 9000,
     "minimumCudaVersion": "12.8",
     "minimumVramGb": 48,
-    "networkVolumeGb": 40,
     "outputDir": ".artifacts/planner-current-qwen-stock-baseline-v2",
+    "persistentVolumeGb": 40,
     "platform": "linux-amd64",
-    "requireCleanGit": true
+    "requireCleanGit": true,
+    "storageMode": "pod-persistent"
   },
   "experimentId": "planner-current-qwen-stock-baseline-v2",
   "hostedProductionComparison": {

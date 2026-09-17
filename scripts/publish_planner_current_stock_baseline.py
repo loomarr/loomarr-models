@@ -225,9 +225,9 @@ def validate_provider_evidence(evidence: dict[str, Any], execution: dict[str, An
         "createdAt",
         "deletedAt",
         "podIdSha256",
-        "networkVolumeIdSha256",
         "zeroActivePods",
-        "networkVolumeDeleted",
+        "storageMode",
+        "persistentStorageDeletedWithPod",
         "costUsd",
     }
     if set(evidence) != required or evidence.get("schemaVersion") != 2:
@@ -239,9 +239,9 @@ def validate_provider_evidence(evidence: dict[str, Any], execution: dict[str, An
         or evidence["cloud"] != execution["cloud"]
         or evidence["gpuSku"] != execution["gpuSku"]
         or not evidence["zeroActivePods"]
-        or not evidence["networkVolumeDeleted"]
+        or evidence["storageMode"] != execution["storageMode"]
+        or not evidence["persistentStorageDeletedWithPod"]
         or re.fullmatch(r"[0-9a-f]{64}", evidence["podIdSha256"]) is None
-        or re.fullmatch(r"[0-9a-f]{64}", evidence["networkVolumeIdSha256"]) is None
     ):
         raise PreflightError("current Runpod settlement identity or teardown evidence drifted")
     try:
@@ -255,12 +255,12 @@ def validate_provider_evidence(evidence: dict[str, Any], execution: dict[str, An
     duration = Decimal(str((deleted - created).total_seconds()))
     if any(value.tzinfo is None for value in (created, deleted, captured)) or duration <= 0 or duration > execution["maxWallClockSeconds"] or captured < deleted:
         raise PreflightError("current Runpod settlement exceeds the provider-creation deadline")
-    if set(costs) != {"gpu", "disk", "networkVolume", "total"} or any(value < 0 for value in costs.values()):
+    if set(costs) != {"gpu", "disk", "persistentStorage", "total"} or any(value < 0 for value in costs.values()):
         raise PreflightError("current Runpod settlement cost fields are invalid")
     expected_gpu = hourly * duration / Decimal(3600)
     if (
         abs(costs["gpu"] - expected_gpu) > Decimal("0.01")
-        or costs["gpu"] + costs["disk"] + costs["networkVolume"] != costs["total"]
+        or costs["gpu"] + costs["disk"] + costs["persistentStorage"] != costs["total"]
         or costs["total"] > Decimal(plan.reservationUsd)
     ):
         raise PreflightError("current Runpod settlement arithmetic or reservation drifted")
