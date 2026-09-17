@@ -64,6 +64,8 @@ def main() -> None:
     report["runtime"] = {
         "containerImage": args.runtime_image,
         "python": ".".join(str(part) for part in sys.version_info[:3]),
+        "torch": _package_version("torch"),
+        "torchvision": _package_version("torchvision"),
         "transformers": importlib.metadata.version("transformers"),
         "tokenizers": importlib.metadata.version("tokenizers"),
     }
@@ -91,6 +93,13 @@ def _loaded_commit(*objects: object) -> str | None:
         if isinstance(init, dict) and isinstance(init.get("_commit_hash"), str):
             return init["_commit_hash"]
     return None
+
+
+def _package_version(name: str) -> str | None:
+    try:
+        return importlib.metadata.version(name)
+    except importlib.metadata.PackageNotFoundError:
+        return None
 
 
 if __name__ == "__main__":
