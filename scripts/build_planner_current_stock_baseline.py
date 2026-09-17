@@ -13,6 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path("experiments/planner-current-qwen-stock-baseline-v2.json")
 AUTHORIZATION_PATH = Path("reviews/planner-current-qwen-stock-baseline/authorization-v2.json")
 EXPERIMENT_ID = "planner-current-qwen-stock-baseline-v2"
+RESERVATION_USD = Decimal("1.50")
+AUTHORIZED_PLAN_COMMIT = "1bd481c2cabd48a9fade02c2c750508cf4905de2"
+AUTHORIZED_AT = "2026-09-17T02:32:20Z"
 
 
 def encoded(value: Any) -> bytes:
@@ -31,11 +34,11 @@ def authorization() -> dict[str, Any]:
     return {
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
-        "status": "not-authorized",
-        "maxReservationUsd": "0",
-        "authorizedBy": None,
-        "authorizedAt": None,
-        "authorizedPlanCommit": None,
+        "status": "authorized",
+        "maxReservationUsd": str(RESERVATION_USD),
+        "authorizedBy": "loomarr-maintainer",
+        "authorizedAt": AUTHORIZED_AT,
+        "authorizedPlanCommit": AUTHORIZED_PLAN_COMMIT,
     }
 
 
@@ -66,7 +69,7 @@ def config(authorization_blob: bytes) -> dict[str, Any]:
         "schemaVersion": 2,
         "experimentId": EXPERIMENT_ID,
         "issue": "https://github.com/loomarr/loomarr-models/issues/25",
-        "status": "planned-no-paid-execution-authorized",
+        "status": "ready-for-paid-baseline",
         "bindings": bindings,
         "model": {
             "candidateId": "qwen38-27b-unsloth-bnb-4bit",
@@ -133,14 +136,14 @@ def config(authorization_blob: bytes) -> dict[str, Any]:
             "aggregateAuthorizationUsd": str(aggregate),
             "currentCommittedUsd": str(committed),
             "outstandingReservationsUsd": budget["outstandingReservationsUsd"],
-            "proposedReservationUsd": "0",
-            "projectedCommitmentUsd": str(committed),
-            "remainingAuthorizationUsd": str(aggregate - committed),
+            "proposedReservationUsd": str(RESERVATION_USD),
+            "projectedCommitmentUsd": str(committed + RESERVATION_USD),
+            "remainingAuthorizationUsd": str(aggregate - committed - RESERVATION_USD),
         },
         "authority": {
-            "paidBaselineAuthorized": False,
-            "modelDownloadAuthorized": False,
-            "gpuAuthorized": False,
+            "paidBaselineAuthorized": True,
+            "modelDownloadAuthorized": True,
+            "gpuAuthorized": True,
             "trainingAuthorized": False,
             "certificationAuthority": False,
             "deploymentAuthority": False,

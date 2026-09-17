@@ -1,9 +1,9 @@
 {
-  "authorizedAt": null,
-  "authorizedBy": null,
-  "authorizedPlanCommit": null,
+  "authorizedAt": "2026-09-17T02:32:20Z",
+  "authorizedBy": "loomarr-maintainer",
+  "authorizedPlanCommit": "1bd481c2cabd48a9fade02c2c750508cf4905de2",
   "experimentId": "planner-current-qwen-stock-baseline-v2",
-  "maxReservationUsd": "0",
+  "maxReservationUsd": "1.50",
   "schemaVersion": 1,
-  "status": "not-authorized"
+  "status": "authorized"
 }

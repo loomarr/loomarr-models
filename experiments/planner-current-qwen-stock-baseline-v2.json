@@ -2,16 +2,16 @@
   "authority": {
     "certificationAuthority": false,
     "deploymentAuthority": false,
-    "gpuAuthorized": false,
-    "modelDownloadAuthorized": false,
-    "paidBaselineAuthorized": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
     "releaseAuthority": false,
     "trainingAuthorized": false
   },
   "bindings": {
     "authorization": {
       "path": "reviews/planner-current-qwen-stock-baseline/authorization-v2.json",
-      "sha256": "e6bee0d209eeb6539d925ea11cf9a54dcd17fa7cbf75c92c884b9ee43fd9952d"
+      "sha256": "9abd3fba5de0c8699758c59ac95ef3ddf11a332ec6633d1d47f670246e2aa893"
     },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
@@ -36,7 +36,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_stock_baseline.py",
-      "sha256": "293f92786e45fdd05b0b0a237c899d41574b10f18f200ade427c94e98153ffe0"
+      "sha256": "a873eb0d901f9b3c754ef2765d7ce4a5b9f097df4dd8bf626617683757318aac"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -44,7 +44,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_baseline.py",
-      "sha256": "2b928735f03dd595190f25f13792e54d653b51534ffef4b8bff47c7960c9cb2c"
+      "sha256": "745ab13dcb4f3049fb86a5d4ac102481cb0916d399864d27dadb7267fa5b5167"
     },
     "publisher": {
       "path": "scripts/publish_planner_current_stock_baseline.py",
@@ -63,9 +63,9 @@
     "aggregateAuthorizationUsd": "40.00",
     "currentCommittedUsd": "28.6967677051754599875",
     "outstandingReservationsUsd": "0",
-    "projectedCommitmentUsd": "28.6967677051754599875",
-    "proposedReservationUsd": "0",
-    "remainingAuthorizationUsd": "11.3032322948245400125"
+    "projectedCommitmentUsd": "30.1967677051754599875",
+    "proposedReservationUsd": "1.50",
+    "remainingAuthorizationUsd": "9.8032322948245400125"
   },
   "comparison": {
     "disableCompile": true,
@@ -131,5 +131,5 @@
       "minSchemaValidityRate": 0.98
     }
   },
-  "status": "planned-no-paid-execution-authorized"
+  "status": "ready-for-paid-baseline"
 }

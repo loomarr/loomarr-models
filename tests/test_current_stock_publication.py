@@ -125,7 +125,7 @@ class CurrentStockPublicationTests(unittest.TestCase):
             with self.assertRaisesRegex(Exception, "safely redacted"):
                 publication.validate_run(directory, self.config, self.plan)
 
-    def test_zero_reservation_provider_evidence_cannot_hide_spend(self):
+    def test_provider_evidence_is_bounded_by_authorized_reservation(self):
         evidence = {
             "schemaVersion": 2,
             "experimentId": self.config["experimentId"],
@@ -135,21 +135,23 @@ class CurrentStockPublicationTests(unittest.TestCase):
             "cloud": "SECURE",
             "dataCenterId": "US-SYNTHETIC-1",
             "gpuSku": "NVIDIA A40",
-            "gpuHourlyUsd": "0",
+            "gpuHourlyUsd": "0.49",
             "createdAt": "2026-09-17T00:00:00Z",
             "deletedAt": "2026-09-17T01:00:00Z",
             "podIdSha256": "a" * 64,
             "networkVolumeIdSha256": "b" * 64,
             "zeroActivePods": True,
             "networkVolumeDeleted": True,
-            "costUsd": {"gpu": "0", "disk": "0", "networkVolume": "0", "total": "0"},
+            "costUsd": {"gpu": "0.49", "disk": "0.01", "networkVolume": "0.02", "total": "0.52"},
         }
         self.assertIs(
             publication.validate_provider_evidence(evidence, self.config["execution"], self.plan),
             evidence,
         )
         charged = copy.deepcopy(evidence)
-        charged["costUsd"]["disk"] = charged["costUsd"]["total"] = "0.01"
+        charged["costUsd"]["disk"] = "1.00"
+        charged["costUsd"]["networkVolume"] = "0.02"
+        charged["costUsd"]["total"] = "1.51"
         with self.assertRaisesRegex(Exception, "reservation"):
             publication.validate_provider_evidence(charged, self.config["execution"], self.plan)
 

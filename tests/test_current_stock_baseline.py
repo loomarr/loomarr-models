@@ -164,22 +164,13 @@ class CurrentStockBaselineTests(unittest.TestCase):
         self.assertFalse(invalid["qloraJustified"])
         self.assertEqual(invalid["outcome"], "baseline-invalid-no-training-decision")
 
-    def test_preflight_reconstructs_plan_but_paid_path_refuses_first(self):
+    def test_preflight_reconstructs_exact_authorized_plan(self):
         plan = preflight(ROOT, CONFIG, require_authorized=False, git_probe=lambda *_: "a" * 40)
         self.assertEqual(plan.caseCount, 24)
-        self.assertEqual(plan.reservationUsd, "0")
-        self.assertFalse(plan.paidBaselineAuthorized)
-        sentinel = object()
-        previous = sys.modules.get("torch", sentinel)
-        sys.modules["torch"] = object()
-        try:
-            with self.assertRaisesRegex(PreflightError, "not authorized"):
-                preflight(ROOT, CONFIG, require_authorized=True, git_probe=lambda *_: "a" * 40)
-        finally:
-            if previous is sentinel:
-                del sys.modules["torch"]
-            else:
-                sys.modules["torch"] = previous
+        self.assertEqual(plan.reservationUsd, "1.50")
+        self.assertTrue(plan.paidBaselineAuthorized)
+        paid = preflight(ROOT, CONFIG, require_authorized=True, git_probe=lambda *_: "a" * 40)
+        self.assertEqual(paid, plan)
 
     def test_preflight_rejects_binding_budget_and_heavy_import_drift(self):
         config = copy.deepcopy(self.config)
@@ -204,7 +195,14 @@ class CurrentStockBaselineTests(unittest.TestCase):
             config["budget"].update(
                 {
                     "aggregateAuthorizationUsd": "28.00",
-                    "remainingAuthorizationUsd": str(Decimal("28.00") - Decimal(ledger["committedSpendUsd"])),
+                    "projectedCommitmentUsd": str(
+                        Decimal(ledger["committedSpendUsd"]) + Decimal("1.50")
+                    ),
+                    "remainingAuthorizationUsd": str(
+                        Decimal("28.00")
+                        - Decimal(ledger["committedSpendUsd"])
+                        - Decimal("1.50")
+                    ),
                 }
             )
             config_path = directory / "config.json"

@@ -1,6 +1,6 @@
 # Current-contract stock baseline harness
 
-Issue [#25](https://github.com/loomarr/loomarr-models/issues/25) turns the current-contract preregistration from #22 into a fail-closed, replayable baseline harness. It remains a no-spend plan: the authorization record carries a zero reservation, and every model-download, provider, GPU, training, certification, deployment, and release authority flag is false.
+Issue [#25](https://github.com/loomarr/loomarr-models/issues/25) turns the current-contract preregistration from #22 into a fail-closed, replayable baseline harness. The maintainer authorized the exact plan at commit `1bd481c2cabd48a9fade02c2c750508cf4905de2` with a hard `$1.50` reservation. At the launch-time secure A40 rate of `$0.49/hour`, the 9,000-second GPU maximum is `$1.225`; disk and short-lived volume charges must fit inside the same reservation. Training, certification, deployment, and release authority remain false.
 
 The harness evaluates the exact 24-case development artifact in committed order against `planner-contract-v5`. It renders the production user and finalization turns, requires exact scripted tool arguments, preserves tool results as production JSON strings, and accepts only complete final Proposal JSON with surfaced catalog keys and unchanged `dateMeaning`.
 
@@ -19,4 +19,4 @@ make preflight-current-stock-baseline
 make check
 ```
 
-The preflight command reconstructs the plan locally and reports the zero-reservation state. The live run and publisher targets intentionally refuse while paid authorization remains false. No command in this issue downloads the pinned model or allocates infrastructure.
+The preflight command reconstructs the authorized plan locally and proves that the `$1.50` reservation keeps aggregate commitment below `$40.00`. The authorization permits exactly one stock-baseline model download and secure A40 execution with no automatic retry; it grants no training or product authority.
