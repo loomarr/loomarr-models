@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
-import subprocess
 import sys
 import tempfile
 import unittest
@@ -19,6 +18,7 @@ from loomarr_models.current_baseline import (
 )
 from loomarr_models.current_baseline_v3 import preflight
 from loomarr_models.current_contract import read_jsonl
+from loomarr_models.experiment import PreflightError
 from loomarr_models.current_publication_v3 import (
     settle_budget,
     validate_provider_evidence,
@@ -174,15 +174,19 @@ class CurrentStockPublicationV3Tests(unittest.TestCase):
             settle_budget(budget, Decimal("1.51"), self.plan)
 
     def test_publisher_refuses_before_reading_provider_evidence_when_unauthorized(self):
-        result = subprocess.run(
-            [sys.executable, str(ROOT / "scripts/publish_planner_current_stock_baseline_v3.py")],
-            cwd=ROOT,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-        self.assertEqual(result.returncode, 2)
-        self.assertIn("paid current stock v3 execution is not authorized", result.stderr)
+        missing = ROOT / ".artifacts/provider-evidence-must-not-be-read.json"
+        with (
+            patch.object(
+                publisher,
+                "preflight",
+                side_effect=PreflightError("paid current stock v3 execution is not authorized"),
+            ),
+            self.assertRaisesRegex(
+                PreflightError, "paid current stock v3 execution is not authorized"
+            ),
+        ):
+            publisher.publish(missing)
+        self.assertFalse(missing.exists())
 
     def test_publisher_immutably_settles_and_terminalizes_each_quality_outcome(self):
         for justified in (False, True):

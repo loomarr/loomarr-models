@@ -1,9 +1,14 @@
 {
-  "authorizedAt": null,
-  "authorizedBy": null,
-  "authorizedPlanCommit": null,
+  "authorizationReference": "https://github.com/loomarr/loomarr-models/issues/29#issuecomment-5713930566",
+  "authorizedAt": "2026-09-17T11:55:55Z",
+  "authorizedBy": "loomarr-maintainer",
+  "authorizedPlanCommit": "19efafb6271566df69bc8d0a5472cf3c1bcd56e5",
   "experimentId": "planner-current-qwen-stock-baseline-v3",
   "maxReservationUsd": "1.50",
+  "priorBaselinePublication": {
+    "path": "runs/planner-current-qwen-stock-baseline-v2/publication.json",
+    "sha256": "a2b7cdc02392a75b8dded9d0711ec003cd23698088c41b4194ffa40d5c529804"
+  },
   "schemaVersion": 1,
-  "status": "not-authorized"
+  "status": "authorized"
 }

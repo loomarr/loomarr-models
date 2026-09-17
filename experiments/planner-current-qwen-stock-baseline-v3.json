@@ -2,16 +2,16 @@
   "authority": {
     "certificationAuthority": false,
     "deploymentAuthority": false,
-    "gpuAuthorized": false,
-    "modelDownloadAuthorized": false,
-    "paidBaselineAuthorized": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
     "releaseAuthority": false,
     "trainingAuthorized": false
   },
   "bindings": {
     "authorization": {
       "path": "reviews/planner-current-qwen-stock-baseline-v3/authorization.json",
-      "sha256": "30272f948731c03d522927f487d110bc9b98a1fc97781a9545523eb850e4e4f2"
+      "sha256": "4789bde38b49c13d02d1d1c41c4b8ce9497a4baf396cd0315ca75f38e6f11897"
     },
     "authorizer": {
       "path": "scripts/authorize_planner_current_stock_baseline_v3.py",
@@ -53,6 +53,10 @@
     "preflight": {
       "path": "src/loomarr_models/current_baseline_v3.py",
       "sha256": "b44ab8b160a3ff585f851bddfa6e3b2c4f1b44859af1e24249adf35bb90624f6"
+    },
+    "priorBaselinePublication": {
+      "path": "runs/planner-current-qwen-stock-baseline-v2/publication.json",
+      "sha256": "a2b7cdc02392a75b8dded9d0711ec003cd23698088c41b4194ffa40d5c529804"
     },
     "promptCapacityChecker": {
       "path": "scripts/check_planner_current_prompt_capacity.py",
@@ -166,5 +170,5 @@
       "minSchemaValidityRate": 0.98
     }
   },
-  "status": "planned-billing-settlement-required"
+  "status": "ready-for-paid-baseline"
 }
