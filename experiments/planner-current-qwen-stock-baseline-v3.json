@@ -1,0 +1,138 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "paidBaselineAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "authorization": {
+      "path": "reviews/planner-current-qwen-stock-baseline-v3/authorization.json",
+      "sha256": "30272f948731c03d522927f487d110bc9b98a1fc97781a9545523eb850e4e4f2"
+    },
+    "budgetLedger": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "2ccfcc6c78ed2789552ca83c2b87ae6c07fcf7f64d1245e651956a153de8882c"
+    },
+    "cases": {
+      "path": "evaluation/planner-current-v1/cases.jsonl",
+      "records": 24,
+      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-current-v1/manifest.json",
+      "sha256": "3d5aa3c64bdbf16e1731e716242867632b1a2bbbd5fec5cdddf95ded742de2da"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "generator": {
+      "path": "scripts/build_planner_current_stock_baseline_v3.py",
+      "sha256": "e31ed6c43c067cd3892caa38502c17fa4598e62793eb03b0a0071748c3ff41ad"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/planner-holdout-denylist-v2.json",
+      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+    },
+    "preflight": {
+      "path": "src/loomarr_models/current_baseline_v3.py",
+      "sha256": "7bc47a5527a7054fe9bc0d04154166c24bcce059ed31bdadc254b71a90b3fc9d"
+    },
+    "promptCapacityChecker": {
+      "path": "scripts/check_planner_current_prompt_capacity.py",
+      "sha256": "9bd9be662aa1f2c5856b365ecc2aefbbddabe0ac4e0c3d54981606884aeef3a9"
+    },
+    "promptCapacityModule": {
+      "path": "src/loomarr_models/prompt_capacity.py",
+      "sha256": "8d8c76eb9ce3e7bfdbf9a777c91ce084e5fa21fdb14b60297cc50a0ed559453d"
+    }
+  },
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "28.6967677051754599875",
+    "outstandingReservationsUsd": "0",
+    "projectedCommitmentUsd": "30.1967677051754599875",
+    "proposedReservationUsd": "1.50",
+    "remainingAuthorizationUsd": "9.8032322948245400125"
+  },
+  "comparison": {
+    "disableCompile": true,
+    "doSample": false,
+    "maxModelCallsPerCase": 3,
+    "maxNewTokens": 2048,
+    "maxSeqLength": 16384,
+    "offloadEmbedding": false,
+    "reasoningEffort": "low",
+    "sameCasesAndOrderRequiredForAdapter": true,
+    "seed": 3407,
+    "temperature": null,
+    "topP": null,
+    "trials": 1
+  },
+  "decision": {
+    "applicationRecoveryBlocker": "https://github.com/loomarr/loomarr/issues/1195",
+    "passingStockStopsTraining": true,
+    "requiresObservedRecoveryFault": true,
+    "runtimeOrInfrastructureFailureJustifiesTraining": false
+  },
+  "execution": {
+    "automaticRetry": false,
+    "cloud": "SECURE",
+    "containerDiskGb": 40,
+    "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851",
+    "gpuCount": 1,
+    "gpuSku": "NVIDIA A40",
+    "maxWallClockSeconds": 9000,
+    "minimumCudaVersion": "12.8",
+    "minimumVramGb": 48,
+    "outputDir": ".artifacts/planner-current-qwen-stock-baseline-v3",
+    "persistentVolumeGb": 40,
+    "platform": "linux-amd64",
+    "requireCleanGit": true,
+    "storageMode": "pod-persistent"
+  },
+  "experimentId": "planner-current-qwen-stock-baseline-v3",
+  "hostedProductionComparison": {
+    "certificationAuthority": false,
+    "exactCurrentContractRequired": true,
+    "historicalScoresComparable": false,
+    "sameCasesAndOrderRequired": true,
+    "status": "preregistered-no-provider-inference-authorized"
+  },
+  "issue": "https://github.com/loomarr/loomarr-models/issues/29",
+  "model": {
+    "candidateId": "qwen38-27b-unsloth-bnb-4bit",
+    "quantization": "unsloth-bnb-4bit",
+    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+  },
+  "promptCapacity": {
+    "exactPinnedProcessorRequired": true,
+    "fullGenerationBudgetRequiredAtEveryStage": true,
+    "report": null,
+    "status": "required-not-run"
+  },
+  "schemaVersion": 1,
+  "scoring": {
+    "scorerVersion": "planner-current-development-scorer-v2",
+    "thresholds": {
+      "maxP95ToolCalls": 2,
+      "minCorrectToolOperationRate": 0.9,
+      "minDateMeaningAccuracyRate": 1.0,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 1.0,
+      "minSchemaValidityRate": 0.98
+    }
+  },
+  "status": "planned-token-preflight-required"
+}

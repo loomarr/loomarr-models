@@ -10,7 +10,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from loomarr_models.current_baseline import load_config
 from loomarr_models.current_contract import read_jsonl
 from loomarr_models.prompt_capacity import measure_prompt_capacity
 
@@ -21,7 +20,9 @@ def main() -> None:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else ROOT / args.config
-    config = load_config(config_path)
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    if not isinstance(config, dict) or "bindings" not in config or "comparison" not in config:
+        parser.error("prompt-capacity config is not a planner baseline object")
     contract = json.loads(
         (ROOT / config["bindings"]["contract"]["path"]).read_text(encoding="utf-8")
     )
