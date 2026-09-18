@@ -22,12 +22,23 @@ CONFIG = ROOT / "experiments/planner-current-qwen38-qlora-v2.json"
 
 
 class CurrentTrainingV2Tests(unittest.TestCase):
-    def test_corrected_plan_is_exact_no_spend_and_storage_safe(self):
+    def test_authorized_plan_is_exact_bounded_and_storage_safe(self):
         self.assertEqual(CONFIG.read_bytes(), builder.content())
         config = json.loads(CONFIG.read_text(encoding="utf-8"))
         execution = config["execution"]
-        self.assertEqual(config["status"], "planned-no-paid-run-authorized")
-        self.assertFalse(any(config["authority"].values()))
+        self.assertEqual(config["status"], "ready-for-training")
+        self.assertEqual(
+            config["authority"],
+            {
+                "certificationAuthority": False,
+                "deploymentAuthority": False,
+                "gpuAuthorized": True,
+                "modelDownloadAuthorized": True,
+                "paidEvaluationAuthorized": False,
+                "releaseAuthority": False,
+                "trainingAuthorized": True,
+            },
+        )
         self.assertEqual(execution["containerDiskGb"], 40)
         self.assertEqual(execution["environmentInstallDir"], "/opt/loomarr-venv")
         self.assertEqual(execution["persistentVolumeGb"], 80)
@@ -48,11 +59,14 @@ class CurrentTrainingV2Tests(unittest.TestCase):
         self.assertEqual(plan.committedSpendUsd, "29.3563469369284740175")
         self.assertEqual(plan.projectedCombinedSpendUsd, "32.3563469369284740175")
         self.assertLessEqual(Decimal(plan.projectedCombinedSpendUsd), Decimal(plan.authorizationUsd))
-        self.assertFalse(plan.trainingAuthorized)
+        self.assertTrue(plan.trainingAuthorized)
 
-    def test_paid_preflight_refuses_before_heavy_imports(self):
-        with self.assertRaisesRegex(PreflightError, "not authorized"):
-            preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
+    def test_paid_preflight_accepts_exact_authorized_plan_before_heavy_imports(self):
+        plan = preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
+        self.assertTrue(plan.trainingAuthorized)
+        self.assertEqual(plan.trainingReservationUsd, "1.50")
+        self.assertEqual(plan.evaluationReservationUsd, "1.50")
+        self.assertEqual(plan.projectedCombinedSpendUsd, "32.3563469369284740175")
 
     def test_storage_or_failure_prerequisite_drift_fails_closed(self):
         config = json.loads(CONFIG.read_text(encoding="utf-8"))

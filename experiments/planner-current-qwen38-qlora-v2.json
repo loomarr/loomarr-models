@@ -2,16 +2,16 @@
   "authority": {
     "certificationAuthority": false,
     "deploymentAuthority": false,
-    "gpuAuthorized": false,
-    "modelDownloadAuthorized": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
     "paidEvaluationAuthorized": false,
     "releaseAuthority": false,
-    "trainingAuthorized": false
+    "trainingAuthorized": true
   },
   "bindings": {
     "authorization": {
       "path": "reviews/planner-current-qwen38-qlora-v2/authorization.json",
-      "sha256": "703fc4eccb5b20784b17181ca7d39bd4e7e980e90d67a8f9225ca7abfc8cf5f1"
+      "sha256": "2e14862df60a0d186105aa62417ec9d7241a2d7618e45cb8978ed0110da46f2f"
     },
     "authorizationTool": {
       "path": "scripts/authorize_planner_current_qwen38_qlora_v2.py",
@@ -213,5 +213,5 @@
     }
   ],
   "schemaVersion": 1,
-  "status": "planned-no-paid-run-authorized"
+  "status": "ready-for-training"
 }
