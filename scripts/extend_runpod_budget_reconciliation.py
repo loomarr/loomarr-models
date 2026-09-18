@@ -29,6 +29,11 @@ ALLOCATIONS = {
         "historyName": "currentStockBaselineV3",
         "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/29",
     },
+    "current-qwen38-qlora-v1-failure": {
+        "experimentId": "planner-current-qwen38-qlora-v1",
+        "historyName": "currentQwen38QloraV1Failure",
+        "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/20",
+    },
 }
 _COMPONENT_ROUNDING_TOLERANCE = Decimal("0.0000000000000001")
 
@@ -120,7 +125,7 @@ def extend(
     result["providerBilling"]["buckets"].append(
         {
             "allocation": allocation,
-            "cpuUsd": "0",
+            "cpuUsd": str(costs["cpu"]),
             "diskUsd": str(disk),
             "endTime": provider["deletedAt"],
             "gpuUsd": str(costs["gpu"]),
@@ -164,16 +169,17 @@ def extend(
 
 def _costs(provider: dict[str, Any]) -> dict[str, Decimal]:
     value = provider.get("costUsd")
-    if not isinstance(value, dict) or set(value) != {
-        "gpu",
-        "disk",
-        "persistentStorage",
-        "total",
-    }:
+    if not isinstance(value, dict) or set(value) not in (
+        {"gpu", "disk", "persistentStorage", "total"},
+        {"cpu", "gpu", "disk", "total"},
+    ):
         raise ValueError("provider cost fields are invalid")
     result = {name: _decimal(amount, f"provider.costUsd.{name}") for name, amount in value.items()}
+    result.setdefault("cpu", Decimal(0))
+    result.setdefault("persistentStorage", Decimal(0))
     if abs(
-        result["gpu"] + result["disk"] + result["persistentStorage"] - result["total"]
+        result["cpu"] + result["gpu"] + result["disk"] + result["persistentStorage"]
+        - result["total"]
     ) > _COMPONENT_ROUNDING_TOLERANCE:
         raise ValueError("provider cost components do not equal total")
     return result

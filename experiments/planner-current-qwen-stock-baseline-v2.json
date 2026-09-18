@@ -15,7 +15,7 @@
     },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "ffc4c701f2799cb2232b1d73dca69702654f9cd7550912aa62660f3f07dcd82e"
+      "sha256": "fdd9c88c62377d74e361c5a62fc500f06848b81b7865b00e4dca5dbc40ff85c4"
     },
     "cases": {
       "path": "evaluation/planner-current-v1/cases.jsonl",
@@ -61,11 +61,11 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "29.1962968898326090175",
+    "currentCommittedUsd": "29.3563469369284740175",
     "outstandingReservationsUsd": "0",
-    "projectedCommitmentUsd": "29.1962968898326090175",
+    "projectedCommitmentUsd": "29.3563469369284740175",
     "proposedReservationUsd": "0",
-    "remainingAuthorizationUsd": "10.8037031101673909825"
+    "remainingAuthorizationUsd": "10.6436530630715259825"
   },
   "comparison": {
     "disableCompile": true,

@@ -88,8 +88,8 @@ class V4ReviewPublicationTests(unittest.TestCase):
     def test_settlement_is_exact_and_refuses_drift_or_overflow(self):
         budget = json.loads((ROOT / "budgets/external-spend-v1.json").read_text())
         settled = publisher.settle_budget(budget, Decimal("2.50"), self.plan)
-        self.assertEqual(settled["postedSpendUsd"], "31.6962968898326090175")
-        self.assertEqual(settled["committedSpendUsd"], "31.6962968898326090175")
+        self.assertEqual(settled["postedSpendUsd"], "31.8563469369284740175")
+        self.assertEqual(settled["committedSpendUsd"], "31.8563469369284740175")
 
         drifted = copy.deepcopy(budget)
         drifted["committedSpendUsd"] = "29.00"

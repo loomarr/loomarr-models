@@ -14,7 +14,7 @@ test:
 
 check-budget-reconciliation:
 	PYTHONPATH=src $(PYTHON) -m loomarr_models.budget_reconciliation \
-		budgets/runpod-pod-billing-current-stock-baseline-v3-v1.json budgets/external-spend-v1.json
+		budgets/runpod-pod-billing-current-qwen38-qlora-v1-failure-v1.json budgets/external-spend-v1.json
 	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -p 'test_budget_reconciliation.py' -v
 
 generate-current-contract:

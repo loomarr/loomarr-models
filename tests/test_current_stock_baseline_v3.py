@@ -101,6 +101,10 @@ class CurrentStockBaselineV3Tests(unittest.TestCase):
                     (ROOT / "budgets/external-spend-v1.json").read_bytes()
                 ).hexdigest(),
             }
+            extender = ROOT / config["bindings"]["budgetReconciliationExtender"]["path"]
+            config["bindings"]["budgetReconciliationExtender"]["sha256"] = hashlib.sha256(
+                extender.read_bytes()
+            ).hexdigest()
             committed = ledger["committedSpendUsd"]
             config["budget"] = {
                 "aggregateAuthorizationUsd": ledger["authorizationUsd"],
