@@ -112,7 +112,10 @@ def validate_provider_evidence(evidence: dict[str, Any]) -> dict[str, Any]:
         raise PreflightError("current QLoRA provider duration or hourly rate drifted")
     if set(costs) != {"cpu", "disk", "gpu", "total"} or any(value < 0 for value in costs.values()):
         raise PreflightError("current QLoRA provider cost fields drifted")
-    if costs["cpu"] + costs["disk"] + costs["gpu"] != costs["total"]:
+    component_delta = abs(
+        costs["cpu"] + costs["disk"] + costs["gpu"] - costs["total"]
+    )
+    if component_delta > Decimal("0.000000000000001"):
         raise PreflightError("current QLoRA provider cost components do not sum")
     if abs(costs["gpu"] - hourly * duration / Decimal(3600)) > Decimal("0.01"):
         raise PreflightError("current QLoRA provider GPU charge differs from runtime")

@@ -80,6 +80,19 @@ class CurrentTrainingFailureTests(unittest.TestCase):
         with self.assertRaisesRegex(PreflightError, "teardown"):
             validate_provider_evidence(evidence)
 
+    def test_provider_evidence_accepts_only_sub_femtodollar_component_rounding(self):
+        evidence = self.provider_fixture()
+        evidence["costUsd"] = {
+            "cpu": "0",
+            "disk": "0.003703703638166189",
+            "gpu": "0.15634634345769882",
+            "total": "0.160050047095865",
+        }
+        self.assertIs(validate_provider_evidence(evidence), evidence)
+        evidence["costUsd"]["total"] = "0.1600500470958"
+        with self.assertRaisesRegex(PreflightError, "components do not sum"):
+            validate_provider_evidence(evidence)
+
     def test_settlement_posts_only_actual_training_cost(self):
         budget = {
             "postedSpendUsd": "29.1962968898326090175",
