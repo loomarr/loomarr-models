@@ -23,6 +23,16 @@ def run_training(
 ) -> dict[str, Any]:
     os.environ["TORCH_COMPILE_DISABLE"] = "1"
     os.environ["UNSLOTH_COMPILE_DISABLE"] = "1"
+    config = load_config(config_path)
+    execution = config["execution"]
+    expected_environment = {
+        "HF_HOME": "/workspace/hf-cache",
+        "HF_HUB_DISABLE_XET": "1",
+    }
+    if execution.get("environment") not in (None, expected_environment):
+        raise PreflightError("current QLoRA model-acquisition environment drifted")
+    for name, value in execution.get("environment", {}).items():
+        os.environ[name] = value
 
     from unsloth import FastModel
     from unsloth.chat_templates import train_on_responses_only
@@ -32,8 +42,6 @@ def run_training(
     from peft import PeftModel
     from trl import SFTConfig, SFTTrainer
 
-    config = load_config(config_path)
-    execution = config["execution"]
     run = config["runs"][0]
     if platform.system() != "Linux" or platform.machine() != "x86_64":
         raise PreflightError("live current QLoRA training requires Linux amd64")

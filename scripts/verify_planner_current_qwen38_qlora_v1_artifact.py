@@ -35,12 +35,15 @@ def verify_artifact(
     config_path: Path,
     artifact_dir: Path,
     expected_source_commit: str,
+    *,
+    expected_experiment_id: str = EXPERIMENT_ID,
+    preflight_fn=preflight,
 ) -> dict[str, Any]:
     root = root.resolve(strict=True)
     config_path = _inside(root, config_path, must_exist=True)
     artifact_dir = _inside(root, artifact_dir, must_exist=True)
     config = load_config(config_path)
-    if config.get("experimentId") != EXPERIMENT_ID or config.get("status") != "ready-for-training":
+    if config.get("experimentId") != expected_experiment_id or config.get("status") != "ready-for-training":
         raise ArtifactVerificationError("current QLoRA experiment is not in the authorized training state")
     if artifact_dir != (root / config["execution"]["outputDir"]).resolve():
         raise ArtifactVerificationError("artifact directory differs from the current QLoRA output")
@@ -52,7 +55,7 @@ def verify_artifact(
         raise ArtifactVerificationError("current QLoRA run manifest fields drifted")
     run = config["runs"][0]
     if (
-        manifest["experimentId"] != EXPERIMENT_ID
+        manifest["experimentId"] != expected_experiment_id
         or manifest["status"] != "complete-unsettled"
         or manifest["runId"] != run["runId"]
         or manifest["completedSteps"] != run["maxSteps"]
@@ -64,7 +67,7 @@ def verify_artifact(
     ):
         raise ArtifactVerificationError("current QLoRA run identity or completion drifted")
     try:
-        expected_plan = preflight(
+        expected_plan = preflight_fn(
             root,
             config_path,
             require_authorized=True,
@@ -96,7 +99,7 @@ def verify_artifact(
         raise ArtifactVerificationError("current QLoRA persisted-adapter load probe is invalid")
     return {
         "schemaVersion": 1,
-        "experimentId": EXPERIMENT_ID,
+        "experimentId": expected_experiment_id,
         "runId": manifest["runId"],
         "sourceCommit": expected_source_commit,
         "completedSteps": manifest["completedSteps"],

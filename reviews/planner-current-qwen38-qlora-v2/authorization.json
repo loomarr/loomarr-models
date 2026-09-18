@@ -1,0 +1,12 @@
+{
+  "authorizationReference": null,
+  "authorizedAt": null,
+  "authorizedBy": null,
+  "authorizedPlanCommit": null,
+  "evaluationReservationUsd": "1.50",
+  "experimentId": "planner-current-qwen38-qlora-v2",
+  "maxCombinedReservationUsd": "3.00",
+  "schemaVersion": 1,
+  "status": "not-authorized",
+  "trainingReservationUsd": "1.50"
+}
