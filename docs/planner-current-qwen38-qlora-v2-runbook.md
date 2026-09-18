@@ -1,5 +1,8 @@
 # Corrected current-contract QLoRA v2 runbook
 
+> This runbook is historical. V2 is terminal (`failed-settled`) and must not be executed again.
+> A future corrected experiment requires a new identity and authorization.
+
 This runbook permits one training launch only. It does not permit a sweep or an automatic paid
 retry.
 

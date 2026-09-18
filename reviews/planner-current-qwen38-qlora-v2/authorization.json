@@ -1,12 +1,18 @@
 {
+  "actualTrainingCostUsd": "0.06595210370142013",
   "authorizationReference": "https://github.com/loomarr/loomarr-models/issues/20#issuecomment-5730318655",
   "authorizedAt": "2026-09-18T12:58:05Z",
   "authorizedBy": "loomarr-maintainer",
   "authorizedPlanCommit": "adbde9e6d9e42f0eaf8402fb0aef5325d2fe4d9b",
+  "completedAt": "2026-09-18T14:08:03Z",
+  "evaluationDisposition": "not-run-no-adapter",
   "evaluationReservationUsd": "1.50",
   "experimentId": "planner-current-qwen38-qlora-v2",
+  "failureClass": "live-rendered-capacity-mismatch",
   "maxCombinedReservationUsd": "3.00",
+  "publicationPath": "runs/planner-current-qwen38-qlora-v2/publication.json",
+  "publicationSha256": "a45a54626f46119d2c0d6154aff35fef957f3d81becc8aa44905e13c47f03cdc",
   "schemaVersion": 1,
-  "status": "training-authorized",
+  "status": "complete-failed",
   "trainingReservationUsd": "1.50"
 }

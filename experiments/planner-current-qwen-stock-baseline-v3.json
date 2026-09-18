@@ -19,7 +19,7 @@
     },
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "fdd9c88c62377d74e361c5a62fc500f06848b81b7865b00e4dca5dbc40ff85c4"
+      "sha256": "c82bfe8fe5bc8fd6391c21a31fcad006a09040bafc2272b67a8c7181743a51ce"
     },
     "budgetReconciliationExtender": {
       "path": "scripts/extend_runpod_budget_reconciliation.py",
@@ -89,11 +89,11 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "29.3563469369284740175",
+    "currentCommittedUsd": "29.4222990406298941475",
     "outstandingReservationsUsd": "0",
-    "projectedCommitmentUsd": "29.3563469369284740175",
+    "projectedCommitmentUsd": "29.4222990406298941475",
     "proposedReservationUsd": "0",
-    "remainingAuthorizationUsd": "10.6436530630715259825"
+    "remainingAuthorizationUsd": "10.5777009593701058525"
   },
   "comparison": {
     "disableCompile": true,

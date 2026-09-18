@@ -56,7 +56,7 @@ class V4ModelReviewPreflightTests(unittest.TestCase):
         self.assertEqual(self.plan.output_token_upper_bound, 360000)
         self.assertEqual(self.plan.reservation_usd, "8.00")
         self.assertLessEqual(Decimal(self.plan.worst_case_cost_usd), Decimal("8.00"))
-        self.assertEqual(self.plan.projected_spend_usd, "37.3563469369284740175")
+        self.assertEqual(self.plan.projected_spend_usd, "37.4222990406298941475")
         self.assertEqual(self.plan.authorization_usd, "40.00")
         payload = request_plan_bytes(self.plan.requests)
         self.assertEqual(payload, REQUEST_PLAN_PATH.read_bytes())

@@ -2,216 +2,28 @@
   "authority": {
     "certificationAuthority": false,
     "deploymentAuthority": false,
-    "gpuAuthorized": true,
-    "modelDownloadAuthorized": true,
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
     "paidEvaluationAuthorized": false,
     "releaseAuthority": false,
-    "trainingAuthorized": true
+    "trainingAuthorized": false
   },
-  "bindings": {
-    "authorization": {
-      "path": "reviews/planner-current-qwen38-qlora-v2/authorization.json",
-      "sha256": "2e14862df60a0d186105aa62417ec9d7241a2d7618e45cb8978ed0110da46f2f"
-    },
-    "authorizationTool": {
-      "path": "scripts/authorize_planner_current_qwen38_qlora_v2.py",
-      "sha256": "c330872049b1510a58eded967e93b531f5d48bbcd06ed8019f8f648c4d43987c"
-    },
-    "budgetLedger": {
-      "path": "budgets/external-spend-v1.json",
-      "sha256": "fdd9c88c62377d74e361c5a62fc500f06848b81b7865b00e4dca5dbc40ff85c4"
-    },
-    "budgetReconciliation": {
-      "path": "budgets/runpod-pod-billing-current-qwen38-qlora-v1-failure-v1.json",
-      "sha256": "677699bd4d4b0abb6a603907129765a0d4084a0d7166e86f04313cbc710253d6"
-    },
-    "capacityReport": {
-      "path": "reviews/planner-current-qwen38-qlora-v1/training-capacity-report.json",
-      "sha256": "ba29b0c433bdee9f35e71b5fdfa94d39dae3bcc90f2e1db7649ec1b176e7663b"
-    },
-    "contract": {
-      "path": "contracts/planner-contract-v5.json",
-      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
-    },
-    "corpus": {
-      "path": "corpus/planner-current-v1/traces.jsonl",
-      "records": 24,
-      "sha256": "a4ce7ac3e3365148ee4bd057928cfe3f72847637fe9c8ae7ebbadc29b608dcfa"
-    },
-    "corpusManifest": {
-      "path": "corpus/planner-current-v1/manifest.json",
-      "sha256": "9e810062a01e462b45763832fdd788d0b801b0967dfd7a30dd5f4e3682fa510f"
-    },
-    "development": {
-      "path": "evaluation/planner-current-v1/cases.jsonl",
-      "records": 24,
-      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
-    },
-    "developmentManifest": {
-      "path": "evaluation/planner-current-v1/manifest.json",
-      "sha256": "3d5aa3c64bdbf16e1731e716242867632b1a2bbbd5fec5cdddf95ded742de2da"
-    },
-    "documentation": {
-      "path": "docs/planner-current-qwen38-qlora-v2.md",
-      "sha256": "fba3dd5bec4ec9c793d5d515e2bf8d6daa96e26ee00565cb6cbbff6a5820955f"
-    },
-    "environment": {
-      "path": "environments/qwen38-a40-v1.json",
-      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
-    },
-    "failurePublication": {
-      "path": "runs/planner-current-qwen38-qlora-v1/publication.json",
-      "sha256": "4727eddfa2f6fed3ff0e9f6e84fb221ecf3a4a32ab4802b24147ea05b1ae3c81"
-    },
-    "generator": {
-      "path": "scripts/build_planner_current_qwen38_qlora_v2.py",
-      "sha256": "d694cbebf898f99878e5df877e4aeb80614e2a1975ae00c5d6e88b70648586e0"
-    },
-    "holdoutDenylist": {
-      "path": "contracts/planner-holdout-denylist-v2.json",
-      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
-    },
-    "preflight": {
-      "path": "src/loomarr_models/current_training_v2.py",
-      "sha256": "80c08598e51c91f10523203c07981b76b6e917969644b8ae2ab50f737af83e1f"
-    },
-    "reviewPublication": {
-      "path": "reviews/planner-current-v1/publication.json",
-      "sha256": "cc762780ffd25d6f8503461f2b1313edb3429f8bdfc2eb83ef65cc7213b4b1f8"
-    },
-    "runbook": {
-      "path": "docs/planner-current-qwen38-qlora-v2-runbook.md",
-      "sha256": "23ecb0e22840b424cb7c659e8cd28e212e72751a6e275d7d9ed9481b59a2631d"
-    },
-    "runner": {
-      "path": "scripts/run_planner_current_qwen38_qlora_v2.py",
-      "sha256": "0b7c7b65c3ec4493d751c462fcbd63c9bc6eade5fb82b36d2c457ad20130331a"
-    },
-    "runtime": {
-      "path": "src/loomarr_models/current_training_runtime.py",
-      "sha256": "6a47631bb58ab824d56c63f6660e7740a78360f56a75443b94c176c38e7f1d71"
-    },
-    "stockPublication": {
-      "path": "runs/planner-current-qwen-stock-baseline-v3/publication.json",
-      "sha256": "0b033229b49585a9c12e6adbe7d16b3333f94950fc8d18e8c693e9a42e4dbf79"
-    },
-    "trainingData": {
-      "path": "src/loomarr_models/training_data.py",
-      "sha256": "8fdb85b06e833c0b355a1a2a402d3fe1bedd7bab5cba1f28d137dadadf85494f"
-    },
-    "verifier": {
-      "path": "scripts/verify_planner_current_qwen38_qlora_v2_artifact.py",
-      "sha256": "d68f77c1a9fa14d060af2e337d1944c6db4a4d5862f4e58027549c1ecc695ada"
-    }
-  },
-  "budget": {
-    "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "29.3563469369284740175",
-    "evaluationReservationUsd": "1.50",
-    "maxCombinedReservationUsd": "3.00",
+  "budgetAfterSettlement": {
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "29.4222990406298941475",
     "outstandingReservationsUsd": "0",
-    "projectedCombinedSpendUsd": "32.3563469369284740175",
-    "remainingAfterCombinedUsd": "7.6436530630715259825",
-    "trainingReservationUsd": "1.50"
-  },
-  "evaluation": {
-    "candidateOrder": [
-      "stock",
-      "adapter"
-    ],
-    "comparison": {
-      "disableCompile": true,
-      "doSample": false,
-      "maxModelCallsPerCase": 3,
-      "maxNewTokens": 2048,
-      "maxSeqLength": 16384,
-      "offloadEmbedding": false,
-      "reasoningEffort": "low",
-      "seed": 3407,
-      "temperature": null,
-      "topP": null,
-      "trials": 1
-    },
-    "promotion": {
-      "certificationAuthority": false,
-      "deploymentAuthority": false,
-      "maximumAuthorityViolations": 0,
-      "maximumUnsupportedKeys": 0,
-      "minimumHardFailureReduction": 8,
-      "releaseAuthority": false,
-      "requiredQualityThresholds": {
-        "maxP95ToolCalls": 2,
-        "minCorrectToolOperationRate": 0.9,
-        "minDateMeaningAccuracyRate": 1.0,
-        "minGroundedCompletionRate": 0.95,
-        "minPolicyAccuracyRate": 0.95,
-        "minProposalQualityRate": 0.9,
-        "minRecoveryRate": 1.0,
-        "minSchemaValidityRate": 0.98
-      }
-    },
-    "reusePublishedStockResults": true,
-    "sameCasesAndOrderRequired": true,
-    "status": "waiting-for-hash-bound-adapter"
-  },
-  "execution": {
-    "automaticRetry": false,
-    "cloud": "SECURE",
-    "containerDiskGb": 40,
-    "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851",
-    "environment": {
-      "HF_HOME": "/workspace/hf-cache",
-      "HF_HUB_DISABLE_XET": "1"
-    },
-    "environmentInstallDir": "/opt/loomarr-venv",
-    "gpuCount": 1,
-    "gpuSku": "NVIDIA A40",
-    "maxWallClockSeconds": 9000,
-    "minimumCudaVersion": "12.8",
-    "minimumFreePersistentGbBeforeDownload": 70,
-    "minimumVramGb": 48,
-    "modelCacheDir": "/workspace/hf-cache",
-    "outputDir": ".artifacts/planner-current-qwen38-qlora-v2",
-    "persistentVolumeGb": 80,
-    "platform": "linux-amd64",
-    "requireCleanGit": true,
-    "storageMode": "pod-persistent"
+    "postedSpendUsd": "29.4222990406298941475"
   },
   "experimentId": "planner-current-qwen38-qlora-v2",
   "issue": "https://github.com/loomarr/loomarr-models/issues/20",
-  "model": {
-    "candidateId": "qwen38-27b-unsloth-bnb-4bit",
-    "quantization": "unsloth-bnb-4bit",
-    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
-    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+  "publication": {
+    "path": "runs/planner-current-qwen38-qlora-v2/publication.json",
+    "sha256": "a45a54626f46119d2c0d6154aff35fef957f3d81becc8aa44905e13c47f03cdc"
   },
-  "runs": [
-    {
-      "finetuneAttentionModules": true,
-      "finetuneLanguageLayers": true,
-      "finetuneMlpModules": true,
-      "finetuneVisionLayers": false,
-      "gradientAccumulationSteps": 4,
-      "gradientCheckpointing": "unsloth",
-      "learningRate": 0.0002,
-      "loraAlpha": 8,
-      "loraDropout": 0,
-      "loraR": 8,
-      "lrSchedulerType": "linear",
-      "maxSeqLength": 8192,
-      "maxSteps": 9,
-      "optimizer": "adamw_8bit",
-      "perDeviceTrainBatchSize": 1,
-      "reasoningEffort": "low",
-      "runId": "current-qwen38-qlora-a40-v2",
-      "saveMode": "adapter-only",
-      "seed": 3407,
-      "shuffle": "deterministic-seeded",
-      "trainOnResponsesOnly": true,
-      "warmupSteps": 1,
-      "weightDecay": 0.001
-    }
-  ],
   "schemaVersion": 1,
-  "status": "ready-for-training"
+  "sourceExperiment": {
+    "path": "runs/planner-current-qwen38-qlora-v2/source-experiment.json",
+    "sha256": "c5d38651b1c2a17540d9b69de26e1b3f605d8d50f565409906ce4add660a7595"
+  },
+  "status": "failed-settled"
 }

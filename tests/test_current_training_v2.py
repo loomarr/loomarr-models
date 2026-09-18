@@ -3,9 +3,7 @@ from __future__ import annotations
 import inspect
 import json
 import sys
-import tempfile
 import unittest
-from decimal import Decimal
 from pathlib import Path
 
 
@@ -22,63 +20,27 @@ CONFIG = ROOT / "experiments/planner-current-qwen38-qlora-v2.json"
 
 
 class CurrentTrainingV2Tests(unittest.TestCase):
-    def test_authorized_plan_is_exact_bounded_and_storage_safe(self):
+    def test_terminal_plan_is_exact_settled_and_revoked(self):
         self.assertEqual(CONFIG.read_bytes(), builder.content())
         config = json.loads(CONFIG.read_text(encoding="utf-8"))
-        execution = config["execution"]
-        self.assertEqual(config["status"], "ready-for-training")
+        self.assertEqual(config["status"], "failed-settled")
+        self.assertFalse(any(config["authority"].values()))
         self.assertEqual(
-            config["authority"],
-            {
-                "certificationAuthority": False,
-                "deploymentAuthority": False,
-                "gpuAuthorized": True,
-                "modelDownloadAuthorized": True,
-                "paidEvaluationAuthorized": False,
-                "releaseAuthority": False,
-                "trainingAuthorized": True,
-            },
+            config["budgetAfterSettlement"]["committedSpendUsd"],
+            "29.4222990406298941475",
         )
-        self.assertEqual(execution["containerDiskGb"], 40)
-        self.assertEqual(execution["environmentInstallDir"], "/opt/loomarr-venv")
-        self.assertEqual(execution["persistentVolumeGb"], 80)
-        self.assertEqual(execution["minimumFreePersistentGbBeforeDownload"], 70)
-        self.assertEqual(
-            execution["environment"],
-            {"HF_HOME": "/workspace/hf-cache", "HF_HUB_DISABLE_XET": "1"},
-        )
-        self.assertFalse(execution["automaticRetry"])
-        plan = preflight(
-            ROOT,
-            CONFIG,
-            require_authorized=False,
-            git_probe=lambda *_: "a" * 40,
-        )
-        self.assertEqual((plan.traceCount, plan.maximumRenderedTokens), (24, 5416))
-        self.assertEqual(plan.maxSeqLength, 8192)
-        self.assertEqual(plan.committedSpendUsd, "29.3563469369284740175")
-        self.assertEqual(plan.projectedCombinedSpendUsd, "32.3563469369284740175")
-        self.assertLessEqual(Decimal(plan.projectedCombinedSpendUsd), Decimal(plan.authorizationUsd))
-        self.assertTrue(plan.trainingAuthorized)
+        publication = json.loads((ROOT / config["publication"]["path"]).read_text())
+        self.assertEqual(publication["providerCostUsd"], "0.06595210370142013")
+        self.assertEqual(publication["failureEvidence"]["optimizerSteps"], 0)
+        self.assertFalse(publication["failureEvidence"]["adapterProduced"])
 
-    def test_paid_preflight_accepts_exact_authorized_plan_before_heavy_imports(self):
-        plan = preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
-        self.assertTrue(plan.trainingAuthorized)
-        self.assertEqual(plan.trainingReservationUsd, "1.50")
-        self.assertEqual(plan.evaluationReservationUsd, "1.50")
-        self.assertEqual(plan.projectedCombinedSpendUsd, "32.3563469369284740175")
-
-    def test_storage_or_failure_prerequisite_drift_fails_closed(self):
-        config = json.loads(CONFIG.read_text(encoding="utf-8"))
-        config["execution"]["persistentVolumeGb"] = 40
-        with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
-            path = Path(temporary) / "config.json"
-            path.write_text(json.dumps(config), encoding="utf-8")
-            with self.assertRaisesRegex(PreflightError, "protocol drifted"):
+    def test_terminal_preflight_refuses_reexecution(self):
+        for require_authorized in (False, True):
+            with self.assertRaisesRegex(PreflightError, "terminal"):
                 preflight(
                     ROOT,
-                    path,
-                    require_authorized=False,
+                    CONFIG,
+                    require_authorized=require_authorized,
                     git_probe=lambda *_: "a" * 40,
                 )
 

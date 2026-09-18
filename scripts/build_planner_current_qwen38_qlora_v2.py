@@ -109,10 +109,17 @@ def content() -> bytes:
             raise ValueError("corrected current QLoRA terminal publication drifted")
         publication = json.loads((ROOT / publication_path).read_text(encoding="utf-8"))
         source = publication.get("sourceExperiment", {})
+        terminal_budget = publication.get("budgetAfterSettlement", {})
         if (
             publication.get("status") != "failed-settled"
             or publication.get("providerCostUsd") != authorization["actualTrainingCostUsd"]
-            or publication.get("budgetAfterSettlement", {}).get("committedSpendUsd") != str(committed)
+            or set(terminal_budget) != {
+                "postedSpendUsd", "outstandingReservationsUsd", "committedSpendUsd", "authorizationUsd"
+            }
+            or Decimal(terminal_budget["postedSpendUsd"])
+            + Decimal(terminal_budget["outstandingReservationsUsd"])
+            != Decimal(terminal_budget["committedSpendUsd"])
+            or terminal_budget["authorizationUsd"] != "40.00"
             or source.get("path") != "runs/planner-current-qwen38-qlora-v2/source-experiment.json"
             or source.get("sha256") != _sha(Path(source.get("path", "missing")))
         ):
@@ -122,7 +129,7 @@ def content() -> bytes:
             authorization["publicationSha256"],
             source["path"],
             source["sha256"],
-            budget,
+            terminal_budget,
         )
     authorized = state == "authorized"
     value = {

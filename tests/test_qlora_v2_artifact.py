@@ -130,7 +130,7 @@ class QLoRAV2ArtifactTests(unittest.TestCase):
                 ],
                 "committedSpendUsd": budget["committedSpendUsd"],
                 "reservationUsd": "1.50",
-                "projectedSpendUsd": "30.8563469369284740175",
+                "projectedSpendUsd": "30.9222990406298941475",
                 "authorizationUsd": "40.00",
                 "sourceCommit": SOURCE_COMMIT,
                 "outputDir": ".artifacts/planner-qwen38-qlora-v2",
