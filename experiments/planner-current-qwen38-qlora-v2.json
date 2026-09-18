@@ -65,7 +65,7 @@
     },
     "generator": {
       "path": "scripts/build_planner_current_qwen38_qlora_v2.py",
-      "sha256": "39a111da4ccf7abea5382c97ea1067bebd4e77c4a552c54d185236e6ec8ba685"
+      "sha256": "d694cbebf898f99878e5df877e4aeb80614e2a1975ae00c5d6e88b70648586e0"
     },
     "holdoutDenylist": {
       "path": "contracts/planner-holdout-denylist-v2.json",
@@ -73,7 +73,7 @@
     },
     "preflight": {
       "path": "src/loomarr_models/current_training_v2.py",
-      "sha256": "e2ff555c795620d042d21d6347690648f3315c2b74b5fed84643f16fcd971b47"
+      "sha256": "80c08598e51c91f10523203c07981b76b6e917969644b8ae2ab50f737af83e1f"
     },
     "reviewPublication": {
       "path": "reviews/planner-current-v1/publication.json",

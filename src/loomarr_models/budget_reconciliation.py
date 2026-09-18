@@ -28,6 +28,7 @@ _ALLOCATIONS = {
     "current-stock-baseline-v2": "currentStockBaselineV2",
     "current-stock-baseline-v3": "currentStockBaselineV3",
     "current-qwen38-qlora-v1-failure": "currentQwen38QloraV1Failure",
+    "current-qwen38-qlora-v2-failure": "currentQwen38QloraV2Failure",
 }
 _COMPONENT_ROUNDING_TOLERANCE = Decimal("0.0000000000000001")
 

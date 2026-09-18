@@ -34,6 +34,11 @@ ALLOCATIONS = {
         "historyName": "currentQwen38QloraV1Failure",
         "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/20",
     },
+    "current-qwen38-qlora-v2-failure": {
+        "experimentId": "planner-current-qwen38-qlora-v2",
+        "historyName": "currentQwen38QloraV2Failure",
+        "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/20",
+    },
 }
 _COMPONENT_ROUNDING_TOLERANCE = Decimal("0.0000000000000001")
 

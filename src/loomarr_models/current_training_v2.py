@@ -99,6 +99,8 @@ def preflight(
     root = root.resolve(strict=True)
     config_path = _input_path(root, config_path)
     config = load_config(config_path)
+    if config.get("status") == "failed-settled":
+        raise PreflightError("corrected current QLoRA experiment is terminal and cannot be reexecuted")
     _validate_shape(config, require_authorized=require_authorized)
     bound: dict[str, Path] = {}
     for name, binding in config["bindings"].items():

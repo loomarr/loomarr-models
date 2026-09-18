@@ -17,6 +17,10 @@ sys.path.insert(0, str(ROOT / "src"))
 from loomarr_models.current_baseline import MODEL
 from loomarr_models.current_training import EVALUATION, NO_AUTHORITY, TRAINING_AUTHORITY
 from loomarr_models.current_training_v2 import EXECUTION, EXPERIMENT_ID, ISSUE, RUN
+from loomarr_models.current_training_failure_v2 import (
+    EXPECTED_PLAN_COMMIT,
+    terminal_config,
+)
 
 
 OUTPUT = Path("experiments/planner-current-qwen38-qlora-v2.json")
@@ -32,7 +36,7 @@ def _binding(path: str, **extra: Any) -> dict[str, Any]:
     return {"path": path, "sha256": _sha(Path(path)), **extra}
 
 
-def _authorized() -> bool:
+def _authorization_state() -> tuple[str, dict[str, Any]]:
     value = json.loads((ROOT / AUTHORIZATION).read_text(encoding="utf-8"))
     base = {
         "schemaVersion": 1,
@@ -49,7 +53,7 @@ def _authorized() -> bool:
         "authorizedPlanCommit": None,
         "authorizationReference": None,
     }:
-        return False
+        return "planned", value
     if (
         set(value) == set(base) | {
             "status", "authorizedBy", "authorizedAt", "authorizedPlanCommit", "authorizationReference"
@@ -64,7 +68,28 @@ def _authorized() -> bool:
             value.get("authorizationReference", ""),
         )
     ):
-        return True
+        return "authorized", value
+    terminal_fields = set(base) | {
+        "status", "authorizedBy", "authorizedAt", "authorizedPlanCommit",
+        "authorizationReference", "completedAt", "failureClass",
+        "actualTrainingCostUsd", "evaluationDisposition", "publicationPath",
+        "publicationSha256",
+    }
+    if (
+        set(value) == terminal_fields
+        and all(value.get(key) == expected for key, expected in base.items())
+        and value.get("status") == "complete-failed"
+        and value.get("authorizedBy") == "loomarr-maintainer"
+        and value.get("authorizedPlanCommit") == EXPECTED_PLAN_COMMIT
+        and re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value.get("authorizedAt", ""))
+        and re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", value.get("completedAt", ""))
+        and value.get("failureClass") == "live-rendered-capacity-mismatch"
+        and Decimal(value.get("actualTrainingCostUsd", "NaN")) <= Decimal("1.50")
+        and value.get("evaluationDisposition") == "not-run-no-adapter"
+        and value.get("publicationPath") == "runs/planner-current-qwen38-qlora-v2/publication.json"
+        and re.fullmatch(r"[0-9a-f]{64}", value.get("publicationSha256", ""))
+    ):
+        return "terminal", value
     raise ValueError("corrected current QLoRA authorization lifecycle is invalid")
 
 
@@ -77,7 +102,29 @@ def content() -> bytes:
     combined = Decimal("3.00")
     if posted + outstanding != committed or committed + combined > aggregate:
         raise ValueError("corrected current QLoRA aggregate budget is invalid")
-    authorized = _authorized()
+    state, authorization = _authorization_state()
+    if state == "terminal":
+        publication_path = Path(authorization["publicationPath"])
+        if _sha(publication_path) != authorization["publicationSha256"]:
+            raise ValueError("corrected current QLoRA terminal publication drifted")
+        publication = json.loads((ROOT / publication_path).read_text(encoding="utf-8"))
+        source = publication.get("sourceExperiment", {})
+        if (
+            publication.get("status") != "failed-settled"
+            or publication.get("providerCostUsd") != authorization["actualTrainingCostUsd"]
+            or publication.get("budgetAfterSettlement", {}).get("committedSpendUsd") != str(committed)
+            or source.get("path") != "runs/planner-current-qwen38-qlora-v2/source-experiment.json"
+            or source.get("sha256") != _sha(Path(source.get("path", "missing")))
+        ):
+            raise ValueError("corrected current QLoRA terminal evidence drifted")
+        return terminal_config(
+            str(publication_path),
+            authorization["publicationSha256"],
+            source["path"],
+            source["sha256"],
+            budget,
+        )
+    authorized = state == "authorized"
     value = {
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
