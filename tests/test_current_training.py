@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import build_planner_current_qwen38_qlora_v1 as builder
+import check_planner_current_training_capacity as capacity_checker
 import verify_planner_current_qwen38_qlora_v1_artifact as artifact_verifier
 from loomarr_models.current_contract import read_jsonl
 from loomarr_models.current_training import _validate_capacity, preflight
@@ -80,6 +81,14 @@ class CurrentTrainingTests(unittest.TestCase):
         self.assertEqual(modules[:2], ["unsloth", "unsloth.chat_templates"])
         self.assertLess(modules.index("unsloth"), modules.index("torch"))
         self.assertLess(modules.index("unsloth"), modules.index("trl"))
+
+    def test_capacity_renderer_preserves_transformers_json_key_order(self):
+        source = inspect.getsource(capacity_checker.measure)
+        self.assertIn(
+            'environment.policies["json.dumps_kwargs"] = {"ensure_ascii": False}',
+            source,
+        )
+        self.assertLess(source.index("json.dumps_kwargs"), source.index("environment.from_string"))
 
     def test_artifact_verifier_rejects_merged_weights(self):
         with tempfile.TemporaryDirectory() as temporary:

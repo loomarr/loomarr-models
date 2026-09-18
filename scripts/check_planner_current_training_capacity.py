@@ -81,6 +81,10 @@ def measure(tokenizer_dir: Path) -> dict[str, Any]:
     traces = _jsonl(CORPUS)
     rows = to_training_rows(traces)
     environment = ImmutableSandboxedEnvironment(trim_blocks=True, lstrip_blocks=True)
+    # Transformers preserves mapping insertion order in its chat-template
+    # ``tojson`` filter. Jinja defaults to sorting keys, which changes the
+    # rendered-byte identity even when token counts remain identical.
+    environment.policies["json.dumps_kwargs"] = {"ensure_ascii": False}
 
     def raise_exception(message: str) -> None:
         raise ValueError(message)
