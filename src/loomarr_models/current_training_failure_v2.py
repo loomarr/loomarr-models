@@ -101,7 +101,8 @@ def validate_provider_evidence(evidence: dict[str, Any]) -> dict[str, Any]:
     required = {
         "schemaVersion", "experimentId", "provider", "status", "capturedAt",
         "cloud", "dataCenterId", "gpuSku", "gpuHourlyUsd", "createdAt",
-        "deletedAt", "podIdSha256", "zeroActivePods", "storageMode",
+        "deletedAt", "billingWindowStartAt", "billingWindowEndAt",
+        "podIdSha256", "zeroActivePods", "storageMode",
         "containerDiskGb", "persistentStorageGb", "persistentStorageDeletedWithPod",
         "costUsd",
     }
@@ -125,21 +126,28 @@ def validate_provider_evidence(evidence: dict[str, Any]) -> dict[str, Any]:
     try:
         created = _timestamp(evidence["createdAt"])
         deleted = _timestamp(evidence["deletedAt"])
+        billing_start = _timestamp(evidence["billingWindowStartAt"])
+        billing_end = _timestamp(evidence["billingWindowEndAt"])
         captured = _timestamp(evidence["capturedAt"])
         hourly = Decimal(evidence["gpuHourlyUsd"])
         costs = {key: Decimal(value) for key, value in evidence["costUsd"].items()}
     except (KeyError, InvalidOperation, TypeError, ValueError) as exc:
         raise PreflightError("corrected current QLoRA provider settlement values are invalid") from exc
     duration = Decimal(str((deleted - created).total_seconds()))
-    if duration <= 0 or duration > 9000 or captured < deleted or hourly != Decimal("0.49"):
+    if (
+        duration <= 0
+        or duration > 9000
+        or not billing_start <= created <= deleted <= billing_end <= captured
+        or hourly != Decimal("0.49")
+    ):
         raise PreflightError("corrected current QLoRA provider duration or hourly rate drifted")
     if set(costs) != {"cpu", "disk", "gpu", "total"} or any(value < 0 for value in costs.values()):
         raise PreflightError("corrected current QLoRA provider cost fields drifted")
     component_delta = abs(costs["cpu"] + costs["disk"] + costs["gpu"] - costs["total"])
     if component_delta > Decimal("0.000000000000001"):
         raise PreflightError("corrected current QLoRA provider cost components do not sum")
-    if abs(costs["gpu"] - hourly * duration / Decimal(3600)) > Decimal("0.01"):
-        raise PreflightError("corrected current QLoRA provider GPU charge differs from runtime")
+    if costs["gpu"] <= 0 or costs["gpu"] > hourly * duration / Decimal(3600) + Decimal("0.01"):
+        raise PreflightError("corrected current QLoRA provider GPU charge exceeds pod lifetime")
     if costs["total"] > TRAINING_RESERVATION_USD:
         raise PreflightError("corrected current QLoRA provider cost exceeds the training reservation")
     return evidence

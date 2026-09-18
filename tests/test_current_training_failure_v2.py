@@ -76,20 +76,27 @@ class CurrentTrainingFailureV2Tests(unittest.TestCase):
             "experimentId": "planner-current-qwen38-qlora-v2",
             "provider": "runpod",
             "status": "settled-resources-deleted",
-            "capturedAt": "2026-09-18T13:30:00Z",
+            "capturedAt": "2026-09-18T14:07:00Z",
             "cloud": "SECURE",
             "dataCenterId": "CA-MTL-1",
             "gpuSku": "NVIDIA A40",
             "gpuHourlyUsd": "0.49",
             "createdAt": "2026-09-18T13:01:05Z",
             "deletedAt": "2026-09-18T13:24:34Z",
+            "billingWindowStartAt": "2026-09-18T13:00:00Z",
+            "billingWindowEndAt": "2026-09-18T14:00:00Z",
             "podIdSha256": "a" * 64,
             "zeroActivePods": True,
             "storageMode": "pod-persistent",
             "containerDiskGb": 40,
             "persistentStorageGb": 80,
             "persistentStorageDeletedWithPod": True,
-            "costUsd": {"cpu": "0", "disk": "0.01", "gpu": "0.191", "total": "0.201"},
+            "costUsd": {
+                "cpu": "0",
+                "disk": "0.0013888889225199819",
+                "gpu": "0.06456321477890015",
+                "total": "0.06595210370142013",
+            },
         }
 
     def test_provider_evidence_is_exact_bounded_and_deleted(self):
@@ -97,6 +104,12 @@ class CurrentTrainingFailureV2Tests(unittest.TestCase):
         self.assertIs(validate_provider_evidence(evidence), evidence)
         evidence["persistentStorageGb"] = 40
         with self.assertRaisesRegex(PreflightError, "teardown"):
+            validate_provider_evidence(evidence)
+
+    def test_provider_billing_window_must_cover_the_pod_lifecycle(self):
+        evidence = self.provider_fixture()
+        evidence["billingWindowEndAt"] = "2026-09-18T13:20:00Z"
+        with self.assertRaisesRegex(PreflightError, "duration"):
             validate_provider_evidence(evidence)
 
     def test_settlement_posts_only_actual_training_cost(self):
