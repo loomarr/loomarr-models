@@ -25,7 +25,7 @@ CONFIG = ROOT / "experiments/planner-current-qwen38-qlora-v1.json"
 
 
 class CurrentTrainingTests(unittest.TestCase):
-    def test_generated_plan_is_exact_current_and_no_spend(self):
+    def test_generated_plan_is_exact_current_and_training_authorized(self):
         self.assertEqual(CONFIG.read_bytes(), builder.content())
         plan = preflight(
             ROOT,
@@ -40,9 +40,21 @@ class CurrentTrainingTests(unittest.TestCase):
         self.assertEqual(plan.combinedReservationUsd, "3.00")
         self.assertEqual(plan.projectedCombinedSpendUsd, "32.1962968898326090175")
         self.assertLessEqual(Decimal(plan.projectedCombinedSpendUsd), Decimal(plan.authorizationUsd))
-        self.assertFalse(plan.trainingAuthorized)
-        with self.assertRaisesRegex(PreflightError, "not authorized"):
-            preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
+        self.assertTrue(plan.trainingAuthorized)
+        authorization = json.loads(
+            (ROOT / "reviews/planner-current-qwen38-qlora-v1/authorization.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            authorization["authorizedPlanCommit"],
+            "c75e9f00700d94e54ab91dc62089b85686832f45",
+        )
+        self.assertEqual(
+            authorization["authorizationReference"],
+            "https://github.com/loomarr/loomarr-models/issues/20#issuecomment-5723983019",
+        )
+        preflight(ROOT, CONFIG, git_probe=lambda *_: "a" * 40)
 
     def test_recipe_is_one_adapter_only_one_and_a_half_pass_run(self):
         config = json.loads(CONFIG.read_text(encoding="utf-8"))

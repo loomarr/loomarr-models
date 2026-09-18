@@ -1,12 +1,12 @@
 {
-  "authorizationReference": null,
-  "authorizedAt": null,
-  "authorizedBy": null,
-  "authorizedPlanCommit": null,
+  "authorizationReference": "https://github.com/loomarr/loomarr-models/issues/20#issuecomment-5723983019",
+  "authorizedAt": "2026-09-18T02:05:17Z",
+  "authorizedBy": "loomarr-maintainer",
+  "authorizedPlanCommit": "c75e9f00700d94e54ab91dc62089b85686832f45",
   "evaluationReservationUsd": "1.50",
   "experimentId": "planner-current-qwen38-qlora-v1",
   "maxCombinedReservationUsd": "3.00",
   "schemaVersion": 1,
-  "status": "not-authorized",
+  "status": "training-authorized",
   "trainingReservationUsd": "1.50"
 }
