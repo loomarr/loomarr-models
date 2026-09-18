@@ -364,6 +364,28 @@ def validate_current_trace(trace: Mapping[str, Any], contract: Mapping[str, Any]
     _reject_private_content(trace_id, trace)
 
 
+def validate_approved_current_trace(
+    trace: Mapping[str, Any], contract: Mapping[str, Any], fixture_id: str
+) -> None:
+    trace_id = trace.get("traceId", "<missing>")
+    review = trace.get("review")
+    if (
+        not isinstance(review, dict)
+        or set(review) != {"status", "reviewer", "reviewedAt", "notes"}
+        or review.get("status") != "approved"
+        or not isinstance(review.get("reviewer"), str)
+        or not review["reviewer"]
+        or not isinstance(review.get("reviewedAt"), str)
+        or re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z", review["reviewedAt"])
+        is None
+        or not isinstance(review.get("notes"), str)
+    ):
+        raise ValidationError(f"{trace_id}: approved current trace review evidence is invalid")
+    pending = dict(trace)
+    pending["review"] = {"status": "pending", "reviewer": "", "reviewedAt": None, "notes": ""}
+    validate_current_trace(pending, contract, fixture_id)
+
+
 def validate_current_development_case(case: Mapping[str, Any], contract: Mapping[str, Any], fixture_id: str) -> None:
     case_id = case.get("caseId", "<missing>")
     if case.get("schemaVersion") != 1 or case.get("split") != "development-eval":

@@ -1,10 +1,10 @@
-.PHONY: check compile test check-budget-reconciliation generate-current-contract check-current-contract generate-current-stock-baseline check-current-stock-baseline preflight-current-stock-baseline run-current-stock-baseline publish-current-stock-baseline init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus init-v4-review generate-v4-corpus check-v4-corpus generate-v4-review-plan check-v4-review-plan preflight-v4-review run-v4-review publish-v4-review promote-v4-review generate-v4-local-screen check-v4-local-screen preflight-v4-local-screen run-v4-local-screen-qwen run-v4-local-screen-gemma publish-v4-local-screen generate-v4-stock-baseline check-v4-stock-baseline preflight-v4-stock-baseline run-v4-stock-baseline publish-v4-stock-baseline generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 verify-qlora-v2-artifact generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test check-budget-reconciliation generate-current-contract check-current-contract init-current-review generate-current-review check-current-review finalize-current-review generate-current-stock-baseline check-current-stock-baseline preflight-current-stock-baseline generate-current-stock-baseline-v3 check-current-stock-baseline-v3 preflight-current-stock-baseline-v3 run-current-stock-baseline-v3 publish-current-stock-baseline-v3 generate-current-qlora-v1 check-current-qlora-v1 preflight-current-qlora-v1 run-current-qlora-v1 verify-current-qlora-v1 generate-current-qlora-v2 check-current-qlora-v2 preflight-current-qlora-v2-plan preflight-current-qlora-v2 run-current-qlora-v2 verify-current-qlora-v2 publish-current-qlora-v2-failure check-current-prompt-capacity run-current-stock-baseline publish-current-stock-baseline publish-current-stock-failure init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus init-v4-review generate-v4-corpus check-v4-corpus generate-v4-review-plan check-v4-review-plan preflight-v4-review run-v4-review publish-v4-review promote-v4-review generate-v4-local-screen check-v4-local-screen preflight-v4-local-screen run-v4-local-screen-qwen run-v4-local-screen-gemma publish-v4-local-screen generate-v4-stock-baseline check-v4-stock-baseline preflight-v4-stock-baseline run-v4-stock-baseline publish-v4-stock-baseline generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 verify-qlora-v2-artifact generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: compile test check-budget-reconciliation check-current-contract check-current-stock-baseline check-generated check-development-eval check-targeted-corpus check-v4-corpus check-v4-review-plan check-v4-local-screen check-v4-stock-baseline check-corrected-targeted-review check-targeted-finalized check-qlora-v2-plan check-review check-finalized check-environment validate-drafts
+check: compile test check-budget-reconciliation check-current-contract check-current-review check-current-stock-baseline check-current-stock-baseline-v3 check-current-qlora-v1 check-current-qlora-v2 check-generated check-development-eval check-targeted-corpus check-v4-corpus check-v4-review-plan check-v4-local-screen check-v4-stock-baseline check-corrected-targeted-review check-targeted-finalized check-qlora-v2-plan check-review check-finalized check-environment validate-drafts
 
 compile:
 	$(PYTHON) -m compileall -q scripts src tests
@@ -14,7 +14,7 @@ test:
 
 check-budget-reconciliation:
 	PYTHONPATH=src $(PYTHON) -m loomarr_models.budget_reconciliation \
-		budgets/runpod-pod-billing-2026-09-03-v1.json budgets/external-spend-v1.json
+		budgets/runpod-pod-billing-current-qwen38-qlora-v2-failure-v1.json budgets/external-spend-v1.json
 	PYTHONPATH=src $(PYTHON) -m unittest discover -s tests -p 'test_budget_reconciliation.py' -v
 
 generate-current-contract:
@@ -22,6 +22,18 @@ generate-current-contract:
 
 check-current-contract:
 	$(PYTHON) scripts/build_planner_current_contract.py --check
+
+init-current-review:
+	$(PYTHON) scripts/build_planner_current_review.py --init-review
+
+generate-current-review:
+	$(PYTHON) scripts/build_planner_current_review.py
+
+check-current-review:
+	$(PYTHON) scripts/build_planner_current_review.py --check
+
+finalize-current-review:
+	$(PYTHON) scripts/finalize_planner_current_review.py
 
 generate-current-stock-baseline:
 	$(PYTHON) scripts/build_planner_current_stock_baseline.py
@@ -32,11 +44,70 @@ check-current-stock-baseline:
 preflight-current-stock-baseline:
 	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_stock_baseline.py --preflight-only
 
+generate-current-stock-baseline-v3:
+	$(PYTHON) scripts/build_planner_current_stock_baseline_v3.py
+
+check-current-stock-baseline-v3:
+	$(PYTHON) scripts/build_planner_current_stock_baseline_v3.py --check
+
+preflight-current-stock-baseline-v3:
+	PYTHONPATH=src $(PYTHON) scripts/preflight_planner_current_stock_baseline_v3.py
+
+run-current-stock-baseline-v3:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_stock_baseline_v3.py
+
+publish-current-stock-baseline-v3:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_current_stock_baseline_v3.py
+
+generate-current-qlora-v1:
+	$(PYTHON) scripts/build_planner_current_qwen38_qlora_v1.py
+
+check-current-qlora-v1:
+	$(PYTHON) scripts/build_planner_current_qwen38_qlora_v1.py --check
+	PYTHONPATH=src $(PYTHON) scripts/check_planner_current_training_capacity.py --check
+
+preflight-current-qlora-v1:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_qwen38_qlora_v1.py --preflight-only
+
+run-current-qlora-v1:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_qwen38_qlora_v1.py
+
+verify-current-qlora-v1:
+	PYTHONPATH=src $(PYTHON) scripts/verify_planner_current_qwen38_qlora_v1_artifact.py
+
+generate-current-qlora-v2:
+	$(PYTHON) scripts/build_planner_current_qwen38_qlora_v2.py
+
+check-current-qlora-v2:
+	$(PYTHON) scripts/build_planner_current_qwen38_qlora_v2.py --check
+
+preflight-current-qlora-v2-plan:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_qwen38_qlora_v2.py --plan-check-only
+
+preflight-current-qlora-v2:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_qwen38_qlora_v2.py --preflight-only
+
+run-current-qlora-v2:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_qwen38_qlora_v2.py
+
+verify-current-qlora-v2:
+	PYTHONPATH=src $(PYTHON) scripts/verify_planner_current_qwen38_qlora_v2_artifact.py
+
+publish-current-qlora-v2-failure:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_current_qwen38_qlora_v2_failure.py \
+		--failure-archive $(FAILURE_ARCHIVE) --provider-evidence $(PROVIDER_EVIDENCE)
+
+check-current-prompt-capacity:
+	PYTHONPATH=src $(PYTHON) scripts/check_planner_current_prompt_capacity.py --config experiments/planner-current-qwen-stock-baseline-v2.json
+
 run-current-stock-baseline:
 	PYTHONPATH=src $(PYTHON) scripts/run_planner_current_stock_baseline.py
 
 publish-current-stock-baseline:
 	PYTHONPATH=src $(PYTHON) scripts/publish_planner_current_stock_baseline.py
+
+publish-current-stock-failure:
+	PYTHONPATH=src $(PYTHON) scripts/publish_planner_current_stock_failure.py
 
 init-review:
 	$(PYTHON) scripts/build_planner_smoke_drafts.py --init-review

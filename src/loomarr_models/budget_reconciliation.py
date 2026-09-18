@@ -25,6 +25,10 @@ _ALLOCATIONS = {
     "prior-planner-setup-and-repair": "priorPlannerSetupAndRepair",
     "qlora-smoke": "qloraSmoke",
     "adapter-evaluation": "adapterEvaluation",
+    "current-stock-baseline-v2": "currentStockBaselineV2",
+    "current-stock-baseline-v3": "currentStockBaselineV3",
+    "current-qwen38-qlora-v1-failure": "currentQwen38QloraV1Failure",
+    "current-qwen38-qlora-v2-failure": "currentQwen38QloraV2Failure",
 }
 _COMPONENT_ROUNDING_TOLERANCE = Decimal("0.0000000000000001")
 
@@ -110,6 +114,7 @@ def validate_budget_reconciliation(
 
     component_totals = {name: Decimal(0) for name in ("cpuUsd", "diskUsd", "gpuUsd", "totalUsd")}
     allocation_totals: defaultdict[str, Decimal] = defaultdict(Decimal)
+    used_allocations: set[str] = set()
     resources: set[str] = set()
     for index, bucket in enumerate(buckets):
         field = f"providerBilling.buckets[{index}]"
@@ -118,6 +123,7 @@ def validate_budget_reconciliation(
         allocation = bucket["allocation"]
         if allocation not in _ALLOCATIONS:
             raise ValueError(f"{field}.allocation is not declared")
+        used_allocations.add(allocation)
         resource_hash = bucket["resourceIdSha256"]
         if not isinstance(resource_hash, str) or _SHA256.fullmatch(resource_hash) is None:
             raise ValueError(f"{field}.resourceIdSha256 must be a lowercase SHA-256")
@@ -152,10 +158,12 @@ def validate_budget_reconciliation(
         raise ValueError("providerBilling.zeroActivePods must be true")
 
     history = reconciliation.get("historicalAccounting")
-    if not isinstance(history, dict) or set(history) != set(_ALLOCATIONS.values()):
+    expected_history = {_ALLOCATIONS[allocation] for allocation in used_allocations}
+    if not isinstance(history, dict) or set(history) != expected_history:
         raise ValueError("historicalAccounting has unknown or missing allocations")
     runtime_estimates = Decimal(0)
-    for allocation, history_name in _ALLOCATIONS.items():
+    for allocation in sorted(used_allocations):
+        history_name = _ALLOCATIONS[allocation]
         entry = history[history_name]
         if not isinstance(entry, dict):
             raise ValueError(f"historicalAccounting.{history_name} must be an object")

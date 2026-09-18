@@ -1,0 +1,36 @@
+{
+  "artifacts": {
+    "archive": {
+      "path": "planner-current-stock-baseline-v2-failure.tgz",
+      "sha256": "768391cd57c85000c71582619c9f0ddc11abb2989b27b27f0e78c6ad1527c71b"
+    },
+    "baselineLog": {
+      "path": "planner-current-stock-baseline-v2-control/baseline.log",
+      "sha256": "f50b7de144ab1246be79844be4c2bf7cce65b4c64bbc94431d09f857f108f337"
+    },
+    "setupLog": {
+      "path": "planner-current-stock-baseline-v2-control/setup.log",
+      "sha256": "208a78fb2c1589a16011df7276eec2bc05f2c0fd85e549b1c641a9d23e17d1e0"
+    }
+  },
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "completionClass": "runtime-configuration-failure",
+  "error": {
+    "exitCode": 2,
+    "message": "evaluation prompt leaves only -729 generation tokens within context"
+  },
+  "experimentId": "planner-current-qwen-stock-baseline-v2",
+  "providerCostUsd": null,
+  "schemaVersion": 1,
+  "sourceCommit": "3faa65dedb13462b637ab13f7b5706b19d575963",
+  "sourceConfigSha256": "d4d871ffe4f354947c7c12f2be9753919d382405e1ce1d6b99711efcb91e53a8",
+  "status": "failed-unsettled"
+}

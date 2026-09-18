@@ -25,7 +25,7 @@ class StockBaselinePreflightTests(unittest.TestCase):
         self.assertEqual(report.caseCount, 120)
         self.assertEqual(report.candidateId, "qwen38-27b-unsloth-bnb-4bit")
         self.assertEqual(report.reservationUsd, "1.50")
-        self.assertEqual(report.projectedSpendUsd, "30.1967677051754599875")
+        self.assertEqual(report.projectedSpendUsd, "30.9222990406298941475")
         self.assertFalse(report.paidBaselineAuthorized)
         config = json.loads(CONFIG.read_text(encoding="utf-8"))
         authorization = ROOT / config["bindings"]["authorization"]["path"]

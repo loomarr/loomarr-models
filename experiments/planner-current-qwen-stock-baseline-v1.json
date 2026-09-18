@@ -10,7 +10,7 @@
   "bindings": {
     "budgetLedger": {
       "path": "budgets/external-spend-v1.json",
-      "sha256": "2ccfcc6c78ed2789552ca83c2b87ae6c07fcf7f64d1245e651956a153de8882c"
+      "sha256": "c82bfe8fe5bc8fd6391c21a31fcad006a09040bafc2272b67a8c7181743a51ce"
     },
     "contract": {
       "path": "contracts/planner-contract-v5.json",
@@ -22,7 +22,7 @@
     "development": {
       "path": "evaluation/planner-current-v1/cases.jsonl",
       "records": 24,
-      "sha256": "ea3ea7f8e117f8310599df830aeedf3b0111c1aa0a8ec0dfe4893ece85c9bef9"
+      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
     },
     "environment": {
       "path": "environments/qwen38-a40-v1.json",
@@ -35,7 +35,7 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "28.6967677051754599875",
+    "currentCommittedUsd": "29.4222990406298941475",
     "outstandingReservationsUsd": "0",
     "proposedReservationUsd": "0"
   },

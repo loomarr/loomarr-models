@@ -6,13 +6,14 @@ import json
 import sys
 import tempfile
 import unittest
+from decimal import Decimal
 from pathlib import Path
+from types import SimpleNamespace
 
 from loomarr_models.current_baseline import (
     AUTHORITY,
     baseline_decision,
     evaluate_current_case,
-    preflight,
     summarize_current_candidate,
 )
 from loomarr_models.current_contract import read_jsonl
@@ -22,10 +23,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import publish_planner_current_stock_baseline as publication
+import publish_planner_current_stock_failure as failure_publication
 from tests.test_current_stock_baseline import oracle
 
 
 CONFIG = ROOT / "experiments/planner-current-qwen-stock-baseline-v2.json"
+
+
+class PublicationPlan(SimpleNamespace):
+    def as_dict(self):
+        return self.preflight
 
 
 class CurrentStockPublicationTests(unittest.TestCase):
@@ -36,7 +43,11 @@ class CurrentStockPublicationTests(unittest.TestCase):
             (ROOT / cls.config["bindings"]["contract"]["path"]).read_text(encoding="utf-8")
         )
         cls.cases = read_jsonl(ROOT / cls.config["bindings"]["cases"]["path"])
-        cls.plan = preflight(ROOT, CONFIG, require_authorized=False, git_probe=lambda *_: "a" * 40)
+        cls.plan = PublicationPlan(
+            candidateId=cls.config["model"]["candidateId"],
+            reservationUsd="1.50",
+            preflight={"experimentId": cls.config["experimentId"], "sourceCommit": "a" * 40},
+        )
         cls.results = [
             evaluate_current_case(
                 case,
@@ -125,7 +136,7 @@ class CurrentStockPublicationTests(unittest.TestCase):
             with self.assertRaisesRegex(Exception, "safely redacted"):
                 publication.validate_run(directory, self.config, self.plan)
 
-    def test_zero_reservation_provider_evidence_cannot_hide_spend(self):
+    def test_provider_evidence_is_bounded_by_authorized_reservation(self):
         evidence = {
             "schemaVersion": 2,
             "experimentId": self.config["experimentId"],
@@ -135,23 +146,118 @@ class CurrentStockPublicationTests(unittest.TestCase):
             "cloud": "SECURE",
             "dataCenterId": "US-SYNTHETIC-1",
             "gpuSku": "NVIDIA A40",
-            "gpuHourlyUsd": "0",
+            "gpuHourlyUsd": "0.49",
             "createdAt": "2026-09-17T00:00:00Z",
             "deletedAt": "2026-09-17T01:00:00Z",
             "podIdSha256": "a" * 64,
-            "networkVolumeIdSha256": "b" * 64,
             "zeroActivePods": True,
-            "networkVolumeDeleted": True,
-            "costUsd": {"gpu": "0", "disk": "0", "networkVolume": "0", "total": "0"},
+            "storageMode": "pod-persistent",
+            "persistentStorageDeletedWithPod": True,
+            "costUsd": {"gpu": "0.49", "disk": "0.01", "persistentStorage": "0.02", "total": "0.52"},
         }
         self.assertIs(
             publication.validate_provider_evidence(evidence, self.config["execution"], self.plan),
             evidence,
         )
         charged = copy.deepcopy(evidence)
-        charged["costUsd"]["disk"] = charged["costUsd"]["total"] = "0.01"
+        charged["costUsd"]["disk"] = "1.00"
+        charged["costUsd"]["persistentStorage"] = "0.02"
+        charged["costUsd"]["total"] = "1.51"
         with self.assertRaisesRegex(Exception, "reservation"):
             publication.validate_provider_evidence(charged, self.config["execution"], self.plan)
+
+    def test_settlement_posts_exact_cost_without_consuming_a_reservation(self):
+        budget = {
+            "authorizationUsd": "40.00",
+            "postedSpendUsd": "28.6967677051754599875",
+            "outstandingReservationsUsd": "0",
+            "committedSpendUsd": "28.6967677051754599875",
+        }
+        plan = SimpleNamespace(
+            committedSpendUsd="28.6967677051754599875",
+            reservationUsd="1.50",
+        )
+        settled = publication.settle_budget(budget, Decimal("0.52"), plan)
+        self.assertEqual(settled["postedSpendUsd"], "29.2167677051754599875")
+        self.assertEqual(settled["committedSpendUsd"], "29.2167677051754599875")
+        self.assertEqual(settled["outstandingReservationsUsd"], "0")
+
+        with self.assertRaisesRegex(Exception, "exceeds authorization"):
+            publication.settle_budget(budget, Decimal("1.51"), plan)
+
+    def test_failure_settlement_preserves_provider_display_rounding(self):
+        evidence = {
+            "schemaVersion": 2,
+            "experimentId": self.config["experimentId"],
+            "provider": "runpod",
+            "status": "settled-resources-deleted",
+            "capturedAt": "2026-09-17T11:47:03Z",
+            "cloud": "SECURE",
+            "dataCenterId": "EU-SE-1",
+            "gpuSku": "NVIDIA A40",
+            "gpuHourlyUsd": "0.49",
+            "createdAt": "2026-09-17T02:45:05.698Z",
+            "deletedAt": "2026-09-17T02:58:13Z",
+            "podIdSha256": "a" * 64,
+            "zeroActivePods": True,
+            "storageMode": "pod-persistent",
+            "persistentStorageDeletedWithPod": True,
+            "costUsd": {
+                "gpu": "0.10506307706236839",
+                "disk": "0.002777777728624642",
+                "persistentStorage": "0",
+                "total": "0.10784085479099303",
+            },
+        }
+        self.assertIs(
+            failure_publication.validate_failure_provider_evidence(
+                evidence, self.config["execution"], self.plan
+            ),
+            evidence,
+        )
+        drifted = copy.deepcopy(evidence)
+        drifted["costUsd"]["total"] = "0.1078408547909"
+        with self.assertRaisesRegex(Exception, "rounding drift"):
+            failure_publication.validate_failure_provider_evidence(
+                drifted, self.config["execution"], self.plan
+            )
+
+    def test_runtime_failure_publication_requires_hash_bound_logs(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            bindings = {}
+            for name, filename in (
+                ("archive", "failure.tgz"),
+                ("baselineLog", "baseline.log"),
+                ("setupLog", "setup.log"),
+            ):
+                artifact = directory / filename
+                artifact.write_bytes(name.encode())
+                bindings[name] = {
+                    "path": filename,
+                    "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                }
+            manifest = {
+                "schemaVersion": 1,
+                "experimentId": self.config["experimentId"],
+                "status": "failed-unsettled",
+                "completionClass": "runtime-configuration-failure",
+                "sourceCommit": "a" * 40,
+                "sourceConfigSha256": "b" * 64,
+                "providerCostUsd": None,
+                "error": {
+                    "exitCode": 2,
+                    "message": "evaluation prompt leaves only -729 generation tokens within context",
+                },
+                "artifacts": bindings,
+                "authority": AUTHORITY,
+            }
+            path = directory / "failure-manifest.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            self.assertEqual(failure_publication.validate_failure(path), manifest)
+            (directory / "baseline.log").write_text("drift", encoding="utf-8")
+            with self.assertRaisesRegex(Exception, "digest mismatch"):
+                failure_publication.validate_failure(path)
 
 
 if __name__ == "__main__":

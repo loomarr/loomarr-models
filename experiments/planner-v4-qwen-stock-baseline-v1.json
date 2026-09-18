@@ -67,10 +67,10 @@
   },
   "budget": {
     "aggregateAuthorizationUsd": "40.00",
-    "currentCommittedUsd": "28.6967677051754599875",
-    "projectedCommitmentUsd": "30.1967677051754599875",
+    "currentCommittedUsd": "29.4222990406298941475",
+    "projectedCommitmentUsd": "30.9222990406298941475",
     "proposedReservationUsd": "1.50",
-    "remainingAfterMaximumUsd": "9.8032322948245400125"
+    "remainingAfterMaximumUsd": "9.0777009593701058525"
   },
   "comparison": {
     "disableCompile": true,

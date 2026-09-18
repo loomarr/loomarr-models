@@ -65,9 +65,9 @@ BINDING_KEYS = {
     "runtime",
 }
 AUTHORITY = {
-    "paidBaselineAuthorized": False,
-    "modelDownloadAuthorized": False,
-    "gpuAuthorized": False,
+    "paidBaselineAuthorized": True,
+    "modelDownloadAuthorized": True,
+    "gpuAuthorized": True,
     "trainingAuthorized": False,
     "certificationAuthority": False,
     "deploymentAuthority": False,
@@ -88,7 +88,8 @@ EXECUTION = {
     "minimumCudaVersion": "12.8",
     "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851",
     "containerDiskGb": 40,
-    "networkVolumeGb": 40,
+    "persistentVolumeGb": 40,
+    "storageMode": "pod-persistent",
     "maxWallClockSeconds": 9000,
     "outputDir": ".artifacts/planner-current-qwen-stock-baseline-v2",
     "requireCleanGit": True,
@@ -627,11 +628,13 @@ def _validate_config_shape(config: dict[str, Any], *, require_authorized: bool) 
         raise PreflightError("current stock baseline identity drifted")
     if set(config["bindings"]) != BINDING_KEYS:
         raise PreflightError("current stock baseline bindings drifted")
+    if config["status"] == "complete-settled":
+        raise PreflightError("current stock baseline is terminal and cannot run again")
     if config["authority"] != AUTHORITY:
         raise PreflightError("current stock baseline authority drifted")
-    if config["status"] != "planned-no-paid-execution-authorized":
+    if config["status"] != "ready-for-paid-baseline":
         raise PreflightError("current stock baseline status drifted")
-    if require_authorized:
+    if require_authorized and not config["authority"]["paidBaselineAuthorized"]:
         raise PreflightError("paid current stock baseline is not authorized")
     if config["model"] != MODEL:
         raise PreflightError("current stock baseline candidate drifted")
@@ -670,14 +673,14 @@ def _validate_authorization(authorization: dict[str, Any], config: dict[str, Any
     expected = {
         "schemaVersion": 1,
         "experimentId": EXPERIMENT_ID,
-        "status": "not-authorized",
-        "maxReservationUsd": "0",
-        "authorizedBy": None,
-        "authorizedAt": None,
-        "authorizedPlanCommit": None,
+        "status": "authorized",
+        "maxReservationUsd": "1.50",
+        "authorizedBy": "loomarr-maintainer",
+        "authorizedAt": "2026-09-17T02:32:20Z",
+        "authorizedPlanCommit": "5c826f83940de4d9e50b7a0f3777b97a5137998c",
     }
-    if authorization != expected or config["budget"]["proposedReservationUsd"] != "0":
-        raise PreflightError("current stock baseline carries unauthorized execution evidence")
+    if authorization != expected or config["budget"]["proposedReservationUsd"] != expected["maxReservationUsd"]:
+        raise PreflightError("current stock baseline authorization evidence drifted")
 
 
 def _validate_budget(
@@ -691,14 +694,14 @@ def _validate_budget(
         reservation = Decimal(config["budget"]["proposedReservationUsd"])
     except (KeyError, InvalidOperation) as exc:
         raise PreflightError("invalid current stock baseline budget") from exc
-    if posted + outstanding != committed or reservation != 0:
-        raise PreflightError("current stock baseline budget does not reconcile at zero reservation")
+    if posted + outstanding != committed or reservation != Decimal("1.50"):
+        raise PreflightError("current stock baseline budget or reservation does not reconcile")
     projected = committed + reservation
     if config["budget"] != {
         "aggregateAuthorizationUsd": str(authorization),
         "currentCommittedUsd": str(committed),
         "outstandingReservationsUsd": str(outstanding),
-        "proposedReservationUsd": "0",
+        "proposedReservationUsd": "1.50",
         "projectedCommitmentUsd": str(projected),
         "remainingAuthorizationUsd": str(authorization - projected),
     }:

@@ -3,10 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
-import sys
-import tempfile
 import unittest
-from decimal import Decimal
 from pathlib import Path
 
 from loomarr_models.current_baseline import (
@@ -164,65 +161,25 @@ class CurrentStockBaselineTests(unittest.TestCase):
         self.assertFalse(invalid["qloraJustified"])
         self.assertEqual(invalid["outcome"], "baseline-invalid-no-training-decision")
 
-    def test_preflight_reconstructs_plan_but_paid_path_refuses_first(self):
-        plan = preflight(ROOT, CONFIG, require_authorized=False, git_probe=lambda *_: "a" * 40)
-        self.assertEqual(plan.caseCount, 24)
-        self.assertEqual(plan.reservationUsd, "0")
-        self.assertFalse(plan.paidBaselineAuthorized)
-        sentinel = object()
-        previous = sys.modules.get("torch", sentinel)
-        sys.modules["torch"] = object()
-        try:
-            with self.assertRaisesRegex(PreflightError, "not authorized"):
-                preflight(ROOT, CONFIG, require_authorized=True, git_probe=lambda *_: "a" * 40)
-        finally:
-            if previous is sentinel:
-                del sys.modules["torch"]
-            else:
-                sys.modules["torch"] = previous
+    def test_terminal_config_refuses_reexecution(self):
+        self.assertEqual(self.config["status"], "complete-settled")
+        self.assertFalse(self.config["authority"]["paidBaselineAuthorized"])
+        self.assertEqual(self.config["budget"]["proposedReservationUsd"], "0")
+        for require_authorized in (False, True):
+            with self.assertRaisesRegex(PreflightError, "terminal and cannot run again"):
+                preflight(
+                    ROOT,
+                    CONFIG,
+                    require_authorized=require_authorized,
+                    git_probe=lambda *_: "a" * 40,
+                )
 
-    def test_preflight_rejects_binding_budget_and_heavy_import_drift(self):
-        config = copy.deepcopy(self.config)
-        config["bindings"]["cases"]["sha256"] = "0" * 64
-        with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
-            path = Path(temporary) / "config.json"
-            path.write_text(json.dumps(config), encoding="utf-8")
-            with self.assertRaisesRegex(PreflightError, "cases digest mismatch"):
-                preflight(ROOT, path, require_authorized=False, git_probe=lambda *_: "a" * 40)
-
-        with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
-            directory = Path(temporary)
-            ledger = json.loads((ROOT / "budgets/external-spend-v1.json").read_text(encoding="utf-8"))
-            ledger["authorizationUsd"] = "28.00"
-            ledger_path = directory / "ledger.json"
-            ledger_path.write_text(json.dumps(ledger), encoding="utf-8")
-            config = copy.deepcopy(self.config)
-            config["bindings"]["budgetLedger"] = {
-                "path": str(ledger_path.relative_to(ROOT)),
-                "sha256": hashlib.sha256(ledger_path.read_bytes()).hexdigest(),
-            }
-            config["budget"].update(
-                {
-                    "aggregateAuthorizationUsd": "28.00",
-                    "remainingAuthorizationUsd": str(Decimal("28.00") - Decimal(ledger["committedSpendUsd"])),
-                }
-            )
-            config_path = directory / "config.json"
-            config_path.write_text(json.dumps(config), encoding="utf-8")
-            with self.assertRaisesRegex(PreflightError, "exceed aggregate"):
-                preflight(ROOT, config_path, require_authorized=False, git_probe=lambda *_: "a" * 40)
-
-        sentinel = object()
-        previous = sys.modules.get("torch", sentinel)
-        sys.modules["torch"] = object()
-        try:
-            with self.assertRaisesRegex(PreflightError, "heavyweight modules"):
-                preflight(ROOT, CONFIG, require_authorized=False, git_probe=lambda *_: "a" * 40)
-        finally:
-            if previous is sentinel:
-                del sys.modules["torch"]
-            else:
-                sys.modules["torch"] = previous
+    def test_terminal_bindings_are_current_and_paid_authority_is_revoked(self):
+        for binding in self.config["bindings"].values():
+            path = ROOT / binding["path"]
+            self.assertEqual(binding["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
+        self.assertFalse(self.config["authority"]["gpuAuthorized"])
+        self.assertFalse(self.config["authority"]["modelDownloadAuthorized"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,23 @@
+{
+  "capturedAt": "2026-09-17T11:47:03Z",
+  "cloud": "SECURE",
+  "costUsd": {
+    "disk": "0.002777777728624642",
+    "gpu": "0.10506307706236839",
+    "persistentStorage": "0",
+    "total": "0.10784085479099303"
+  },
+  "createdAt": "2026-09-17T02:45:05.698Z",
+  "dataCenterId": "EU-SE-1",
+  "deletedAt": "2026-09-17T02:58:13Z",
+  "experimentId": "planner-current-qwen-stock-baseline-v2",
+  "gpuHourlyUsd": "0.49",
+  "gpuSku": "NVIDIA A40",
+  "persistentStorageDeletedWithPod": true,
+  "podIdSha256": "5137a63664dfad55cc897e2561ebe644cfa8c5934c4d881276007d1b5f3b3061",
+  "provider": "runpod",
+  "schemaVersion": 2,
+  "status": "settled-resources-deleted",
+  "storageMode": "pod-persistent",
+  "zeroActivePods": true
+}

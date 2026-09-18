@@ -7,7 +7,7 @@
   "generator": {
     "id": "planner-current-contract-generator-v1",
     "path": "scripts/build_planner_current_contract.py",
-    "sha256": "bb6def4d50e2311fb7f598a813f46911cee786067a057c58b9a1697fd27db6ae"
+    "sha256": "354f8509eb102f0a455340a18df4561a0ace377f06031dad8eda53a85e91713b"
   },
   "holdoutDenylist": {
     "path": "contracts/planner-holdout-denylist-v2.json",
@@ -16,6 +16,6 @@
   "records": 24,
   "reviewStatus": "pending",
   "schemaVersion": 1,
-  "sha256": "fc1997a5af5aae1e41a57049aa76fb6d52521083047809ffa3fa1e56ae7e02c5",
+  "sha256": "70e1a84e648886430ca225360d14e3388c8199664ff3aaa9894b686b9e4e5cff",
   "trainingAuthorized": false
 }
