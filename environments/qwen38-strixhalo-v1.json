@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "environmentId": "qwen38-strixhalo-v1",
+  "status": "locked-measured",
+  "platform": {
+    "os": "linux",
+    "architecture": "amd64",
+    "gpuClass": "amd-unified-128gb",
+    "validatedSku": "AMD Radeon 8060S (Ryzen AI Max+ 395)",
+    "gpuArch": "gfx1151",
+    "host": "fictional-ai-server"
+  },
+  "python": "3.12",
+  "resolver": {
+    "name": "uv",
+    "version": "0.12.17"
+  },
+  "requirements": {
+    "inputPath": "environments/qwen38-strixhalo-v1.requirements.in",
+    "inputSha256": "24535a3a73ce8789838b9ea7feff280100c433d293b25d3732f42e32a98cc16f",
+    "lockPath": "environments/qwen38-strixhalo-v1.requirements.lock",
+    "lockSha256": "65be75de9f427f592341933d7faac5118758ce8a0e4c44c7b515caeb53e39864",
+    "resolvedPackageCount": 64,
+    "pythonPlatform": "x86_64-manylinux_2_28",
+    "indexes": [
+      "https://pypi.org/simple",
+      "https://stable.repo.amd.com/rocm/whl-next/"
+    ],
+    "indexStrategy": "unsafe-best-match",
+    "hashesRequired": true
+  },
+  "baseModel": {
+    "repository": "Qwen/Qwen3.8-27B",
+    "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "dtype": "bfloat16"
+  },
+  "measured": {
+    "date": "2026-09-26",
+    "bf16MatmulTflops": 24.1,
+    "modelLoadSeconds": 26.2,
+    "allocatedGiB": 51.0,
+    "peakReservedGiB": 58.0,
+    "prefillTokensPerSecond": 231,
+    "decodeTokensPerSecond": 3.86,
+    "notes": "flash SDPA backend fails on gfx1151 for Qwen3.5 attention (hipErrorInvalidValue); use the memory-efficient backend"
+  }
+}
