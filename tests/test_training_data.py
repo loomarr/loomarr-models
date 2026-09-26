@@ -40,6 +40,64 @@ class TrainingDataTests(unittest.TestCase):
             tools[0]["function"]["parameters"], self.trace["tools"][0]["Parameters"]
         )
 
+    def test_affected_families_preserve_intent_and_recovery_contracts(self):
+        traces = [
+            json.loads(line)
+            for line in (ROOT / "corpus/planner-smoke-v1/drafts.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        ]
+        by_axis = {
+            axis: [trace for trace in traces if trace["axes"] == [axis]]
+            for axis in (
+                "genre-discovery",
+                "keyword-discovery",
+                "must-include",
+                "ambiguous-intent",
+                "conflicting-intent",
+                "tool-error-recovery",
+            )
+        }
+        self.assertTrue(all(len(items) == 5 for items in by_axis.values()))
+        for axis in ("genre-discovery", "keyword-discovery"):
+            for trace in by_axis[axis]:
+                arguments = trace["messages"][2]["toolCalls"][0]["arguments"]
+                self.assertNotIn("media_type", arguments)
+        for trace in by_axis["keyword-discovery"]:
+            keyword = trace["messages"][2]["toolCalls"][0]["arguments"]["keywords"][0]
+            overview = trace["messages"][3]["content"]["candidates"][0]["overview"]
+            self.assertIn(keyword, overview)
+        for trace in by_axis["must-include"]:
+            self.assertNotIn("varied", trace["messages"][1]["content"].lower())
+        for trace in by_axis["ambiguous-intent"]:
+            arguments = trace["messages"][2]["toolCalls"][0]["arguments"]
+            self.assertEqual(set(arguments), {"genres"})
+            self.assertEqual(
+                arguments["genres"], trace["messages"][3]["content"]["candidates"][0]["genres"]
+            )
+            mood = trace["messages"][1]["content"].split("feels ", 1)[1].split(",", 1)[0]
+            overview = trace["messages"][3]["content"]["candidates"][0]["overview"]
+            self.assertIn(mood, overview)
+        for trace in by_axis["conflicting-intent"]:
+            candidate = trace["messages"][3]["content"]["candidates"][0]
+            arguments = trace["messages"][2]["toolCalls"][0]["arguments"]
+            proposal = json.loads(trace["messages"][4]["content"])
+            self.assertEqual(arguments, {"query": candidate["name"]})
+            self.assertEqual(candidate["genres"], ["Horror"])
+            self.assertEqual(trace["messages"][1]["content"].count(candidate["name"]), 2)
+            self.assertEqual(proposal["picks"], [])
+            self.assertIn("excludes", proposal["rationale"])
+            self.assertEqual(proposal["policy"]["genres"]["include"], ["Horror"])
+        for trace in by_axis["tool-error-recovery"]:
+            first = trace["messages"][2]["toolCalls"][0]["arguments"]
+            second = trace["messages"][4]["toolCalls"][0]["arguments"]
+            candidate = trace["messages"][5]["content"]["candidates"][0]
+            proposal = json.loads(trace["messages"][6]["content"])
+            self.assertEqual(first, {"query": candidate["name"]})
+            self.assertEqual(second, {"genres": ["Adventure"]})
+            self.assertIn(candidate["name"], trace["messages"][1]["content"])
+            self.assertEqual(proposal["policy"]["genres"]["include"], ["Adventure"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,29 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "paidEvaluationAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "budgetAfterSettlement": {
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "29.4222990406298941475",
+    "outstandingReservationsUsd": "0",
+    "postedSpendUsd": "29.4222990406298941475"
+  },
+  "experimentId": "planner-current-qwen38-qlora-v2",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/20",
+  "publication": {
+    "path": "runs/planner-current-qwen38-qlora-v2/publication.json",
+    "sha256": "a45a54626f46119d2c0d6154aff35fef957f3d81becc8aa44905e13c47f03cdc"
+  },
+  "schemaVersion": 1,
+  "sourceExperiment": {
+    "path": "runs/planner-current-qwen38-qlora-v2/source-experiment.json",
+    "sha256": "c5d38651b1c2a17540d9b69de26e1b3f605d8d50f565409906ce4add660a7595"
+  },
+  "status": "failed-settled"
+}

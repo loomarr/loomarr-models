@@ -1,0 +1,21 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788441546-3GD1X677Nzs59HlcfzTa","object":"chat.completion","created":1788441546,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-complete-proposal-json-05\":{\"criteria\":{\"constraints\":{\"evidence\":\"No must-include, must-exclude, audience, era, or format constraints were specified. The assistant applied no policy object (empty {}), and the single pick is the exact requested title Ember Delta Fixture 045, fully honoring the constraint-free intent.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final assistant message is valid JSON with channelName 'Ember Complete', a picks array containing tmdbId 920045 / name 'Ember Delta Fixture 045' / mediaType 'movie', confidence 0.91 (honest, sub-1.0), and an empty policy object matching the no-policy-requested intent.\",\"passed\":true},\"grounding\":{\"evidence\":\"The sole pick uses tmdbId 920045 and name 'Ember Delta Fixture 045', both directly returned by catalog_search tool result (toolCallId behavior-45-1). No IDs or titles appear that were not present in the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"Intent is to build a channel around the exact title 'Ember Delta Fixture 045' with no policy. The assistant searches for that exact title, retrieves it, and builds the proposal solely around it, fully representing the stated intent.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned a non-empty single candidate result with the requested title. No error or empty-result condition occurred; the assistant proceeded correctly to finalization without unnecessary abstention or retry.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Exactly one tool call was made: catalog_search with arguments {\\\"query\\\":\\\"Ember Delta Fixture 045\\\"}, assigned id 'behavior-45-1'. This is necessary and sufficient for the intent, and the argument schema matches catalog-search-v3 requirements.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace correctly searches for the exact requested fixture title, grounds the final proposal entirely on the returned tool result (tmdbId 920045), applies no unwarranted policy, uses an honest confidence of 0.91, and produces a schema-valid JSON proposal. No fabricated IDs, no constraint violations, and no recovery issues are present.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2122,"completion_tokens":528,"total_tokens":2650,"cost":0.014286,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.014286,"upstream_inference_prompt_cost":0.006366,"upstream_inference_completions_cost":0.00792},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

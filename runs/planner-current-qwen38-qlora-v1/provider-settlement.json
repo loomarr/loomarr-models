@@ -1,0 +1,23 @@
+{
+  "capturedAt": "2026-09-18T12:24:35Z",
+  "cloud": "SECURE",
+  "costUsd": {
+    "cpu": "0",
+    "disk": "0.003703703638166189",
+    "gpu": "0.15634634345769882",
+    "total": "0.160050047095865"
+  },
+  "createdAt": "2026-09-18T02:08:08.843Z",
+  "dataCenterId": "CA-MTL-1",
+  "deletedAt": "2026-09-18T02:27:17.510013Z",
+  "experimentId": "planner-current-qwen38-qlora-v1",
+  "gpuHourlyUsd": "0.49",
+  "gpuSku": "NVIDIA A40",
+  "persistentStorageDeletedWithPod": true,
+  "podIdSha256": "54dd08f11ae0e1cda7eac6d6a65c5d03310c67ed6489fb993ca2a132d8dab2b3",
+  "provider": "runpod",
+  "schemaVersion": 1,
+  "status": "settled-resources-deleted",
+  "storageMode": "pod-persistent",
+  "zeroActivePods": true
+}

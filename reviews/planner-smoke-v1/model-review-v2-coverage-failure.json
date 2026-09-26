@@ -1,0 +1,37 @@
+{
+  "accounting": {
+    "attribution": "The runner discarded the response ID before settlement. The full current-key daily usage observed immediately after failure is conservatively attributed to this run and may overstate its cost.",
+    "conservativelyAttributedCostUsd": "0.067828",
+    "evidenceEndpoint": "https://openrouter.ai/api/v1/key",
+    "observedAt": "2026-09-03T03:09:35Z",
+    "observedKeyUsageDailyUsd": "0.067828",
+    "observedKeyUsageTotalUsd": "11.249135881",
+    "runnerReportedActualCostUsd": "0"
+  },
+  "completedCalls": 0,
+  "error": "review output does not cover the exact ordered batch trace ids",
+  "failedAt": "2026-09-03T03:07:53.768003Z",
+  "inferenceResponsesReceived": 1,
+  "preflight": {
+    "authorizationUsd": "20",
+    "committedSpendUsd": "4.454895891125471",
+    "configSha256": "ac0a5c85fbf129f0d1c3d0d3e494db0a050d1c152e180ea74eae5fcde9f0bc0a",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1411208,
+    "outputDir": ".artifacts/planner-model-review-v2",
+    "outputTokenUpperBound": 120000,
+    "projectedSpendUsd": "8.954895891125471",
+    "requestCount": 20,
+    "reservationUsd": "4.5",
+    "reviewId": "planner-model-review-v2",
+    "schemaVersion": 1,
+    "sourceCommit": "ea3a8c2f7f4c518fc3f35ef309339fb6e587bcfe",
+    "traceCount": 50,
+    "worstCaseCostUsd": "4.142416"
+  },
+  "reservationUsd": "4.5",
+  "reviewId": "planner-model-review-v2",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:07:32.521603Z",
+  "status": "failed-after-first-response"
+}

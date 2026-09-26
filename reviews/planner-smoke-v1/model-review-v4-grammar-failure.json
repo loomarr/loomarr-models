@@ -1,0 +1,39 @@
+{
+  "accounting": {
+    "costUsd": "0",
+    "evidence": "No generation ID or response was created, and current-key daily usage remained exactly $0.132212, the sum of the posted v2 and v3 charges.",
+    "observedAt": "2026-09-03T03:24:10Z",
+    "observedKeyUsageDailyUsd": "0.132212"
+  },
+  "completedCalls": 0,
+  "error": {
+    "code": 400,
+    "message": "The compiled grammar is too large, which would cause performance issues. Simplify your tool schemas or reduce the number of strict tools.",
+    "providerName": "Anthropic",
+    "type": "invalid_request_error"
+  },
+  "failedAt": "2026-09-03T03:23:41.601984Z",
+  "inferenceResponsesReceived": 0,
+  "preflight": {
+    "authorizationUsd": "40",
+    "committedSpendUsd": "4.587107891125471",
+    "configSha256": "5214a9df94383499ff88c11b12e56156605f9c09e370aece459085b8d5299629",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1630468,
+    "outputDir": ".artifacts/planner-model-review-v4",
+    "outputTokenUpperBound": 120000,
+    "projectedSpendUsd": "9.587107891125471",
+    "requestCount": 20,
+    "reservationUsd": "5",
+    "reviewId": "planner-model-review-v4",
+    "schemaVersion": 1,
+    "sourceCommit": "f5a9e7ed106efb6cf0a1175ed37740d7dd15b166",
+    "traceCount": 50,
+    "worstCaseCostUsd": "4.580936"
+  },
+  "reservationUsd": "5",
+  "reviewId": "planner-model-review-v4",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:23:41.012039Z",
+  "status": "failed-before-inference"
+}

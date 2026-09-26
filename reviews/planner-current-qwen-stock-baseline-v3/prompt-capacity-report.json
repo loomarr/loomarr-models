@@ -1,0 +1,402 @@
+{
+  "caseCount": 24,
+  "experimentId": "planner-current-qwen-stock-baseline-v3",
+  "inputs": {
+    "cases": {
+      "path": "evaluation/planner-current-v1/cases.jsonl",
+      "records": 24,
+      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
+    },
+    "config": {
+      "path": "experiments/planner-current-qwen-stock-baseline-v3.json",
+      "sha256": "e0d31e5244c735ea68103c56a040ba129d04ab2fcbb31536f69efb26cfb2c40d"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "model": {
+      "candidateId": "qwen38-27b-unsloth-bnb-4bit",
+      "quantization": "unsloth-bnb-4bit",
+      "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+      "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+    }
+  },
+  "maxInputTokens": 5260,
+  "maxSeqLength": 16384,
+  "measurements": [
+    {
+      "availableGenerationTokens": 11559,
+      "caseId": "planner-current-development-exact-key-final-01",
+      "inputTokens": 4825,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11369,
+      "caseId": "planner-current-development-exact-key-final-01",
+      "inputTokens": 5015,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11532,
+      "caseId": "planner-current-development-date-movie-release-01",
+      "inputTokens": 4852,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11195,
+      "caseId": "planner-current-development-date-movie-release-01",
+      "inputTokens": 5189,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11514,
+      "caseId": "planner-current-development-date-series-premiere-01",
+      "inputTokens": 4870,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11169,
+      "caseId": "planner-current-development-date-series-premiere-01",
+      "inputTokens": 5215,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11505,
+      "caseId": "planner-current-development-date-series-airing-01",
+      "inputTokens": 4879,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11187,
+      "caseId": "planner-current-development-date-series-airing-01",
+      "inputTokens": 5197,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11499,
+      "caseId": "planner-current-development-date-disjoint-intervals-01",
+      "inputTokens": 4885,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11124,
+      "caseId": "planner-current-development-date-disjoint-intervals-01",
+      "inputTokens": 5260,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11546,
+      "caseId": "planner-current-development-date-ambiguity-01",
+      "inputTokens": 4838,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11371,
+      "caseId": "planner-current-development-date-ambiguity-01",
+      "inputTokens": 5013,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11428,
+      "caseId": "planner-current-development-collection-evidence-01",
+      "inputTokens": 4956,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11198,
+      "caseId": "planner-current-development-collection-evidence-01",
+      "inputTokens": 5186,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11557,
+      "caseId": "planner-current-development-franchise-boundary-01",
+      "inputTokens": 4827,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11278,
+      "caseId": "planner-current-development-franchise-boundary-01",
+      "inputTokens": 5106,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11372,
+      "caseId": "planner-current-development-network-editorial-epoch-01",
+      "inputTokens": 5012,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11153,
+      "caseId": "planner-current-development-network-editorial-epoch-01",
+      "inputTokens": 5231,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11526,
+      "caseId": "planner-current-development-cast-routing-01",
+      "inputTokens": 4858,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11306,
+      "caseId": "planner-current-development-cast-routing-01",
+      "inputTokens": 5078,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11511,
+      "caseId": "planner-current-development-creator-routing-01",
+      "inputTokens": 4873,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11290,
+      "caseId": "planner-current-development-creator-routing-01",
+      "inputTokens": 5094,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11557,
+      "caseId": "planner-current-development-exact-title-unfamiliar-01",
+      "inputTokens": 4827,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11349,
+      "caseId": "planner-current-development-exact-title-unfamiliar-01",
+      "inputTokens": 5035,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11407,
+      "caseId": "planner-current-development-constraint-conflict-abstention-01",
+      "inputTokens": 4977,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11202,
+      "caseId": "planner-current-development-constraint-conflict-abstention-01",
+      "inputTokens": 5182,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11512,
+      "caseId": "planner-current-development-ownership-acquisition-balance-01",
+      "inputTokens": 4872,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11251,
+      "caseId": "planner-current-development-ownership-acquisition-balance-01",
+      "inputTokens": 5133,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11405,
+      "caseId": "planner-current-development-refinement-preservation-01",
+      "inputTokens": 4979,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11187,
+      "caseId": "planner-current-development-refinement-preservation-01",
+      "inputTokens": 5197,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11493,
+      "caseId": "planner-current-development-audience-ceiling-01",
+      "inputTokens": 4891,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11285,
+      "caseId": "planner-current-development-audience-ceiling-01",
+      "inputTokens": 5099,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11497,
+      "caseId": "planner-current-development-season-window-01",
+      "inputTokens": 4887,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11292,
+      "caseId": "planner-current-development-season-window-01",
+      "inputTokens": 5092,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11538,
+      "caseId": "planner-current-development-medium-constraint-01",
+      "inputTokens": 4846,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11277,
+      "caseId": "planner-current-development-medium-constraint-01",
+      "inputTokens": 5107,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11554,
+      "caseId": "planner-current-development-language-constraint-01",
+      "inputTokens": 4830,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11336,
+      "caseId": "planner-current-development-language-constraint-01",
+      "inputTokens": 5048,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11542,
+      "caseId": "planner-current-development-region-constraint-01",
+      "inputTokens": 4842,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11324,
+      "caseId": "planner-current-development-region-constraint-01",
+      "inputTokens": 5060,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11525,
+      "caseId": "planner-current-development-thin-results-01",
+      "inputTokens": 4859,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11323,
+      "caseId": "planner-current-development-thin-results-01",
+      "inputTokens": 5061,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11537,
+      "caseId": "planner-current-development-empty-results-01",
+      "inputTokens": 4847,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11459,
+      "caseId": "planner-current-development-empty-results-01",
+      "inputTokens": 4925,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-2"
+    },
+    {
+      "availableGenerationTokens": 11320,
+      "caseId": "planner-current-development-empty-results-01",
+      "inputTokens": 5064,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11513,
+      "caseId": "planner-current-development-malformed-tool-result-01",
+      "inputTokens": 4871,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11365,
+      "caseId": "planner-current-development-malformed-tool-result-01",
+      "inputTokens": 5019,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    },
+    {
+      "availableGenerationTokens": 11525,
+      "caseId": "planner-current-development-observed-fault-recovery-01",
+      "inputTokens": 4859,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-1"
+    },
+    {
+      "availableGenerationTokens": 11414,
+      "caseId": "planner-current-development-observed-fault-recovery-01",
+      "inputTokens": 4970,
+      "requiredGenerationTokens": 2048,
+      "stage": "tool-call-2"
+    },
+    {
+      "availableGenerationTokens": 11192,
+      "caseId": "planner-current-development-observed-fault-recovery-01",
+      "inputTokens": 5192,
+      "requiredGenerationTokens": 2048,
+      "stage": "finalization"
+    }
+  ],
+  "measurementsSha256": "48e2953bf4830f80251ad5fd7fa696473b94dd609a6d1a60581043b140d957e8",
+  "minAvailableGenerationTokens": 11124,
+  "processor": {
+    "class": "transformers.models.qwen3_vl.processing_qwen3_vl.Qwen3VLProcessor",
+    "loadedCommit": null,
+    "tokenizerClass": "transformers.models.qwen2.tokenization_qwen2.Qwen2Tokenizer"
+  },
+  "requiredGenerationTokens": 2048,
+  "runtime": {
+    "containerImage": "python@sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7",
+    "python": "3.12.11",
+    "tokenizers": "0.22.2",
+    "torch": "2.8.0+cpu",
+    "torchvision": "0.23.0+cpu",
+    "transformers": "5.15.1"
+  },
+  "schemaVersion": 1,
+  "sourceCommit": "eab8296218bf53135c0e1e17c74d92d8e9095ee9",
+  "stageCount": 50
+}

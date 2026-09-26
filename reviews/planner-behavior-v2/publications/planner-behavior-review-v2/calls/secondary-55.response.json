@@ -1,0 +1,25 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788442028-LB4SSjrVSP85UTWiMzgt","object":"chat.completion","created":1788442028,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-complete-proposal-json-16\":{\"criteria\":{\"constraints\":{\"evidence\":\"No must-include, must-exclude, audience, era, or format constraints were specified. The assistant correctly produced a single-item proposal around Aster Junction Fixture 056 without adding unsolicited filters or extra content. The policy field is an empty object, consistent with 'no policy was requested'.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final assistant turn is a valid JSON string containing channelName 'Aster Complete', rationale, picks array with one entry (tmdbId 920056, name 'Aster Junction Fixture 056', mediaType 'series', confidence 0.91), and an empty policy object. All fields are schema-consistent, grounded in tool results, and the confidence value 0.91 is plausible and honest.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick has tmdbId 920056 and name 'Aster Junction Fixture 056', which exactly matches the catalog_search result returned in toolCallId behavior-56-1. No IDs or titles were invented outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent specifies building a synthetic channel around the exact catalog title 'Aster Junction Fixture 056' with no policy. The assistant searched for that title, retrieved it, and proposed a channel solely based on it, fully representing the intent.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned exactly one candidate with no errors or empty results, so no recovery behavior was required. The assistant correctly proceeded to finalize a proposal without any error-handling divergence.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call was made: catalog_search with arguments {\\\"query\\\":\\\"Aster Junction Fixture 056\\\"} (id: behavior-56-1). This is the minimum necessary call to locate the specified title, and the arguments match the catalog-search-v3 schema expectation of a query string.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace correctly searches for the exact requested title, retrieves a matching synthetic fixture (tmdbId 920056), and produces a schema-valid, grounded final proposal with an honest confidence value. No constraints were violated, no hallucinated IDs appear, and recovery behavior was not needed given a clean single-result response.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2127,"completion_tokens":559,"total_tokens":2686,"cost":0.014766,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.014766,"upstream_inference_prompt_cost":0.006381,"upstream_inference_completions_cost":0.008385},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

@@ -1,0 +1,28 @@
+{
+  "actualCostUsd": "2.212744",
+  "completedAt": "2026-09-03T04:21:41.755661Z",
+  "completedCalls": 100,
+  "invalidReviewCount": 32,
+  "preflight": {
+    "authorizationUsd": "40",
+    "committedSpendUsd": "4.851869891125471",
+    "configSha256": "f6059aedb07eb5e2fc6d411d6fdd1849c56ba2f5480b7d4a148a4646996ed8d0",
+    "corpusSha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+    "inputTokenUpperBound": 1822548,
+    "outputDir": ".artifacts/planner-model-review-v7",
+    "outputTokenUpperBound": 200000,
+    "projectedSpendUsd": "10.851869891125471",
+    "requestCount": 100,
+    "reservationUsd": "6",
+    "reviewId": "planner-model-review-v7",
+    "schemaVersion": 1,
+    "sourceCommit": "d06f8042034cde5741060f63cf93603be0a90d8a",
+    "traceCount": 50,
+    "worstCaseCostUsd": "5.845096"
+  },
+  "reservationUsd": "6",
+  "reviewId": "planner-model-review-v7",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T03:45:49.895453Z",
+  "status": "complete"
+}

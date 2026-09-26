@@ -1,0 +1,160 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "purpose": "zero-cost base-model selection and QLoRA necessity screen",
+    "releaseAuthority": false,
+    "screenOnly": true,
+    "trainingAuthority": false
+  },
+  "bindings": {
+    "cases": {
+      "count": 120,
+      "path": "evaluation/planner-development-v4/cases.jsonl",
+      "sha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-development-v4/manifest.json",
+      "sha256": "1acc344f31dffbd1a02cb57fcb0c69df0f478e3afce42df8f73ad74194258ee8"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v4.json",
+      "sha256": "53708f6cc2281a2c67c34ab6fdd698d3455e55ec1fcf75bc5565b2d6538329d7"
+    },
+    "developmentExposure": {
+      "path": "reviews/planner-v4-local-screen/development-exposure.json",
+      "sha256": "0cf1a18877812fa7ed99e4a130b74332d92ce970f15e3854b64c4628196c2611"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "ollamaSnapshot": {
+      "path": "reviews/planner-v4-local-screen/ollama-snapshot.json",
+      "sha256": "71842836464eefd94019422b09c22aca9ff4aa888a7150c5ff9e8e69d4b67278"
+    },
+    "planGenerator": {
+      "path": "scripts/build_planner_v4_local_screen.py",
+      "sha256": "e0cddeaed2f19fb379f97370e3771b4c3bd6bc0eca62a4625d636b514e7ea147"
+    },
+    "preflight": {
+      "path": "src/loomarr_models/local_screen.py",
+      "sha256": "77c1fd755d73b91a77c2d585c4d31a8b5400d149c97ce0c0cdb0522bc62ce3c1"
+    },
+    "publisher": {
+      "path": "scripts/publish_planner_v4_local_screen.py",
+      "sha256": "987735589838de3668df2d03a6efc8df01c04c435fdae5b3ced8b076187a8938"
+    },
+    "runner": {
+      "path": "scripts/run_planner_v4_local_screen.py",
+      "sha256": "129b78192cfd9459c232b4441cc2f1c144f8541294ffec0893f19fff7e07516b"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/local_screen_runtime.py",
+      "sha256": "a49c887bdd1724bf01c0169579389d74cdd3ecf0b5c2e3f85151eb16aadb4810"
+    },
+    "scorer": {
+      "path": "src/loomarr_models/eval_runner.py",
+      "sha256": "708efff56dba3c8792bb36ec97c4e1513ef4b3e9de17657934c30f7e1a8e09e2"
+    },
+    "v4Generator": {
+      "path": "scripts/build_planner_v4_delta.py",
+      "sha256": "82caadcf45a8737c297e7bcebf66313ac6f8e2a784d8c207a9bd76b6c29fc055"
+    },
+    "v4Validator": {
+      "path": "src/loomarr_models/planner_v4.py",
+      "sha256": "f6cc98528fe88d2ca9cca0401e7c342ff7ea784e85faf0921573aa90773cfb4a"
+    }
+  },
+  "candidates": [
+    {
+      "architecture": "qwen3_5",
+      "candidateId": "qwen38-27b-mlx-nvfp4",
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ],
+      "contextLength": 262144,
+      "digest": "5642e97495e1a088883805981563dcdc4a040c2f53388b7a41d1f24d3622cf7e",
+      "format": "safetensors",
+      "model": "qwen3.8:27b-mlx",
+      "modelfileSha256": "0a53f3040ae6af2817c0ca0deed3965c34e6c84239dda0a897a7cfe41f6bd920",
+      "parameterCount": 27781081984,
+      "quantization": "nvfp4",
+      "sizeBytes": 18174721847,
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315"
+    },
+    {
+      "architecture": "gemma4",
+      "candidateId": "gemma4-12b-q4-k-m",
+      "capabilities": [
+        "completion",
+        "vision",
+        "audio",
+        "tools",
+        "thinking"
+      ],
+      "contextLength": 262144,
+      "digest": "4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+      "format": "gguf",
+      "model": "gemma4:12b",
+      "modelfileSha256": "192c54573da6266c51a7f90e2cd8b185f7f435eb9106a4d82c8b4060113cfdfe",
+      "parameterCount": 11907350576,
+      "quantization": "Q4_K_M",
+      "sizeBytes": 7556508396,
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315"
+    }
+  ],
+  "comparison": {
+    "automaticRetry": false,
+    "candidateOrder": [
+      "qwen38-27b-mlx-nvfp4",
+      "gemma4-12b-q4-k-m"
+    ],
+    "maxModelCallsPerCase": 5,
+    "numCtx": 4096,
+    "numPredict": 768,
+    "seed": 3407,
+    "temperature": 0,
+    "think": "low",
+    "trials": 1
+  },
+  "execution": {
+    "apiBaseUrl": "http://127.0.0.1:11434",
+    "externalNetworkAllowed": false,
+    "keepAlive": "5m",
+    "maxWallClockSecondsPerCandidate": 21600,
+    "minimumMemoryBytes": 25769803776,
+    "outputDir": ".artifacts/planner-v4-local-screen-v1",
+    "platform": "darwin-arm64",
+    "requestTimeoutSeconds": 600,
+    "requireCleanGit": true
+  },
+  "externalCostUsd": "0",
+  "issue": "https://github.com/loomarr/loomarr-models/issues/22",
+  "schemaVersion": 1,
+  "scoring": {
+    "qualityMargin": 0.02,
+    "scorerVersion": "planner-development-scorer-v1",
+    "thresholds": {
+      "maxP95ToolCalls": 3,
+      "minCorrectToolOperationRate": 0.9,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 0.8,
+      "minSchemaValidityRate": 0.98
+    },
+    "weights": {
+      "correctToolOperation": 0.2,
+      "groundedCompletion": 0.2,
+      "policyAccuracy": 0.15,
+      "proposalQuality": 0.25,
+      "recovery": 0.1,
+      "schemaValidity": 0.1
+    }
+  },
+  "screenId": "planner-v4-local-screen-v1",
+  "status": "complete-local-screen"
+}

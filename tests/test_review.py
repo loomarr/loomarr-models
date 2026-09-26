@@ -19,7 +19,7 @@ def approve(block: dict, reviewer: str, timestamp: str, notes: str = "Checked al
 
 
 class ReviewDecisionTests(unittest.TestCase):
-    def test_secondary_review_selection_is_exactly_twenty_two(self):
+    def test_model_backed_policy_requires_secondary_review_for_all_fifty(self):
         families = (
             "title-search",
             "genre-discovery",
@@ -38,16 +38,15 @@ class ReviewDecisionTests(unittest.TestCase):
             for variant in range(1, 6)
             if secondary_review_required(f"planner-smoke-{family}-{variant:02d}")
         ]
-        self.assertEqual(len(selected), 22)
+        self.assertEqual(len(selected), 50)
 
-    def test_non_sampled_primary_approval_is_complete(self):
+    def test_primary_approval_alone_remains_incomplete(self):
         decision = empty_decision("planner-smoke-title-search-02")
         approve(decision["primary"], "github:alice", "2026-09-03T02:00:00Z")
-        review = derive_review(decision, require_complete=True)
-        self.assertEqual(review.status, "approved")
-        self.assertEqual(trace_review(decision)["reviewer"], "github:alice")
+        with self.assertRaisesRegex(ReviewError, "review incomplete"):
+            derive_review(decision, require_complete=True)
 
-    def test_sampled_trace_requires_distinct_ordered_secondary_approval(self):
+    def test_trace_requires_distinct_ordered_secondary_approval(self):
         decision = empty_decision("planner-smoke-empty-results-03")
         approve(decision["primary"], "github:alice", "2026-09-03T02:00:00Z")
         with self.assertRaisesRegex(ReviewError, "review incomplete"):
@@ -86,8 +85,20 @@ class ReviewDecisionTests(unittest.TestCase):
         self.assertEqual(derived.status, "pending")
         self.assertEqual((projected["reviewer"], projected["reviewedAt"]), ("", None))
         self.assertIn("github:bob", projected["notes"])
-        with self.assertRaisesRegex(ReviewError, "disagreement"):
+        with self.assertRaisesRegex(ReviewError, "disagreement or rejection"):
             derive_review(decision, require_complete=True)
+
+        inverse = empty_decision("planner-smoke-tool-error-recovery-03")
+        inverse["primary"].update(
+            {
+                "verdict": "rejected",
+                "reviewer": "github:alice",
+                "reviewedAt": "2026-09-03T02:00:00Z",
+                "notes": "Grounding evidence is insufficient.",
+            }
+        )
+        approve(inverse["secondary"], "github:bob", "2026-09-03T02:01:00Z")
+        self.assertEqual(derive_review(inverse).status, "pending")
 
     def test_refuses_false_evidence_and_invalid_reviewer_or_timestamp(self):
         pending = empty_decision("planner-smoke-title-search-02")
@@ -97,8 +108,21 @@ class ReviewDecisionTests(unittest.TestCase):
 
         invalid = empty_decision("planner-smoke-title-search-02")
         approve(invalid["primary"], "person:alice", "2026-09-03T02:00:00Z")
-        with self.assertRaisesRegex(ReviewError, "github:<login>"):
+        with self.assertRaisesRegex(ReviewError, "github:<login> or a pinned model"):
             derive_review(invalid)
+
+        model_backed = empty_decision("planner-smoke-title-search-02")
+        approve(
+            model_backed["primary"],
+            "openrouter:anthropic/claude-sonnet-5",
+            "2026-09-03T02:00:00Z",
+        )
+        approve(
+            model_backed["secondary"],
+            "openrouter:google/gemini-3.1-pro-preview",
+            "2026-09-03T02:01:00Z",
+        )
+        self.assertEqual(derive_review(model_backed, require_complete=True).status, "approved")
 
         invalid["primary"]["reviewer"] = "github:alice"
         invalid["primary"]["reviewedAt"] = "2026-09-03T02:00:00+01:00"

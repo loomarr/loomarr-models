@@ -1,0 +1,42 @@
+{
+  "capturedAt": "2026-09-03T05:34:06Z",
+  "reviewers": [
+    {
+      "completionPriceUsdPerToken": "0.000012",
+      "family": "google-gemini",
+      "model": "google/gemini-3.1-pro-preview",
+      "promptPriceUsdPerToken": "0.000002",
+      "providerDisplayName": "Google AI Studio",
+      "providerTag": "google-ai-studio",
+      "role": "primary",
+      "requiredParameters": [
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs"
+      ],
+      "upstreamModel": "google/gemini-3.1-pro-preview-20260219"
+    },
+    {
+      "completionPriceUsdPerToken": "0.00003",
+      "family": "openai",
+      "model": "openai/gpt-5.4",
+      "promptPriceUsdPerToken": "0.000005",
+      "providerDisplayName": "OpenAI",
+      "providerTag": "openai/fast",
+      "role": "secondary",
+      "requiredParameters": [
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs"
+      ],
+      "upstreamModel": "openai/gpt-5.4-20260305"
+    }
+  ],
+  "schemaVersion": 1,
+  "sources": [
+    "https://openrouter.ai/api/v1/models/google/gemini-3.1-pro-preview/endpoints",
+    "https://openrouter.ai/api/v1/models/openai/gpt-5.4/endpoints"
+  ]
+}

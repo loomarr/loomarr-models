@@ -1,0 +1,28 @@
+{
+  "contract": {
+    "path": "contracts/planner-contract-v5.json",
+    "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+  },
+  "corpusId": "planner-current-training-v1",
+  "holdoutDenylist": {
+    "path": "contracts/planner-holdout-denylist-v2.json",
+    "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+  },
+  "records": 24,
+  "reviewDecisions": {
+    "path": "reviews/planner-current-v1/decisions.jsonl",
+    "sha256": "bbdb3c0936146ef7b54b9f4a0887be13ab4d7e9de8a06cac326d12ad7c751c87"
+  },
+  "reviewPlan": {
+    "path": "reviews/planner-current-v1/review-plan.json",
+    "sha256": "5e38610ac19639ea276cf8e2585beea95b7fa3a5b7402c35b6539fa5da7121e3"
+  },
+  "reviewStatus": "independently-approved",
+  "schemaVersion": 1,
+  "sha256": "a4ce7ac3e3365148ee4bd057928cfe3f72847637fe9c8ae7ebbadc29b608dcfa",
+  "sourceDrafts": {
+    "path": "corpus/planner-current-v1/drafts.jsonl",
+    "sha256": "70e1a84e648886430ca225360d14e3388c8199664ff3aaa9894b686b9e4e5cff"
+  },
+  "trainingAuthorized": false
+}

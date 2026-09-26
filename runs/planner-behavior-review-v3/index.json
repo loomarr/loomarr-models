@@ -1,0 +1,37 @@
+{
+  "artifacts": [
+    {
+      "path": "experiments/planner-behavior-review-v3.json",
+      "sha256": "ffa571775222ea87bdf90a01ee8229d14f337f7f4945705359dfaaabfc5ceb77"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
+      "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
+    },
+    {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v3/publication.json",
+      "sha256": "5058ee98a159d33ec128c3f2880926e211cd88ec9b0a989492fc6480a82b9cae"
+    },
+    {
+      "path": "reviews/planner-behavior-v3/preflight-report.json",
+      "sha256": "40f6b6d12143f00f49e2efe451a37546c33e8f6c21a03cfd4946ad02bd24545f"
+    },
+    {
+      "path": "reviews/planner-behavior-v3/request-plan.jsonl",
+      "sha256": "5759c2b0a9a4dca4a0439ae70ba91512fcabb7e084e492251c6a426f12e35045"
+    },
+    {
+      "path": "reviews/planner-behavior-v3/route-snapshot.json",
+      "sha256": "6a6f0e29b36938dcefb7ff1ba4108600f349b69127336d2250cf721a75061e66"
+    }
+  ],
+  "generator": {
+    "path": "scripts/build_planner_behavior_review_v3.py",
+    "sha256": "06c28c4fb1cb9c7914b7cfbbdd9e0cbeb2dae341ebc4925ddb1a89e8e1e94e25"
+  },
+  "nextGate": "use the frozen corpus and untouched development gate to decide whether QLoRA v2 is justified",
+  "publicationId": "planner-behavior-review-v3",
+  "schemaVersion": 1,
+  "status": "complete-approved",
+  "trainingAuthorized": false
+}

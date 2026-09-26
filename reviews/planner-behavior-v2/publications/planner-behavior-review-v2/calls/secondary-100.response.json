@@ -1,0 +1,21 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788444246-btk7PumhY5GteG5MgXIO","object":"chat.completion","created":1788444246,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-ambiguous-intent-mapping-01\":{\"criteria\":{\"constraints\":{\"evidence\":\"The intent requested airy and optimistic mood with genre mapping. The assistant mapped this to Comedy (include:[\\\"Comedy\\\"]) without adding must-exclude constraints or violating audience/era/format constraints. The policy block correctly reflects the genre chosen.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final proposal is a JSON object with channelName, rationale, picks array (tmdbId:920101, name:\\\"Aster Delta Fixture 101\\\", mediaType:\\\"movie\\\", confidence:0.91), and policy block. All fields are schema-consistent and grounded in the catalog_search tool result. Confidence 0.91 is plausible and not inflated.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId:920101 \\\"Aster Delta Fixture 101\\\" is directly returned by tool call behavior-101-1 with matching name, mediaType:movie, genres:[Comedy], and year:2000. No ID or factual claim appears outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"User intent is to build something airy and optimistic, asking the planner to infer the genre without asking clarifying questions. The assistant resolved the ambiguity by mapping to Comedy genre and proceeded directly to a proposal, fully representing the synthetic mood-based intent.\",\"passed\":true},\"recovery\":{\"evidence\":\"The catalog_search returned one candidate, and the assistant used it without error or abstention. No empty-result or error condition was triggered. This is correct behavior for a single-result response in this trace family; no recovery action was needed.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"One tool call (catalog_search, id:behavior-101-1) was made with arguments {\\\"genres\\\":[\\\"Comedy\\\"]}. This matches the production contract schema for catalog-search-v3. No redundant or unnecessary tool calls were made. The argument selection directly follows from the mood-to-genre mapping.\",\"passed\":true}},\"summary\":\"All six criteria pass. The assistant correctly mapped the ambiguous airy/optimistic intent to the Comedy genre without asking a clarifying question, made a single well-formed catalog_search call, grounded its final proposal exclusively in the returned fixture (tmdbId:920101), respected all constraints, and produced a schema-valid proposal with an honest confidence of 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2145,"completion_tokens":567,"total_tokens":2712,"cost":0.01494,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01494,"upstream_inference_prompt_cost":0.006435,"upstream_inference_completions_cost":0.008505},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

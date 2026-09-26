@@ -43,16 +43,17 @@ def to_qwen_conversation(trace: dict[str, Any]) -> list[dict[str, Any]]:
                 }
             )
         elif role == "tool":
-            converted.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": message["toolCallId"],
-                    "name": message["name"],
-                    "content": json.dumps(
-                        message["content"], sort_keys=True, separators=(",", ":")
-                    ),
-                }
-            )
+            content = message["content"]
+            if not isinstance(content, str):
+                content = json.dumps(content, sort_keys=True, separators=(",", ":"))
+            tool_message = {
+                "role": "tool",
+                "tool_call_id": message["toolCallId"],
+                "content": content,
+            }
+            if "name" in message:
+                tool_message["name"] = message["name"]
+            converted.append(tool_message)
         elif role == "assistant":
             converted.append({"role": "assistant", "content": message["content"]})
         else:

@@ -1,0 +1,14 @@
+{
+  "batchIndex": 14,
+  "contentError": "completion finish reason is 'length'",
+  "requestSha256": "0d1c87ca2365041fdab9098beca78b4fe312589e93f1782d0c1a5ce796e2b379",
+  "responseSha256": "d5ae3153b3d5491a791ab22362815ed9ed06188a3f469abb24b9c349ba5a9e3d",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.034444",
+  "settlementSha256": "53ae78918df478741be24cb72e7ed0d6d5416f1978bbdf165cb8df2e948793c6",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-keyword-discovery-05"
+  ]
+}

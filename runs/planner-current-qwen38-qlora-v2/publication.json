@@ -1,0 +1,47 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": false,
+    "modelDownloadAuthorized": false,
+    "paidEvaluationAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "budgetAfterSettlement": {
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "29.4222990406298941475",
+    "outstandingReservationsUsd": "0",
+    "postedSpendUsd": "29.4222990406298941475"
+  },
+  "budgetBeforeSettlement": {
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "29.3563469369284740175",
+    "outstandingReservationsUsd": "0",
+    "postedSpendUsd": "29.3563469369284740175"
+  },
+  "completedAt": "2026-09-18T14:08:03Z",
+  "evaluationDisposition": "not-run-no-adapter",
+  "experimentId": "planner-current-qwen38-qlora-v2",
+  "failureClass": "live-rendered-capacity-mismatch",
+  "failureEvidence": {
+    "adapterProduced": false,
+    "exitCode": 2,
+    "optimizerSteps": 0,
+    "path": "runs/planner-current-qwen38-qlora-v2/failure-evidence.tgz",
+    "sha256": "958fa29db90c4cae4c85719c25b1472851f6f50cccb30f515769b3b80b0984ad"
+  },
+  "providerCostUsd": "0.06595210370142013",
+  "providerEvidence": {
+    "path": "runs/planner-current-qwen38-qlora-v2/provider-settlement.json",
+    "sha256": "e386d91fffb3a9f247bf108f5a1e9049052c6a6c0aae43e7c24b6a18221f6786"
+  },
+  "publicationCommit": "8d834ce8d6168775650d7ebf057e462a1ce15a98",
+  "schemaVersion": 1,
+  "sourceCommit": "6c1a43d8af777be0d475060c3a3ff22df7b312db",
+  "sourceExperiment": {
+    "path": "runs/planner-current-qwen38-qlora-v2/source-experiment.json",
+    "sha256": "c5d38651b1c2a17540d9b69de26e1b3f605d8d50f565409906ce4add660a7595"
+  },
+  "status": "failed-settled"
+}

@@ -1,0 +1,2 @@
+# Preserve byte-exact provider responses, including provider-supplied whitespace.
+reviews/*/publications/*/calls/*.response.json -whitespace

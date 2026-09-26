@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443612-3GM0YUhwxOAMn6p7L8Kz","object":"chat.completion","created":1788443612,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-08\":{\"criteria\":{\"constraints\":{\"evidence\":\"The genre constraint 'Documentary' is preserved throughout: the recovery search uses genres:[\\\"Documentary\\\"], the returned candidate has genres:[\\\"Documentary\\\"], and the final proposal policy includes genres.include:[\\\"Documentary\\\"].\",\"passed\":true},\"final_proposal\":{\"evidence\":\"Final proposal is valid JSON with channelName 'Cinder Recovery', picks array containing tmdbId 920088 grounded in tool result, confidence 0.91, and policy preserving genre constraint. All required fields are present and values are grounded.\",\"passed\":true},\"grounding\":{\"evidence\":\"The pick tmdbId 920088 with name 'Cinder Junction Fixture 088' is directly sourced from the tool result in toolCallId behavior-88-2, which returned exactly that candidate with matching tmdbId, name, mediaType, and genres.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent is to build a documentary channel around 'Cinder Junction Fixture 088' and recover from a fixture timeout. Both elements are fully represented: the initial search targets the fixture by name, a timeout error occurs, recovery proceeds, and a documentary channel is proposed.\",\"passed\":true},\"recovery\":{\"evidence\":\"The first call (behavior-88-1) returned error 'synthetic fixture timeout' with empty candidates. The assistant correctly recovered by issuing a fallback search (behavior-88-2) using genre filter ['Documentary'], which successfully retrieved the target fixture, demonstrating proper error recovery behavior.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two catalog_search calls were made: behavior-88-1 with query 'Cinder Junction Fixture 088' (direct lookup), and behavior-88-2 with genres=['Documentary'] (recovery fallback). Both are necessary and arguments conform to catalog-search-v3 schema. No superfluous calls were made.\",\"passed\":true}},\"summary\":\"The trace correctly demonstrates error recovery: an initial named search times out, the assistant recovers with a genre-filtered fallback search that retrieves the target fixture, and the final proposal is fully grounded in the recovered tool result with valid schema, honest confidence, and preserved genre constraints. All six criteria pass.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2220,"completion_tokens":527,"total_tokens":2747,"cost":0.014565,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.014565,"upstream_inference_prompt_cost":0.00666,"upstream_inference_completions_cost":0.007905},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

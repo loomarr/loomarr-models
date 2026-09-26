@@ -1,0 +1,13 @@
+{
+  "batchIndex": 6,
+  "requestSha256": "793b3f2a5e23b10d8e3d52efa81cf2edd45909f6960e753780c871d16951f3e4",
+  "responseSha256": "b8299b56c5c06ec577e809457c62d2d9fe2f8366d917621061f5fff0b18805fc",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.015004",
+  "settlementSha256": "4776235962ce08dd3b7ed1b0a7e30a49acc2a6434e550391fa0f570e039cf23d",
+  "status": "valid",
+  "traceIds": [
+    "planner-behavior-v2-canonical-argument-preservation-07"
+  ]
+}

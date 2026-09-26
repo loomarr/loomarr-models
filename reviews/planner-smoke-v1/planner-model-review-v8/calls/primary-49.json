@@ -1,0 +1,13 @@
+{
+  "batchIndex": 49,
+  "requestSha256": "1bae65487fa042b82da0516217dbfa15d5310c5c59a2f5c47cc4d4d4ad7f8497",
+  "responseSha256": "b17eb4447d0c5f2afc41ca7c6f0b9ff1399a763108488b64271c635d324cb913",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.023204",
+  "settlementSha256": "2472a8ad7e69723532e963fc7d45756c0523c13fccf4929fc4cc16dceb3d098e",
+  "status": "valid",
+  "traceIds": [
+    "planner-smoke-malformed-final-repair-05"
+  ]
+}

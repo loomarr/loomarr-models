@@ -1,0 +1,27 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788415911-3sNEdi8DrEU7DxPCBAp4","object":"chat.completion","created":1788415911,"model":"google/gemini-3.1-pro-preview","provider":"Google AI Studio","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"STOP","message":{"role":"assistant","content":"{\n  \"reviews\": {\n    \"planner-smoke-title-search-04\": {\n      \"criteria\": {\n        \"constraints\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"final_proposal\": {\n          \"evidence\": \"Final proposal yields `{\\\"channelName\\\":\\\"Lunar Spotlight\\\",... \\\"picks\\\":[{\\\"tmdbId\\\":900004,\\\"name\\\":\\\"Velvet Voyage 04\\\",...}]}`, properly schema-valid with honest confidence.\",\n          \"passed\": true\n        },\n        \"grounding\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"intent\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"recovery\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"tool_calls\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        }\n      },\n      \"summary\": \"Initial logic and parameters are validated. The final object is correct.\",\n      \"verdict\": \"approved\"\n    }\n  },\n  \"schemaVersion\": 1\n}","refusal":null,"reasoning_details":[{"type":"reasoning.text","signature":"EnMKcQERTTIPANT0wD3w7+DBCKJcqe3WG70Rkg870KGgD4EdkblgHSAmGLCG1APG/2CVnx1WrZEwI1TXdf46G+DtfHeHTVIa4Y1FwPk26RC6oQd5Ylg8kXQTVw50QUlNJeOKUYOvFvgT0fAc9Ht9wKomq1jd","format":"google-gemini-v1","index":0}]}}],"usage":{"prompt_tokens":3712,"completion_tokens":273,"total_tokens":3985,"cost":0.0107,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.0107,"upstream_inference_prompt_cost":0.007424,"upstream_inference_completions_cost":0.003276},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

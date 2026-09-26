@@ -1,0 +1,57 @@
+{
+  "corpus": {
+    "path": "corpus/planner-current-v1/traces.jsonl",
+    "records": 24,
+    "sha256": "a4ce7ac3e3365148ee4bd057928cfe3f72847637fe9c8ae7ebbadc29b608dcfa"
+  },
+  "environmentPackages": {
+    "jinja2": "3.1.6",
+    "markupsafe": "3.0.3",
+    "tokenizers": "0.22.2"
+  },
+  "experimentId": "planner-current-qwen38-qlora-v1",
+  "measurements": [
+    {"renderedBytes": 20807, "tokens": 5107, "traceId": "planner-current-train-exact-key-final-01"},
+    {"renderedBytes": 21417, "tokens": 5318, "traceId": "planner-current-train-date-movie-release-01"},
+    {"renderedBytes": 21493, "tokens": 5351, "traceId": "planner-current-train-date-series-premiere-01"},
+    {"renderedBytes": 21437, "tokens": 5344, "traceId": "planner-current-train-date-series-airing-01"},
+    {"renderedBytes": 21617, "tokens": 5416, "traceId": "planner-current-train-date-disjoint-intervals-01"},
+    {"renderedBytes": 20632, "tokens": 5069, "traceId": "planner-current-train-date-ambiguity-01"},
+    {"renderedBytes": 21304, "tokens": 5274, "traceId": "planner-current-train-collection-evidence-01"},
+    {"renderedBytes": 21122, "tokens": 5197, "traceId": "planner-current-train-franchise-boundary-01"},
+    {"renderedBytes": 21639, "tokens": 5322, "traceId": "planner-current-train-network-editorial-epoch-01"},
+    {"renderedBytes": 20976, "tokens": 5169, "traceId": "planner-current-train-cast-routing-01"},
+    {"renderedBytes": 21017, "tokens": 5183, "traceId": "planner-current-train-creator-routing-01"},
+    {"renderedBytes": 20856, "tokens": 5121, "traceId": "planner-current-train-exact-title-unfamiliar-01"},
+    {"renderedBytes": 21114, "tokens": 5218, "traceId": "planner-current-train-constraint-conflict-abstention-01"},
+    {"renderedBytes": 21373, "tokens": 5272, "traceId": "planner-current-train-ownership-acquisition-balance-01"},
+    {"renderedBytes": 21462, "tokens": 5283, "traceId": "planner-current-train-refinement-preservation-01"},
+    {"renderedBytes": 21023, "tokens": 5179, "traceId": "planner-current-train-audience-ceiling-01"},
+    {"renderedBytes": 21000, "tokens": 5174, "traceId": "planner-current-train-season-window-01"},
+    {"renderedBytes": 21103, "tokens": 5194, "traceId": "planner-current-train-medium-constraint-01"},
+    {"renderedBytes": 20920, "tokens": 5139, "traceId": "planner-current-train-language-constraint-01"},
+    {"renderedBytes": 20988, "tokens": 5167, "traceId": "planner-current-train-region-constraint-01"},
+    {"renderedBytes": 20924, "tokens": 5152, "traceId": "planner-current-train-thin-results-01"},
+    {"renderedBytes": 20807, "tokens": 5101, "traceId": "planner-current-train-empty-results-01"},
+    {"renderedBytes": 20617, "tokens": 5061, "traceId": "planner-current-train-malformed-tool-result-01"},
+    {"renderedBytes": 21459, "tokens": 5287, "traceId": "planner-current-train-observed-fault-recovery-01"}
+  ],
+  "model": {
+    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+  },
+  "renderedTrainingSha256": "35b00e0cffd1ac50e254148ceeaf13ba25f3dee7113c5685b74aa0e0472dd6cf",
+  "rendering": {
+    "addGenerationPrompt": false,
+    "preserveThinking": true,
+    "reasoningEffort": "low",
+    "truncation": false
+  },
+  "schemaVersion": 1,
+  "status": "passed",
+  "tokenizerFiles": {
+    "chat_template.jinja": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+    "tokenizer.json": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+    "tokenizer_config.json": "792fa3f0cb88b111e54ef3134c873531008c4df471d108da17903426e308aa7b"
+  }
+}

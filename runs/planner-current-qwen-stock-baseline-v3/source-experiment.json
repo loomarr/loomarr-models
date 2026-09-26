@@ -1,0 +1,174 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "gpuAuthorized": true,
+    "modelDownloadAuthorized": true,
+    "paidBaselineAuthorized": true,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "authorization": {
+      "path": "reviews/planner-current-qwen-stock-baseline-v3/authorization.json",
+      "sha256": "4789bde38b49c13d02d1d1c41c4b8ce9497a4baf396cd0315ca75f38e6f11897"
+    },
+    "authorizer": {
+      "path": "scripts/authorize_planner_current_stock_baseline_v3.py",
+      "sha256": "f227c67c947c40ef388e070dfdb15bed8613e0b2c2346302a22de7c3e63cd75d"
+    },
+    "budgetLedger": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "3c2f19303179c5cab3af94990450caa68a5d6d7c65cb4e8b253f87aa4863caf8"
+    },
+    "budgetReconciliationExtender": {
+      "path": "scripts/extend_runpod_budget_reconciliation.py",
+      "sha256": "da00328ce8b7f3fe4bafb4bccfe96813ad35fb737aa3a58cb07a5c5118fc4068"
+    },
+    "cases": {
+      "path": "evaluation/planner-current-v1/cases.jsonl",
+      "records": 24,
+      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-current-v1/manifest.json",
+      "sha256": "3d5aa3c64bdbf16e1731e716242867632b1a2bbbd5fec5cdddf95ded742de2da"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "environment": {
+      "path": "environments/qwen38-a40-v1.json",
+      "sha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248"
+    },
+    "generator": {
+      "path": "scripts/build_planner_current_stock_baseline_v3.py",
+      "sha256": "029b9e911d906cd94110ee4f530bfacb2db134c9fd5ea3e7632c2b2d5d1087d0"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/planner-holdout-denylist-v2.json",
+      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+    },
+    "preflight": {
+      "path": "src/loomarr_models/current_baseline_v3.py",
+      "sha256": "b44ab8b160a3ff585f851bddfa6e3b2c4f1b44859af1e24249adf35bb90624f6"
+    },
+    "priorBaselinePublication": {
+      "path": "runs/planner-current-qwen-stock-baseline-v2/publication.json",
+      "sha256": "a2b7cdc02392a75b8dded9d0711ec003cd23698088c41b4194ffa40d5c529804"
+    },
+    "promptCapacityChecker": {
+      "path": "scripts/check_planner_current_prompt_capacity.py",
+      "sha256": "82d3c86e40d57f73024583bb590475beea9cb1df82adb4376718e7ee451e6974"
+    },
+    "promptCapacityModule": {
+      "path": "src/loomarr_models/prompt_capacity.py",
+      "sha256": "c4c940fbcf34aeee02e52b70b409f368809b2a6715c52ce612810f91ab7ebd83"
+    },
+    "promptCapacityReport": {
+      "path": "reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json",
+      "sha256": "ae39b9b93e57e3aed6f8704da6f0e1bf0bcf4f26797656c96dcd8605dddefea5"
+    },
+    "publicationValidator": {
+      "path": "src/loomarr_models/current_publication_v3.py",
+      "sha256": "48dab137e78c6b8e720828ab04380e07bbb7f9f3147b39371b30b62abb68236e"
+    },
+    "publisher": {
+      "path": "scripts/publish_planner_current_stock_baseline_v3.py",
+      "sha256": "59d9aaa0674d27d36eb17a511fe8464b779ca4a88cbc32443f6b3c9961bfc77b"
+    },
+    "runner": {
+      "path": "scripts/run_planner_current_stock_baseline_v3.py",
+      "sha256": "db1ace91a4e95be269fe6481e9503c9292dc5e8278aa7b223305244fdbbe0631"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/current_stock_runtime_v3.py",
+      "sha256": "07b22f723c89658cffab76de2695f62f1699a3b8703d07b9352becd58ebda5b6"
+    }
+  },
+  "budget": {
+    "aggregateAuthorizationUsd": "40.00",
+    "currentCommittedUsd": "28.8046085599664530175",
+    "outstandingReservationsUsd": "0",
+    "projectedCommitmentUsd": "30.3046085599664530175",
+    "proposedReservationUsd": "1.50",
+    "remainingAuthorizationUsd": "9.6953914400335469825"
+  },
+  "comparison": {
+    "disableCompile": true,
+    "doSample": false,
+    "maxModelCallsPerCase": 3,
+    "maxNewTokens": 2048,
+    "maxSeqLength": 16384,
+    "offloadEmbedding": false,
+    "reasoningEffort": "low",
+    "sameCasesAndOrderRequiredForAdapter": true,
+    "seed": 3407,
+    "temperature": null,
+    "topP": null,
+    "trials": 1
+  },
+  "decision": {
+    "applicationRecoveryBlocker": "https://github.com/loomarr/loomarr/issues/1195",
+    "passingStockStopsTraining": true,
+    "requiresObservedRecoveryFault": true,
+    "runtimeOrInfrastructureFailureJustifiesTraining": false
+  },
+  "execution": {
+    "automaticRetry": false,
+    "cloud": "SECURE",
+    "containerDiskGb": 40,
+    "containerImage": "runpod/pytorch@sha256:4d1721e62b56d345c83b4fd6090664be6daf9312caab5b2e76f23d8231941851",
+    "gpuCount": 1,
+    "gpuSku": "NVIDIA A40",
+    "maxWallClockSeconds": 9000,
+    "minimumCudaVersion": "12.8",
+    "minimumVramGb": 48,
+    "outputDir": ".artifacts/planner-current-qwen-stock-baseline-v3",
+    "persistentVolumeGb": 40,
+    "platform": "linux-amd64",
+    "requireCleanGit": true,
+    "storageMode": "pod-persistent"
+  },
+  "experimentId": "planner-current-qwen-stock-baseline-v3",
+  "hostedProductionComparison": {
+    "certificationAuthority": false,
+    "exactCurrentContractRequired": true,
+    "historicalScoresComparable": false,
+    "sameCasesAndOrderRequired": true,
+    "status": "preregistered-no-provider-inference-authorized"
+  },
+  "issue": "https://github.com/loomarr/loomarr-models/issues/29",
+  "model": {
+    "candidateId": "qwen38-27b-unsloth-bnb-4bit",
+    "quantization": "unsloth-bnb-4bit",
+    "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+    "revision": "8aa5f05d26b7205477066e1449e0af13f762a299"
+  },
+  "promptCapacity": {
+    "exactPinnedProcessorRequired": true,
+    "fullGenerationBudgetRequiredAtEveryStage": true,
+    "preflightConfigSha256": "e0d31e5244c735ea68103c56a040ba129d04ab2fcbb31536f69efb26cfb2c40d",
+    "report": {
+      "path": "reviews/planner-current-qwen-stock-baseline-v3/prompt-capacity-report.json",
+      "sha256": "ae39b9b93e57e3aed6f8704da6f0e1bf0bcf4f26797656c96dcd8605dddefea5"
+    },
+    "status": "passed"
+  },
+  "schemaVersion": 1,
+  "scoring": {
+    "scorerVersion": "planner-current-development-scorer-v2",
+    "thresholds": {
+      "maxP95ToolCalls": 2,
+      "minCorrectToolOperationRate": 0.9,
+      "minDateMeaningAccuracyRate": 1.0,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 1.0,
+      "minSchemaValidityRate": 0.98
+    }
+  },
+  "status": "ready-for-paid-baseline"
+}

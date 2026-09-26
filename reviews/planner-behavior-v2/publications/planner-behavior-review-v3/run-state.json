@@ -1,0 +1,28 @@
+{
+  "actualCostUsd": "4.621493",
+  "completedAt": "2026-09-03T16:42:16.048256Z",
+  "completedCalls": 240,
+  "invalidReviewCount": 0,
+  "preflight": {
+    "authorizationUsd": "40.00",
+    "committedSpendUsd": "23.3611685675672820",
+    "configSha256": "ffa571775222ea87bdf90a01ee8229d14f337f7f4945705359dfaaabfc5ceb77",
+    "corpusSha256": "60b10f12d98c65a146ed0966917a8e3ab34045805968dd126e9f3ad86b6c6002",
+    "inputTokenUpperBound": 2359600,
+    "outputDir": ".artifacts/planner-behavior-review-v3",
+    "outputTokenUpperBound": 720000,
+    "paidReviewAuthorized": true,
+    "projectedSpendUsd": "39.8611685675672820",
+    "requestCount": 240,
+    "reservationUsd": "16.50",
+    "reviewId": "planner-behavior-review-v3",
+    "sourceCommit": "edb4237d4cd41ae0fcd42ab1d5b7357a883bd569",
+    "traceCount": 120,
+    "worstCaseCostUsd": "15.617740"
+  },
+  "reservationUsd": "16.50",
+  "reviewId": "planner-behavior-review-v3",
+  "schemaVersion": 1,
+  "startedAt": "2026-09-03T14:52:05.998493Z",
+  "status": "complete"
+}

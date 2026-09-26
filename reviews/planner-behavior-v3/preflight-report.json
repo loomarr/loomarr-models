@@ -1,0 +1,54 @@
+{
+  "bindings": {
+    "budget": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "917b12295be48c40ffa8eb7b7474ce489557256d8221a71c76c1defbd24f60b2"
+    },
+    "priorPublication": {
+      "path": "reviews/planner-behavior-v2/publications/planner-behavior-review-v2/publication.json",
+      "sha256": "c215253f81967ae662bab47521cdd57aff6603b03568257f164ccc656beec7ac"
+    },
+    "requestPlan": {
+      "path": "reviews/planner-behavior-v3/request-plan.jsonl",
+      "sha256": "5759c2b0a9a4dca4a0439ae70ba91512fcabb7e084e492251c6a426f12e35045"
+    },
+    "reviewPlan": {
+      "path": "experiments/planner-behavior-review-v3.json",
+      "sha256": "ffa571775222ea87bdf90a01ee8229d14f337f7f4945705359dfaaabfc5ceb77"
+    },
+    "routeSnapshot": {
+      "path": "reviews/planner-behavior-v3/route-snapshot.json",
+      "sha256": "6a6f0e29b36938dcefb7ff1ba4108600f349b69127336d2250cf721a75061e66"
+    },
+    "trainingDrafts": {
+      "path": "corpus/planner-behavior-v2/drafts.jsonl",
+      "sha256": "60b10f12d98c65a146ed0966917a8e3ab34045805968dd126e9f3ad86b6c6002"
+    }
+  },
+  "decision": "contract-complete-full-review-fits-remaining-authorization",
+  "externalCostUsd": "0",
+  "inferenceCalls": 0,
+  "paidReviewAuthorized": true,
+  "preflight": {
+    "authorizationUsd": "40.00",
+    "batchSize": 1,
+    "committedSpendUsd": "23.3611685675672820",
+    "inputByteUpperBound": 2359600,
+    "outputTokenUpperBound": 720000,
+    "projectedSpendUsd": "39.8611685675672820",
+    "requestCount": 240,
+    "requestPlanSha256": "5759c2b0a9a4dca4a0439ae70ba91512fcabb7e084e492251c6a426f12e35045",
+    "reservationUsd": "16.50",
+    "traceCount": 120,
+    "worstCaseCostUsd": "15.617740"
+  },
+  "reportId": "planner-behavior-review-v3-preflight",
+  "routeMetadataCapturedAt": "2026-09-03T14:48:13.192940Z",
+  "schemaCompilationProof": {
+    "available": false,
+    "reason": "OpenRouter endpoint metadata advertises structured-output parameters but provides no no-inference proof that an exact multi-trace schema compiles.",
+    "selectedBatchSize": 1
+  },
+  "schemaVersion": 1,
+  "status": "passed-no-inference"
+}

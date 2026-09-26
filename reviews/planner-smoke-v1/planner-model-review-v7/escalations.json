@@ -1,0 +1,652 @@
+{
+  "count": 37,
+  "reviewId": "planner-model-review-v7",
+  "schemaVersion": 1,
+  "traces": [
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-title-search-01: invalid review summary",
+        "invalidReviewSha256": "a084cc7868c76eaf437beea672e4857fa50bfdb70283d335d8a71e5e84a8bf95",
+        "responseSha256": "8612494e34e56993cdc902416f758f0a512c30ce2bbf31833df2881bc9412a62",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "20446f330a47e1a86a876edefaee77ba798966a23ee3dc84920edf45fa4e6368",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-title-search-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-title-search-02: invalid criterion evidence",
+        "invalidReviewSha256": "2cc5f80662b8e1fdca2c7da9463a4619bb3b4f759e43b34e80662e91e36661b9",
+        "responseSha256": "7c4512772ec89d9fe9855808682f673eb1638e6db103118c48bdd8cb9ef8660a",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "8be2ffaae093e01270f8149d6618174d21eb4fd81780a37c9bb22b94ec3f1d6b",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-title-search-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-title-search-04: verdict does not match criterion decisions",
+        "invalidReviewSha256": "772d623b923c9704629b539179ebd337dbcb3d68eb123f43d8a4921b44dfbb4d",
+        "responseSha256": "3387e866a2a0fc87360903410222781608daf63b15ba1947962dbf0e5a40adfd",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "7b46e0f4181d6494951eec9099cc18d2448413ad0ecefe9c20ed51013ce3e3b5",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-title-search-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-title-search-05: invalid review summary",
+        "invalidReviewSha256": "b7ffb4f1c88b7ec735d234f2b5ad21fa38cbb4d331762f9116d584896d060b8e",
+        "responseSha256": "940373d75ea422fa3973b1bf6f2b966cb962101dd645af3394fcf9d94b3cca6c",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "8fcd0cf772219575537571474e2e7382e5bc3d8f17d8ff400b462009593c37a3",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-title-search-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-genre-discovery-01: invalid review summary",
+        "invalidReviewSha256": "94425793e42aad87cce7c48411b53559b0887ad5914457e533bfd3c41c07e124",
+        "responseSha256": "dd6bc92ec655bcaea3e3807a17f697ec6d4e8d3539b976c352713378b77330c4",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "0be2f15bbacd7b3a91ccb7303351a1b0ff9a9c2d16a178591ad4e794fb39778d",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-genre-discovery-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-genre-discovery-02: invalid review summary",
+        "invalidReviewSha256": "07b6b4d85f0483026680bbab5f33dd9181b6244d8e9ac2896375378145cec883",
+        "responseSha256": "6af9b56d1f6e60c211d770c48eb50e5ec20c3c5ff337ce83ff5dbdc58fb06d66",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "73b8068a39e94becc12afcec9c840a5a3062a1e8272b938f3128e92c79dbef85",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-genre-discovery-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "87a3135952b03836db59ed6aa1b3f960fcf1fdfb026c6d4ca31983b485b2968d",
+        "failedCriteria": [
+          "intent"
+        ],
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "rejected"
+      },
+      "secondary": {
+        "attestationSha256": "ae73e6a6c182ed358249253e90a4bcde5130345487e95668469b6e9ff1a36b71",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-genre-discovery-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-genre-discovery-04: invalid review summary",
+        "invalidReviewSha256": "904deb54dfe09d058967fb9fe76abed9fe630af7fa368b4d892ff15bde36ff62",
+        "responseSha256": "f1f67f5b15f2fa5077ad43061e0f7663ea89db636c48289f1792b61a26c2e61a",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "1ae6e1a2fb6d9b90461adcdcd386386653b2e30e63530112e0cae3d0dcad80f6",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-genre-discovery-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-genre-discovery-05: invalid review summary",
+        "invalidReviewSha256": "11df6191bb4d64c77e7e261974a2eaaaf4f55de9660e6d0948f523fa953f8edb",
+        "responseSha256": "b2e71931e2cfcee3452686d5f878c4654ef62c762acb16c7b6b407cceb93617a",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "cab0ebf9c2113eab9f0bc240ab46070b4aebe063a7f5c9db4c8dece7edb926b3",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-genre-discovery-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-keyword-discovery-01: invalid review summary",
+        "invalidReviewSha256": "1f24c0b1d36ad00b7e6c9459aefe80a6343187fb456b95e68fe7a15e81eaedbe",
+        "responseSha256": "6fd5e3d00b2eb497b601f6b50cd868362e12dab8a1aeea8ff0dcd5c9ab531ebe",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "0ccb0776c6e87b68788ad511073ebe8b36a8d16ed71ba0a117a4cd52475d7778",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-keyword-discovery-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-keyword-discovery-02: invalid review summary",
+        "invalidReviewSha256": "3c24bc6eb1a9a44af282034c89919ff8e5e2d8975c48549230a133948b5419ef",
+        "responseSha256": "194d1a5af4d1ba326fbe2338a69385a871d193d55ff57a7e20165d16d1ec5518",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "8fc0492276f2ba1a9339813c18fb54c69ea40ac4dd67a5552ba829c17823b1c2",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-keyword-discovery-02"
+    },
+    {
+      "derivedStatus": "rejected",
+      "primary": {
+        "attestationSha256": "07c3629dd7a7864e42d46e3f7a178f47371a66644ebe510cfc899f975f509d28",
+        "failedCriteria": [
+          "grounding",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "rejected"
+      },
+      "secondary": {
+        "attestationSha256": "1e6dee9df27f1f7333ac1c9b84348d2b4808a8a8da4d0549267d4618c0777653",
+        "failedCriteria": [
+          "tool_calls"
+        ],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-keyword-discovery-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-keyword-discovery-04: invalid review summary",
+        "invalidReviewSha256": "51abe2ec402772afe3bd9aab053b05c11482be4937b33a8bb60cb9ec846ec433",
+        "responseSha256": "d0a1ee0a0040422ccd14f7590d521da682002ee58fd8179ff32c5916e95c96d7",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "34c82fca5b070b7ae470e71ef66be37ee7433f3c86b04bfd550cbee82bd0bc68",
+        "failedCriteria": [
+          "tool_calls"
+        ],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-keyword-discovery-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "7bfe97975c68fd93fbe191b715121940c56eb8b60ff9bf9577d94e18cff59667",
+        "responseSha256": "d5ae3153b3d5491a791ab22362815ed9ed06188a3f469abb24b9c349ba5a9e3d",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "a5961c31d004bcf208f4c1bb5b6f00ad46fc698cde80c9864c95d8ff15473b75",
+        "failedCriteria": [
+          "tool_calls"
+        ],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "rejected"
+      },
+      "traceId": "planner-smoke-keyword-discovery-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "6e8aa66457e48dde43cd45ef00b9aaf28c42e70281ced249994f2884854e0b14",
+        "failedCriteria": [
+          "intent"
+        ],
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "rejected"
+      },
+      "secondary": {
+        "attestationSha256": "492f55a1d2b4953712de32a0ea1880decb00e34eca3b1fe8534a5a8fed70ce26",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-must-include-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-must-include-02: invalid review summary",
+        "invalidReviewSha256": "2362745b1661635e6c7972369afc5b9154290782e176c195b22677ef62f0729c",
+        "responseSha256": "7f4178eb31a4b024ebe3e9ffb935e04d14f7501344cfe64635548d40f28887df",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "956cbd5083c04c10871c873d535707377ede14a16c562deee56e89b82317f6ad",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-must-include-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-must-include-03: invalid review summary",
+        "invalidReviewSha256": "599ae3006d7704791badc20ebb8854c0e1cb9ec8584b16d0256c1feb29a8961d",
+        "responseSha256": "d7c455cfb95613cf00bf3363c4a995b4dee31a56bb4beb90665d5d7c254a525c",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "6ba4a2525ddc9f5118740da0156e5980c3b46950125a8af352e5b3a403059721",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-must-include-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "54c7ec679afba0376e1807e545cd4aaf804096ac148fba06215bf4cc70ff85fb",
+        "responseSha256": "58c376a651b3c1fcd14629e4681f1044de9319a5bcfbd390d9bafc9338bb74e4",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "a0180b269b77129f99e718395327d8fad0506ffae3d2369757ea7e35dc543f82",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-must-include-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-must-exclude-01: invalid review summary",
+        "invalidReviewSha256": "b86068c7a058c4d2aa654f34f728437668521115ee4bbacea8f180ab79762f01",
+        "responseSha256": "8ff3af5da41f911986ade61cfa98957b4c3cdae471c053458ecd31719cd3abbb",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "c4338ff249ca72574df0ae2ecf593a4103b59a3a0d6ef22e0dc6895160ded9a4",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-must-exclude-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-must-exclude-05: invalid review summary",
+        "invalidReviewSha256": "5d217ed48794d92a728d653b6fff06a01678723a4f3efdccab9792189422fe36",
+        "responseSha256": "6c714107b68ec12653d7205a245697a4a19b18d1d981a9109eca5a3bbda29341",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "4123f29a00a6c1e82f13ee7334602f7718eee7d58f4a28d465f80a6f3a7ae631",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-must-exclude-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "758bfb18ee6e629735a0aa3fd84af44ef293a1a8605f0a21bb8f21e04bb3f5df",
+        "responseSha256": "37a261660e39d91a1612877b50ca8ec1d5a4e88b524e3626709525612312ebc9",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "d1749ec917f6d6310c1d9045c9722188b4a3ac0185c8e1537c8b1dfc145d18ba",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-ambiguous-intent-02: invalid review summary",
+        "invalidReviewSha256": "f8ed29a4b198bfd9e968e78908448cf40f05a1c906837b7dad6820b5899b066e",
+        "responseSha256": "2e05cb8b120c34b36a9dae5fe16ed17f43a2382eca4b02ac39a34d10479cae28",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "526eef89716fab119d957d1bd44715639497ca64f955949a62f61f0d9dae77ff",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-ambiguous-intent-03: invalid review summary",
+        "invalidReviewSha256": "9249442ae42508d804c6e1e4141becbeaf1d0bc4379f10668106d102a715d4ff",
+        "responseSha256": "85e08d89f9268882e591fa58271f11eb55d56b239906364771617a12d5d3c931",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "f32c1e89c82597b53b2789961034502f8a6e01e0a0fa1628ee2bd8337302866c",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "completion finish reason is 'length'",
+        "invalidReviewSha256": "060b1571d9242408df6b053332f820d8d32034d9e593ec2f8dc5d02892d58b8a",
+        "responseSha256": "8f06f34e1eb5016804db0e8594c333fc03786d976605a5dc051e1be59c58ffbf",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "f3a83026927cdcb6ac6d706e4aca5e1607b4b1101e1ad9d9d98a2dbe277d46ff",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "9981074419615b716c1eb9da302b67b76d82b4bdecb5bd51e23d4d0447932feb",
+        "failedCriteria": [
+          "intent",
+          "tool_calls",
+          "grounding",
+          "final_proposal"
+        ],
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "rejected"
+      },
+      "secondary": {
+        "attestationSha256": "9aff0c71bad6f123b1ecbda3817f89ad0518eccacbf63f4c0820577ebd3bcfad",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-ambiguous-intent-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-conflicting-intent-02: invalid review summary",
+        "invalidReviewSha256": "35007f0125714da6be6458bfa62756da4111d31c5924676d0c5065828f79ce0d",
+        "responseSha256": "f030ac0149acd619ae268a5c49c94fbefc06119b875168db845f24d8308e4644",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "fcec3189e87fec2cba06e597eba01b9c5434d92ccbeb609be5b911a93aa28298",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-conflicting-intent-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-conflicting-intent-03: invalid review summary",
+        "invalidReviewSha256": "6291ff75f55d29a04d42b1e5b9efa6e352d9de5d1d697ecc6dae1276664bfb8a",
+        "responseSha256": "77e30db0d417a2edc5bf4edddd9aeb88a25b8c5eaf6312a0becd8ef5d948c9ce",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "f290282bd8161327e77374402eccaa61aab456b1ac809b63cf1dfe44645453bb",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-conflicting-intent-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-conflicting-intent-05: invalid review summary",
+        "invalidReviewSha256": "7cd3f0822e057eeb852f0109285a7d0b3d41bc4bd29d0d8da986b17fc3086059",
+        "responseSha256": "c132be8eda262403f149aa559a605d41661e3ca86fa42aec8b9b162ec04b87b6",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "62371e064833941ea16ca4bb0ae1585c76959acb39d1475759ec01174e54fe57",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-conflicting-intent-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-empty-results-01: invalid review summary",
+        "invalidReviewSha256": "fd1a5323cd505277ee07571385154e37aa00308bc8c3bed6efe7316e0c2120fb",
+        "responseSha256": "68ee18ac169e4736a65afb3a2040a1f0751bced66a0c17dabdb57154d001afe4",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "424c5b274e1d8d362210635002b91f84deecdced6b230048ca3457bfb9f49517",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-empty-results-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-empty-results-02: invalid review summary",
+        "invalidReviewSha256": "717cfe7dcf0845b60968e7ddc3a14e8521bcc6f71985bc543263a62140611c1e",
+        "responseSha256": "26795b94ba4f2a0184b1e5978af18825eb4cb986d744f5fc86d2d0c6f06d8f00",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "86a0a0837a6216a59fa505d5a609a8eaaaa5ecdc94bf8703468339e668455578",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-empty-results-02"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-empty-results-03: invalid review summary",
+        "invalidReviewSha256": "98a4a893162290f5349431ac8f100d6f306692e8539cd1dbedea8401f98007d8",
+        "responseSha256": "105b21fb48b4700eaead72ac57646cc9c1051d0861666e3c75c49f831aa07ae2",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "3a54664d8fcf801df0f1a45e9be8bbd42e2642608615c71bcfdb4e6a7fae5598",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-empty-results-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-empty-results-04: invalid review summary",
+        "invalidReviewSha256": "1279dd72f913694b7222e249cad293ee2f6e65adfcd78ea2c37437abc6db86a0",
+        "responseSha256": "7877bd3172f4915bd98752ae1d767c4766db50f51715233efa6d258488fcb427",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "2a25b89a5c496d9e013ea37091a40da226c5917e601b58549a1282fd8902ae60",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-empty-results-04"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-empty-results-05: invalid review summary",
+        "invalidReviewSha256": "11f3a8a9d40e75fbe4a515cf6f771bf78fa8bbb7201ec9a65c3a02f2ce6c4a5c",
+        "responseSha256": "8557b77a02c4567490922a73aeaafedc109824944b16ddeb7b2fe8d5dcd07f4f",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "a95ba66c12c2db75f12011949d9e25baba792a1a816f13d172f7472ecf2da8fd",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-empty-results-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-tool-error-recovery-01: invalid review summary",
+        "invalidReviewSha256": "da1fc5c63706716312252336c681c24d57d7bcee3ea2c7b86e10337b0001dc0b",
+        "responseSha256": "f7754cecc3cf77d6f101a5daa04e5084bc196ef5283149992e1817b6e6082c3f",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "16e2c890aaeb7dc878bd20efd26ebd49e18c2e9d62cc8d5593d8cdd23e47a42f",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-01"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "attestationSha256": "112c823b33b6cd82ab72a7885c297b1084ec074eb3dbe79298594051a06fda05",
+        "failedCriteria": [
+          "tool_calls",
+          "recovery"
+        ],
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "rejected"
+      },
+      "secondary": {
+        "attestationSha256": "2745cb32837cabb64a2da3bfa5ef2830095b4b999d3c6818327e78d9474aa934",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-03"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-tool-error-recovery-05: invalid review summary",
+        "invalidReviewSha256": "5128cec0e6b271f6039a3725439f4f300b68586788ac7921c89cea5a6e45151c",
+        "responseSha256": "f5cb34bfa17bdf6a12e55d4948d42c3a7bfb7ea62e4150ea6f846b8b96586708",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "58d3f74d5c85e10e1486318028fa0bf4e90b03815a49a23ceac810abc050ed1f",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-tool-error-recovery-05"
+    },
+    {
+      "derivedStatus": "pending",
+      "primary": {
+        "error": "planner-smoke-malformed-final-repair-05: invalid review summary",
+        "invalidReviewSha256": "78edff9fae9338b5b1ef7ab6e9598ec41207b95b7cd372685f68c1c856757d71",
+        "responseSha256": "76cd302c644843b4b82db5077365789b293dce7b987ce0f024f0f8367c2c0573",
+        "reviewer": "openrouter:anthropic/claude-sonnet-5",
+        "verdict": "invalid"
+      },
+      "secondary": {
+        "attestationSha256": "0a39dd48a38ac117dcd8b077936c41f5c97774c898b1eb86c81d9340574de4ff",
+        "failedCriteria": [],
+        "reviewer": "openrouter:google/gemini-3.1-pro-preview",
+        "verdict": "approved"
+      },
+      "traceId": "planner-smoke-malformed-final-repair-05"
+    }
+  ]
+}

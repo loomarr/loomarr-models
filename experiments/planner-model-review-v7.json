@@ -1,0 +1,69 @@
+{
+  "bindings": {
+    "budget": {
+      "path": "budgets/external-spend-v1.json"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v3.json",
+      "sha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4"
+    },
+    "corpus": {
+      "path": "corpus/planner-smoke-v1/drafts.jsonl",
+      "sha256": "b18305341c934859a7bda26ccf9013e6e32cfa9e5db9b8787ede58e968d18b92",
+      "traceCount": 50
+    },
+    "corpusManifest": {
+      "path": "corpus/planner-smoke-v1/draft-manifest.json",
+      "sha256": "603b7601b1c7fea8474ecfd8ac98216707c0ebba5835f52d1ed05ceabf03b074"
+    },
+    "denylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "routeSnapshot": {
+      "path": "reviews/planner-smoke-v1/model-review-v1-route-snapshot.json",
+      "sha256": "b8c636118735aa5f782fc8d7b2c65ce778e5945d518c29883c1bc8dda29bce9f"
+    }
+  },
+  "candidateFamily": "qwen",
+  "criteria": [
+    "intent",
+    "tool_calls",
+    "grounding",
+    "recovery",
+    "constraints",
+    "final_proposal"
+  ],
+  "execution": {
+    "apiBaseUrl": "https://openrouter.ai/api/v1",
+    "batchSize": 1,
+    "maxCalls": 100,
+    "maxOutputTokensPerCall": 2000,
+    "maxReservationUsd": "6.00",
+    "noAutomaticRetry": true,
+    "outputDir": ".artifacts/planner-model-review-v7",
+    "requestTimeoutSeconds": 180,
+    "requireCleanGit": true,
+    "settlementAttempts": 60,
+    "settlementDelaySeconds": 1
+  },
+  "issue": "https://github.com/loomarr/loomarr-models/issues/2",
+  "promptVersion": "planner-model-review-v4",
+  "reviewId": "planner-model-review-v7",
+  "reviewers": [
+    {
+      "family": "anthropic",
+      "model": "anthropic/claude-sonnet-5",
+      "providerTag": "anthropic",
+      "role": "primary"
+    },
+    {
+      "family": "google-gemini",
+      "model": "google/gemini-3.1-pro-preview",
+      "providerTag": "google-ai-studio",
+      "role": "secondary"
+    }
+  ],
+  "schemaVersion": 1,
+  "status": "ready-for-review"
+}

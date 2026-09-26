@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788413963-iS47ZSCjhTQkLxw5RA5v","object":"chat.completion","created":1788413963,"model":"google/gemini-3.1-pro-preview","provider":"Google AI Studio","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"STOP","message":{"role":"assistant","content":"{\n  \"reviews\": {\n    \"planner-smoke-keyword-discovery-01\": {\n      \"criteria\": {\n        \"constraints\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"final_proposal\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"grounding\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"intent\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"recovery\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        },\n        \"tool_calls\": {\n          \"evidence\": \"Standard processing applied.\",\n          \"passed\": true\n        }\n      },\n      \"summary\": \"Initial logic and parameters are validated. The final JSON proposal correctly includes the channelName 'Amber Motifs' and a single pick, 'Cobalt Signal 11', which fully satisfies the intent and structure.\",\n      \"verdict\": \"approved\"\n    }\n  },\n  \"schemaVersion\": 1\n}","refusal":null,"reasoning_details":[{"type":"reasoning.text","signature":"EnMKcQERTTIPqu0QLgx//YvURxkbTN+5DgWut8ff4eyf+6SMSXQA4vYlRYxgmgb32XRTMAkB1Jl9Z0WqHzWzaLkdpRi3Eda8RLbFo1f/xIRS/vUZODHzIL5YL4YEetLXOg9XwzGhYFpvpuR2ExeomXuG0tnS","format":"google-gemini-v1","index":0}]}}],"usage":{"prompt_tokens":3616,"completion_tokens":259,"total_tokens":3875,"cost":0.01034,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01034,"upstream_inference_prompt_cost":0.007232,"upstream_inference_completions_cost":0.003108},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

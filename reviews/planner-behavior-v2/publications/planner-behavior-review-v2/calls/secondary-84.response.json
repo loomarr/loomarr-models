@@ -1,0 +1,23 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443482-uK3OLitOeMGwByc7frpb","object":"chat.completion","created":1788443482,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-05\":{\"criteria\":{\"constraints\":{\"evidence\":\"The genre constraint 'Mystery' is preserved in the policy block: `\\\"policy\\\":{\\\"genres\\\":{\\\"include\\\":[\\\"Mystery\\\"]}}` and the alternate catalog_search call used `{\\\"genres\\\":[\\\"Mystery\\\"]}` as its argument, maintaining the must-include genre throughout recovery.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal includes channelName 'Ember Recovery', a pick with tmdbId 920085 matching the tool result, mediaType 'movie', and confidence 0.91. All fields are grounded in the second catalog_search result and the schema appears valid.\",\"passed\":true},\"grounding\":{\"evidence\":\"The single pick tmdbId 920085 with name 'Ember Horizon Fixture 085' is directly returned in the second tool result: `{\\\"tmdbId\\\":920085,\\\"name\\\":\\\"Ember Horizon Fixture 085\\\",\\\"genres\\\":[\\\"Mystery\\\"],\\\"inLibrary\\\":true,...}`. No ungrounded claims are made.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent is to build a mystery channel around Ember Horizon Fixture 085 and recover from a fixture timeout. The trace shows an initial search for the specific fixture, a timeout error, a recovery search by genre, and a final proposal naming 'Ember Recovery' based on the recovered fixture.\",\"passed\":true},\"recovery\":{\"evidence\":\"The first call `catalog_search({\\\"query\\\":\\\"Ember Horizon Fixture 085\\\"})` returned `{\\\"candidates\\\":[],'error':'synthetic fixture timeout'}`. The assistant correctly retried with a genre-based search `catalog_search({\\\"genres\\\":[\\\"Mystery\\\"]})` which succeeded, demonstrating proper error recovery behavior.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two tool calls: (1) `catalog_search({\\\"query\\\":\\\"Ember Horizon Fixture 085\\\"})` id behavior-85-1 — direct search for the requested fixture; (2) `catalog_search({\\\"genres\\\":[\\\"Mystery\\\"]})` id behavior-85-2 — recovery search after timeout. Both calls use valid arguments matching the catalog-search-v3 schema and are necessary given the error on the first call.\",\"passed\":true}},\"summary\":\"All six criteria pass. The trace cleanly demonstrates synthetic-tool-error-recovery behavior: the initial direct search times out, the assistant correctly recovers with a genre-based fallback search, and the final proposal is fully grounded in the recovered tool result with valid schema, correct genre constraints, and honest confidence value of 0.91.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2219,"completion_tokens":627,"total_tokens":2846,"cost":0.016062,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.016062,"upstream_inference_prompt_cost":0.006657,"upstream_inference_completions_cost":0.009405},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

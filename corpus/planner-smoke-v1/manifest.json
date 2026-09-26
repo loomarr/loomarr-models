@@ -1,0 +1,46 @@
+{
+  "contractPath": "contracts/planner-contract-v3.json",
+  "contractSha256": "27a93b22bb45941839fe8dc57bda49445231da55a15b7fb73656be5ea88fbcb4",
+  "corpusId": "planner-smoke-v1",
+  "denylistPath": "contracts/holdout-denylist-v1.json",
+  "denylistSha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de",
+  "draftManifestPath": "corpus/planner-smoke-v1/draft-manifest.json",
+  "draftManifestSha256": "6d0f14f3c6ba9f7f1ca94fc3cc29985dd0a70fe34f62a7fc50bbe0e03793e03e",
+  "draftPath": "corpus/planner-smoke-v1/drafts.jsonl",
+  "draftSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b",
+  "environmentPath": "environments/qwen38-a40-v1.json",
+  "environmentSha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248",
+  "familyCounts": {
+    "ambiguous-intent": 5,
+    "conflicting-intent": 5,
+    "empty-results": 5,
+    "genre-discovery": 5,
+    "keyword-discovery": 5,
+    "malformed-final-repair": 5,
+    "must-exclude": 5,
+    "must-include": 5,
+    "title-search": 5,
+    "tool-error-recovery": 5
+  },
+  "finalizerPath": "scripts/finalize_planner_smoke.py",
+  "finalizerSha256": "b32abbd096cbbd6af0074a2374834c6e8971783646a5ebd6c9a1d36c11c85e9d",
+  "generatorPath": "scripts/build_planner_smoke_drafts.py",
+  "generatorSha256": "fc89f8371801e91dd41643c76323eca4f57ca4ced0b442c1e1ccd98ffd794053",
+  "primaryReviewers": [
+    "openrouter:google/gemini-3.1-pro-preview"
+  ],
+  "reviewContract": "planner-smoke-review-decision-v1",
+  "reviewDecisionsPath": "reviews/planner-smoke-v1.jsonl",
+  "reviewDecisionsSha256": "b108c21dbfce22efee5fd906e8acf848375d1b25c97c8310352e1c8c4e7045d0",
+  "reviewValidatorPath": "src/loomarr_models/review.py",
+  "reviewValidatorSha256": "8daef0b0e80ebe9a09a955ac28e8e74581d0d247355c58abb8b50fad4bc902cd",
+  "schemaVersion": 1,
+  "secondaryReviewCount": 50,
+  "secondaryReviewers": [
+    "openrouter:openai/gpt-5.4"
+  ],
+  "status": "reviewed-frozen",
+  "traceCount": 50,
+  "tracesPath": "corpus/planner-smoke-v1/traces.jsonl",
+  "tracesSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+}

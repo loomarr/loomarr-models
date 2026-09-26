@@ -1,0 +1,14 @@
+{
+  "batchIndex": 3,
+  "contentError": "planner-smoke-title-search-04: verdict does not match criterion decisions",
+  "requestSha256": "72320d04b23e6936f5328d220497ba983e84cfe5e1efa3c39e2337da545fc839",
+  "responseSha256": "3387e866a2a0fc87360903410222781608daf63b15ba1947962dbf0e5a40adfd",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.02396",
+  "settlementSha256": "ec24174d755e338dfab69f4fe41eb2dad4e0b42222acf1f3658b60d74925d542",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-title-search-04"
+  ]
+}

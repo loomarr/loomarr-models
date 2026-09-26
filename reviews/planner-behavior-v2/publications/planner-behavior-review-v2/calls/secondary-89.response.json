@@ -1,0 +1,21 @@
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+
+         
+{"id":"gen-1788443697-O0VU0oA5Q6YAHYU0ATBi","object":"chat.completion","created":1788443697,"model":"anthropic/claude-sonnet-4.6","provider":"Anthropic","system_fingerprint":null,"service_tier":"default","choices":[{"index":0,"logprobs":null,"finish_reason":"stop","native_finish_reason":"end_turn","message":{"role":"assistant","content":"{\"reviews\":{\"planner-behavior-v2-synthetic-tool-error-recovery-10\":{\"criteria\":{\"constraints\":{\"evidence\":\"The genre constraint 'Mystery' is preserved throughout: the recovery search uses genres:[\\\"Mystery\\\"], the returned candidate carries genres:[\\\"Mystery\\\"], and the final proposal policy reflects genres.include:[\\\"Mystery\\\"]. No must-exclude or audience/era constraints were specified, and none were violated.\",\"passed\":true},\"final_proposal\":{\"evidence\":\"The final proposal is well-formed JSON with channelName 'Ember Recovery', rationale citing the recovery, a single pick with tmdbId 920090 matching the tool result, mediaType 'series', name 'Ember Junction Fixture 090', and confidence 0.91 — an honest, non-inflated value for a single grounded synthetic fixture.\",\"passed\":true},\"grounding\":{\"evidence\":\"The pick tmdbId 920090 and name 'Ember Junction Fixture 090' match exactly the candidate returned in tool result for toolCallId behavior-90-2. The rationale references the alternate search recovery and the grounded synthetic fixture result, with no invented titles or IDs outside the tool result.\",\"passed\":true},\"intent\":{\"evidence\":\"The intent 'Build a synthetic mystery channel around Ember Junction Fixture 090 and recover from the fixture timeout' is fully represented: the trace attempts a direct search for Ember Junction Fixture 090, encounters a synthetic fixture timeout, recovers via a genre-based Mystery search, and builds the channel from the recovered fixture.\",\"passed\":true},\"recovery\":{\"evidence\":\"After the first catalog_search (id behavior-90-1) returns an error 'synthetic fixture timeout' with empty candidates, the assistant correctly retries with a genre-based fallback search using genres:[\\\"Mystery\\\"] (id behavior-90-2), successfully retrieves the fixture, and proceeds to finalize the channel — demonstrating correct error recovery without halting or fabricating results.\",\"passed\":true},\"tool_calls\":{\"evidence\":\"Two catalog_search calls are made: the first with query 'Ember Junction Fixture 090' (appropriate initial lookup), and the second with genres:[\\\"Mystery\\\"] as a recovery fallback after timeout. Both argument structures conform to the catalog-search-v3 schema. No redundant or contract-violating calls are present.\",\"passed\":true}},\"summary\":\"The trace correctly models synthetic tool error recovery: an initial direct search times out, a genre-based fallback recovers the target fixture (tmdbId 920090, Ember Junction Fixture 090), and the final proposal is grounded, schema-valid, and uses a reasonable confidence of 0.91. All six criteria pass.\",\"verdict\":\"approved\"}},\"schemaVersion\":1}","refusal":null}}],"usage":{"prompt_tokens":2215,"completion_tokens":619,"total_tokens":2834,"cost":0.01593,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0,"cache_write_tokens":0,"audio_tokens":0,"video_tokens":0},"cost_details":{"upstream_inference_cost":0.01593,"upstream_inference_prompt_cost":0.006645,"upstream_inference_completions_cost":0.009285},"completion_tokens_details":{"reasoning_tokens":0,"image_tokens":0,"audio_tokens":0}}}

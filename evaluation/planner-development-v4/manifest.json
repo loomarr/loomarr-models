@@ -1,0 +1,82 @@
+{
+  "behaviorCounts": {
+    "ambiguous-intent-mapping": 10,
+    "canonical-argument-preservation": 10,
+    "cast-routing": 10,
+    "combined-person-routing": 10,
+    "complete-proposal-json": 10,
+    "creator-routing": 10,
+    "network-country-routing": 10,
+    "network-routing": 10,
+    "one-tool-operation-per-turn": 10,
+    "series-person-evidence-routing": 10,
+    "structured-json-abstention": 10,
+    "synthetic-tool-error-recovery": 10
+  },
+  "bindings": {
+    "contract": {
+      "path": "contracts/planner-contract-v4.json",
+      "sha256": "53708f6cc2281a2c67c34ab6fdd698d3455e55ec1fcf75bc5565b2d6538329d7"
+    },
+    "corpusValidator": {
+      "path": "src/loomarr_models/validator.py",
+      "sha256": "6de20a3d717f41b29ea12622ba8a3fef4731eaa55ba3e78acdd33b38a524a508"
+    },
+    "developmentExposure": {
+      "path": "reviews/planner-v4-local-screen/development-exposure.json",
+      "sha256": "0cf1a18877812fa7ed99e4a130b74332d92ce970f15e3854b64c4628196c2611"
+    },
+    "foundationalGenerator": {
+      "path": "scripts/build_planner_behavior_corpus.py",
+      "sha256": "9dd36bdf6ac7d3836e32b786392304787ce8302b2de9a72f4de5aaaaa4dac277"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/holdout-denylist-v1.json",
+      "sha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de"
+    },
+    "planner-behavior-development-v2": {
+      "path": "evaluation/planner-behavior-development-v2/cases.jsonl",
+      "sha256": "fb19936e473c0e4dcdce7e913868bf4e677707961f94b20cfbd3675cc02e7115"
+    },
+    "planner-behavior-v2": {
+      "path": "corpus/planner-behavior-v2/traces.jsonl",
+      "sha256": "857c3c0b6b6d00e395555d14f3556c8c37d66e99a9343c38e25416b461d8ef57"
+    },
+    "planner-development-v1": {
+      "path": "evaluation/planner-development-v1/cases.jsonl",
+      "sha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209"
+    },
+    "planner-smoke-v1": {
+      "path": "corpus/planner-smoke-v1/traces.jsonl",
+      "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+    },
+    "reviewDecisions": {
+      "count": 60,
+      "path": "reviews/planner-v4-delta.jsonl",
+      "sha256": "c0b104a378c3e6b19083f66bbbafb576d67d340c3f011ecea9fe28165ca48c10"
+    },
+    "reviewValidator": {
+      "path": "src/loomarr_models/v4_review.py",
+      "sha256": "74cd4c0e48c7995a525c232d626754555bad67c211e4e35e18ddfa04911eeb43"
+    },
+    "v4Validator": {
+      "path": "src/loomarr_models/planner_v4.py",
+      "sha256": "f6cc98528fe88d2ca9cca0401e7c342ff7ea784e85faf0921573aa90773cfb4a"
+    }
+  },
+  "caseCount": 120,
+  "casesPath": "evaluation/planner-development-v4/cases.jsonl",
+  "casesSha256": "ae687cb6298bd248f5e5b857aab60076484f7b502ff556d645bf0bfbf1e64f34",
+  "contractId": "loomarr-planner-contract-v4",
+  "contractSourceRevision": "6ab634855d69ba322d54f61b489f6ddc94e5bc52",
+  "corpusId": "planner-development-v4",
+  "disjointnessReportPath": "reports/planner-v4-disjointness.json",
+  "disjointnessReportSha256": "adf3da5a54c86aaca2bcfa501a90ce2232e67bc93c5e4975c27c08061c5402ac",
+  "fixtureId": "planner-v4-development-catalog-v1",
+  "generator": "planner-v4-development-generator-v1",
+  "generatorSha256": "82caadcf45a8737c297e7bcebf66313ac6f8e2a784d8c207a9bd76b6c29fc055",
+  "schemaVersion": 1,
+  "status": "frozen-development-only-local-screen-exposed",
+  "trainingDraftsPath": "corpus/planner-v4-delta/drafts.jsonl",
+  "trainingDraftsSha256": "58b408e641133e8b941fd12981f577aca40d620458101d4f181c010c553241f2"
+}

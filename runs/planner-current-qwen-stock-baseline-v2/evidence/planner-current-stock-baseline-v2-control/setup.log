@@ -1,0 +1,432 @@
+Cloning into '/workspace/loomarr-models'...
+Updating files:  73% (33/45)Updating files:  75% (34/45)Updating files:  77% (35/45)Updating files:  80% (36/45)Updating files:  82% (37/45)Updating files:  84% (38/45)Updating files:  86% (39/45)Updating files:  88% (40/45)Updating files:  91% (41/45)Updating files:  93% (42/45)Updating files:  95% (43/45)Updating files:  97% (44/45)Updating files: 100% (45/45)Updating files: 100% (45/45), done.
+HEAD is now at 3faa65d chore(planner): bind authorized A40 launch plan
+Collecting uv==0.12.9
+  Downloading uv-0.12.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Downloading uv-0.12.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.1/20.1 MB 39.2 MB/s eta 0:00:00
+Installing collected packages: uv
+Successfully installed uv-0.12.9
+make: Entering directory '/workspace/loomarr-models'
+uv pip sync --torch-backend cu128 --require-hashes environments/qwen38-a40-v1.requirements.lock
+Using Python 3.12.3 environment at: /opt/loomarr-qwen38-current
+Resolved 104 packages in 2.69s
+Downloading torchao (3.0MiB)
+Downloading xformers (111.8MiB)
+Downloading scipy (33.7MiB)
+Downloading numpy (15.9MiB)
+Downloading pyarrow (47.8MiB)
+Downloading bitsandbytes (41.1MiB)
+Downloading pygments (1.2MiB)
+Downloading sentencepiece (1.3MiB)
+Downloading sympy (6.0MiB)
+Downloading aiohttp (1.7MiB)
+Downloading pydantic-core (2.0MiB)
+Downloading hf-transfer (3.4MiB)
+Downloading diffusers (5.6MiB)
+Downloading nvidia-cufile-cu12 (1.1MiB)
+Downloading tokenizers (3.1MiB)
+Downloading networkx (2.0MiB)
+Downloading scikit-learn (8.7MiB)
+Downloading hf-xet (4.3MiB)
+Downloading pillow (6.6MiB)
+Downloading nvidia-cublas-cu12 (566.8MiB)
+Downloading triton (148.4MiB)
+Downloading torchvision (8.2MiB)
+Downloading nvidia-cusparselt-cu12 (273.9MiB)
+Downloading nvidia-nccl-cu12 (307.4MiB)
+Downloading torch (847.9MiB)
+Downloading pandas (10.5MiB)
+Downloading nvidia-cuda-cupti-cu12 (9.8MiB)
+Downloading nvidia-cudnn-cu12 (674.0MiB)
+Downloading transformers (11.2MiB)
+Downloading unsloth (78.5MiB)
+Downloading nvidia-cufft-cu12 (184.2MiB)
+Downloading unsloth-zoo (1.4MiB)
+Downloading nvidia-cusparse-cu12 (274.9MiB)
+Downloading nvidia-curand-cu12 (60.7MiB)
+Downloading nvidia-cusolver-cu12 (255.1MiB)
+Downloading nvidia-cuda-nvrtc-cu12 (84.0MiB)
+Downloading nvidia-nvjitlink-cu12 (37.4MiB)
+ Downloaded nvidia-cufile-cu12
+ Downloaded sentencepiece
+ Downloaded aiohttp
+ Downloaded unsloth-zoo
+ Downloaded pydantic-core
+ Downloaded torchvision
+ Downloaded pygments
+ Downloaded tokenizers
+ Downloaded hf-transfer
+ Downloaded torchao
+ Downloaded networkx
+ Downloaded hf-xet
+ Downloaded xformers
+ Downloaded pillow
+ Downloaded diffusers
+ Downloaded triton
+ Downloaded scikit-learn
+ Downloaded nvidia-cuda-cupti-cu12
+ Downloaded sympy
+ Downloaded numpy
+ Downloaded nvidia-nvjitlink-cu12
+ Downloaded bitsandbytes
+ Downloaded scipy
+ Downloaded pandas
+ Downloaded nvidia-curand-cu12
+ Downloaded nvidia-cuda-nvrtc-cu12
+ Downloaded transformers
+ Downloaded nvidia-cufft-cu12
+ Downloaded pyarrow
+ Downloaded nvidia-cusolver-cu12
+ Downloaded nvidia-cusparse-cu12
+ Downloaded nvidia-cusparselt-cu12
+ Downloaded nvidia-nccl-cu12
+ Downloaded nvidia-cublas-cu12
+ Downloaded nvidia-cudnn-cu12
+ Downloaded unsloth
+ Downloaded torch
+Prepared 104 packages in 1m 40s
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 104 packages in 47.17s
+ + accelerate==1.14.0
+ + aiohappyeyeballs==2.7.1
+ + aiohttp==3.14.3
+ + aiosignal==1.4.0
+ + annotated-doc==0.0.5
+ + annotated-types==0.8.0
+ + anyio==4.15.0
+ + attrs==26.1.0
+ + bitsandbytes==0.50.2
+ + certifi==2026.7.22
+ + charset-normalizer==3.5.1
+ + click==8.5.0
+ + cloudpickle==3.1.2
+ + cut-cross-entropy==25.1.1
+ + datasets==4.3.0
+ + diffusers==0.40.0
+ + dill==0.4.0
+ + docstring-parser==0.18.0
+ + filelock==3.32.5
+ + frozenlist==1.8.0
+ + fsspec==2025.9.0
+ + h11==0.16.0
+ + hf-transfer==0.1.9
+ + hf-xet==1.6.0
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + huggingface-hub==1.29.0
+ + idna==3.19
+ + importlib-metadata==9.0.1
+ + jinja2==3.1.6
+ + joblib==1.6.0
+ + markdown-it-py==4.2.0
+ + markupsafe==3.0.3
+ + mdurl==0.1.2
+ + mpmath==1.3.0
+ + msgspec==0.21.1
+ + multidict==6.7.1
+ + multiprocess==0.70.16
+ + narwhals==2.25.0
+ + nest-asyncio==1.6.0
+ + networkx==3.6.1
+ + numpy==2.5.2
+ + nvidia-cublas-cu12==12.8.4.1
+ + nvidia-cuda-cupti-cu12==12.8.90
+ + nvidia-cuda-nvrtc-cu12==12.8.93
+ + nvidia-cuda-runtime-cu12==12.8.90
+ + nvidia-cudnn-cu12==9.10.2.21
+ + nvidia-cufft-cu12==11.3.3.83
+ + nvidia-cufile-cu12==1.13.1.3
+ + nvidia-curand-cu12==10.3.9.90
+ + nvidia-cusolver-cu12==11.7.3.90
+ + nvidia-cusparse-cu12==12.5.8.93
+ + nvidia-cusparselt-cu12==0.7.1
+ + nvidia-nccl-cu12==2.27.3
+ + nvidia-nvjitlink-cu12==12.8.93
+ + nvidia-nvtx-cu12==12.8.90
+ + packaging==26.3
+ + pandas==3.0.5
+ + peft==0.18.0
+ + pillow==12.3.0
+ + propcache==0.5.2
+ + protobuf==7.36.1
+ + psutil==7.2.2
+ + pyarrow==25.0.1
+ + pydantic==2.13.5
+ + pydantic-core==2.46.5
+ + pygments==2.21.0
+ + python-dateutil==2.9.0.post0
+ + pyyaml==6.0.3
+ + regex==2026.9.3
+ + requests==2.34.2
+ + rich==15.0.0
+ + safetensors==0.8.0
+ + scikit-learn==1.9.0
+ + scipy==1.18.1
+ + sentence-transformers==6.0.1
+ + sentencepiece==0.2.2
+ + setuptools==84.0.0
+ + shellingham==1.5.4
+ + six==1.17.0
+ + structlog==26.1.0
+ + sympy==1.14.0
+ + threadpoolctl==3.6.0
+ + tokenizers==0.22.2
+ + torch==2.8.0+cu128
+ + torchao==0.17.0+cu128
+ + torchvision==0.23.0+cu128
+ + tqdm==4.70.0
+ + transformers==5.15.1
+ + triton==3.4.0
+ + trl==0.22.2
+ + typeguard==4.6.0
+ + typer==0.27.2
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + tyro==1.0.16
+ + unsloth==2026.9.2
+ + unsloth-zoo==2026.9.1
+ + urllib3==2.7.0
+ + wheel==0.48.0
+ + xformers==0.0.32.post2
+ + xxhash==4.0.1
+ + yarl==1.24.5
+ + zipp==4.1.0
+make: Leaving directory '/workspace/loomarr-models'
+make: Entering directory '/workspace/loomarr-models'
+python3 -m compileall -q scripts src tests
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+test_corrected_packet_supplies_the_missing_authoritative_semantics (test_behavior_review_preflight.BehaviorReviewPreflightTests.test_corrected_packet_supplies_the_missing_authoritative_semantics) ... ok
+test_exact_compact_plan_fits_reservation_without_authorizing_inference (test_behavior_review_preflight.BehaviorReviewPreflightTests.test_exact_compact_plan_fits_reservation_without_authorizing_inference) ... ok
+test_multi_trace_batch_stays_disabled_without_exact_compile_proof (test_behavior_review_preflight.BehaviorReviewPreflightTests.test_multi_trace_batch_stays_disabled_without_exact_compile_proof) ... ok
+test_packet_is_compact_but_preserves_every_audited_turn_and_strict_route (test_behavior_review_preflight.BehaviorReviewPreflightTests.test_packet_is_compact_but_preserves_every_audited_turn_and_strict_route) ... ok
+test_route_price_and_budget_drift_fail_closed (test_behavior_review_preflight.BehaviorReviewPreflightTests.test_route_price_and_budget_drift_fail_closed) ... ok
+test_budget_settlement_is_exact_and_refuses_drift_or_overflow (test_behavior_review_publication.BehaviorReviewPublicationTests.test_budget_settlement_is_exact_and_refuses_drift_or_overflow) ... ok
+test_derives_exactly_120_unanimous_decisions (test_behavior_review_publication.BehaviorReviewPublicationTests.test_derives_exactly_120_unanimous_decisions) ... ok
+test_freeze_uses_the_unanimous_v3_publication (test_behavior_review_publication.BehaviorReviewPublicationTests.test_freeze_uses_the_unanimous_v3_publication) ... ok
+test_invalid_or_disputed_observation_stays_pending (test_behavior_review_publication.BehaviorReviewPublicationTests.test_invalid_or_disputed_observation_stays_pending) ... ok
+test_published_disagreement_is_hash_bound_settled_and_terminal (test_behavior_review_publication.BehaviorReviewPublicationTests.test_published_disagreement_is_hash_bound_settled_and_terminal) ... ok
+test_only_disabled_v3_config_can_refresh (test_behavior_review_route_refresh.CorrectedRouteRefreshTests.test_only_disabled_v3_config_can_refresh) ... ok
+test_reconstructs_exact_snapshot_without_inference (test_behavior_review_route_refresh.CorrectedRouteRefreshTests.test_reconstructs_exact_snapshot_without_inference) ... ok
+test_refuses_unhealthy_or_parameter_incomplete_route (test_behavior_review_route_refresh.CorrectedRouteRefreshTests.test_refuses_unhealthy_or_parameter_incomplete_route) ... ok
+test_corrected_plan_is_full_independent_and_disabled (test_behavior_review_runner.BehaviorReviewRunnerTests.test_corrected_plan_is_full_independent_and_disabled) ... ok
+test_execution_and_binding_drift_fail_closed (test_behavior_review_runner.BehaviorReviewRunnerTests.test_execution_and_binding_drift_fail_closed) ... ok
+test_reconstructs_the_exact_committed_runtime_requests (test_behavior_review_runner.BehaviorReviewRunnerTests.test_reconstructs_the_exact_committed_runtime_requests) ... ok
+test_terminal_execution_refuses_before_key_or_network (test_behavior_review_runner.BehaviorReviewRunnerTests.test_terminal_execution_refuses_before_key_or_network) ... ok
+test_plan_is_hash_bound_no_spend_and_inside_the_aggregate_cap (test_behavior_review_v3.CorrectedBehaviorReviewTests.test_plan_is_hash_bound_no_spend_and_inside_the_aggregate_cap) ... ok
+test_canonical_ledger_matches_provider_reconciliation (test_budget_reconciliation.BudgetReconciliationContractTests.test_canonical_ledger_matches_provider_reconciliation) ... ok
+test_reconciliation_artifact_is_internally_consistent (test_budget_reconciliation.BudgetReconciliationContractTests.test_reconciliation_artifact_is_internally_consistent) ... ok
+test_rejects_historical_publication_digest_drift (test_budget_reconciliation.BudgetReconciliationContractTests.test_rejects_historical_publication_digest_drift) ... ok
+test_rejects_provider_total_outside_display_rounding_tolerance (test_budget_reconciliation.BudgetReconciliationContractTests.test_rejects_provider_total_outside_display_rounding_tolerance) ... ok
+test_rejects_remaining_authorization_drift (test_budget_reconciliation.BudgetReconciliationContractTests.test_rejects_remaining_authorization_drift) ... ok
+test_contract_and_hash_only_denylist_bind_the_same_source_revision (test_current_contract.CurrentContractTests.test_contract_and_hash_only_denylist_bind_the_same_source_revision) ... ok
+test_current_artifacts_cover_every_capability_and_validate (test_current_contract.CurrentContractTests.test_current_artifacts_cover_every_capability_and_validate) ... ok
+test_denylist_rejects_a_protected_application_value (test_current_contract.CurrentContractTests.test_denylist_rejects_a_protected_application_value) ... ok
+test_historical_artifacts_are_machine_excluded (test_current_contract.CurrentContractTests.test_historical_artifacts_are_machine_excluded) ... ok
+test_manifests_bind_artifacts_and_holdout_hashes (test_current_contract.CurrentContractTests.test_manifests_bind_artifacts_and_holdout_hashes) ... ok
+test_missing_date_meaning_and_obsolete_or_ungrounded_finals_fail_closed (test_current_contract.CurrentContractTests.test_missing_date_meaning_and_obsolete_or_ungrounded_finals_fail_closed) ... ok
+test_normalized_semantic_overlap_fails_even_with_new_ids_and_keys (test_current_contract.CurrentContractTests.test_normalized_semantic_overlap_fails_even_with_new_ids_and_keys) ... ok
+test_recovery_requires_an_injected_observed_fault (test_current_contract.CurrentContractTests.test_recovery_requires_an_injected_observed_fault) ... ok
+test_synthetic_evidence_encodes_the_behavior_instead_of_only_the_shape (test_current_contract.CurrentContractTests.test_synthetic_evidence_encodes_the_behavior_instead_of_only_the_shape) ... ok
+test_complete_independent_review_builds_immutable_unauthorized_corpus (test_current_review.CurrentReviewTests.test_complete_independent_review_builds_immutable_unauthorized_corpus) ... ok
+test_rejection_is_valid_evidence_but_blocks_promotion (test_current_review.CurrentReviewTests.test_rejection_is_valid_evidence_but_blocks_promotion) ... ok
+test_review_evidence_fails_closed (test_current_review.CurrentReviewTests.test_review_evidence_fails_closed) ... ok
+test_review_is_exact_and_pending_decision_cannot_promote (test_current_review.CurrentReviewTests.test_review_is_exact_and_pending_decision_cannot_promote) ... ok
+test_incorrect_tool_operation_is_a_hard_failure (test_current_stock_baseline.CurrentStockBaselineTests.test_incorrect_tool_operation_is_a_hard_failure) ... ok
+test_oracle_clears_all_current_capabilities (test_current_stock_baseline.CurrentStockBaselineTests.test_oracle_clears_all_current_capabilities) ... ok
+test_preflight_reconstructs_exact_authorized_plan (test_current_stock_baseline.CurrentStockBaselineTests.test_preflight_reconstructs_exact_authorized_plan) ... ok
+test_preflight_rejects_binding_budget_and_heavy_import_drift (test_current_stock_baseline.CurrentStockBaselineTests.test_preflight_rejects_binding_budget_and_heavy_import_drift) ... ok
+test_quality_miss_can_justify_but_never_authorize_training (test_current_stock_baseline.CurrentStockBaselineTests.test_quality_miss_can_justify_but_never_authorize_training) ... ok
+test_unsupported_key_and_recovery_without_observed_fault_fail (test_current_stock_baseline.CurrentStockBaselineTests.test_unsupported_key_and_recovery_without_observed_fault_fail) ... ok
+test_provider_evidence_is_bounded_by_authorized_reservation (test_current_stock_publication.CurrentStockPublicationTests.test_provider_evidence_is_bounded_by_authorized_reservation) ... ok
+test_replays_hash_bound_redacted_publication (test_current_stock_publication.CurrentStockPublicationTests.test_replays_hash_bound_redacted_publication) ... ok
+test_settlement_posts_exact_cost_without_consuming_a_reservation (test_current_stock_publication.CurrentStockPublicationTests.test_settlement_posts_exact_cost_without_consuming_a_reservation) ... ok
+test_accepts_exact_clean_fifty_case_comparison_without_heavy_imports (test_eval_experiment.EvalExperimentTests.test_accepts_exact_clean_fifty_case_comparison_without_heavy_imports) ... ok
+test_current_repository_config_refuses_completed_experiment (test_eval_experiment.EvalExperimentTests.test_current_repository_config_refuses_completed_experiment) ... ok
+test_refuses_adapter_source_drift (test_eval_experiment.EvalExperimentTests.test_refuses_adapter_source_drift) ... ok
+test_refuses_bound_digest_drift (test_eval_experiment.EvalExperimentTests.test_refuses_bound_digest_drift) ... ok
+test_refuses_generator_drift_even_when_frozen_cases_are_unchanged (test_eval_experiment.EvalExperimentTests.test_refuses_generator_drift_even_when_frozen_cases_are_unchanged) ... ok
+test_refuses_heavy_module_loaded_before_preflight_completion (test_eval_experiment.EvalExperimentTests.test_refuses_heavy_module_loaded_before_preflight_completion) ... ok
+test_refuses_missing_or_mismatched_adapter (test_eval_experiment.EvalExperimentTests.test_refuses_missing_or_mismatched_adapter) ... ok
+test_refuses_model_revision_drift (test_eval_experiment.EvalExperimentTests.test_refuses_model_revision_drift) ... ok
+test_refuses_protocol_status_or_budget_drift (test_eval_experiment.EvalExperimentTests.test_refuses_protocol_status_or_budget_drift) ... ok
+test_refuses_unconsumed_captured_generation (test_eval_replay.EvalReplayTests.test_refuses_unconsumed_captured_generation) ... ok
+test_replays_captured_reasoning_prefix_and_preserves_measured_latency (test_eval_replay.EvalReplayTests.test_replays_captured_reasoning_prefix_and_preserves_measured_latency) ... ok
+test_adapter_advances_only_with_margin_target_gain_and_thresholds (test_eval_runner.EvalRunnerTests.test_adapter_advances_only_with_margin_target_gain_and_thresholds) ... ok
+test_hard_regression_or_no_target_gain_rejects_adapter (test_eval_runner.EvalRunnerTests.test_hard_regression_or_no_target_gain_rejects_adapter) ... ok
+test_oracle_clears_every_metric_on_all_fifty_cases (test_eval_runner.EvalRunnerTests.test_oracle_clears_every_metric_on_all_fifty_cases) ... ok
+test_refuses_asymmetric_candidate_counts (test_eval_runner.EvalRunnerTests.test_refuses_asymmetric_candidate_counts) ... ok
+test_repair_cases_receive_frozen_feedback_before_final_generation (test_eval_runner.EvalRunnerTests.test_repair_cases_receive_frozen_feedback_before_final_generation) ... ok
+test_unexpected_or_invalid_tool_arguments_fail_closed (test_eval_runner.EvalRunnerTests.test_unexpected_or_invalid_tool_arguments_fail_closed) ... ok
+test_unsupported_id_is_a_hard_failure (test_eval_runner.EvalRunnerTests.test_unsupported_id_is_a_hard_failure) ... ok
+test_compile_is_disabled_before_unsloth_import (test_eval_runtime.EvalRuntimeTests.test_compile_is_disabled_before_unsloth_import) ... ok
+test_converts_tool_messages_for_the_pinned_chat_template (test_eval_runtime.EvalRuntimeTests.test_converts_tool_messages_for_the_pinned_chat_template) ... ok
+test_malformed_tool_markup_remains_content_and_fails_later_schema_checks (test_eval_runtime.EvalRuntimeTests.test_malformed_tool_markup_remains_content_and_fails_later_schema_checks) ... ok
+test_model_load_keeps_embeddings_on_gpu_for_pinned_a40 (test_eval_runtime.EvalRuntimeTests.test_model_load_keeps_embeddings_on_gpu_for_pinned_a40) ... ok
+test_multimodal_processor_receives_rendered_prompt_as_text_keyword (test_eval_runtime.EvalRuntimeTests.test_multimodal_processor_receives_rendered_prompt_as_text_keyword) ... ok
+test_parses_qwen_xml_tool_call_and_reasoning_prefix (test_eval_runtime.EvalRuntimeTests.test_parses_qwen_xml_tool_call_and_reasoning_prefix) ... ok
+test_strips_reasoning_when_decoding_removed_the_opening_marker (test_eval_runtime.EvalRuntimeTests.test_strips_reasoning_when_decoding_removed_the_opening_marker) ... ok
+test_unsloth_import_precedes_torch_and_peft (test_eval_runtime.EvalRuntimeTests.test_unsloth_import_precedes_torch_and_peft) ... ok
+test_current_corpus_is_fifty_balanced_disjoint_cases (test_evaluation_corpus.EvaluationCorpusTests.test_current_corpus_is_fifty_balanced_disjoint_cases) ... ok
+test_manifest_binds_every_input_and_scoring_rule (test_evaluation_corpus.EvaluationCorpusTests.test_manifest_binds_every_input_and_scoring_rule) ... ok
+test_rejects_holdout_secret_and_private_path_leakage (test_evaluation_corpus.EvaluationCorpusTests.test_rejects_holdout_secret_and_private_path_leakage) ... ok
+test_rejects_training_intent_or_candidate_overlap (test_evaluation_corpus.EvaluationCorpusTests.test_rejects_training_intent_or_candidate_overlap) ... ok
+test_rejects_unbalanced_or_duplicate_cases (test_evaluation_corpus.EvaluationCorpusTests.test_rejects_unbalanced_or_duplicate_cases) ... ok
+test_rejects_unscripted_expected_id_or_contract_drift (test_evaluation_corpus.EvaluationCorpusTests.test_rejects_unscripted_expected_id_or_contract_drift) ... ok
+test_accepts_exact_approved_single_run_without_heavy_imports (test_experiment.ExperimentPreflightTests.test_accepts_exact_approved_single_run_without_heavy_imports) ... ok
+test_current_repository_config_refuses_completed_experiment (test_experiment.ExperimentPreflightTests.test_current_repository_config_refuses_completed_experiment) ... ok
+test_git_probe_refuses_dirty_or_untracked_runner_input (test_experiment.ExperimentPreflightTests.test_git_probe_refuses_dirty_or_untracked_runner_input) ... ok
+test_refuses_aggregate_budget_overflow (test_experiment.ExperimentPreflightTests.test_refuses_aggregate_budget_overflow) ... ok
+test_refuses_blocked_experiment_after_review (test_experiment.ExperimentPreflightTests.test_refuses_blocked_experiment_after_review) ... ok
+test_refuses_bound_artifact_digest_drift (test_experiment.ExperimentPreflightTests.test_refuses_bound_artifact_digest_drift) ... ok
+test_refuses_heavyweight_module_loaded_before_completion (test_experiment.ExperimentPreflightTests.test_refuses_heavyweight_module_loaded_before_completion) ... ok
+test_refuses_model_revision_drift (test_experiment.ExperimentPreflightTests.test_refuses_model_revision_drift) ... ok
+test_refuses_more_than_one_training_configuration (test_experiment.ExperimentPreflightTests.test_refuses_more_than_one_training_configuration) ... ok
+test_refuses_output_path_escape (test_experiment.ExperimentPreflightTests.test_refuses_output_path_escape) ... ok
+test_refuses_pending_trace (test_experiment.ExperimentPreflightTests.test_refuses_pending_trace) ... ok
+test_analysis_authorizes_no_training_or_release_action (test_failure_analysis.FailureAnalysisTests.test_analysis_authorizes_no_training_or_release_action) ... ok
+test_analysis_exhaustively_classifies_hash_bound_hard_failures (test_failure_analysis.FailureAnalysisTests.test_analysis_exhaustively_classifies_hash_bound_hard_failures) ... ok
+test_builds_hash_linked_fifty_trace_artifact_after_complete_review (test_finalize.FinalizeTests.test_builds_hash_linked_fifty_trace_artifact_after_complete_review) ... ok
+test_current_tool_schema_is_bound_to_the_production_digest (test_import_planner_contract.ImportPlannerContractTests.test_current_tool_schema_is_bound_to_the_production_digest) ... ok
+test_accepts_exact_reserved_v4_screen_without_network (test_local_screen.LocalScreenTests.test_accepts_exact_reserved_v4_screen_without_network) ... ok
+test_refuses_authority_or_candidate_drift (test_local_screen.LocalScreenTests.test_refuses_authority_or_candidate_drift) ... ok
+test_refuses_bound_source_drift (test_local_screen.LocalScreenTests.test_refuses_bound_source_drift) ... ok
+test_refuses_completed_screen (test_local_screen.LocalScreenTests.test_refuses_completed_screen) ... ok
+test_refuses_prior_development_exposure (test_local_screen.LocalScreenTests.test_refuses_prior_development_exposure) ... ok
+test_published_mixed_outcome_is_hash_bound_and_non_authoritative (test_local_screen_publication.LocalScreenPublicationTests.test_published_mixed_outcome_is_hash_bound_and_non_authoritative) ... ok
+test_qwen_host_failure_and_gemma_pass_still_require_authoritative_baseline (test_local_screen_publication.LocalScreenPublicationTests.test_qwen_host_failure_and_gemma_pass_still_require_authoritative_baseline) ... ok
+test_qwen_pass_means_training_is_not_justified_by_screen (test_local_screen_publication.LocalScreenPublicationTests.test_qwen_pass_means_training_is_not_justified_by_screen) ... ok
+test_two_failures_require_authoritative_baseline (test_local_screen_publication.LocalScreenPublicationTests.test_two_failures_require_authoritative_baseline) ... ok
+test_candidate_run_writes_replayable_hash_bound_artifacts (test_local_screen_runtime.LocalScreenRuntimeTests.test_candidate_run_writes_replayable_hash_bound_artifacts) ... ok
+test_converts_tool_round_trip_for_ollama (test_local_screen_runtime.LocalScreenRuntimeTests.test_converts_tool_round_trip_for_ollama) ... ok
+test_generator_pins_deterministic_request_and_redacts_thinking (test_local_screen_runtime.LocalScreenRuntimeTests.test_generator_pins_deterministic_request_and_redacts_thinking) ... ok
+test_live_probe_requires_exact_frozen_identity (test_local_screen_runtime.LocalScreenRuntimeTests.test_live_probe_requires_exact_frozen_identity) ... ok
+test_parses_native_tool_call_and_final (test_local_screen_runtime.LocalScreenRuntimeTests.test_parses_native_tool_call_and_final) ... ok
+test_accepts_exact_grounded_shape (test_model_review.ModelReviewEvidenceTests.test_accepts_exact_grounded_shape) ... ok
+test_distinguishes_model_authored_content_failure_from_envelope_failure (test_model_review.ModelReviewEvidenceTests.test_distinguishes_model_authored_content_failure_from_envelope_failure) ... ok
+test_live_endpoint_projection_has_only_stable_pinned_fields (test_model_review.ModelReviewEvidenceTests.test_live_endpoint_projection_has_only_stable_pinned_fields) ... ok
+test_rejects_model_provider_finish_and_usage_drift (test_model_review.ModelReviewEvidenceTests.test_rejects_model_provider_finish_and_usage_drift) ... ok
+test_rejects_wrong_coverage_criteria_or_verdict (test_model_review.ModelReviewEvidenceTests.test_rejects_wrong_coverage_criteria_or_verdict) ... ok
+test_settlement_binds_generation_provider_model_finish_and_cost (test_model_review.ModelReviewEvidenceTests.test_settlement_binds_generation_provider_model_finish_and_cost) ... ok
+test_budget_refuses_overflow_or_unreconciled_ledger (test_model_review.ModelReviewPreflightTests.test_budget_refuses_overflow_or_unreconciled_ledger) ... ok
+test_every_request_is_blind_strict_single_route_and_no_fallback (test_model_review.ModelReviewPreflightTests.test_every_request_is_blind_strict_single_route_and_no_fallback) ... ok
+test_exact_hundred_call_plan_fits_reservation_and_aggregate_cap (test_model_review.ModelReviewPreflightTests.test_exact_hundred_call_plan_fits_reservation_and_aggregate_cap) ... ok
+test_invalid_completion_is_persisted_settled_and_quarantined_without_retry (test_model_review_workflow.ModelReviewWorkflowTests.test_invalid_completion_is_persisted_settled_and_quarantined_without_retry) ... ok
+test_live_route_check_accepts_exact_snapshot_and_rejects_drift (test_model_review_workflow.ModelReviewWorkflowTests.test_live_route_check_accepts_exact_snapshot_and_rejects_drift) ... ok
+test_promotion_requires_two_passes_and_escalates_disagreement (test_model_review_workflow.ModelReviewWorkflowTests.test_promotion_requires_two_passes_and_escalates_disagreement) ... ok
+test_provider_error_envelope_stops_before_settlement (test_model_review_workflow.ModelReviewWorkflowTests.test_provider_error_envelope_stops_before_settlement) ... ok
+test_settlement_poll_is_bounded_and_never_retries_inference (test_model_review_workflow.ModelReviewWorkflowTests.test_settlement_poll_is_bounded_and_never_retries_inference) ... ok
+test_settlement_poll_tolerates_only_transient_not_found (test_model_review_workflow.ModelReviewWorkflowTests.test_settlement_poll_tolerates_only_transient_not_found) ... ok
+test_all_six_data_splits_are_pairwise_disjoint (test_planner_v4.PlannerV4Tests.test_all_six_data_splits_are_pairwise_disjoint) ... ok
+test_entity_route_sabotage_fails_closed (test_planner_v4.PlannerV4Tests.test_entity_route_sabotage_fails_closed) ... ok
+test_exact_pending_delta_and_fresh_v4_development_gate (test_planner_v4.PlannerV4Tests.test_exact_pending_delta_and_fresh_v4_development_gate) ... ok
+test_manifests_bind_generated_artifacts (test_planner_v4.PlannerV4Tests.test_manifests_bind_generated_artifacts) ... ok
+test_review_ledger_is_exact_and_carries_no_false_evidence (test_planner_v4.PlannerV4Tests.test_review_ledger_is_exact_and_carries_no_false_evidence) ... ok
+test_accepts_exact_adapter_only_artifact (test_qlora_v2_artifact.QLoRAV2ArtifactTests.test_accepts_exact_adapter_only_artifact) ... ok
+test_rejects_adapter_digest_drift (test_qlora_v2_artifact.QLoRAV2ArtifactTests.test_rejects_adapter_digest_drift) ... ok
+test_rejects_incomplete_training (test_qlora_v2_artifact.QLoRAV2ArtifactTests.test_rejects_incomplete_training) ... ok
+test_rejects_merged_weights (test_qlora_v2_artifact.QLoRAV2ArtifactTests.test_rejects_merged_weights) ... ok
+test_rejects_planned_but_unauthorized_config (test_qlora_v2_artifact.QLoRAV2ArtifactTests.test_rejects_planned_but_unauthorized_config) ... ok
+test_rejects_wrong_source_commit (test_qlora_v2_artifact.QLoRAV2ArtifactTests.test_rejects_wrong_source_commit) ... ok
+test_evaluation_is_preregistered_but_cannot_run_without_the_adapter (test_qlora_v2_plan.QLoRAV2PlanTests.test_evaluation_is_preregistered_but_cannot_run_without_the_adapter) ... ok
+test_generated_plan_is_exact_and_no_spend (test_qlora_v2_plan.QLoRAV2PlanTests.test_generated_plan_is_exact_and_no_spend) ... ok
+test_no_spend_preflight_accepts_only_the_exact_frozen_corpus (test_qlora_v2_plan.QLoRAV2PlanTests.test_no_spend_preflight_accepts_only_the_exact_frozen_corpus) ... ok
+test_disagreement_stays_pending_with_evidence_but_cannot_freeze (test_review.ReviewDecisionTests.test_disagreement_stays_pending_with_evidence_but_cannot_freeze) ... ok
+test_model_backed_policy_requires_secondary_review_for_all_fifty (test_review.ReviewDecisionTests.test_model_backed_policy_requires_secondary_review_for_all_fifty) ... ok
+test_primary_approval_alone_remains_incomplete (test_review.ReviewDecisionTests.test_primary_approval_alone_remains_incomplete) ... ok
+test_refuses_false_evidence_and_invalid_reviewer_or_timestamp (test_review.ReviewDecisionTests.test_refuses_false_evidence_and_invalid_reviewer_or_timestamp) ... ok
+test_trace_requires_distinct_ordered_secondary_approval (test_review.ReviewDecisionTests.test_trace_requires_distinct_ordered_secondary_approval) ... ok
+test_eval_publication_is_hash_bound_rejected_and_unreleased (test_run_publication.RunPublicationTests.test_eval_publication_is_hash_bound_rejected_and_unreleased) ... ok
+test_smoke_publication_is_hash_bound_budgeted_and_unreleased (test_run_publication.RunPublicationTests.test_smoke_publication_is_hash_bound_budgeted_and_unreleased) ... ok
+test_paid_execution_refuses_before_heavy_import_or_network (test_stock_baseline.StockBaselinePreflightTests.test_paid_execution_refuses_before_heavy_import_or_network) ... ok
+test_reconstructs_exact_plan_without_authorizing_paid_execution (test_stock_baseline.StockBaselinePreflightTests.test_reconstructs_exact_plan_without_authorizing_paid_execution) ... ok
+test_status_or_budget_projection_drift_fails_closed (test_stock_baseline.StockBaselinePreflightTests.test_status_or_budget_projection_drift_fails_closed) ... ok
+test_accepts_exact_settled_deleted_resource_evidence (test_stock_publication.StockBaselinePublicationTests.test_accepts_exact_settled_deleted_resource_evidence) ... ok
+test_budget_settlement_posts_only_actual_cost (test_stock_publication.StockBaselinePublicationTests.test_budget_settlement_posts_only_actual_cost) ... ok
+test_rejects_deadline_cost_or_teardown_drift (test_stock_publication.StockBaselinePublicationTests.test_rejects_deadline_cost_or_teardown_drift) ... ok
+test_generation_publication_hashes_and_removes_raw_output (test_stock_runtime.StockBaselineRuntimeTests.test_generation_publication_hashes_and_removes_raw_output) ... ok
+test_stock_failure_justifies_but_does_not_authorize_qlora (test_stock_runtime.StockBaselineRuntimeTests.test_stock_failure_justifies_but_does_not_authorize_qlora) ... ok
+test_stock_pass_blocks_qlora_without_granting_release (test_stock_runtime.StockBaselineRuntimeTests.test_stock_pass_blocks_qlora_without_granting_release) ... ok
+test_all_four_splits_are_pairwise_disjoint (test_targeted_corpus.TargetedCorpusTests.test_all_four_splits_are_pairwise_disjoint) ... ok
+test_development_rejects_leakage_secrets_household_data_and_bad_expectations (test_targeted_corpus.TargetedCorpusTests.test_development_rejects_leakage_secrets_household_data_and_bad_expectations) ... ok
+test_disjointness_rejects_relabelled_cross_split_copy (test_targeted_corpus.TargetedCorpusTests.test_disjointness_rejects_relabelled_cross_split_copy) ... ok
+test_exact_balanced_pending_training_and_untouched_development_gate (test_targeted_corpus.TargetedCorpusTests.test_exact_balanced_pending_training_and_untouched_development_gate) ... ok
+test_frozen_v3_training_tool_calls_are_a_valid_v4_subset (test_targeted_corpus.TargetedCorpusTests.test_frozen_v3_training_tool_calls_are_a_valid_v4_subset) ... ok
+test_manifests_plan_and_publication_index_bind_every_artifact (test_targeted_corpus.TargetedCorpusTests.test_manifests_plan_and_publication_index_bind_every_artifact) ... ok
+test_review_contract_is_exactly_120_independent_fail_closed_decisions (test_targeted_corpus.TargetedCorpusTests.test_review_contract_is_exactly_120_independent_fail_closed_decisions) ... ok
+test_training_rejects_each_observed_failure_class (test_targeted_corpus.TargetedCorpusTests.test_training_rejects_each_observed_failure_class) ... ok
+test_a40_marketed_memory_is_checked_in_decimal_gb (test_training.TrainingImportOrderTests.test_a40_marketed_memory_is_checked_in_decimal_gb) ... ok
+test_unsloth_is_imported_before_training_stack (test_training.TrainingImportOrderTests.test_unsloth_is_imported_before_training_stack) ... ok
+test_adapts_frozen_tool_schema_to_huggingface_wrapper (test_training_data.TrainingDataTests.test_adapts_frozen_tool_schema_to_huggingface_wrapper) ... ok
+test_affected_families_preserve_intent_and_recovery_contracts (test_training_data.TrainingDataTests.test_affected_families_preserve_intent_and_recovery_contracts) ... ok
+test_preserves_prompt_intent_tool_arguments_results_and_final (test_training_data.TrainingDataTests.test_preserves_prompt_intent_tool_arguments_results_and_final) ... ok
+test_contract_route_budget_and_count_drift_fail_closed (test_v4_model_review.V4ModelReviewPreflightTests.test_contract_route_budget_and_count_drift_fail_closed) ... ok
+test_development_gate_is_bound_but_never_sent_for_review (test_v4_model_review.V4ModelReviewPreflightTests.test_development_gate_is_bound_but_never_sent_for_review) ... ok
+test_exact_dual_review_plan_fits_the_bounded_reservation (test_v4_model_review.V4ModelReviewPreflightTests.test_exact_dual_review_plan_fits_the_bounded_reservation) ... ok
+test_payload_carries_exact_v4_audit_semantics_and_strict_routes (test_v4_model_review.V4ModelReviewPreflightTests.test_payload_carries_exact_v4_audit_semantics_and_strict_routes) ... ok
+test_paid_execution_refuses_before_key_or_network (test_v4_model_review.V4ModelReviewRunnerTests.test_paid_execution_refuses_before_key_or_network) ... ok
+test_reconstructs_exact_requests_without_authorizing_paid_calls (test_v4_model_review.V4ModelReviewRunnerTests.test_reconstructs_exact_requests_without_authorizing_paid_calls) ... ok
+test_request_plan_binding_and_content_drift_fail_closed (test_v4_model_review.V4ModelReviewRunnerTests.test_request_plan_binding_and_content_drift_fail_closed) ... ok
+test_derives_exactly_sixty_unanimous_decisions (test_v4_review_publication.V4ReviewPublicationTests.test_derives_exactly_sixty_unanimous_decisions) ... ok
+test_generator_projects_promoted_review_without_rewriting_synthetic_content (test_v4_review_publication.V4ReviewPublicationTests.test_generator_projects_promoted_review_without_rewriting_synthetic_content) ... ok
+test_invalid_observation_keeps_trace_pending_with_evidence (test_v4_review_publication.V4ReviewPublicationTests.test_invalid_observation_keeps_trace_pending_with_evidence) ... ok
+test_review_plan_binds_the_exact_publisher (test_v4_review_publication.V4ReviewPublicationTests.test_review_plan_binds_the_exact_publisher) ... ok
+test_settlement_is_exact_and_refuses_drift_or_overflow (test_v4_review_publication.V4ReviewPublicationTests.test_settlement_is_exact_and_refuses_drift_or_overflow) ... ok
+test_accepts_production_v4_search_modes (test_validator.ValidatorTests.test_accepts_production_v4_search_modes) ... ok
+test_accepts_reviewed_grounded_trace (test_validator.ValidatorTests.test_accepts_reviewed_grounded_trace) ... ok
+test_pending_trace_requires_explicit_draft_mode (test_validator.ValidatorTests.test_pending_trace_requires_explicit_draft_mode) ... ok
+test_rejected_trace_never_enters_draft_or_artifact (test_validator.ValidatorTests.test_rejected_trace_never_enters_draft_or_artifact) ... ok
+test_rejects_duplicate_content_across_splits (test_validator.ValidatorTests.test_rejects_duplicate_content_across_splits) ... ok
+test_rejects_holdout_identity_or_digest (test_validator.ValidatorTests.test_rejects_holdout_identity_or_digest) ... ok
+test_rejects_invalid_v4_entity_routes_and_values (test_validator.ValidatorTests.test_rejects_invalid_v4_entity_routes_and_values) ... ok
+test_rejects_invalid_v4_scalar_qualifiers (test_validator.ValidatorTests.test_rejects_invalid_v4_scalar_qualifiers) ... ok
+test_rejects_malformed_tool_arguments (test_validator.ValidatorTests.test_rejects_malformed_tool_arguments) ... ok
+test_rejects_prompt_or_tool_contract_drift (test_validator.ValidatorTests.test_rejects_prompt_or_tool_contract_drift) ... ok
+test_rejects_schema_invalid_final (test_validator.ValidatorTests.test_rejects_schema_invalid_final) ... ok
+test_rejects_secret_or_household_path (test_validator.ValidatorTests.test_rejects_secret_or_household_path) ... ok
+test_rejects_unsupported_selected_id (test_validator.ValidatorTests.test_rejects_unsupported_selected_id) ... ok
+test_target_contract_controls_compatible_argument_names (test_validator.ValidatorTests.test_target_contract_controls_compatible_argument_names) ... ok
+
+----------------------------------------------------------------------
+Ran 190 tests in 12.548s
+
+OK
+PYTHONPATH=src python3 -m loomarr_models.budget_reconciliation \
+	budgets/runpod-pod-billing-2026-09-03-v1.json budgets/external-spend-v1.json
+PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_budget_reconciliation.py' -v
+test_canonical_ledger_matches_provider_reconciliation (test_budget_reconciliation.BudgetReconciliationContractTests.test_canonical_ledger_matches_provider_reconciliation) ... ok
+test_reconciliation_artifact_is_internally_consistent (test_budget_reconciliation.BudgetReconciliationContractTests.test_reconciliation_artifact_is_internally_consistent) ... ok
+test_rejects_historical_publication_digest_drift (test_budget_reconciliation.BudgetReconciliationContractTests.test_rejects_historical_publication_digest_drift) ... ok
+test_rejects_provider_total_outside_display_rounding_tolerance (test_budget_reconciliation.BudgetReconciliationContractTests.test_rejects_provider_total_outside_display_rounding_tolerance) ... ok
+test_rejects_remaining_authorization_drift (test_budget_reconciliation.BudgetReconciliationContractTests.test_rejects_remaining_authorization_drift) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.027s
+
+OK
+python3 scripts/build_planner_current_contract.py --check
+python3 scripts/build_planner_current_review.py --check
+python3 scripts/build_planner_current_stock_baseline.py --check
+python3 scripts/build_planner_smoke_drafts.py --check
+python3 scripts/build_planner_development_eval.py --check
+python3 scripts/build_planner_behavior_corpus.py --check
+python3 scripts/build_planner_v4_delta.py --check
+python3 scripts/build_planner_v4_review.py --check
+python3 scripts/build_planner_v4_local_screen.py --check
+python3 scripts/build_planner_v4_stock_baseline.py --check
+python3 scripts/build_planner_behavior_review_v3.py --check
+PYTHONPATH=src python3 scripts/finalize_planner_behavior_corpus.py --check-if-present
+python3 scripts/build_planner_qwen38_qlora_v2.py --check
+python3 scripts/render_review_packet.py --check
+python3 scripts/finalize_planner_smoke.py --check-if-present
+python3 scripts/verify_environment.py
+{"environmentId": "qwen38-a40-v1", "lockSha256": "d7998cb91dc332290985fe09cf1ea1b823306752bf87714e3c8e7c487c66781f", "packages": 104}
+PYTHONPATH=src python3 -m loomarr_models.cli validate --allow-pending corpus/planner-smoke-v1/drafts.jsonl
+{"approved": 50, "pending": 0, "sha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b", "traces": 50}
+make: Leaving directory '/workspace/loomarr-models'
+make: Entering directory '/workspace/loomarr-models'
+PYTHONPATH=src python3 scripts/run_planner_current_stock_baseline.py --preflight-only
+{"authorizationUsd": "40.00", "candidateId": "qwen38-27b-unsloth-bnb-4bit", "caseCount": 24, "casesSha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c", "committedSpendUsd": "28.6967677051754599875", "configSha256": "d4d871ffe4f354947c7c12f2be9753919d382405e1ce1d6b99711efcb91e53a8", "contractId": "loomarr-planner-contract-v5", "environmentSha256": "1cbf8e589663b0a88acb789ab8dafb9011da31b7a552eb66d9de9902e5f5d248", "experimentId": "planner-current-qwen-stock-baseline-v2", "modelRevision": "8aa5f05d26b7205477066e1449e0af13f762a299", "outputDir": ".artifacts/planner-current-qwen-stock-baseline-v2", "paidBaselineAuthorized": true, "projectedSpendUsd": "30.1967677051754599875", "reservationUsd": "1.50", "schemaVersion": 2, "sourceCommit": "3faa65dedb13462b637ab13f7b5706b19d575963"}
+make: Leaving directory '/workspace/loomarr-models'

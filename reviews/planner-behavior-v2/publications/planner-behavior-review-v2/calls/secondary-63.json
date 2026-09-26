@@ -1,0 +1,13 @@
+{
+  "batchIndex": 63,
+  "requestSha256": "bf2158f0350088777b7e8e6ab5e8b25257fd88cdf38d40ac74dfb2103d8e92ef",
+  "responseSha256": "3f8cc7289054267b85c8c05177d8004919e650cd23ccb06348d3ee92c0867a99",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.02643",
+  "settlementSha256": "d68a377920110ae9a4370fad32a021134fc8dc3a878264468ff51acb465adbb5",
+  "status": "valid",
+  "traceIds": [
+    "planner-behavior-v2-structured-json-abstention-04"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "caseCount": 50,
+  "casesPath": "evaluation/planner-development-v1/cases.jsonl",
+  "casesSha256": "2a3179166a05f068bcdc01fac32d1c4bc521bcf0b65f783163426408722a5209",
+  "contractId": "loomarr-planner-contract-v3",
+  "contractSourceRevision": "d4718491584730a95fd3ad462074557a2e095564",
+  "corpusId": "planner-development-v1",
+  "familyCounts": {
+    "ambiguous-intent": 5,
+    "conflicting-intent": 5,
+    "empty-results": 5,
+    "genre-discovery": 5,
+    "keyword-discovery": 5,
+    "malformed-final-repair": 5,
+    "must-exclude": 5,
+    "must-include": 5,
+    "title-search": 5,
+    "tool-error-recovery": 5
+  },
+  "fixtureId": "planner-development-catalog-v1",
+  "generator": "planner-development-eval-generator-v1",
+  "generatorSha256": "7fbe3c38c9955a7f04bce7aca2b4d065db9f8c04a5e44098527bb5ad1e8365c8",
+  "holdoutDenylistPath": "contracts/holdout-denylist-v1.json",
+  "holdoutDenylistSha256": "de1c2e2bfee12099ba9288f73c65166be8b8b436264f3d72a66769a7980db5de",
+  "schemaVersion": 1,
+  "scoring": {
+    "qualityMargin": 0.02,
+    "scorerVersion": "planner-development-scorer-v1",
+    "thresholds": {
+      "maxP95ToolCalls": 3,
+      "minCorrectToolOperationRate": 0.9,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 0.8,
+      "minSchemaValidityRate": 0.98
+    },
+    "weights": {
+      "correctToolOperation": 0.2,
+      "groundedCompletion": 0.2,
+      "policyAccuracy": 0.15,
+      "proposalQuality": 0.25,
+      "recovery": 0.1,
+      "schemaValidity": 0.1
+    }
+  },
+  "status": "frozen-development-only",
+  "systemPromptSha256": "c825bb321636ee756635167828bd252e46c550692835e56950951b7c5269ae61",
+  "toolSchemaSha256": "16a9f228864ae8286df2fbe5439fe121922a35402f7168f1a42319652bf30853",
+  "trainingCorpusPath": "corpus/planner-smoke-v1/traces.jsonl",
+  "trainingCorpusSha256": "56663b037c2d298c0bbd4b4a7f30368631f495e7618d3089ee97f14504c0df5b"
+}

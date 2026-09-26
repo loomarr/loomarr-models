@@ -1,0 +1,198 @@
+{
+  "capturedAt": "2026-09-18T12:24:35Z",
+  "correctedLedger": {
+    "committedSpendUsd": "29.3563469369284740175",
+    "outstandingReservationsUsd": "0",
+    "postedSpendUsd": "29.3563469369284740175",
+    "remainingAuthorizationUsd": "10.6436530630715259825"
+  },
+  "historicalAccounting": {
+    "adapterEvaluation": {
+      "billedAllocationUsd": "1.07830594421830031",
+      "publicationPath": "runs/planner-adapter-eval-v1/publication.json",
+      "publicationSha256": "d47fe88861cc34d2903fc8afdf1f5fdd947d52c9754886aecc40e6a7517ff2f2",
+      "recordedRuntimeEstimateUsd": "0.7827729525743052"
+    },
+    "currentQwen38QloraV1Failure": {
+      "billedAllocationUsd": "0.160050047095865",
+      "publicationPath": "runs/planner-current-qwen38-qlora-v1/publication.json",
+      "publicationSha256": "4727eddfa2f6fed3ff0e9f6e84fb221ecf3a4a32ab4802b24147ea05b1ae3c81",
+      "recordedRuntimeEstimateUsd": "0"
+    },
+    "currentStockBaselineV2": {
+      "billedAllocationUsd": "0.10784085479099303",
+      "publicationPath": "runs/planner-current-qwen-stock-baseline-v2/publication.json",
+      "publicationSha256": "a2b7cdc02392a75b8dded9d0711ec003cd23698088c41b4194ffa40d5c529804",
+      "recordedRuntimeEstimateUsd": "0"
+    },
+    "currentStockBaselineV3": {
+      "billedAllocationUsd": "0.391688329866156",
+      "publicationPath": "runs/planner-current-qwen-stock-baseline-v3/publication.json",
+      "publicationSha256": "0b033229b49585a9c12e6adbe7d16b3333f94950fc8d18e8c693e9a42e4dbf79",
+      "recordedRuntimeEstimateUsd": "0"
+    },
+    "priorPlannerSetupAndRepair": {
+      "billedAllocationUsd": "0.6193008270347490775",
+      "recordedRuntimeEstimateUsd": "0.317141906125471",
+      "source": "https://github.com/loomarr/loomarr/issues/856#issuecomment-5518976234",
+      "standingReservationUsd": "0.10"
+    },
+    "qloraSmoke": {
+      "billedAllocationUsd": "0.3996184489224106",
+      "publicationPath": "runs/planner-qwen38-smoke-v1/publication.json",
+      "publicationSha256": "1463aa413517deeac4122838d4925480fe8be18595731c8981e4b694f62cd952",
+      "recordedRuntimeEstimateUsd": "0.1832042238675058"
+    }
+  },
+  "ledgerBefore": {
+    "committedSpendUsd": "27.9826615675672820",
+    "nonRunpodPostedSpendUsd": "26.5995424850000000",
+    "outstandingReservationsUsd": "0.10",
+    "postedRunpodRuntimeEstimatesUsd": "1.2831190825672820",
+    "postedSpendUsd": "27.8826615675672820"
+  },
+  "provider": "runpod",
+  "providerBilling": {
+    "buckets": [
+      {
+        "allocation": "prior-planner-setup-and-repair",
+        "cpuUsd": "0",
+        "diskUsd": "0.0011574074160307646",
+        "endTime": "2026-09-03T01:00:00Z",
+        "gpuUsd": "0.00241371663287282",
+        "resourceIdSha256": "0bc244f8a8d9b5700c7c3686d87ec9d89186d3d889e2e3e4d05ef26cdefbd527",
+        "startTime": "2026-09-03T00:00:00Z",
+        "totalUsd": "0.0035711240489035845"
+      },
+      {
+        "allocation": "prior-planner-setup-and-repair",
+        "cpuUsd": "0",
+        "diskUsd": "0.0011574074160307646",
+        "endTime": "2026-09-03T01:00:00Z",
+        "gpuUsd": "0.022289056330919266",
+        "resourceIdSha256": "bfa4c41ed2b1d903fb7ecd35216ff8facbd370d952c0f3dc3ae0c104890bdebf",
+        "startTime": "2026-09-03T00:00:00Z",
+        "totalUsd": "0.02344646374695003"
+      },
+      {
+        "allocation": "prior-planner-setup-and-repair",
+        "cpuUsd": "0",
+        "diskUsd": "0.01261574006639421",
+        "endTime": "2026-09-03T01:00:00Z",
+        "gpuUsd": "0.4827080937102437",
+        "resourceIdSha256": "8ed520de69a00229b51720c8370cf1487627f1ed9133434dbedb9b0e4362f289",
+        "startTime": "2026-09-03T00:00:00Z",
+        "totalUsd": "0.4953238337766379"
+      },
+      {
+        "allocation": "prior-planner-setup-and-repair",
+        "cpuUsd": "0",
+        "diskUsd": "0.00046296301297843456",
+        "endTime": "2026-09-03T01:00:00Z",
+        "gpuUsd": "0.008762933313846588",
+        "resourceIdSha256": "559b88691ff478753c9795a3028c45bae83d18aba82f622f69e03016e9e48839",
+        "startTime": "2026-09-03T00:00:00Z",
+        "totalUsd": "0.009225896326825023"
+      },
+      {
+        "allocation": "prior-planner-setup-and-repair",
+        "cpuUsd": "0",
+        "diskUsd": "0.0013888889225199819",
+        "endTime": "2026-09-03T02:00:00Z",
+        "gpuUsd": "0.08634462021291256",
+        "resourceIdSha256": "50f0866debf7977e755639fb769667eb8c76451dfc12f9971d66126b69da6739",
+        "startTime": "2026-09-03T01:00:00Z",
+        "totalUsd": "0.08773350913543254"
+      },
+      {
+        "allocation": "qlora-smoke",
+        "cpuUsd": "0",
+        "diskUsd": "0.013310184935107827",
+        "endTime": "2026-09-03T08:00:00Z",
+        "gpuUsd": "0.3863082639873028",
+        "resourceIdSha256": "2c25239635541cd04c7abd71fa0e705a3979c61ddbddccf70a2bf11d6f3c3f49",
+        "startTime": "2026-09-03T07:00:00Z",
+        "totalUsd": "0.3996184489224106"
+      },
+      {
+        "allocation": "adapter-evaluation",
+        "cpuUsd": "0",
+        "diskUsd": "0.010185184888541698",
+        "endTime": "2026-09-03T09:00:00Z",
+        "gpuUsd": "0.2788840960711241",
+        "resourceIdSha256": "fe1a3c3bd762cfa541ee38b8e49018bb108c32680b88f594fc6a63170e5237ed",
+        "startTime": "2026-09-03T08:00:00Z",
+        "totalUsd": "0.2890692809596658"
+      },
+      {
+        "allocation": "adapter-evaluation",
+        "cpuUsd": "0",
+        "diskUsd": "0.015277777332812548",
+        "endTime": "2026-09-03T10:00:00Z",
+        "gpuUsd": "0.4407418891787529",
+        "resourceIdSha256": "fe1a3c3bd762cfa541ee38b8e49018bb108c32680b88f594fc6a63170e5237ed",
+        "startTime": "2026-09-03T09:00:00Z",
+        "totalUsd": "0.45601966651156545"
+      },
+      {
+        "allocation": "adapter-evaluation",
+        "cpuUsd": "0",
+        "diskUsd": "0.012037036824040115",
+        "endTime": "2026-09-03T11:00:00Z",
+        "gpuUsd": "0.32117995992302895",
+        "resourceIdSha256": "fe1a3c3bd762cfa541ee38b8e49018bb108c32680b88f594fc6a63170e5237ed",
+        "startTime": "2026-09-03T10:00:00Z",
+        "totalUsd": "0.33321699674706906"
+      },
+      {
+        "allocation": "current-stock-baseline-v2",
+        "cpuUsd": "0",
+        "diskUsd": "0.002777777728624642",
+        "endTime": "2026-09-17T02:58:13Z",
+        "gpuUsd": "0.10506307706236839",
+        "resourceIdSha256": "5137a63664dfad55cc897e2561ebe644cfa8c5934c4d881276007d1b5f3b3061",
+        "startTime": "2026-09-17T02:45:05.698Z",
+        "totalUsd": "0.10784085479099303"
+      },
+      {
+        "allocation": "current-stock-baseline-v3",
+        "cpuUsd": "0",
+        "diskUsd": "0.0092592590954155",
+        "endTime": "2026-09-17T12:45:47Z",
+        "gpuUsd": "0.3824290707707405",
+        "resourceIdSha256": "0b1626a60cd2afd0eb8f872ff7eed1b36e98ee57d7550d1280045377e45b4421",
+        "startTime": "2026-09-17T11:58:45.602Z",
+        "totalUsd": "0.391688329866156"
+      },
+      {
+        "allocation": "current-qwen38-qlora-v1-failure",
+        "cpuUsd": "0",
+        "diskUsd": "0.003703703638166189",
+        "endTime": "2026-09-18T02:27:17.510013Z",
+        "gpuUsd": "0.15634634345769882",
+        "resourceIdSha256": "54dd08f11ae0e1cda7eac6d6a65c5d03310c67ed6489fb993ca2a132d8dab2b3",
+        "startTime": "2026-09-18T02:08:08.843Z",
+        "totalUsd": "0.160050047095865"
+      }
+    ],
+    "metadataRoundedTotalUsd": "2.75680445192847",
+    "query": {
+      "bucketSize": "hour",
+      "endTime": "2026-09-18T13:00:00Z",
+      "scope": "pods",
+      "startTime": "2026-09-03T00:00:00Z"
+    },
+    "totals": {
+      "cpuUsd": "0",
+      "diskUsd": "0.08333333127666267466",
+      "gpuUsd": "2.673471120651811394",
+      "totalUsd": "2.7568044519284740175"
+    },
+    "uniqueResourceCount": 10,
+    "zeroActivePods": true
+  },
+  "reconciliationId": "runpod-pod-billing-current-qwen38-qlora-v1-failure-v1",
+  "schemaVersion": 1,
+  "source": "runpod-mcp-rest-v2",
+  "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/20"
+}

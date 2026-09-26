@@ -5,20 +5,51 @@ import json
 import hashlib
 import unittest
 
-from loomarr_models.validator import ValidationError, validate_corpus
+from loomarr_models.validator import (
+    ValidationError,
+    validate_corpus,
+    validate_tool_call_compatibility,
+)
 
 
 DENYLIST_IDENTITIES = {"planner-certification-v5", "planner-catalog-v1"}
 DENYLIST_DIGESTS = {"36a393258d1b89a43de8e12c16eb90aa6c5f67096eaa8d34dd46ad2676426f1a"}
 TEST_SYSTEM_PROMPT = "Use only catalog_search results; return proposal JSON."
+TEST_PROPERTIES = {
+    "query": {"type": "string"},
+    "genres": {"type": "array", "items": {"type": "string"}},
+    "keywords": {"type": "array", "items": {"type": "string"}},
+    "era": {"type": "string"},
+    "media_type": {"type": "string", "enum": ["movie", "series"]},
+    "original_language": {"type": "string"},
+    "origin_country": {"type": "string"},
+    "runtime_min": {"type": "integer", "minimum": 1, "maximum": 1440},
+    "runtime_max": {"type": "integer", "minimum": 1, "maximum": 1440},
+    "vote_average_min": {"type": "number", "exclusiveMinimum": 0, "maximum": 10},
+    "vote_count_min": {"type": "integer", "minimum": 1, "maximum": 100000000},
+    "network": {"type": "string", "maxLength": 100},
+    "cast": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 4,
+        "items": {"type": "string", "maxLength": 100},
+    },
+    "creators": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 4,
+        "items": {"type": "string", "maxLength": 100},
+    },
+}
 TEST_TOOLS = [
     {
         "Name": "catalog_search",
         "Description": "Search the synthetic catalog fixture.",
-        "Parameters": {"type": "object"},
+        "Parameters": {"type": "object", "properties": TEST_PROPERTIES},
     }
 ]
 TEST_CONTRACT = {
+    "contractId": "loomarr-planner-contract-test-v4",
     "promptVersion": "test-prompt-v1",
     "systemPromptSha256": hashlib.sha256(TEST_SYSTEM_PROMPT.encode()).hexdigest(),
     "toolSchemaVersion": "test-tools-v1",
@@ -136,6 +167,90 @@ class ValidatorTests(unittest.TestCase):
         }
         with self.assertRaisesRegex(ValidationError, "title query mixed"):
             self.validate(trace)
+
+    def test_accepts_production_v4_search_modes(self):
+        valid_arguments = (
+            {"query": "Voyage Beyond Neon", "media_type": "movie"},
+            {"era": "1990s", "origin_country": "US"},
+            {"media_type": "series", "network": "ABC"},
+            {"media_type": "movie", "cast": ["Jamie Lee Curtis"]},
+            {
+                "media_type": "movie",
+                "cast": ["Tom Hanks", "Meg Ryan"],
+                "creators": ["Nora Ephron"],
+            },
+        )
+        for arguments in valid_arguments:
+            with self.subTest(arguments=arguments):
+                trace = valid_trace()
+                trace["messages"][2]["toolCalls"][0]["arguments"] = arguments
+                self.validate(trace)
+
+    def test_rejects_invalid_v4_entity_routes_and_values(self):
+        invalid_arguments = (
+            ({"network": "ABC"}, "network requires media_type series"),
+            ({"media_type": "movie", "network": "ABC"}, "network requires media_type series"),
+            ({"cast": ["Tom Hanks"]}, "cast and creators require media_type movie"),
+            (
+                {"media_type": "series", "creators": ["David Simon"]},
+                "cast and creators require media_type movie",
+            ),
+            (
+                {"media_type": "series", "network": "HBO", "cast": ["Idris Elba"]},
+                "network and person constraints cannot be combined",
+            ),
+            ({"media_type": "series", "network": "  "}, "invalid network"),
+            ({"media_type": "movie", "cast": []}, "invalid cast"),
+            ({"media_type": "movie", "cast": ["Tom Hanks", 31]}, "invalid cast"),
+            (
+                {"media_type": "movie", "creators": ["Nora Ephron", " nora ephron "]},
+                "duplicate creators",
+            ),
+            ({"media_type": "series"}, "no search selector"),
+        )
+        for arguments, message in invalid_arguments:
+            with self.subTest(arguments=arguments):
+                trace = valid_trace()
+                trace["messages"][2]["toolCalls"][0]["arguments"] = arguments
+                with self.assertRaisesRegex(ValidationError, message):
+                    self.validate(trace)
+
+    def test_rejects_invalid_v4_scalar_qualifiers(self):
+        invalid_arguments = (
+            ({"era": "whenever"}, "invalid era"),
+            ({"genres": ["Drama"], "original_language": "english"}, "invalid original_language"),
+            ({"genres": ["Drama"], "origin_country": 44}, "invalid origin_country"),
+            ({"genres": ["Drama"], "runtime_min": 20.5}, "invalid runtime_min"),
+            (
+                {"genres": ["Drama"], "runtime_min": 90, "runtime_max": 20},
+                "runtime_min exceeds runtime_max",
+            ),
+            ({"genres": ["Drama"], "vote_average_min": 0}, "invalid vote_average_min"),
+            ({"genres": ["Drama"], "vote_count_min": True}, "invalid vote_count_min"),
+        )
+        for arguments, message in invalid_arguments:
+            with self.subTest(arguments=arguments):
+                trace = valid_trace()
+                trace["messages"][2]["toolCalls"][0]["arguments"] = arguments
+                with self.assertRaisesRegex(ValidationError, message):
+                    self.validate(trace)
+
+    def test_target_contract_controls_compatible_argument_names(self):
+        trace = valid_trace()
+        trace["messages"][2]["toolCalls"][0]["arguments"] = {
+            "media_type": "series",
+            "network": "ABC",
+        }
+        report = validate_tool_call_compatibility([trace], target_contract_bundle=TEST_CONTRACT)
+        self.assertEqual(
+            (report.traces, report.tool_calls, report.target_contract_id),
+            (1, 1, TEST_CONTRACT["contractId"]),
+        )
+
+        legacy_contract = copy.deepcopy(TEST_CONTRACT)
+        del legacy_contract["tools"][0]["Parameters"]["properties"]["network"]
+        with self.assertRaisesRegex(ValidationError, "not declared by target contract"):
+            validate_tool_call_compatibility([trace], target_contract_bundle=legacy_contract)
 
     def test_rejects_holdout_identity_or_digest(self):
         for leaked in (next(iter(DENYLIST_IDENTITIES)), next(iter(DENYLIST_DIGESTS))):

@@ -1,0 +1,13 @@
+{
+  "batchIndex": 14,
+  "requestSha256": "81e19881ca58e3b9505d80de3591434ce48cbb514e38347645d7ccc70c906b08",
+  "responseSha256": "67ad95da1e6e7d90edc2db2b25a0be51a1d2b8f482b03c2680607288f900813d",
+  "role": "secondary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.05678",
+  "settlementSha256": "a9d04d6c80a9df83006d53e042c55af9625dd477691ede434febbbfc26099953",
+  "status": "valid",
+  "traceIds": [
+    "planner-smoke-keyword-discovery-05"
+  ]
+}

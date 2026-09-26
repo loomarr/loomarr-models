@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-04T12:43:00Z",
+  "endpoint": "http://127.0.0.1:11434",
+  "serverVersion": "0.33.0",
+  "host": {
+    "platform": "darwin-arm64",
+    "chip": "Apple M5 Pro",
+    "memoryBytes": 25769803776
+  },
+  "candidates": [
+    {
+      "candidateId": "qwen38-27b-mlx-nvfp4",
+      "model": "qwen3.8:27b-mlx",
+      "digest": "5642e97495e1a088883805981563dcdc4a040c2f53388b7a41d1f24d3622cf7e",
+      "sizeBytes": 18174721847,
+      "architecture": "qwen3_5",
+      "parameterCount": 27781081984,
+      "contextLength": 262144,
+      "format": "safetensors",
+      "quantization": "nvfp4",
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ],
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "modelfileSha256": "0a53f3040ae6af2817c0ca0deed3965c34e6c84239dda0a897a7cfe41f6bd920"
+    },
+    {
+      "candidateId": "gemma4-12b-q4-k-m",
+      "model": "gemma4:12b",
+      "digest": "4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+      "sizeBytes": 7556508396,
+      "architecture": "gemma4",
+      "parameterCount": 11907350576,
+      "contextLength": 262144,
+      "format": "gguf",
+      "quantization": "Q4_K_M",
+      "capabilities": [
+        "completion",
+        "vision",
+        "audio",
+        "tools",
+        "thinking"
+      ],
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "modelfileSha256": "192c54573da6266c51a7f90e2cd8b185f7f435eb9106a4d82c8b4060113cfdfe"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "analysisId": "planner-adapter-eval-v1-first-divergence",
+  "trackingIssue": "https://github.com/loomarr/loomarr-models/issues/7",
+  "status": "completed",
+  "method": "manual-first-divergence-review-of-hash-bound-local-generations",
+  "source": {
+    "runManifestPath": "runs/planner-adapter-eval-v1/run-manifest.json",
+    "runManifestSha256": "ce8dc06386a91df87f53f647c56c9c4da186ec20401298270f6b8ed65f8c285e",
+    "correctedAdapterResultsSha256": "147e10e9c6abe9e6d801d8da636ec0e48e6ac317a9ddf498f7b84d9bdeb1fadc",
+    "adapterGenerationsSha256": "d138a2cd3080f07d9de070f590e71a7e887edcae3e96eff3562d6917d826f79e"
+  },
+  "summary": {
+    "evaluatedCases": 50,
+    "hardFailureCases": 16,
+    "hardFailureEvents": 16,
+    "hardFailureTypeCounts": {
+      "schema_invalid": 16
+    },
+    "unsupportedIdCount": 0,
+    "authorityViolationCount": 0
+  },
+  "categories": [
+    {
+      "categoryId": "exact-tool-argument-drift",
+      "count": 7,
+      "firstDivergence": "The first catalog operation changes, adds, or misclassifies an intent-derived argument, so the frozen fixture rejects it.",
+      "caseIds": [
+        "planner-development-genre-discovery-01",
+        "planner-development-genre-discovery-02",
+        "planner-development-keyword-discovery-01",
+        "planner-development-keyword-discovery-03",
+        "planner-development-keyword-discovery-04",
+        "planner-development-must-exclude-02",
+        "planner-development-ambiguous-intent-05"
+      ]
+    },
+    {
+      "categoryId": "required-final-field-omission",
+      "count": 1,
+      "firstDivergence": "The grounded final object omits the required policy field instead of returning an empty policy object.",
+      "caseIds": [
+        "planner-development-must-include-03"
+      ]
+    },
+    {
+      "categoryId": "prose-instead-of-proposal-json",
+      "count": 5,
+      "firstDivergence": "The model returns clarification or refusal prose instead of the required structured proposal; four cases misclassify synthetic fixture wording as a fabrication request.",
+      "caseIds": [
+        "planner-development-ambiguous-intent-04",
+        "planner-development-tool-error-recovery-01",
+        "planner-development-tool-error-recovery-02",
+        "planner-development-tool-error-recovery-03",
+        "planner-development-tool-error-recovery-04"
+      ]
+    },
+    {
+      "categoryId": "multiple-tool-calls-in-one-turn",
+      "count": 3,
+      "firstDivergence": "The model emits two catalog calls in one assistant turn, outside the single-operation turn contract, so neither call executes.",
+      "caseIds": [
+        "planner-development-conflicting-intent-01",
+        "planner-development-conflicting-intent-02",
+        "planner-development-conflicting-intent-03"
+      ]
+    }
+  ],
+  "decision": {
+    "status": "no-second-training-run-on-current-corpus",
+    "unslothStatus": "validated-for-bounded-nvidia-experiments-not-selected-for-release",
+    "secondTrainingAuthorized": false,
+    "certificationAuthorized": false,
+    "packagingAuthorized": false,
+    "deploymentAuthorized": false,
+    "nextGate": "reviewed-targeted-corpus-revision-and-disjoint-preregistered-development-evaluation",
+    "requiredCoverage": [
+      "canonical tool-argument preservation without invented narrowing",
+      "one tool operation per assistant turn",
+      "mandatory complete proposal shape including an empty policy object",
+      "structured JSON abstention instead of prose",
+      "tool-error recovery that treats synthetic fixtures as valid test data",
+      "ambiguous-intent mapping without unsupported clarification prose"
+    ],
+    "externalSpendUsd": "0"
+  }
+}

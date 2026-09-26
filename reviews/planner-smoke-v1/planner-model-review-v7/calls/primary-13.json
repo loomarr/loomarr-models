@@ -1,0 +1,14 @@
+{
+  "batchIndex": 13,
+  "contentError": "planner-smoke-keyword-discovery-04: invalid review summary",
+  "requestSha256": "002674ed8b140355a9af1ec37267d9f27ef574d3e8c5db4ff0fb4eefe18bc371",
+  "responseSha256": "d0a1ee0a0040422ccd14f7590d521da682002ee58fd8179ff32c5916e95c96d7",
+  "role": "primary",
+  "schemaVersion": 1,
+  "settledCostUsd": "0.031222",
+  "settlementSha256": "16fbe9bef7f0ae33697caa12cbb17cab2339d79e70466cf7aee92a6bb5bd33b6",
+  "status": "invalid",
+  "traceIds": [
+    "planner-smoke-keyword-discovery-04"
+  ]
+}

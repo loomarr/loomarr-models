@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gc
 import hashlib
 import importlib.metadata
 import json
@@ -14,11 +15,13 @@ from .validator import load_jsonl
 
 
 def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> dict[str, Any]:
-    import torch
-    from datasets import Dataset
-    from trl import SFTConfig, SFTTrainer
     from unsloth import FastModel
     from unsloth.chat_templates import train_on_responses_only
+
+    import torch
+    from datasets import Dataset
+    from peft import PeftModel
+    from trl import SFTConfig, SFTTrainer
 
     config = load_experiment(config_path)
     execution = config["execution"]
@@ -28,11 +31,7 @@ def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> d
     if not torch.cuda.is_available() or torch.cuda.device_count() < execution["gpuCount"]:
         raise PreflightError("required NVIDIA GPU is unavailable")
     props = torch.cuda.get_device_properties(0)
-    vram_gb = props.total_memory / 1024**3
-    if execution["gpuSku"] not in props.name or vram_gb < execution["minimumVramGb"] - 1:
-        raise PreflightError(
-            f"GPU identity {props.name!r} / {vram_gb:.1f} GiB is outside the experiment envelope"
-        )
+    _validate_gpu(props.name, props.total_memory, execution)
 
     output = root / execution["outputDir"]
     if output.exists():
@@ -117,6 +116,47 @@ def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> d
     model.save_pretrained(adapter_dir)
     tokenizer.save_pretrained(adapter_dir)
 
+    # A successful save is not enough: reload the persisted adapter into a fresh
+    # base-model instance and execute a tiny deterministic generation before the
+    # run can publish a manifest. This is an artifact-usability probe, not a
+    # product-quality evaluation.
+    del trainer, model, tokenizer
+    gc.collect()
+    torch.cuda.empty_cache()
+    probe_model, probe_tokenizer = FastModel.from_pretrained(
+        model_name=model_identity["repository"],
+        revision=model_identity["revision"],
+        max_seq_length=run["maxSeqLength"],
+        load_in_4bit=True,
+        full_finetuning=False,
+    )
+    probe_model = PeftModel.from_pretrained(probe_model, adapter_dir, is_trainable=False)
+    FastModel.for_inference(probe_model)
+    probe_text = probe_tokenizer.apply_chat_template(
+        [{"role": "user", "content": "Return a short acknowledgement."}],
+        tokenize=False,
+        add_generation_prompt=True,
+        reasoning_effort=run["reasoningEffort"],
+    )
+    probe_inputs = probe_tokenizer(text=probe_text, return_tensors="pt").to(
+        probe_model.device
+    )
+    probe_input_tokens = int(probe_inputs["input_ids"].shape[-1])
+    with torch.inference_mode():
+        probe_output = probe_model.generate(
+            **probe_inputs,
+            max_new_tokens=8,
+            do_sample=False,
+            pad_token_id=probe_tokenizer.eos_token_id,
+            use_cache=True,
+        )
+    probe_generated = probe_output[0, probe_input_tokens:]
+    if int(probe_generated.shape[-1]) < 1:
+        raise PreflightError("persisted adapter load probe generated no tokens")
+    probe_bytes = probe_tokenizer.decode(
+        probe_generated, skip_special_tokens=True
+    ).encode("utf-8")
+
     adapter_hashes = {
         str(path.relative_to(adapter_dir)): hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted(adapter_dir.rglob("*"))
@@ -129,6 +169,7 @@ def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> d
         "preflight": preflight.as_dict(),
         "runId": run["runId"],
         "elapsedSeconds": time.monotonic() - started,
+        "completedSteps": int(stats.global_step),
         "renderedTrainingSha256": rendered_sha,
         "packages": packages,
         "runtime": {
@@ -145,11 +186,24 @@ def run_training(root: Path, config_path: Path, preflight: PreflightReport) -> d
         },
         "metrics": _json_values(stats.metrics),
         "adapterFiles": adapter_hashes,
+        "loadProbe": {
+            "activeAdapter": str(probe_model.active_adapter),
+            "generatedTokenCount": int(probe_generated.shape[-1]),
+            "outputSha256": hashlib.sha256(probe_bytes).hexdigest(),
+        },
     }
     (output / "run-manifest.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     return manifest
+
+
+def _validate_gpu(name: str, total_memory_bytes: int, execution: dict[str, Any]) -> None:
+    vram_gb = total_memory_bytes / 1_000_000_000
+    if execution["gpuSku"] not in name or vram_gb < execution["minimumVramGb"] - 1:
+        raise PreflightError(
+            f"GPU identity {name!r} / {vram_gb:.1f} GB is outside the experiment envelope"
+        )
 
 
 def _json_values(values: dict[str, Any]) -> dict[str, Any]:
