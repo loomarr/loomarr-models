@@ -21,10 +21,12 @@ from .experiment import PreflightError, _git_probe, _input_path, sha256_file
 from .flash_next_screen import (
     AUTHORITY,
     DECODING,
+    ENDPOINT,
     GATES,
     OpenAIChatTurnGenerator,
     _server_identity,
     evaluate_cases,
+    read_api_key,
     write_run,
 )
 
@@ -45,6 +47,9 @@ RUNTIME = {
     "readyTimeoutSeconds": 600,
 }
 CANDIDATES = {
+    # The incumbent: Loomarr's production Flash-Next service, measured with the same wire profile,
+    # gates, and trials as every challenger. No server is started for it.
+    "flash-next-served": {"served": True, "endpoint": ENDPOINT},
     "qwen35-9b-q8_0": {
         "repository": "unsloth/Qwen3.5-9B-GGUF",
         "revision": "3885219b6810b007914f3a7950a8d1b469d598a5",
@@ -133,51 +138,70 @@ def run_candidate(root: Path, plan: dict[str, Any], candidate_id: str, log: Path
     base = root / ".artifacts" / EXPERIMENT_ID / candidate_id
     if base.exists():
         raise PreflightError(f"refusing to overwrite existing output: {base}")
+    if candidate.get("served"):
+        endpoint = candidate["endpoint"]
+        api_key = read_api_key(Path(endpoint["apiKeyFile"]))
+        identity = _server_identity(api_key, endpoint)
+        return _run_trials(root, plan, candidate_id, base, endpoint, api_key, identity, {"sharedProductionService": True})
     if candidate.get("exclusiveGpu") and _primary_active():
         raise PreflightError(f"{candidate_id} needs the GPU to itself; run it inside with_gpu.sh")
     path = model_path(candidate)
     endpoint = {"baseUrl": f"http://{RUNTIME['host']}:{RUNTIME['port']}/v1", "modelAlias": candidate_id}
     env = {**os.environ, "LD_LIBRARY_PATH": str(Path(RUNTIME["binary"]).parent)}
-    contract = json.loads((root / BINDINGS["contract"]).read_text(encoding="utf-8"))
-    manifests = []
     with log.open("w", encoding="utf-8") as handle:
         server = subprocess.Popen(server_command(candidate_id, path), stdout=handle, stderr=subprocess.STDOUT, env=env)
         try:
             gtt_before = _gtt_used()
             _wait_ready(endpoint, server)
             identity = _server_identity("unused", endpoint)
-            loaded = {"gttUsedBytesAfterLoad": _gtt_used(), "gttUsedBytesBeforeLoad": gtt_before}
-            for trial in range(1, TRIALS + 1):
-                for gate in SCREEN_GATES:
-                    generator = OpenAIChatTurnGenerator("unused", {}, endpoint)
-                    started = time.monotonic()
-                    results = evaluate_cases(root, gate, generator, contract["systemPrompt"], f"{candidate_id} {gate} t{trial}")
-                    manifests.append(
-                        write_run(
-                            base / gate / f"t{trial}",
-                            results,
-                            generator,
-                            candidate_id=candidate_id,
-                            gate=gate,
-                            fields={
-                                "experimentId": EXPERIMENT_ID,
-                                "candidate": {"id": candidate_id, **candidate},
-                                "runtime": RUNTIME,
-                                "gate": gate,
-                                "trial": trial,
-                                "preflight": plan,
-                                "server": identity,
-                                "memory": loaded,
-                                "elapsedSeconds": time.monotonic() - started,
-                            },
-                        )
-                    )
+            memory = {"gttUsedBytesAfterLoad": _gtt_used(), "gttUsedBytesBeforeLoad": gtt_before}
+            return _run_trials(root, plan, candidate_id, base, endpoint, "unused", identity, memory)
         finally:
             server.terminate()
             try:
                 server.wait(timeout=60)
             except subprocess.TimeoutExpired:
                 server.kill()
+
+
+def _run_trials(
+    root: Path,
+    plan: dict[str, Any],
+    candidate_id: str,
+    base: Path,
+    endpoint: dict[str, Any],
+    api_key: str,
+    identity: dict[str, Any],
+    memory: dict[str, Any],
+) -> list[dict[str, Any]]:
+    contract = json.loads((root / BINDINGS["contract"]).read_text(encoding="utf-8"))
+    manifests = []
+    for trial in range(1, TRIALS + 1):
+        for gate in SCREEN_GATES:
+            generator = OpenAIChatTurnGenerator(api_key, {}, endpoint)
+            started = time.monotonic()
+            results = evaluate_cases(root, gate, generator, contract["systemPrompt"], f"{candidate_id} {gate} t{trial}")
+            manifests.append(
+                write_run(
+                    base / gate / f"t{trial}",
+                    results,
+                    generator,
+                    candidate_id=candidate_id,
+                    gate=gate,
+                    fields={
+                        "experimentId": EXPERIMENT_ID,
+                        "candidate": {"id": candidate_id, **CANDIDATES[candidate_id]},
+                        "runtime": None if CANDIDATES[candidate_id].get("served") else RUNTIME,
+                        "decoding": DECODING,
+                        "gate": gate,
+                        "trial": trial,
+                        "preflight": plan,
+                        "server": identity,
+                        "memory": memory,
+                        "elapsedSeconds": time.monotonic() - started,
+                    },
+                )
+            )
     return manifests
 
 

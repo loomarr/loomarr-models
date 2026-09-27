@@ -107,3 +107,29 @@ class PromptCandidateTests(unittest.TestCase):
         self.assertEqual(len(cases), 24)
         keys = [key for c in cases for key in c["expectation"]["selectedKeys"]]
         self.assertTrue(keys and all(key.split(":")[2].startswith("97") for key in keys))
+
+
+class WireProfileTests(unittest.TestCase):
+    TOOLS = [{"Name": "catalog_search", "Description": "d", "Parameters": {"type": "object"}}]
+
+    def test_search_turn_matches_loomarr_selfhosted_request(self):
+        payload = screen.request_payload("m", [{"role": "system", "content": "s"}, {"role": "user", "content": "u"}], self.TOOLS, {})
+        self.assertEqual(payload["temperature"], 0.2)
+        self.assertEqual(payload["max_tokens"], 640)
+        self.assertEqual(payload["chat_template_kwargs"], {"enable_thinking": False})
+        self.assertNotIn("response_format", payload)
+        self.assertNotIn("tool_choice", payload)
+
+    def test_finalization_keeps_tools_but_forbids_calls_and_asks_for_json(self):
+        messages = [
+            {"role": "system", "content": "s"},
+            {"role": "user", "content": "u"},
+            {"role": "assistant", "toolCalls": [{"id": "c", "name": "catalog_search", "arguments": {}}]},
+            {"role": "tool", "toolCallId": "c", "name": "catalog_search", "content": "[]"},
+            {"role": "user", "content": "Retrieval is complete."},
+        ]
+        payload = screen.request_payload("m", messages, self.TOOLS, {})
+        self.assertEqual(payload["max_tokens"], 1024)
+        self.assertEqual(payload["tool_choice"], "none")
+        self.assertEqual(payload["response_format"], {"type": "json_object"})
+        self.assertTrue(payload["tools"])

@@ -45,15 +45,21 @@
     },
     "runtime": {
       "path": "src/loomarr_models/flash_next_screen.py",
-      "sha256": "66d3914b1d0d54bf774f4d1e28c0915d7669efacee0e49a93336677272393fe6"
+      "sha256": "c098a012f4bb3aa0de4622dc8a096775e76919eea933631b37d5fe74e03a358e"
     }
   },
   "decoding": {
+    "enableThinking": false,
+    "finalJsonMode": true,
+    "finalMaxTokens": 1024,
+    "finalToolChoice": "none",
     "maxModelCallsPerCase": 3,
-    "maxTokens": 2048,
+    "profile": "loomarr-planner-selfhosted-v1",
     "requestTimeoutSeconds": 600,
+    "searchMaxTokens": 640,
     "seed": 3407,
-    "temperature": 0.0
+    "source": "loomarr c2fef697729579ba856ab8c7e4b45fe39fd0faec",
+    "temperature": 0.2
   },
   "endpoint": {
     "apiKeyFile": "/etc/fictional-ai/api-keys",

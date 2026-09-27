@@ -33,14 +33,24 @@
     },
     "runtime": {
       "path": "src/loomarr_models/candidate_screen.py",
-      "sha256": "b17df77ba893eb3137e99400f0bc83877631af7fec9ae220f9e1a00c32a16606"
+      "sha256": "a774858977335bbaa128e54c5986daa0f8d10881260a4399ece43fed44076820"
     },
     "screenModule": {
       "path": "src/loomarr_models/flash_next_screen.py",
-      "sha256": "66d3914b1d0d54bf774f4d1e28c0915d7669efacee0e49a93336677272393fe6"
+      "sha256": "c098a012f4bb3aa0de4622dc8a096775e76919eea933631b37d5fe74e03a358e"
     }
   },
   "candidates": {
+    "flash-next-served": {
+      "endpoint": {
+        "apiKeyFile": "/etc/fictional-ai/api-keys",
+        "baseUrl": "http://127.0.0.1:8080/v1",
+        "host": "fictional-ai-server",
+        "modelAlias": "flash-next",
+        "service": "fictional-ai-primary"
+      },
+      "served": true
+    },
     "qwen35-4b-q4_k_m": {
       "bytes": 2740937888,
       "file": "Qwen3.5-4B-Q4_K_M.gguf",
@@ -65,11 +75,17 @@
     }
   },
   "decoding": {
+    "enableThinking": false,
+    "finalJsonMode": true,
+    "finalMaxTokens": 1024,
+    "finalToolChoice": "none",
     "maxModelCallsPerCase": 3,
-    "maxTokens": 2048,
+    "profile": "loomarr-planner-selfhosted-v1",
     "requestTimeoutSeconds": 600,
+    "searchMaxTokens": 640,
     "seed": 3407,
-    "temperature": 0.0
+    "source": "loomarr c2fef697729579ba856ab8c7e4b45fe39fd0faec",
+    "temperature": 0.2
   },
   "experimentId": "planner-candidate-screen-v1",
   "gates": [

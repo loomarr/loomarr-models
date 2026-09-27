@@ -85,10 +85,20 @@ ENDPOINT = {
     "modelAlias": "flash-next",
     "apiKeyFile": "/etc/fictional-ai/api-keys",
 }
+# Loomarr's planner request for a self-hosted OpenAI-compatible server, from loomarr c2fef69:
+# internal/suggest/suggester.go chatOpts (grounded temperature 0.2; 640 tokens per search turn;
+# 1024 for finalization with JSON mode and tool_choice "none" while keeping the tools) and
+# internal/llm/openai.go (thinking stated off for any tool or JSON request to a self-hosted server).
 DECODING = {
-    "temperature": 0.0,
+    "profile": "loomarr-planner-selfhosted-v1",
+    "source": "loomarr c2fef697729579ba856ab8c7e4b45fe39fd0faec",
+    "temperature": 0.2,
     "seed": COMPARISON["seed"],
-    "maxTokens": COMPARISON["maxNewTokens"],
+    "searchMaxTokens": 640,
+    "finalMaxTokens": 1024,
+    "finalJsonMode": True,
+    "finalToolChoice": "none",
+    "enableThinking": False,
     "maxModelCallsPerCase": COMPARISON["maxModelCallsPerCase"],
     "requestTimeoutSeconds": 600,
 }
@@ -117,15 +127,7 @@ class OpenAIChatTurnGenerator:
         self.records: list[dict[str, Any]] = []
 
     def __call__(self, messages: list[dict[str, Any]], tools: list[dict[str, Any]]) -> dict[str, Any]:
-        payload = {
-            "model": self.endpoint["modelAlias"],
-            "messages": _to_openai_messages(messages),
-            "tools": to_huggingface_tools(tools),
-            "temperature": DECODING["temperature"],
-            "seed": DECODING["seed"],
-            "max_tokens": DECODING["maxTokens"],
-            **self.extra,
-        }
+        payload = request_payload(self.endpoint["modelAlias"], messages, tools, self.extra)
         request = urllib.request.Request(
             f"{self.endpoint['baseUrl']}/chat/completions",
             data=json.dumps(payload).encode(),
@@ -150,6 +152,29 @@ class OpenAIChatTurnGenerator:
             }
         )
         return parsed
+
+
+def request_payload(
+    model: str, messages: list[dict[str, Any]], tools: list[dict[str, Any]], extra: dict[str, Any]
+) -> dict[str, Any]:
+    """Build the request Loomarr's planner sends to a self-hosted server for this turn."""
+    # The evaluator appends a user finalization message once retrieval is complete; every other
+    # turn after the opening user prompt follows a tool result.
+    finalizing = len(messages) > 2 and messages[-1]["role"] == "user"
+    payload: dict[str, Any] = {
+        "model": model,
+        "messages": _to_openai_messages(messages),
+        "tools": to_huggingface_tools(tools),
+        "temperature": DECODING["temperature"],
+        "seed": DECODING["seed"],
+        "max_tokens": DECODING["finalMaxTokens"] if finalizing else DECODING["searchMaxTokens"],
+        "chat_template_kwargs": {"enable_thinking": DECODING["enableThinking"]},
+    }
+    if finalizing:
+        payload["tool_choice"] = DECODING["finalToolChoice"]
+        payload["response_format"] = {"type": "json_object"}
+    payload.update(extra)
+    return payload
 
 
 def parse_openai_turn(message: dict[str, Any], call_number: int) -> dict[str, Any]:
