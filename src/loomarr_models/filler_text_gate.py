@@ -178,8 +178,10 @@ def _score_text(taxonomy: Taxonomy, case: dict[str, Any], output: dict[str, Any]
             checks[axis] = (value if value in allowed else "") == expect[axis]
     if "brand" in expect:
         brand = str(output.get("brand") or "").strip()
-        grounded = brand if brand and fold(brand) in fold(signal_text(case["signals"])) else ""
-        checks["brand"] = fold(grounded) == fold(expect["brand"])
+        grounded = fold(brand) if brand and fold(brand) in fold(signal_text(case["signals"])) else ""
+        wanted = fold(expect["brand"])
+        # A fuller grounded name ("Fizzleberry Cola" for "Fizzleberry") names the same brand.
+        checks["brand"] = grounded == wanted if not wanted or not grounded else (wanted in grounded or grounded in wanted)
     for key, axis in TAG_AXES.items():
         if key not in expect:
             continue
@@ -208,8 +210,10 @@ def _score_research(_taxonomy: Taxonomy, case: dict[str, Any], output: dict[str,
             checks["year"] = year == expect["year"]
         if "countryCode" in expect:
             checks["countryCode"] = country == expect["countryCode"]
+    # Only the answer fields count; the explanation may legitimately mention what it ignored.
+    answer = json.dumps({key: output.get(key) for key in ("year", "decade", "countryCode", "country")})
     for forbidden in expect.get("forbiddenValues", []):
-        checks[f"ignored:{forbidden}"] = str(forbidden) not in json.dumps(output)
+        checks[f"ignored:{forbidden}"] = str(forbidden) not in answer
     return checks
 
 

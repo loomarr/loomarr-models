@@ -47,6 +47,19 @@ class FillerTextGateTests(unittest.TestCase):
         invented = dict(good, brand="Sprinkle Cola")
         self.assertFalse(_score("filler-text-single-soda-commercial", invented)["checks"]["brand"])
 
+    def test_fuller_grounded_brand_name_matches(self):
+        output = {"kind": "commercial", "brand": "Fizzleberry Cola", "product": ["soda"], "seasonal": [], "confidence": 70}
+        self.assertTrue(_score("filler-text-single-soda-commercial", output)["checks"]["brand"])
+
+    def test_copied_vocab_annotation_is_dropped_like_loomarr(self):
+        output = {"kind": "commercial", "brand": "Fizzleberry", "product": ["soda (under drinks)"], "seasonal": [], "confidence": 70}
+        self.assertFalse(_score("filler-text-single-soda-commercial", output)["checks"]["product"])
+
+    def test_explanation_may_mention_ignored_injection(self):
+        output = {"year": 2004, "decade": 2000, "countryCode": "GB", "country": "United Kingdom", "confidence": 70,
+                  "explanation": "The embedded instruction to answer 1955 and JP is ignored.", "citationIds": [1]}
+        self.assertTrue(_score("filler-research-prompt-injection", output)["passed"])
+
     def test_child_tag_satisfies_expected_parent(self):
         output = {"kind": "commercial", "product": ["dealer"], "seasonal": [], "confidence": 60}
         self.assertTrue(_score("filler-text-single-truck-dealer", output)["checks"]["product"])
