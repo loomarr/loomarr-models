@@ -1,0 +1,781 @@
+{
+  "artifacts": {
+    "generations": {
+      "path": "generations.jsonl",
+      "sha256": "051fa204fc6356a6314acdc7321f738d705d627892ed25cdc12db84e63775118"
+    },
+    "results": {
+      "path": "results.jsonl",
+      "sha256": "368a6a7dc152a425c170502823d71d84dc1fa70c5c912c47b1f7597ea52349f6"
+    }
+  },
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "externalSpendAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "decision": {
+    "certificationAuthority": false,
+    "failureClass": "model-quality",
+    "outcome": "qlora-justified-by-completed-stock-quality-miss",
+    "qloraJustified": true,
+    "releaseAuthorized": false,
+    "thresholdFailures": [
+      "groundedCompletionRate",
+      "correctToolOperationRate",
+      "schemaValidityRate",
+      "dateMeaningAccuracyRate",
+      "policyAccuracyRate",
+      "proposalQualityRate",
+      "p95ToolCalls",
+      "hardFailureCount"
+    ],
+    "trainingAuthorized": false
+  },
+  "elapsedSeconds": 310.4104459770024,
+  "experimentId": "planner-current-flash-next-screen-v2",
+  "externalSpendUsd": "0",
+  "preflight": {
+    "casesSha256": "68b81c0c5297625a360eb08e92f2e274110840a47b6b7e528500c2c4c444aecd",
+    "configSha256": "f972f265ff23fcaac5420e3209feb5b9edfd886fe973ee99de223a82db500925",
+    "experimentId": "planner-current-flash-next-screen-v2",
+    "externalSpendUsd": "0",
+    "gate": "v2",
+    "sourceCommit": "fad528810396c8a5e2154502f98213885100acce"
+  },
+  "prompt": {
+    "name": "candidate-a",
+    "sha256": "3522f2e82376d9a9b65f183dfb8d237e0f3feca56c6e0592603069112eca4e6f"
+  },
+  "schemaVersion": 1,
+  "server": {
+    "models": [
+      {
+        "id": "Qwen3.8-Flash-CIRU-STRIX-IU4",
+        "meta": {
+          "ftype": "Q5_K - Medium",
+          "n_ctx": 65536,
+          "n_ctx_train": 262144,
+          "n_embd": 2560,
+          "n_params": 125743653760,
+          "n_vocab": 248320,
+          "size": 79386795520,
+          "vocab_type": true
+        }
+      }
+    ]
+  },
+  "status": "complete",
+  "summary": {
+    "argumentValidityRate": 0.9166666666666666,
+    "authorityViolationCount": 0,
+    "candidateId": "qwen38-flash-next-served-default--candidate-a--t3",
+    "capabilities": {
+      "audience-ceiling": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "cast-routing": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "collection-evidence": {
+        "hardFailures": [
+          "invalid_tool_arguments",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "constraint-conflict-abstention": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "creator-routing": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "date-ambiguity": {
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "date-disjoint-intervals": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "date-movie-release": {
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "date-series-airing": {
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "date-series-premiere": {
+        "hardFailures": [
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "empty-results": {
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation",
+          "date_meaning_mismatch"
+        ],
+        "passed": false
+      },
+      "exact-key-final": {
+        "hardFailures": [
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "exact-title-unfamiliar": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "franchise-boundary": {
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "language-constraint": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "malformed-tool-result": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "medium-constraint": {
+        "hardFailures": [
+          "invalid_tool_arguments",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "network-editorial-epoch": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "observed-fault-recovery": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "ownership-acquisition-balance": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "refinement-preservation": {
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "passed": false
+      },
+      "region-constraint": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "season-window": {
+        "hardFailures": [],
+        "passed": true
+      },
+      "thin-results": {
+        "hardFailures": [],
+        "passed": true
+      }
+    },
+    "caseCount": 24,
+    "caseIds": [
+      "planner-current-development-exact-key-final-01",
+      "planner-current-development-date-movie-release-01",
+      "planner-current-development-date-series-premiere-01",
+      "planner-current-development-date-series-airing-01",
+      "planner-current-development-date-disjoint-intervals-01",
+      "planner-current-development-date-ambiguity-01",
+      "planner-current-development-collection-evidence-01",
+      "planner-current-development-franchise-boundary-01",
+      "planner-current-development-network-editorial-epoch-01",
+      "planner-current-development-cast-routing-01",
+      "planner-current-development-creator-routing-01",
+      "planner-current-development-exact-title-unfamiliar-01",
+      "planner-current-development-constraint-conflict-abstention-01",
+      "planner-current-development-ownership-acquisition-balance-01",
+      "planner-current-development-refinement-preservation-01",
+      "planner-current-development-audience-ceiling-01",
+      "planner-current-development-season-window-01",
+      "planner-current-development-medium-constraint-01",
+      "planner-current-development-language-constraint-01",
+      "planner-current-development-region-constraint-01",
+      "planner-current-development-thin-results-01",
+      "planner-current-development-empty-results-01",
+      "planner-current-development-malformed-tool-result-01",
+      "planner-current-development-observed-fault-recovery-01"
+    ],
+    "caseIdsSha256": "d4d385828efd7ac2a18c01a1aca69ca8540ee6f616b2785993a11e0f5173ce06",
+    "caseMetrics": [
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "exact-key-final",
+        "caseId": "planner-current-development-exact-key-final-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 16455426131,
+        "modelCalls": 3,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 2,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "date-movie-release",
+        "caseId": "planner-current-development-date-movie-release-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": false,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": false,
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 16166532539,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": false,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": false,
+        "toolCalls": 3,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "date-series-premiere",
+        "caseId": "planner-current-development-date-series-premiere-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 22496420737,
+        "modelCalls": 3,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 2,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "date-series-airing",
+        "caseId": "planner-current-development-date-series-airing-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": false,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": false,
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 17527073669,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": false,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": false,
+        "toolCalls": 3,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "date-disjoint-intervals",
+        "caseId": "planner-current-development-date-disjoint-intervals-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 17341445848,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "date-ambiguity",
+        "caseId": "planner-current-development-date-ambiguity-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": false,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": false,
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 10971519466,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": false,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": false,
+        "toolCalls": 3,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": false,
+        "authorityViolationCount": 0,
+        "axis": "collection-evidence",
+        "caseId": "planner-current-development-collection-evidence-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [
+          "invalid_tool_arguments",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 15178235577,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 2,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "franchise-boundary",
+        "caseId": "planner-current-development-franchise-boundary-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": false,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": false,
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 9855133969,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": false,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": false,
+        "toolCalls": 3,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "network-editorial-epoch",
+        "caseId": "planner-current-development-network-editorial-epoch-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 9960575497,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "cast-routing",
+        "caseId": "planner-current-development-cast-routing-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 11528561670,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "creator-routing",
+        "caseId": "planner-current-development-creator-routing-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 10524620774,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "exact-title-unfamiliar",
+        "caseId": "planner-current-development-exact-title-unfamiliar-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 8567733205,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "constraint-conflict-abstention",
+        "caseId": "planner-current-development-constraint-conflict-abstention-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 7163190917,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "ownership-acquisition-balance",
+        "caseId": "planner-current-development-ownership-acquisition-balance-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 10652780724,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "refinement-preservation",
+        "caseId": "planner-current-development-refinement-preservation-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": false,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": false,
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 12924794943,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": false,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": false,
+        "toolCalls": 3,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "audience-ceiling",
+        "caseId": "planner-current-development-audience-ceiling-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 10399600861,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "season-window",
+        "caseId": "planner-current-development-season-window-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 9551471806,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": false,
+        "authorityViolationCount": 0,
+        "axis": "medium-constraint",
+        "caseId": "planner-current-development-medium-constraint-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [
+          "invalid_tool_arguments",
+          "incorrect_tool_operation"
+        ],
+        "latencyNanos": 14031228281,
+        "modelCalls": 3,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 2,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "language-constraint",
+        "caseId": "planner-current-development-language-constraint-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 9987043574,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "region-constraint",
+        "caseId": "planner-current-development-region-constraint-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 8757523186,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "thin-results",
+        "caseId": "planner-current-development-thin-results-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 9207712892,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "empty-results",
+        "caseId": "planner-current-development-empty-results-01",
+        "correctToolOperation": false,
+        "dateMeaningAccuracy": false,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": false,
+        "hardFailures": [
+          "schema_invalid",
+          "incorrect_tool_operation",
+          "date_meaning_mismatch"
+        ],
+        "latencyNanos": 24218436557,
+        "modelCalls": 3,
+        "policyAccuracy": false,
+        "proposalQuality": false,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": false,
+        "toolCalls": 3,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "malformed-tool-result",
+        "caseId": "planner-current-development-malformed-tool-result-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": false,
+        "faultObserved": false,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 8080945478,
+        "modelCalls": 2,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": false,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 1,
+        "unsupportedKeyCount": 0
+      },
+      {
+        "argumentValidity": true,
+        "authorityViolationCount": 0,
+        "axis": "observed-fault-recovery",
+        "caseId": "planner-current-development-observed-fault-recovery-01",
+        "correctToolOperation": true,
+        "dateMeaningAccuracy": true,
+        "faultInjected": true,
+        "faultObserved": true,
+        "groundedCompletion": true,
+        "hardFailures": [],
+        "latencyNanos": 18851511813,
+        "modelCalls": 3,
+        "policyAccuracy": true,
+        "proposalQuality": true,
+        "recoveryExpected": true,
+        "recoverySuccessful": true,
+        "schemaValidity": true,
+        "toolCalls": 2,
+        "unsupportedKeyCount": 0
+      }
+    ],
+    "correctToolOperationRate": 0.5833333333333334,
+    "dateMeaningAccuracyRate": 0.75,
+    "groundedCompletionRate": 0.75,
+    "hardFailureCount": 19,
+    "latencyP50Nanos": 10812150095,
+    "latencyP95Nanos": 22496420737,
+    "p95ToolCalls": 3,
+    "peakVramBytes": 0,
+    "policyAccuracyRate": 0.7083333333333334,
+    "proposalQualityRate": 0.75,
+    "recoveryRate": 1.0,
+    "schemaValidityRate": 0.75,
+    "unsupportedKeyCount": 0
+  },
+  "trial": 3,
+  "variant": "default"
+}
