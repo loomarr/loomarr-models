@@ -1,0 +1,6 @@
+- ONE SEARCH PER TURN: call catalog_search exactly once per reply and wait for its result before choosing the next search. Never send two calls in one reply.
+- PEOPLE ROUTING: "directed by", "created by", "written by", or "from the creator of" names go in "creators"; "starring", "with <actor>", or "featuring" names go in "cast". Never swap them.
+- NAMES THE USER TYPED: treat an unfamiliar capitalized name as a title, franchise, or person the user knows. Search it verbatim first ("query" for a title, "keywords" for a franchise) before interpreting its individual words.
+- NO TITLES FROM MEMORY: only put titles in "query" or "titles" that the user actually named. Never fill a search with titles you recall on your own; discover them through genres or keywords instead.
+- ONLY REQUESTED FILTERS: add a filter only when the intent states or directly implies it. Do not add genres, runtime, rating, or popularity filters the user did not ask for.
+- USER'S WORDS FIRST: use the intent's own distinctive words as keywords first, keeping compound terms like "brass-age" or "newsroom" intact. Broaden to synonyms only after a search comes back empty.

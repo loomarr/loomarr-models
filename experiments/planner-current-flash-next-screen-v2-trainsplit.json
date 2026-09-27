@@ -1,0 +1,93 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "externalSpendAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "cases": {
+      "path": "evaluation/planner-current-v2/trainsplit-cases.jsonl",
+      "sha256": "b1d24ea3e36b0e4d04f47dd9fecd4ff4c40a91703509b47abce387950599d79c"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-current-v2/trainsplit-manifest.json",
+      "sha256": "20af3fba4f7e9ed2be3b2319b725259e9ba9be587a59ff907cf6f55cc31e6461"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "gateModule": {
+      "path": "src/loomarr_models/current_gate_v2.py",
+      "sha256": "f05b6ed8fb4a36c1fbdf3ceb625df27478bde468ece696c96066711eca4aa4ed"
+    },
+    "generator": {
+      "path": "scripts/build_planner_flash_next_screen.py",
+      "sha256": "a62295fe308ef23084a8958a119ae7602c3b8b39bc278a5cc805088700749a45"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/planner-holdout-denylist-v2.json",
+      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+    },
+    "prompt:candidate-a": {
+      "path": "experiments/prompt-candidates/planner-prompt-candidate-a.txt",
+      "sha256": "3698c4fcb821d22386c6ad6e55e55b51a89f2873a93e6507bc2d37aef9b2c8dd"
+    },
+    "referenceBaseline": {
+      "path": "runs/planner-current-qwen-stock-baseline-v3/publication.json",
+      "sha256": "0b033229b49585a9c12e6adbe7d16b3333f94950fc8d18e8c693e9a42e4dbf79"
+    },
+    "runner": {
+      "path": "scripts/run_planner_flash_next_screen.py",
+      "sha256": "c86a2665e2be56982579d9997375761c045cd2702152ea1b2409457c99a8197a"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/flash_next_screen.py",
+      "sha256": "b981fc73399727c4788d9fd36013f5dd17902e0518219a6da2026ea00c8a9602"
+    }
+  },
+  "decoding": {
+    "maxModelCallsPerCase": 3,
+    "maxTokens": 2048,
+    "requestTimeoutSeconds": 600,
+    "seed": 3407,
+    "temperature": 0.0
+  },
+  "endpoint": {
+    "apiKeyFile": "/etc/fictional-ai/api-keys",
+    "baseUrl": "http://127.0.0.1:8080/v1",
+    "host": "fictional-ai-server",
+    "modelAlias": "flash-next",
+    "service": "fictional-ai-primary"
+  },
+  "experimentId": "planner-current-flash-next-screen-v2-trainsplit",
+  "gate": "v2-trainsplit",
+  "prompts": {
+    "candidate-a": "experiments/prompt-candidates/planner-prompt-candidate-a.txt",
+    "production": null
+  },
+  "purpose": "Screen the served Flash-Next model, which Loomarr uses for every function, on the current-contract gate before choosing a training target.",
+  "schemaVersion": 1,
+  "scoring": {
+    "scorerVersion": "planner-current-development-scorer-v3",
+    "thresholds": {
+      "maxP95ToolCalls": 2,
+      "minCorrectToolOperationRate": 0.9,
+      "minDateMeaningAccuracyRate": 1.0,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 1.0,
+      "minSchemaValidityRate": 0.98
+    }
+  },
+  "status": "planned-local-zero-spend",
+  "variants": {
+    "default": {},
+    "single-call": {
+      "parallel_tool_calls": false
+    }
+  }
+}

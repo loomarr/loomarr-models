@@ -1,0 +1,13 @@
+# Local Strix Halo (gfx1151) lane: bf16 Transformers + PEFT, no Unsloth or bitsandbytes.
+# Resolve for Linux x86_64 and Python 3.12. torch and its gfx1151 kernel packages come from
+# AMD's ROCm 10 wheel index. Without the per-device packages, every kernel fails with
+# hipErrorInvalidImage.
+torch==2.13.0+rocm10.0.0
+amd-torch-device-gfx1151==2.13.0+rocm10.0.0
+rocm-sdk-device-gfx1151==10.0.0
+# Same training/eval library pins as the A40 lane (qwen38-a40-v1).
+transformers==5.15.1
+peft==0.18.0
+trl==0.22.2
+# Required by transformers device_map loading.
+accelerate==1.15.0

@@ -1,0 +1,106 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "externalSpendAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "budgetLedger": {
+      "path": "budgets/external-spend-v1.json",
+      "sha256": "c82bfe8fe5bc8fd6391c21a31fcad006a09040bafc2272b67a8c7181743a51ce"
+    },
+    "cases": {
+      "path": "evaluation/planner-current-v1/cases.jsonl",
+      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
+    },
+    "casesManifest": {
+      "path": "evaluation/planner-current-v1/manifest.json",
+      "sha256": "3d5aa3c64bdbf16e1731e716242867632b1a2bbbd5fec5cdddf95ded742de2da"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "environment": {
+      "path": "environments/qwen38-strixhalo-v1.json",
+      "sha256": "3aa8323b863b4e2f9368c6576b7f181ac19991b274896978b8ba20a2ab91d882"
+    },
+    "generator": {
+      "path": "scripts/build_planner_local_baseline.py",
+      "sha256": "07258fb9575e5d9afd87021dc03c85ff63e23aaa6c6175a92754e680c306ff93"
+    },
+    "holdoutDenylist": {
+      "path": "contracts/planner-holdout-denylist-v2.json",
+      "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
+    },
+    "referenceBaseline": {
+      "path": "runs/planner-current-qwen-stock-baseline-v3/publication.json",
+      "sha256": "0b033229b49585a9c12e6adbe7d16b3333f94950fc8d18e8c693e9a42e4dbf79"
+    },
+    "runner": {
+      "path": "scripts/run_planner_local_baseline.py",
+      "sha256": "4c58a00eae5978e1503af8d8d12fb8cafa70339a9c4a2a5a5d3c8c76712c704d"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/local_baseline.py",
+      "sha256": "c463e6541e5bdc5379b70472ba746f7a8782e2f393d2725f77e20ca1aea7d54d"
+    }
+  },
+  "comparison": {
+    "disableCompile": true,
+    "doSample": false,
+    "maxModelCallsPerCase": 3,
+    "maxNewTokens": 2048,
+    "maxSeqLength": 16384,
+    "offloadEmbedding": false,
+    "reasoningEffort": "low",
+    "sameCasesAndOrderRequiredForAdapter": true,
+    "seed": 3407,
+    "temperature": null,
+    "topP": null,
+    "trials": 1
+  },
+  "execution": {
+    "automaticRetry": false,
+    "externalSpendUsd": "0",
+    "flashSdpa": false,
+    "gpuArch": "gfx1151",
+    "host": "fictional-ai-server",
+    "maxWallClockSeconds": 21600,
+    "minimumGpuMemoryGb": 100,
+    "outputDir": ".artifacts/planner-current-qwen-local-baseline-v1",
+    "platform": "linux-amd64",
+    "requireCleanGit": true
+  },
+  "experimentId": "planner-current-qwen-local-baseline-v1",
+  "model": {
+    "candidateId": "qwen38-27b-bf16",
+    "dtype": "bfloat16",
+    "repository": "Qwen/Qwen3.8-27B",
+    "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "tokenizer": {
+      "chatTemplateSha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+      "repository": "unsloth/Qwen3.8-27B-unsloth-bnb-4bit",
+      "revision": "8aa5f05d26b7205477066e1449e0af13f762a299",
+      "tokenizerSha256": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523"
+    }
+  },
+  "purpose": "Re-establish the current-contract stock baseline on the local Strix Halo host with bf16 weights before local LoRA training. Scores are compared with, not substituted for, the published A40 bnb-4bit v3 baseline.",
+  "schemaVersion": 1,
+  "scoring": {
+    "scorerVersion": "planner-current-development-scorer-v2",
+    "thresholds": {
+      "maxP95ToolCalls": 2,
+      "minCorrectToolOperationRate": 0.9,
+      "minDateMeaningAccuracyRate": 1.0,
+      "minGroundedCompletionRate": 0.95,
+      "minPolicyAccuracyRate": 0.95,
+      "minProposalQualityRate": 0.9,
+      "minRecoveryRate": 1.0,
+      "minSchemaValidityRate": 0.98
+    }
+  },
+  "status": "planned-local-zero-spend"
+}

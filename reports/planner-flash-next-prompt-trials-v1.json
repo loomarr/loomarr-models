@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "sets": {
+    "dev": {
+      "candidate-a": {
+        "capabilities": {
+          "audience-ceiling": 1.0,
+          "cast-routing": 1.0,
+          "collection-evidence": 0.0,
+          "constraint-conflict-abstention": 1.0,
+          "creator-routing": 1.0,
+          "date-ambiguity": 0.0,
+          "date-disjoint-intervals": 1.0,
+          "date-movie-release": 0.0,
+          "date-series-airing": 0.0,
+          "date-series-premiere": 0.0,
+          "empty-results": 0.0,
+          "exact-key-final": 0.0,
+          "exact-title-unfamiliar": 1.0,
+          "franchise-boundary": 0.0,
+          "language-constraint": 1.0,
+          "malformed-tool-result": 1.0,
+          "medium-constraint": 0.0,
+          "network-editorial-epoch": 1.0,
+          "observed-fault-recovery": 0.2,
+          "ownership-acquisition-balance": 1.0,
+          "refinement-preservation": 0.0,
+          "region-constraint": 1.0,
+          "season-window": 1.0,
+          "thin-results": 1.0
+        },
+        "meanPassed": 13.2,
+        "passed": [
+          13,
+          13,
+          14,
+          13,
+          13
+        ],
+        "rangePassed": [
+          13,
+          14
+        ],
+        "trials": 5
+      },
+      "production": {
+        "capabilities": {
+          "audience-ceiling": 0.8,
+          "cast-routing": 1.0,
+          "collection-evidence": 0.0,
+          "constraint-conflict-abstention": 0.8,
+          "creator-routing": 0.2,
+          "date-ambiguity": 0.0,
+          "date-disjoint-intervals": 1.0,
+          "date-movie-release": 1.0,
+          "date-series-airing": 0.0,
+          "date-series-premiere": 0.2,
+          "empty-results": 0.0,
+          "exact-key-final": 1.0,
+          "exact-title-unfamiliar": 1.0,
+          "franchise-boundary": 0.0,
+          "language-constraint": 1.0,
+          "malformed-tool-result": 1.0,
+          "medium-constraint": 0.8,
+          "network-editorial-epoch": 0.8,
+          "observed-fault-recovery": 0.0,
+          "ownership-acquisition-balance": 1.0,
+          "refinement-preservation": 0.0,
+          "region-constraint": 1.0,
+          "season-window": 0.0,
+          "thin-results": 1.0
+        },
+        "meanPassed": 13.6,
+        "passed": [
+          14,
+          12,
+          14,
+          14,
+          14
+        ],
+        "rangePassed": [
+          12,
+          14
+        ],
+        "trials": 5
+      }
+    },
+    "train-split": {
+      "candidate-a": {
+        "capabilities": {
+          "audience-ceiling": 0.0,
+          "cast-routing": 1.0,
+          "collection-evidence": 0.0,
+          "constraint-conflict-abstention": 1.0,
+          "creator-routing": 1.0,
+          "date-ambiguity": 0.0,
+          "date-disjoint-intervals": 1.0,
+          "date-movie-release": 1.0,
+          "date-series-airing": 0.0,
+          "date-series-premiere": 1.0,
+          "empty-results": 0.0,
+          "exact-key-final": 1.0,
+          "exact-title-unfamiliar": 0.0,
+          "franchise-boundary": 0.0,
+          "language-constraint": 1.0,
+          "malformed-tool-result": 1.0,
+          "medium-constraint": 1.0,
+          "network-editorial-epoch": 1.0,
+          "observed-fault-recovery": 0.0,
+          "ownership-acquisition-balance": 1.0,
+          "refinement-preservation": 0.0,
+          "region-constraint": 1.0,
+          "season-window": 1.0,
+          "thin-results": 0.0
+        },
+        "meanPassed": 14,
+        "passed": [
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "rangePassed": [
+          14,
+          14
+        ],
+        "trials": 5
+      },
+      "production": {
+        "capabilities": {
+          "audience-ceiling": 0.0,
+          "cast-routing": 1.0,
+          "collection-evidence": 0.0,
+          "constraint-conflict-abstention": 1.0,
+          "creator-routing": 0.0,
+          "date-ambiguity": 0.0,
+          "date-disjoint-intervals": 0.8,
+          "date-movie-release": 0.2,
+          "date-series-airing": 0.0,
+          "date-series-premiere": 0.0,
+          "empty-results": 0.0,
+          "exact-key-final": 1.0,
+          "exact-title-unfamiliar": 1.0,
+          "franchise-boundary": 1.0,
+          "language-constraint": 1.0,
+          "malformed-tool-result": 1.0,
+          "medium-constraint": 1.0,
+          "network-editorial-epoch": 1.0,
+          "observed-fault-recovery": 0.0,
+          "ownership-acquisition-balance": 1.0,
+          "refinement-preservation": 0.0,
+          "region-constraint": 1.0,
+          "season-window": 1.0,
+          "thin-results": 0.0
+        },
+        "meanPassed": 13,
+        "passed": [
+          13,
+          13,
+          13,
+          13,
+          13
+        ],
+        "rangePassed": [
+          13,
+          13
+        ],
+        "trials": 5
+      }
+    }
+  }
+}

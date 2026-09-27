@@ -1,10 +1,10 @@
-.PHONY: check compile test check-budget-reconciliation generate-current-contract check-current-contract init-current-review generate-current-review check-current-review finalize-current-review generate-current-stock-baseline check-current-stock-baseline preflight-current-stock-baseline generate-current-stock-baseline-v3 check-current-stock-baseline-v3 preflight-current-stock-baseline-v3 run-current-stock-baseline-v3 publish-current-stock-baseline-v3 generate-current-qlora-v1 check-current-qlora-v1 preflight-current-qlora-v1 run-current-qlora-v1 verify-current-qlora-v1 generate-current-qlora-v2 check-current-qlora-v2 preflight-current-qlora-v2-plan preflight-current-qlora-v2 run-current-qlora-v2 verify-current-qlora-v2 publish-current-qlora-v2-failure check-current-prompt-capacity run-current-stock-baseline publish-current-stock-baseline publish-current-stock-failure init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus init-v4-review generate-v4-corpus check-v4-corpus generate-v4-review-plan check-v4-review-plan preflight-v4-review run-v4-review publish-v4-review promote-v4-review generate-v4-local-screen check-v4-local-screen preflight-v4-local-screen run-v4-local-screen-qwen run-v4-local-screen-gemma publish-v4-local-screen generate-v4-stock-baseline check-v4-stock-baseline preflight-v4-stock-baseline run-v4-stock-baseline publish-v4-stock-baseline generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 verify-qlora-v2-artifact generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval
+.PHONY: check compile test check-budget-reconciliation generate-current-contract check-current-contract init-current-review generate-current-review check-current-review finalize-current-review generate-current-stock-baseline check-current-stock-baseline preflight-current-stock-baseline generate-current-stock-baseline-v3 check-current-stock-baseline-v3 preflight-current-stock-baseline-v3 run-current-stock-baseline-v3 publish-current-stock-baseline-v3 generate-current-qlora-v1 check-current-qlora-v1 preflight-current-qlora-v1 run-current-qlora-v1 verify-current-qlora-v1 generate-current-qlora-v2 check-current-qlora-v2 preflight-current-qlora-v2-plan preflight-current-qlora-v2 run-current-qlora-v2 verify-current-qlora-v2 publish-current-qlora-v2-failure check-current-prompt-capacity run-current-stock-baseline publish-current-stock-baseline publish-current-stock-failure init-review generate-drafts check-generated generate-development-eval check-development-eval init-targeted-review generate-targeted-corpus check-targeted-corpus init-v4-review generate-v4-corpus check-v4-corpus generate-v4-review-plan check-v4-review-plan preflight-v4-review run-v4-review publish-v4-review promote-v4-review generate-v4-local-screen check-v4-local-screen preflight-v4-local-screen run-v4-local-screen-qwen run-v4-local-screen-gemma publish-v4-local-screen generate-v4-stock-baseline check-v4-stock-baseline preflight-v4-stock-baseline run-v4-stock-baseline publish-v4-stock-baseline generate-corrected-targeted-review check-corrected-targeted-review refresh-corrected-targeted-review-routes check-live-corrected-targeted-review-routes preflight-targeted-review run-targeted-review publish-targeted-review promote-targeted-review preflight-corrected-targeted-review run-corrected-targeted-review publish-corrected-targeted-review promote-corrected-targeted-review finalize-targeted-corpus check-targeted-finalized generate-qlora-v2-plan check-qlora-v2-plan preflight-qlora-v2-plan preflight-qlora-v2 verify-qlora-v2-artifact generate-review check-review check-finalized finalize-corpus preflight-model-review run-model-review publish-model-review promote-model-review lock-qwen38-a40 check-environment sync-qwen38-a40 validate-drafts validate-corpus preflight-qwen38 preflight-planner-eval run-planner-eval replay-planner-eval sync-qwen38-strixhalo generate-local-baseline check-local-baseline preflight-local-baseline run-local-baseline publish-local-baseline check-flash-next-screen run-flash-next-screen publish-flash-next-screen check-current-contract-v2
 
 PYTHON ?= python3
 UV ?= uv
 UV_VERSION := 0.12.9
 
-check: compile test check-budget-reconciliation check-current-contract check-current-review check-current-stock-baseline check-current-stock-baseline-v3 check-current-qlora-v1 check-current-qlora-v2 check-generated check-development-eval check-targeted-corpus check-v4-corpus check-v4-review-plan check-v4-local-screen check-v4-stock-baseline check-corrected-targeted-review check-targeted-finalized check-qlora-v2-plan check-review check-finalized check-environment validate-drafts
+check: compile test check-budget-reconciliation check-current-contract check-current-review check-current-stock-baseline check-current-stock-baseline-v3 check-current-qlora-v1 check-current-qlora-v2 check-generated check-development-eval check-targeted-corpus check-v4-corpus check-v4-review-plan check-v4-local-screen check-v4-stock-baseline check-corrected-targeted-review check-targeted-finalized check-qlora-v2-plan check-review check-finalized check-environment check-local-baseline check-flash-next-screen check-current-contract-v2 validate-drafts
 
 compile:
 	$(PYTHON) -m compileall -q scripts src tests
@@ -286,6 +286,46 @@ lock-qwen38-a40:
 
 check-environment:
 	$(PYTHON) scripts/verify_environment.py
+	$(PYTHON) scripts/verify_environment_strixhalo.py
+
+# Local zero-spend Strix Halo lane. Run on fictional-ai-server inside the synced venv.
+sync-qwen38-strixhalo:
+	$(UV) pip sync --require-hashes --index-url https://pypi.org/simple \
+		--extra-index-url https://stable.repo.amd.com/rocm/whl-next/ --index-strategy unsafe-best-match \
+		environments/qwen38-strixhalo-v1.requirements.lock
+
+generate-local-baseline:
+	$(PYTHON) scripts/build_planner_local_baseline.py
+
+check-local-baseline:
+	$(PYTHON) scripts/build_planner_local_baseline.py --check
+
+preflight-local-baseline:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_local_baseline.py --preflight-only
+
+run-local-baseline:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_local_baseline.py
+
+publish-local-baseline:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_local_baseline.py --publish
+
+check-current-contract-v2:
+	$(PYTHON) scripts/build_planner_current_contract_v2.py --check
+
+# Served Flash-Next screen. Run on fictional-ai-server; GATE=v1|v2|v2-trainsplit,
+# VARIANT=default|single-call, PROMPT=production|candidate-a.
+VARIANT ?= default
+GATE ?= v2
+PROMPT ?= production
+TRIAL ?= 1
+check-flash-next-screen:
+	$(PYTHON) scripts/build_planner_flash_next_screen.py --check
+
+run-flash-next-screen:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT) --trial $(TRIAL)
+
+publish-flash-next-screen:
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT) --trial $(TRIAL) --publish
 
 sync-qwen38-a40:
 	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }
