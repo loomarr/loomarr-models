@@ -1,0 +1,33 @@
+{
+  "artifacts": {
+    "generations.jsonl": "c0801bfc3e3fc68158133e3256ec666ad87590d8455d78eeb212a108d2b43744",
+    "results.jsonl": "3b8fea78400cb61f984d897612c10ce06deb78429c432057eedaa49c7df13db5"
+  },
+  "byCallSite": {
+    "filler.research": {
+      "cases": 8,
+      "passed": 8
+    },
+    "filler.split_rescue": {
+      "cases": 8,
+      "passed": 8
+    },
+    "filler.text_single": {
+      "cases": 20,
+      "passed": 17
+    }
+  },
+  "candidate": "flash-next-served",
+  "cases": 36,
+  "elapsedSeconds": 246.7120554819703,
+  "endpoint": {
+    "baseUrl": "http://127.0.0.1:8080/v1",
+    "modelAlias": "flash-next"
+  },
+  "experimentId": "filler-text-gate-v1",
+  "externalSpendUsd": "0",
+  "passed": 33,
+  "schemaVersion": 1,
+  "sourceCommit": "9fd752eeb0bf8937866ce100cf896513c364b703",
+  "trial": 1
+}
