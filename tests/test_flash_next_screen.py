@@ -86,3 +86,24 @@ class FlashNextScreenTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PromptCandidateTests(unittest.TestCase):
+    def test_candidate_rules_are_inserted_once_before_the_final_json_instruction(self):
+        contract = json.loads((ROOT / screen.BINDINGS["contract"]).read_text(encoding="utf-8"))
+        patched = screen.apply_prompt(contract["systemPrompt"], ROOT / screen.PROMPTS["candidate-a"])
+        self.assertEqual(patched.count("ONE SEARCH PER TURN"), 1)
+        self.assertLess(patched.index("ONE SEARCH PER TURN"), patched.index(screen.PROMPT_ANCHOR))
+        self.assertTrue(patched.startswith(contract["systemPrompt"].split(screen.PROMPT_ANCHOR)[0]))
+
+    def test_production_prompt_is_unchanged(self):
+        contract = json.loads((ROOT / screen.BINDINGS["contract"]).read_text(encoding="utf-8"))
+        self.assertEqual(screen.apply_prompt(contract["systemPrompt"], None), contract["systemPrompt"])
+
+    def test_trainsplit_screen_is_never_a_training_gate(self):
+        manifest = json.loads((ROOT / screen.GATES["v2-trainsplit"]["casesManifest"]).read_text(encoding="utf-8"))
+        self.assertIs(manifest["trainingDecisionAuthority"], False)
+        cases = read_jsonl(ROOT / screen.GATES["v2-trainsplit"]["cases"])
+        self.assertEqual(len(cases), 24)
+        keys = [key for c in cases for key in c["expectation"]["selectedKeys"]]
+        self.assertTrue(keys and all(key.split(":")[2].startswith("97") for key in keys))

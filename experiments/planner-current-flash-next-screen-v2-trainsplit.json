@@ -8,12 +8,12 @@
   },
   "bindings": {
     "cases": {
-      "path": "evaluation/planner-current-v2/cases.jsonl",
-      "sha256": "68b81c0c5297625a360eb08e92f2e274110840a47b6b7e528500c2c4c444aecd"
+      "path": "evaluation/planner-current-v2/trainsplit-cases.jsonl",
+      "sha256": "b1d24ea3e36b0e4d04f47dd9fecd4ff4c40a91703509b47abce387950599d79c"
     },
     "casesManifest": {
-      "path": "evaluation/planner-current-v2/manifest.json",
-      "sha256": "7dde59070a237581c5618473a560d8e89d4d6977de05c2fa0de5d22f7ab6e73b"
+      "path": "evaluation/planner-current-v2/trainsplit-manifest.json",
+      "sha256": "20af3fba4f7e9ed2be3b2319b725259e9ba9be587a59ff907cf6f55cc31e6461"
     },
     "contract": {
       "path": "contracts/planner-contract-v5.json",
@@ -62,8 +62,8 @@
     "modelAlias": "flash-next",
     "service": "fictional-ai-primary"
   },
-  "experimentId": "planner-current-flash-next-screen-v2",
-  "gate": "v2",
+  "experimentId": "planner-current-flash-next-screen-v2-trainsplit",
+  "gate": "v2-trainsplit",
   "prompts": {
     "candidate-a": "experiments/prompt-candidates/planner-prompt-candidate-a.txt",
     "production": null

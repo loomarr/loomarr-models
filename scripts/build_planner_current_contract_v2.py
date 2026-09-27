@@ -33,12 +33,14 @@ from loomarr_models.current_contract import (
     validate_current_trace,
     validate_disjoint_splits,
 )
-from loomarr_models.current_gate_v2 import SCORER_VERSION
+from loomarr_models.current_gate_v2 import SCORER_VERSION, step_accepts
 
 
 GENERATOR_ID = "planner-current-contract-generator-v2"
 DEVELOPMENT_PATH = Path("evaluation/planner-current-v2/cases.jsonl")
 DEVELOPMENT_MANIFEST_PATH = Path("evaluation/planner-current-v2/manifest.json")
+TRAINSPLIT_PATH = Path("evaluation/planner-current-v2/trainsplit-cases.jsonl")
+TRAINSPLIT_MANIFEST_PATH = Path("evaluation/planner-current-v2/trainsplit-manifest.json")
 TRAIN_PATH = Path("corpus/planner-current-v2/drafts.jsonl")
 TRAIN_MANIFEST_PATH = Path("corpus/planner-current-v2/draft-manifest.json")
 
@@ -150,6 +152,48 @@ def development_case(contract: dict[str, Any], capability: str, index: int) -> d
     return case
 
 
+def trainsplit_case(contract: dict[str, Any], capability: str, index: int) -> dict[str, Any]:
+    """A development-shaped case over the training-split intent and catalog, for prompt screening.
+
+    It shares intents with the training drafts, so it can detect prompt overfitting to the
+    development cases but must never stand in for the development gate in a training decision.
+    """
+    spec = v1.capability_spec(capability, index, "train")
+    expectation: dict[str, Any] = {
+        "selectedKeys": spec["selected"],
+        "forbiddenKeys": spec["forbidden"],
+        "dateMeaning": spec["meaning"],
+        "abstain": spec["abstain"],
+        "maxToolCalls": len(spec["results"]),
+        "policy": {"audienceCeiling": "TV-PG" if capability == "audience-ceiling" else None, "rulesAllowed": False},
+    }
+    if capability == "observed-fault-recovery":
+        expectation["faultInjected"] = True
+        expectation["faultObserved"] = True
+    arguments_by_step = spec["argumentsByStep"]
+    if capability == "medium-constraint":
+        extra_terms = ["ocean"]
+    else:
+        extra_terms = None
+    script = []
+    for arguments, result in zip(arguments_by_step, spec["results"], strict=True):
+        accept = accept_rule(capability, arguments)
+        if extra_terms:
+            accept["fields"]["keywords"]["value"] = extra_terms
+        script.append({"arguments": arguments, "result": v1.tool_result_text(result), "accept": accept})
+    return {
+        "schemaVersion": 1,
+        "caseId": f"planner-current-trainsplit-{capability}-01",
+        "split": "development-eval",
+        "axis": capability,
+        "contract": v1.contract_reference(contract, v1.TRAIN_FIXTURE_ID),
+        "intent": spec["intent"],
+        "script": script,
+        "expectation": expectation,
+        "provenance": {"source": "synthetic", "generator": GENERATOR_ID, "author": "codex:fixture", "intent": spec["intent"]},
+    }
+
+
 def training_trace(contract: dict[str, Any], capability: str, index: int) -> dict[str, Any]:
     trace = v1.training_trace(contract, capability, index)
     final = json.loads(trace["messages"][-1]["content"])
@@ -172,6 +216,14 @@ def build_outputs() -> dict[Path, bytes]:
         validate_current_development_case(case, contract, v1.DEVELOPMENT_FIXTURE_ID)
         assert_not_denylisted(case["caseId"], case, exact, normalized, minimum, protected)
     validate_disjoint_splits({"current-training": traces, "current-development": development})
+    trainsplit = [trainsplit_case(contract, c, i) for i, c in enumerate(CURRENT_CAPABILITIES)]
+    for case in trainsplit:
+        validate_current_development_case(case, contract, v1.TRAIN_FIXTURE_ID)
+        assert_not_denylisted(case["caseId"], case, exact, normalized, minimum, protected)
+        for step in case["script"]:
+            if not step_accepts(step, step["arguments"]):
+                raise SystemExit(f"{case['caseId']}: canonical step rejected by its accept rule")
+    trainsplit_blob = v1.jsonl_bytes(trainsplit)
 
     train_blob, development_blob = v1.jsonl_bytes(traces), v1.jsonl_bytes(development)
     generator = {
@@ -195,6 +247,18 @@ def build_outputs() -> dict[Path, bytes]:
             "sha256": hashlib.sha256(development_blob).hexdigest(),
             **common,
             "modelExposure": "none",
+            "certificationAuthority": False,
+        }),
+        TRAINSPLIT_PATH: trainsplit_blob,
+        TRAINSPLIT_MANIFEST_PATH: v1.json_bytes({
+            "schemaVersion": 1,
+            "evaluationId": "planner-current-trainsplit-screen-v2",
+            "purpose": "prompt-overfitting screen only; shares intents with the training drafts",
+            "trainingDecisionAuthority": False,
+            "scorerVersion": SCORER_VERSION,
+            "records": len(trainsplit),
+            "sha256": hashlib.sha256(trainsplit_blob).hexdigest(),
+            **common,
             "certificationAuthority": False,
         }),
         TRAIN_PATH: train_blob,

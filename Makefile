@@ -312,17 +312,19 @@ publish-local-baseline:
 check-current-contract-v2:
 	$(PYTHON) scripts/build_planner_current_contract_v2.py --check
 
-# Served Flash-Next screen. Run on fictional-ai-server; GATE=v1|v2, VARIANT=default|single-call.
+# Served Flash-Next screen. Run on fictional-ai-server; GATE=v1|v2|v2-trainsplit,
+# VARIANT=default|single-call, PROMPT=production|candidate-a.
 VARIANT ?= default
 GATE ?= v2
+PROMPT ?= production
 check-flash-next-screen:
 	$(PYTHON) scripts/build_planner_flash_next_screen.py --check
 
 run-flash-next-screen:
-	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT)
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT)
 
 publish-flash-next-screen:
-	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --publish
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT) --publish
 
 sync-qwen38-a40:
 	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }

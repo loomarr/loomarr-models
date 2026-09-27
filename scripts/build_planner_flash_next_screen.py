@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from loomarr_models.flash_next_screen import AUTHORITY, DECODING, ENDPOINT, GATES, VARIANTS, bindings, experiment_id, scoring
+from loomarr_models.flash_next_screen import PROMPTS, AUTHORITY, DECODING, ENDPOINT, GATES, VARIANTS, bindings, experiment_id, scoring
 
 
 def output(gate: str) -> Path:
@@ -35,6 +35,7 @@ def content(gate: str) -> bytes:
         "endpoint": ENDPOINT,
         "decoding": DECODING,
         "variants": VARIANTS,
+        "prompts": PROMPTS if gate != "v1" else {"production": None},
         "scoring": scoring(gate),
         "authority": AUTHORITY,
     }

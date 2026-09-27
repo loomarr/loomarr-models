@@ -8,7 +8,7 @@
   "generator": {
     "id": "planner-current-contract-generator-v2",
     "path": "scripts/build_planner_current_contract_v2.py",
-    "sha256": "6aad7d04688a5bd7f5d0c99fdee55ac5c74a40a9e986fadf7a6bcd1b79132e2f"
+    "sha256": "c9f30076a0b23e64f1874d1d7741e8dc37606c959c4595ae10fc7d0db63127f5"
   },
   "holdoutDenylist": {
     "path": "contracts/planner-holdout-denylist-v2.json",

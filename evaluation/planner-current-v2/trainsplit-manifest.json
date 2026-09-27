@@ -1,9 +1,10 @@
 {
+  "certificationAuthority": false,
   "contract": {
     "path": "contracts/planner-contract-v5.json",
     "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
   },
-  "corpusId": "planner-current-training-v2",
+  "evaluationId": "planner-current-trainsplit-screen-v2",
   "generator": {
     "id": "planner-current-contract-generator-v2",
     "path": "scripts/build_planner_current_contract_v2.py",
@@ -13,10 +14,10 @@
     "path": "contracts/planner-holdout-denylist-v2.json",
     "sha256": "04bb3009b711005c9789b503cb8369e2bd0b0108afea84e9789e8b5c85f69b1b"
   },
+  "purpose": "prompt-overfitting screen only; shares intents with the training drafts",
   "records": 24,
-  "reviewStatus": "pending",
   "schemaVersion": 1,
-  "sha256": "73ecb251d2312b6e38ad93b0bc30bed7c5efea7f8f85407983de01622969c56a",
-  "supersedes": "planner-current-training-v1",
-  "trainingAuthorized": false
+  "scorerVersion": "planner-current-development-scorer-v3",
+  "sha256": "b1d24ea3e36b0e4d04f47dd9fecd4ff4c40a91703509b47abce387950599d79c",
+  "trainingDecisionAuthority": false
 }

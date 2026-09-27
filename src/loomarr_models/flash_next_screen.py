@@ -39,8 +39,30 @@ GATES = {
         "casesManifest": "evaluation/planner-current-v2/manifest.json",
         "scorerVersion": V2_SCORER_VERSION,
     },
+    # Prompt-overfitting screen only: training-split intents and catalog, never a training gate.
+    "v2-trainsplit": {
+        "cases": "evaluation/planner-current-v2/trainsplit-cases.jsonl",
+        "casesManifest": "evaluation/planner-current-v2/trainsplit-manifest.json",
+        "scorerVersion": V2_SCORER_VERSION,
+    },
 }
-EVALUATORS = {"v1": evaluate_current_case, "v2": evaluate_current_case_v2}
+EVALUATORS = {"v1": evaluate_current_case, "v2": evaluate_current_case_v2, "v2-trainsplit": evaluate_current_case_v2}
+# Candidate system-prompt additions researched here and proposed to the Loomarr repository, which
+# owns the production prompt. "production" is the imported prompt unchanged.
+PROMPTS = {
+    "production": None,
+    "candidate-a": "experiments/prompt-candidates/planner-prompt-candidate-a.txt",
+}
+PROMPT_ANCHOR = "When finished, reply with ONLY this JSON"
+
+
+def apply_prompt(system_prompt: str, patch_path: Path | None) -> str:
+    if patch_path is None:
+        return system_prompt
+    patch = patch_path.read_text(encoding="utf-8").strip()
+    if system_prompt.count(PROMPT_ANCHOR) != 1:
+        raise PreflightError("production prompt insertion anchor drifted")
+    return system_prompt.replace(PROMPT_ANCHOR, patch + "\n" + PROMPT_ANCHOR)
 
 
 def experiment_id(gate: str) -> str:
@@ -52,8 +74,9 @@ def scoring(gate: str) -> dict[str, Any]:
 
 
 def bindings(gate: str) -> dict[str, str]:
-    extra = {"gateModule": "src/loomarr_models/current_gate_v2.py"} if gate == "v2" else {}
-    return {**BINDINGS, "cases": GATES[gate]["cases"], "casesManifest": GATES[gate]["casesManifest"], **extra}
+    extra = {"gateModule": "src/loomarr_models/current_gate_v2.py"} if gate != "v1" else {}
+    prompts = {f"prompt:{name}": path for name, path in PROMPTS.items() if path} if gate != "v1" else {}
+    return {**BINDINGS, "cases": GATES[gate]["cases"], "casesManifest": GATES[gate]["casesManifest"], **extra, **prompts}
 VARIANTS = {"default": {}, "single-call": {"parallel_tool_calls": False}}
 ENDPOINT = {
     "host": "fictional-ai-server",
@@ -175,6 +198,7 @@ def preflight(root: Path, config_path: Path, *, git_probe: Any = None) -> dict[s
         or config.get("decoding") != DECODING
         or config.get("scoring") != scoring(gate)
         or config.get("variants") != VARIANTS
+        or config.get("prompts") != (PROMPTS if gate != "v1" else {"production": None})
         or config.get("authority") != AUTHORITY
         or set(config.get("bindings", {})) != set(bindings(gate))
     ):
@@ -194,9 +218,12 @@ def preflight(root: Path, config_path: Path, *, git_probe: Any = None) -> dict[s
     }
 
 
-def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str) -> dict[str, Any]:
+def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str, prompt: str = "production") -> dict[str, Any]:
     gate = plan["gate"]
-    output = root / ".artifacts" / experiment_id(gate) / variant
+    if gate == "v1" and prompt != "production":
+        raise PreflightError("the v1 screen only supports the production prompt")
+    label = variant if prompt == "production" else f"{variant}--{prompt}"
+    output = root / ".artifacts" / experiment_id(gate) / label
     if output.exists():
         raise PreflightError(f"refusing to overwrite existing output: {output}")
     server = _server_identity(api_key)
@@ -204,13 +231,15 @@ def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str) -> 
     contract = json.loads((root / BINDINGS["contract"]).read_text(encoding="utf-8"))
     cases = read_jsonl(root / GATES[gate]["cases"])
     generator = OpenAIChatTurnGenerator(api_key, VARIANTS[variant])
+    patch = PROMPTS[prompt]
+    system_prompt = apply_prompt(contract["systemPrompt"], root / patch if patch else None)
     started = time.monotonic()
     results = []
     for index, case in enumerate(cases, start=1):
         results.append(
             EVALUATORS[gate](
                 case,
-                system_prompt=contract["systemPrompt"],
+                system_prompt=system_prompt,
                 tools=contract["tools"],
                 generate=generator,
                 max_model_calls=DECODING["maxModelCallsPerCase"],
@@ -221,11 +250,12 @@ def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str) -> 
     generations_bytes = _jsonl(redact_generation_records(generator.records))
     (output / "results.jsonl").write_bytes(results_bytes)
     (output / "generations.jsonl").write_bytes(generations_bytes)
-    summary = summarize_current_candidate(f"qwen38-flash-next-served-{variant}", results)
+    summary = summarize_current_candidate(f"qwen38-flash-next-served-{label}", results)
     manifest = {
         "schemaVersion": 1,
         "experimentId": experiment_id(gate),
         "variant": variant,
+        "prompt": {"name": prompt, "sha256": hashlib.sha256(system_prompt.encode()).hexdigest()},
         "status": "complete",
         "preflight": plan,
         "server": server,
