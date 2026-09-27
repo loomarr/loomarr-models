@@ -1,0 +1,26 @@
+{
+  "byCallSite": {
+    "filler.research": 8,
+    "filler.split_rescue": 8,
+    "filler.text_single": 20
+  },
+  "contract": {
+    "path": "contracts/filler-text-contract-v1.json",
+    "sha256": "572424fe6dd444afe756e673ea4eabf0bf659f1e684e4761ae468a9f2bc9b49c"
+  },
+  "evaluationId": "filler-text-v1",
+  "generator": {
+    "path": "scripts/build_filler_text_gate.py",
+    "sha256": "8932c15f8528b1a2c3a6c0454e9d765722ffdcd2261902ab746a64bdedc9153e"
+  },
+  "inputs": "wholly synthetic; no household media, transcripts, or certification authorities",
+  "notCovered": [
+    "filler.text_batch",
+    "filler.vision",
+    "filler.split_vision"
+  ],
+  "records": 36,
+  "reviewStatus": "pending",
+  "schemaVersion": 1,
+  "sha256": "3f86cd3c68fab602946c0f2019025f44aae196f64349402b28afeb80945a566a"
+}
