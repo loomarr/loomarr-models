@@ -41,11 +41,11 @@
     },
     "runner": {
       "path": "scripts/run_planner_flash_next_screen.py",
-      "sha256": "13330e8f1d8db029ae2b1a16c01d19b7cce474943ee6872db4b79c02e0c3dab1"
+      "sha256": "c86a2665e2be56982579d9997375761c045cd2702152ea1b2409457c99a8197a"
     },
     "runtime": {
       "path": "src/loomarr_models/flash_next_screen.py",
-      "sha256": "0dee7799a0eba3fb95d625d01041f98de25ac3b4c3ccac6ce80253a482c28f00"
+      "sha256": "b981fc73399727c4788d9fd36013f5dd17902e0518219a6da2026ea00c8a9602"
     }
   },
   "decoding": {

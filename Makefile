@@ -317,14 +317,15 @@ check-current-contract-v2:
 VARIANT ?= default
 GATE ?= v2
 PROMPT ?= production
+TRIAL ?= 1
 check-flash-next-screen:
 	$(PYTHON) scripts/build_planner_flash_next_screen.py --check
 
 run-flash-next-screen:
-	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT)
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT) --trial $(TRIAL)
 
 publish-flash-next-screen:
-	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT) --publish
+	PYTHONPATH=src $(PYTHON) scripts/run_planner_flash_next_screen.py --gate $(GATE) --variant $(VARIANT) --prompt $(PROMPT) --trial $(TRIAL) --publish
 
 sync-qwen38-a40:
 	@test "$$($(UV) --version | awk '{print $$2}')" = "$(UV_VERSION)" || { echo "uv $(UV_VERSION) is required" >&2; exit 1; }

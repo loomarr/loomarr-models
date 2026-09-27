@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from loomarr_models.experiment import PreflightError
-from loomarr_models.flash_next_screen import ENDPOINT, GATES, PROMPTS, VARIANTS, experiment_id, preflight, read_api_key, run_screen
+from loomarr_models.flash_next_screen import ENDPOINT, GATES, PROMPTS, VARIANTS, experiment_id, preflight, read_api_key, run_label, run_screen
 
 
 def main() -> None:
@@ -21,25 +21,22 @@ def main() -> None:
     parser.add_argument("--variant", choices=sorted(VARIANTS), default="default")
     parser.add_argument("--gate", choices=sorted(GATES), default="v2")
     parser.add_argument("--prompt", choices=sorted(PROMPTS), default="production")
+    parser.add_argument("--trial", type=int, default=1)
     parser.add_argument("--preflight-only", action="store_true")
     parser.add_argument("--publish", action="store_true", help="copy a completed variant into runs/ for commit")
     args = parser.parse_args()
     try:
         if args.publish:
-            print(json.dumps(publish(args.gate, _label(args.variant, args.prompt)), sort_keys=True))
+            print(json.dumps(publish(args.gate, run_label(args.variant, args.prompt, args.trial)), sort_keys=True))
             return
         plan = preflight(ROOT, ROOT / f"experiments/{experiment_id(args.gate)}.json")
         if args.preflight_only:
             print(json.dumps(plan, sort_keys=True))
             return
-        manifest = run_screen(ROOT, plan, args.variant, read_api_key(Path(ENDPOINT["apiKeyFile"])), args.prompt)
+        manifest = run_screen(ROOT, plan, args.variant, read_api_key(Path(ENDPOINT["apiKeyFile"])), args.prompt, args.trial)
     except (PreflightError, ValueError) as exc:
         parser.error(str(exc))
     print(json.dumps({"summary": manifest["summary"], "decision": manifest["decision"]}, sort_keys=True))
-
-
-def _label(variant: str, prompt: str) -> str:
-    return variant if prompt == "production" else f"{variant}--{prompt}"
 
 
 def publish(gate: str, label: str) -> dict[str, str]:

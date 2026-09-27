@@ -218,11 +218,19 @@ def preflight(root: Path, config_path: Path, *, git_probe: Any = None) -> dict[s
     }
 
 
-def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str, prompt: str = "production") -> dict[str, Any]:
+def run_label(variant: str, prompt: str = "production", trial: int = 1) -> str:
+    """Served greedy decoding is not batch-invariant, so comparisons need repeated trials."""
+    label = variant if prompt == "production" else f"{variant}--{prompt}"
+    return label if trial == 1 else f"{label}--t{trial}"
+
+
+def run_screen(
+    root: Path, plan: dict[str, Any], variant: str, api_key: str, prompt: str = "production", trial: int = 1
+) -> dict[str, Any]:
     gate = plan["gate"]
     if gate == "v1" and prompt != "production":
         raise PreflightError("the v1 screen only supports the production prompt")
-    label = variant if prompt == "production" else f"{variant}--{prompt}"
+    label = run_label(variant, prompt, trial)
     output = root / ".artifacts" / experiment_id(gate) / label
     if output.exists():
         raise PreflightError(f"refusing to overwrite existing output: {output}")
@@ -255,6 +263,7 @@ def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str, pro
         "schemaVersion": 1,
         "experimentId": experiment_id(gate),
         "variant": variant,
+        "trial": trial,
         "prompt": {"name": prompt, "sha256": hashlib.sha256(system_prompt.encode()).hexdigest()},
         "status": "complete",
         "preflight": plan,
