@@ -18,7 +18,7 @@ from loomarr_models.current_contract import read_jsonl
 from loomarr_models.experiment import PreflightError
 
 
-CONFIG = ROOT / "experiments/planner-current-flash-next-screen-v1.json"
+CONFIG = ROOT / "experiments/planner-current-flash-next-screen-v2.json"
 
 
 def _probe(_root: Path, _paths: object) -> str:
@@ -30,8 +30,14 @@ def _call(name: str, arguments: object) -> dict:
 
 
 class FlashNextScreenTests(unittest.TestCase):
-    def test_generated_plan_is_current(self):
-        self.assertEqual(CONFIG.read_bytes(), builder.content())
+    def test_generated_plans_are_current(self):
+        for gate in screen.GATES:
+            self.assertEqual((ROOT / builder.output(gate)).read_bytes(), builder.content(gate))
+
+    def test_v2_plan_binds_v2_cases_and_scorer(self):
+        config = json.loads(CONFIG.read_text(encoding="utf-8"))
+        self.assertEqual(config["bindings"]["cases"]["path"], "evaluation/planner-current-v2/cases.jsonl")
+        self.assertEqual(config["scoring"]["scorerVersion"], "planner-current-development-scorer-v3")
 
     def test_preflight_accepts_committed_plan(self):
         plan = screen.preflight(ROOT, CONFIG, git_probe=_probe)
@@ -40,10 +46,10 @@ class FlashNextScreenTests(unittest.TestCase):
     def test_preflight_rejects_tampered_cases(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            for path in [*screen.BINDINGS.values(), str(CONFIG.relative_to(ROOT))]:
+            for path in [*screen.bindings("v2").values(), str(CONFIG.relative_to(ROOT))]:
                 (root / path).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / path, root / path)
-            with (root / screen.BINDINGS["cases"]).open("a", encoding="utf-8") as handle:
+            with (root / screen.GATES["v2"]["cases"]).open("a", encoding="utf-8") as handle:
                 handle.write("\n")
             with self.assertRaisesRegex(PreflightError, "cases digest mismatch"):
                 screen.preflight(root, root / CONFIG.relative_to(ROOT), git_probe=_probe)
@@ -57,7 +63,7 @@ class FlashNextScreenTests(unittest.TestCase):
         self.assertEqual(turn, {"role": "assistant", "content": "{\"a\": 1}"})
 
     def test_parallel_tool_calls_fail_the_single_operation_contract(self):
-        case = read_jsonl(ROOT / screen.BINDINGS["cases"])[0]
+        case = read_jsonl(ROOT / screen.GATES["v1"]["cases"])[0]
         contract = json.loads((ROOT / screen.BINDINGS["contract"]).read_text(encoding="utf-8"))
         two_calls = screen.parse_openai_turn(
             {"tool_calls": [_call("catalog_search", {"query": "a"}), _call("catalog_search", {"query": "b"})]}, 1

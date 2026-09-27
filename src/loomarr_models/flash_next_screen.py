@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Any
 
 from .current_baseline import SCORING, baseline_decision, evaluate_current_case, summarize_current_candidate
+from .current_gate_v2 import SCORER_VERSION as V2_SCORER_VERSION
+from .current_gate_v2 import evaluate_current_case_v2
 from .current_baseline_v3 import COMPARISON
 from .current_contract import read_jsonl
 from .eval_runtime import _to_huggingface_messages
@@ -26,7 +28,32 @@ from .stock_runtime import redact_generation_records
 from .training_data import to_huggingface_tools
 
 
-EXPERIMENT_ID = "planner-current-flash-next-screen-v1"
+GATES = {
+    "v1": {
+        "cases": "evaluation/planner-current-v1/cases.jsonl",
+        "casesManifest": "evaluation/planner-current-v1/manifest.json",
+        "scorerVersion": SCORING["scorerVersion"],
+    },
+    "v2": {
+        "cases": "evaluation/planner-current-v2/cases.jsonl",
+        "casesManifest": "evaluation/planner-current-v2/manifest.json",
+        "scorerVersion": V2_SCORER_VERSION,
+    },
+}
+EVALUATORS = {"v1": evaluate_current_case, "v2": evaluate_current_case_v2}
+
+
+def experiment_id(gate: str) -> str:
+    return f"planner-current-flash-next-screen-{gate}"
+
+
+def scoring(gate: str) -> dict[str, Any]:
+    return {**SCORING, "scorerVersion": GATES[gate]["scorerVersion"]}
+
+
+def bindings(gate: str) -> dict[str, str]:
+    extra = {"gateModule": "src/loomarr_models/current_gate_v2.py"} if gate == "v2" else {}
+    return {**BINDINGS, "cases": GATES[gate]["cases"], "casesManifest": GATES[gate]["casesManifest"], **extra}
 VARIANTS = {"default": {}, "single-call": {"parallel_tool_calls": False}}
 ENDPOINT = {
     "host": "fictional-ai-server",
@@ -50,8 +77,6 @@ AUTHORITY = {
     "releaseAuthority": False,
 }
 BINDINGS = {
-    "cases": "evaluation/planner-current-v1/cases.jsonl",
-    "casesManifest": "evaluation/planner-current-v1/manifest.json",
     "contract": "contracts/planner-contract-v5.json",
     "holdoutDenylist": "contracts/planner-holdout-denylist-v2.json",
     "referenceBaseline": "runs/planner-current-qwen-stock-baseline-v3/publication.json",
@@ -142,23 +167,26 @@ def preflight(root: Path, config_path: Path, *, git_probe: Any = None) -> dict[s
     root = root.resolve(strict=True)
     config_path = _input_path(root, config_path)
     config = json.loads(config_path.read_text(encoding="utf-8"))
+    gate = config.get("gate")
     if (
-        config.get("experimentId") != EXPERIMENT_ID
+        gate not in GATES
+        or config.get("experimentId") != experiment_id(gate)
         or config.get("endpoint") != ENDPOINT
         or config.get("decoding") != DECODING
-        or config.get("scoring") != SCORING
+        or config.get("scoring") != scoring(gate)
         or config.get("variants") != VARIANTS
         or config.get("authority") != AUTHORITY
-        or set(config.get("bindings", {})) != set(BINDINGS)
+        or set(config.get("bindings", {})) != set(bindings(gate))
     ):
         raise PreflightError("Flash-Next screen config differs from the pinned plan")
     bound = {}
     for name, binding in config["bindings"].items():
         bound[name] = _input_path(root, Path(binding["path"]))
-        if binding["path"] != BINDINGS[name] or sha256_file(bound[name]) != binding["sha256"]:
+        if binding["path"] != bindings(gate)[name] or sha256_file(bound[name]) != binding["sha256"]:
             raise PreflightError(f"Flash-Next screen {name} digest mismatch")
     return {
-        "experimentId": EXPERIMENT_ID,
+        "experimentId": experiment_id(gate),
+        "gate": gate,
         "configSha256": sha256_file(config_path),
         "casesSha256": sha256_file(bound["cases"]),
         "sourceCommit": (git_probe or _git_probe)(root, [config_path, *bound.values()]),
@@ -167,19 +195,20 @@ def preflight(root: Path, config_path: Path, *, git_probe: Any = None) -> dict[s
 
 
 def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str) -> dict[str, Any]:
-    output = root / ".artifacts" / EXPERIMENT_ID / variant
+    gate = plan["gate"]
+    output = root / ".artifacts" / experiment_id(gate) / variant
     if output.exists():
         raise PreflightError(f"refusing to overwrite existing output: {output}")
     server = _server_identity(api_key)
     output.mkdir(parents=True)
     contract = json.loads((root / BINDINGS["contract"]).read_text(encoding="utf-8"))
-    cases = read_jsonl(root / BINDINGS["cases"])
+    cases = read_jsonl(root / GATES[gate]["cases"])
     generator = OpenAIChatTurnGenerator(api_key, VARIANTS[variant])
     started = time.monotonic()
     results = []
     for index, case in enumerate(cases, start=1):
         results.append(
-            evaluate_current_case(
+            EVALUATORS[gate](
                 case,
                 system_prompt=contract["systemPrompt"],
                 tools=contract["tools"],
@@ -195,7 +224,7 @@ def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str) -> 
     summary = summarize_current_candidate(f"qwen38-flash-next-served-{variant}", results)
     manifest = {
         "schemaVersion": 1,
-        "experimentId": EXPERIMENT_ID,
+        "experimentId": experiment_id(gate),
         "variant": variant,
         "status": "complete",
         "preflight": plan,
@@ -206,7 +235,7 @@ def run_screen(root: Path, plan: dict[str, Any], variant: str, api_key: str) -> 
             "generations": {"path": "generations.jsonl", "sha256": hashlib.sha256(generations_bytes).hexdigest()},
         },
         "summary": summary,
-        "decision": baseline_decision(summary, SCORING),
+        "decision": baseline_decision(summary, scoring(gate)),
         "externalSpendUsd": "0",
         "authority": AUTHORITY,
     }

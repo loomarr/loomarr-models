@@ -8,16 +8,20 @@
   },
   "bindings": {
     "cases": {
-      "path": "evaluation/planner-current-v1/cases.jsonl",
-      "sha256": "3a18cf6f1353f2b4315efd3a61173e009d5618ca8343523205a8e9b0036fd52c"
+      "path": "evaluation/planner-current-v2/cases.jsonl",
+      "sha256": "68b81c0c5297625a360eb08e92f2e274110840a47b6b7e528500c2c4c444aecd"
     },
     "casesManifest": {
-      "path": "evaluation/planner-current-v1/manifest.json",
-      "sha256": "3d5aa3c64bdbf16e1731e716242867632b1a2bbbd5fec5cdddf95ded742de2da"
+      "path": "evaluation/planner-current-v2/manifest.json",
+      "sha256": "85d1918442c234aed8abc906f1658362562eeaa10d9a8220958bee7268a74f1b"
     },
     "contract": {
       "path": "contracts/planner-contract-v5.json",
       "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "gateModule": {
+      "path": "src/loomarr_models/current_gate_v2.py",
+      "sha256": "f05b6ed8fb4a36c1fbdf3ceb625df27478bde468ece696c96066711eca4aa4ed"
     },
     "generator": {
       "path": "scripts/build_planner_flash_next_screen.py",
@@ -54,12 +58,12 @@
     "modelAlias": "flash-next",
     "service": "fictional-ai-primary"
   },
-  "experimentId": "planner-current-flash-next-screen-v1",
-  "gate": "v1",
+  "experimentId": "planner-current-flash-next-screen-v2",
+  "gate": "v2",
   "purpose": "Screen the served Flash-Next model, which Loomarr uses for every function, on the current-contract gate before choosing a training target.",
   "schemaVersion": 1,
   "scoring": {
-    "scorerVersion": "planner-current-development-scorer-v2",
+    "scorerVersion": "planner-current-development-scorer-v3",
     "thresholds": {
       "maxP95ToolCalls": 2,
       "minCorrectToolOperationRate": 0.9,
