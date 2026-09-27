@@ -33,7 +33,7 @@
     },
     "runtime": {
       "path": "src/loomarr_models/candidate_screen.py",
-      "sha256": "eb3394a2b0a8659413c3d079d8577078dc4735aeafaf17c324cc529279a66222"
+      "sha256": "b17df77ba893eb3137e99400f0bc83877631af7fec9ae220f9e1a00c32a16606"
     },
     "screenModule": {
       "path": "src/loomarr_models/flash_next_screen.py",
@@ -54,6 +54,14 @@
       "repository": "unsloth/Qwen3.5-9B-GGUF",
       "revision": "3885219b6810b007914f3a7950a8d1b469d598a5",
       "sha256": "a5573e05ae69eb9a0c70b5b5a5460d15d72d8c8ea2057233352313b3138dc82a"
+    },
+    "qwen38-27b-q8_k_xl": {
+      "bytes": 31457991680,
+      "exclusiveGpu": true,
+      "file": "Qwen3.8-27B-UD-Q8_K_XL.gguf",
+      "repository": "unsloth/Qwen3.8-27B-GGUF",
+      "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+      "sha256": "701cf79e7f0d4c2177a3fe202ead1126275dc66ba51900d0d5332edfeb380fce"
     }
   },
   "decoding": {

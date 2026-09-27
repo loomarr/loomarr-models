@@ -52,6 +52,16 @@ CANDIDATES = {
         "sha256": "a5573e05ae69eb9a0c70b5b5a5460d15d72d8c8ea2057233352313b3138dc82a",
         "bytes": 9527502048,
     },
+    # Reference, not a deployable candidate: it does not fit beside Flash-Next, so it runs
+    # overnight inside with_gpu.sh with the primary service stopped.
+    "qwen38-27b-q8_k_xl": {
+        "repository": "unsloth/Qwen3.8-27B-GGUF",
+        "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+        "file": "Qwen3.8-27B-UD-Q8_K_XL.gguf",
+        "sha256": "701cf79e7f0d4c2177a3fe202ead1126275dc66ba51900d0d5332edfeb380fce",
+        "bytes": 31457991680,
+        "exclusiveGpu": True,
+    },
     "qwen35-4b-q4_k_m": {
         "repository": "unsloth/Qwen3.5-4B-GGUF",
         "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
@@ -123,6 +133,8 @@ def run_candidate(root: Path, plan: dict[str, Any], candidate_id: str, log: Path
     base = root / ".artifacts" / EXPERIMENT_ID / candidate_id
     if base.exists():
         raise PreflightError(f"refusing to overwrite existing output: {base}")
+    if candidate.get("exclusiveGpu") and _primary_active():
+        raise PreflightError(f"{candidate_id} needs the GPU to itself; run it inside with_gpu.sh")
     path = model_path(candidate)
     endpoint = {"baseUrl": f"http://{RUNTIME['host']}:{RUNTIME['port']}/v1", "modelAlias": candidate_id}
     env = {**os.environ, "LD_LIBRARY_PATH": str(Path(RUNTIME["binary"]).parent)}
@@ -183,6 +195,11 @@ def _wait_ready(endpoint: dict[str, Any], server: subprocess.Popen) -> None:
             pass
         time.sleep(2)
     raise PreflightError("candidate server did not become ready")
+
+
+def _primary_active() -> bool:
+    status = subprocess.run(["systemctl", "is-active", "--quiet", "fictional-ai-primary"], check=False)
+    return status.returncode == 0
 
 
 def _gtt_used() -> int | None:

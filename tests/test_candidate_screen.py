@@ -39,6 +39,11 @@ class CandidateScreenTests(unittest.TestCase):
         self.assertEqual(command[command.index("--port") + 1], "8090")
         self.assertEqual(command[command.index("--alias") + 1], "qwen35-9b-q8_0")
 
+    def test_exclusive_reference_refuses_while_production_is_up(self):
+        with mock.patch.object(screen, "_primary_active", return_value=True), tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(PreflightError, "with_gpu.sh"):
+                screen.run_candidate(Path(tmp), {}, "qwen38-27b-q8_k_xl", Path(tmp) / "log")
+
     def _cache(self, root: Path, blob_name: str, size: int) -> None:
         candidate = screen.CANDIDATES["qwen35-4b-q4_k_m"]
         repo = root / ("models--" + candidate["repository"].replace("/", "--"))
