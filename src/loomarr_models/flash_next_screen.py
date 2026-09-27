@@ -110,14 +110,15 @@ BINDINGS = {
 
 
 class OpenAIChatTurnGenerator:
-    def __init__(self, api_key: str, extra: dict[str, Any]):
+    def __init__(self, api_key: str, extra: dict[str, Any], endpoint: dict[str, Any] = ENDPOINT):
         self.api_key = api_key
         self.extra = extra
+        self.endpoint = endpoint
         self.records: list[dict[str, Any]] = []
 
     def __call__(self, messages: list[dict[str, Any]], tools: list[dict[str, Any]]) -> dict[str, Any]:
         payload = {
-            "model": ENDPOINT["modelAlias"],
+            "model": self.endpoint["modelAlias"],
             "messages": _to_openai_messages(messages),
             "tools": to_huggingface_tools(tools),
             "temperature": DECODING["temperature"],
@@ -126,7 +127,7 @@ class OpenAIChatTurnGenerator:
             **self.extra,
         }
         request = urllib.request.Request(
-            f"{ENDPOINT['baseUrl']}/chat/completions",
+            f"{self.endpoint['baseUrl']}/chat/completions",
             data=json.dumps(payload).encode(),
             headers={"Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"},
         )
@@ -235,13 +236,34 @@ def run_screen(
     if output.exists():
         raise PreflightError(f"refusing to overwrite existing output: {output}")
     server = _server_identity(api_key)
-    output.mkdir(parents=True)
     contract = json.loads((root / BINDINGS["contract"]).read_text(encoding="utf-8"))
-    cases = read_jsonl(root / GATES[gate]["cases"])
     generator = OpenAIChatTurnGenerator(api_key, VARIANTS[variant])
     patch = PROMPTS[prompt]
     system_prompt = apply_prompt(contract["systemPrompt"], root / patch if patch else None)
     started = time.monotonic()
+    results = evaluate_cases(root, gate, generator, system_prompt, f"flash-next screen {variant}")
+    return write_run(
+        output,
+        results,
+        generator,
+        candidate_id=f"qwen38-flash-next-served-{label}",
+        gate=gate,
+        fields={
+            "experimentId": experiment_id(gate),
+            "variant": variant,
+            "trial": trial,
+            "prompt": {"name": prompt, "sha256": hashlib.sha256(system_prompt.encode()).hexdigest()},
+            "preflight": plan,
+            "server": server,
+            "elapsedSeconds": time.monotonic() - started,
+        },
+    )
+
+
+def evaluate_cases(root: Path, gate: str, generator: Any, system_prompt: str, progress: str) -> list[Any]:
+    """Score every case of a gate with one turn generator."""
+    contract = json.loads((root / BINDINGS["contract"]).read_text(encoding="utf-8"))
+    cases = read_jsonl(root / GATES[gate]["cases"])
     results = []
     for index, case in enumerate(cases, start=1):
         results.append(
@@ -253,22 +275,24 @@ def run_screen(
                 max_model_calls=DECODING["maxModelCallsPerCase"],
             )
         )
-        print(f"flash-next screen {variant}: case={index}/{len(cases)} caseId={case['caseId']}", flush=True)
+        print(f"{progress}: case={index}/{len(cases)} caseId={case['caseId']}", flush=True)
+    return results
+
+
+def write_run(
+    output: Path, results: list[Any], generator: Any, *, candidate_id: str, gate: str, fields: dict[str, Any]
+) -> dict[str, Any]:
+    """Write results, redacted generations, and a hash-bound manifest for one completed run."""
+    output.mkdir(parents=True)
     results_bytes = _jsonl(result.as_dict() for result in results)
     generations_bytes = _jsonl(redact_generation_records(generator.records))
     (output / "results.jsonl").write_bytes(results_bytes)
     (output / "generations.jsonl").write_bytes(generations_bytes)
-    summary = summarize_current_candidate(f"qwen38-flash-next-served-{label}", results)
+    summary = summarize_current_candidate(candidate_id, results)
     manifest = {
         "schemaVersion": 1,
-        "experimentId": experiment_id(gate),
-        "variant": variant,
-        "trial": trial,
-        "prompt": {"name": prompt, "sha256": hashlib.sha256(system_prompt.encode()).hexdigest()},
+        **fields,
         "status": "complete",
-        "preflight": plan,
-        "server": server,
-        "elapsedSeconds": time.monotonic() - started,
         "artifacts": {
             "results": {"path": "results.jsonl", "sha256": hashlib.sha256(results_bytes).hexdigest()},
             "generations": {"path": "generations.jsonl", "sha256": hashlib.sha256(generations_bytes).hexdigest()},
@@ -282,9 +306,9 @@ def run_screen(
     return manifest
 
 
-def _server_identity(api_key: str) -> dict[str, Any]:
+def _server_identity(api_key: str, endpoint: dict[str, Any] = ENDPOINT) -> dict[str, Any]:
     request = urllib.request.Request(
-        f"{ENDPOINT['baseUrl']}/models", headers={"Authorization": f"Bearer {api_key}"}
+        f"{endpoint['baseUrl']}/models", headers={"Authorization": f"Bearer {api_key}"}
     )
     with urllib.request.urlopen(request, timeout=30) as response:
         models = json.loads(response.read())

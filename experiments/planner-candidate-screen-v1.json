@@ -1,0 +1,90 @@
+{
+  "authority": {
+    "certificationAuthority": false,
+    "deploymentAuthority": false,
+    "externalSpendAuthorized": false,
+    "releaseAuthority": false,
+    "trainingAuthorized": false
+  },
+  "bindings": {
+    "cases:v2": {
+      "path": "evaluation/planner-current-v2/cases.jsonl",
+      "sha256": "68b81c0c5297625a360eb08e92f2e274110840a47b6b7e528500c2c4c444aecd"
+    },
+    "cases:v2-trainsplit": {
+      "path": "evaluation/planner-current-v2/trainsplit-cases.jsonl",
+      "sha256": "b1d24ea3e36b0e4d04f47dd9fecd4ff4c40a91703509b47abce387950599d79c"
+    },
+    "contract": {
+      "path": "contracts/planner-contract-v5.json",
+      "sha256": "3e4ce7cd1e3ca59a9d438dedaa4d4d4cdc08a61e5fe91d6c3681081ddcbb42c5"
+    },
+    "gateModule": {
+      "path": "src/loomarr_models/current_gate_v2.py",
+      "sha256": "f05b6ed8fb4a36c1fbdf3ceb625df27478bde468ece696c96066711eca4aa4ed"
+    },
+    "generator": {
+      "path": "scripts/build_planner_candidate_screen.py",
+      "sha256": "5916ae93e2b3398ea9a96c289e9ce8539a5f5180ddd5c5657ea25f25aba3fab2"
+    },
+    "runner": {
+      "path": "scripts/run_planner_candidate_screen.py",
+      "sha256": "a4dbc7a167c4d2bd88898f787a61a8d0f1d4ab426db5b68e9a06b4e30d536cee"
+    },
+    "runtime": {
+      "path": "src/loomarr_models/candidate_screen.py",
+      "sha256": "eb3394a2b0a8659413c3d079d8577078dc4735aeafaf17c324cc529279a66222"
+    },
+    "screenModule": {
+      "path": "src/loomarr_models/flash_next_screen.py",
+      "sha256": "66d3914b1d0d54bf774f4d1e28c0915d7669efacee0e49a93336677272393fe6"
+    }
+  },
+  "candidates": {
+    "qwen35-4b-q4_k_m": {
+      "bytes": 2740937888,
+      "file": "Qwen3.5-4B-Q4_K_M.gguf",
+      "repository": "unsloth/Qwen3.5-4B-GGUF",
+      "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+      "sha256": "1d203c2196991da08bc5b191ab4727516f476f3167e3276f75a0c5257493aadb"
+    },
+    "qwen35-9b-q8_0": {
+      "bytes": 9527502048,
+      "file": "Qwen3.5-9B-Q8_0.gguf",
+      "repository": "unsloth/Qwen3.5-9B-GGUF",
+      "revision": "3885219b6810b007914f3a7950a8d1b469d598a5",
+      "sha256": "a5573e05ae69eb9a0c70b5b5a5460d15d72d8c8ea2057233352313b3138dc82a"
+    }
+  },
+  "decoding": {
+    "maxModelCallsPerCase": 3,
+    "maxTokens": 2048,
+    "requestTimeoutSeconds": 600,
+    "seed": 3407,
+    "temperature": 0.0
+  },
+  "experimentId": "planner-candidate-screen-v1",
+  "gates": [
+    "v2",
+    "v2-trainsplit"
+  ],
+  "issue": "https://github.com/loomarr/loomarr-models/issues/35",
+  "purpose": "Screen stock planner candidates against the served Flash-Next incumbent on the v2 gate and training-split screen, feeding loomarr/loomarr#831.",
+  "runtime": {
+    "binary": "/var/cache/fictional-ai/build/strix-llama-hip-gfx1151-8c1c282e/bin/llama-server",
+    "build": "strix-llama-hip-gfx1151-8c1c282e",
+    "ctxSize": 16384,
+    "flags": [
+      "--jinja",
+      "--no-webui"
+    ],
+    "gpuLayers": 999,
+    "host": "127.0.0.1",
+    "parallel": 1,
+    "port": 8090,
+    "readyTimeoutSeconds": 600
+  },
+  "schemaVersion": 1,
+  "status": "planned-local-zero-spend",
+  "trials": 5
+}

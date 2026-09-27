@@ -37,7 +37,7 @@
     },
     "runtime": {
       "path": "src/loomarr_models/flash_next_screen.py",
-      "sha256": "b981fc73399727c4788d9fd36013f5dd17902e0518219a6da2026ea00c8a9602"
+      "sha256": "66d3914b1d0d54bf774f4d1e28c0915d7669efacee0e49a93336677272393fe6"
     }
   },
   "decoding": {
